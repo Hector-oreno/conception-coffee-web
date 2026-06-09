@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conception Coffee | Escuintla, Guatemala</title>
+  <meta name="description"
+    content="Conception Coffee — Sabores únicos, ambiente acogedor y momentos inolvidables en Escuintla, Guatemala.">
+    
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- NAVEGACIÓN -->
+  <nav id="navbar">
+    <a href="#inicio" class="nav-logo">
+      <img src="images/logo-navbar.png" alt="Conception Coffee" class="nav-logo-img">
+      <span class="nav-logo-text">CONCEPTION COFFEE</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#ejecutivo">Menú Ejecutivo</a></li>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#sucursales">Sucursales</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="nav-cta" id="navCta">Contáctanos</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+  </nav>
+
+  <!-- HERO SLIDER
+     ╔══════════════════════════════════════════════════════════╗
+     ║  PARA AGREGAR TUS FOTOS:                                 ║
+     ║  En cada .slide-N agrega: style="background-image:      ║
+     ║  url('imagenes/foto1.jpg')"                              ║
+     ║  Ejemplo:                                                ║
+     ║  <div class="slide slide-1 active"                       ║
+     ║       style="background-image:url('imagenes/hero1.jpg')">║
+     ╚══════════════════════════════════════════════════════════╝ -->
+  <section class="hero" id="inicio">
+
+    <!-- SLIDES DE FONDO — reemplaza cada uno con tu foto real -->
+    <div class="slider-track">
+      <div class="slide slide-1 active" id="slide-0" style="background-image:url('images/logo-hero.png')">
+      </div>
+      <div class="slide slide-2" id="slide-1" style="background-image:url('images/logo-hero2.jpeg')">
+        <!-- foto 2: bebidas o ambiente -->
+      </div>
+      <div class="slide slide-3" id="slide-2" style="background-image:url('images/logo-hero3.png')">
+        <!-- foto 3: equipo o sucursal -->
+      </div>
+    </div>
+
+    <!-- FLECHAS DE NAVEGACIÓN -->
+    <button class="slider-arrow slider-prev" onclick="sliderMove(-1)" aria-label="Anterior">&#8592;</button>
+    <button class="slider-arrow slider-next" onclick="sliderMove(1)" aria-label="Siguiente">&#8594;</button>
+
+    <!-- CONTENIDO DE TEXTO ENCIMA DE LAS FOTOS -->
+    <div class="hero-content">
+    </div>
+
+  </section>
+  <section class="quick-links">
+
+    <div class="quick-card">
+      <h3>Explora nuestro menú</h3>
+      <p>Descubre nuestros platillos, bebidas y especialidades.</p>
+      <a href="#menu">Ver menú</a>
+    </div>
+
+    <div class="quick-card">
+      <h3>Reserva una experiencia</h3>
+      <p>Disfruta un ambiente único con familia y amigos.</p>
+      <a href="#contacto">Reservar</a>
+    </div>
+
+    <div class="quick-card">
+      <h3>Eventos & Catering</h3>
+      <p>Haz de tu evento algo especial con Conception Coffee.</p>
+      <a href="#contacto">Cotizar</a>
+    </div>
+
+  </section>
+
+  <!-- PUNTOS INDICADORES -->
+  <div class="slider-dots" id="sliderDots"></div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section class="about" id="nosotros">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="section-tag">Nuestra historia</p>
+          <h2 class="section-title">Más que un café,<br><span>una experiencia</span></h2>
+          <div class="section-line"></div>
+          <p>Conception Coffee nació con una visión simple: crear un espacio donde cada visita se convierta en un
+            momento especial. Desde nuestras puertas en Escuintla, hemos construido un lugar cálido y acogedor que ya
+            sientes tuyo desde la primera vez que entras.</p>
+          <div class="about-quote">
+            <p>"Advertencia: una vez que pruebas, vas a volver."</p>
+          </div>
+          <p>Nuestro menú combina bebidas artesanales, alimentos frescos y combinaciones únicas, todo preparado con
+            cuidado y pasión por nuestro equipo.</p>
+          <div class="about-stats">
+            <div class="stat">
+              <div class="stat-num">2024</div>
+              <div class="stat-label">Desde</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">+30</div>
+              <div class="stat-label">Productos</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">100%</div>
+              <div class="stat-label">Calidad</div>
+            </div>
+          </div>
+        </div>
+        <div class="about-visual">
+          <div class="about-img-box">
+
+            <img src="images/local.png" alt="Interior Conception Coffee">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENÚ EJECUTIVO DE LA SEMANA -->
+  <section class="ejecutivo" id="ejecutivo">
+    <div class="container">
+      <p class="section-tag"></p>
+      <h2 class="section-title">Menú Ejecutivo <span>de la Semana</span></h2>
+      <div class="section-line"></div>
+      <div class="ejecutivo-meta" id="ejecutivoFecha">📅 Cargando...</div>
+      <div class="ejecutivo-includes" id="ejecutivoIncludes"></div>
+      <div class="dias-grid" id="diasGrid"><!-- generado por JS --></div>
+    </div>
+  </section>
+
+  <section class="featured">
+  
+    <div class="container">
+  
+      <p class="section-tag">
+        Recomendados
+      </p>
+  
+      <h2 class="section-title">
+        Favoritos de la <span>Casa</span>
+      </h2>
+  
+      <div class="section-line"></div>
+  
+      <div class="featured-grid">
+  
+        <div class="featured-card">
+  
+          <img src="images/desayuno-buffet.jpg" alt="Desayuno Buffet">
+  
+          <div class="featured-content">
+  
+            <h3>Desayuno Buffet</h3>
+  
+            <p>
+              Nuestro desayuno más solicitado.
+            </p>
+  
+          </div>
+  
+        </div>
+  
+        <div class="featured-card">
+  
+          <img src="images/churrasquito.jpg" alt="Churrasquito">
+  
+          <div class="featured-content">
+  
+            <h3>Churrasquito Típico</h3>
+  
+            <p>
+              El favorito para almorzar.
+            </p>
+  
+          </div>
+  
+        </div>
+  
+        <div class="featured-card">
+  
+          <img src="images/frappe.jpg" alt="Frappé">
+  
+          <div class="featured-content">
+  
+            <h3>Frappé</h3>
+  
+            <p>
+              Nuestra bebida fría más solicitada.
+            </p>
+  
+          </div>
+  
+        </div>
+  
+      </div>
+  
+    </div>
+  
+  </section>
+
+
+  <!-- MENÚ GENERAL -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <p class="section-tag">Lo que ofrecemos</p>
+      <h2 class="section-title">Nuestro <span>Menú</span></h2>
+      <div class="section-line"></div>
+      <div class="menu-header">
+        <div class="menu-cats" id="menuCats">
+          <button class="cat-btn active" onclick="filterMenu(this,'all')">Todo</button>
+          <button class="cat-btn" onclick="filterMenu(this,'desayuno')">Desayunos</button>
+          <button class="cat-btn" onclick="filterMenu(this,'especial')">Especiales</button>
+          <button class="cat-btn" onclick="filterMenu(this,'bebida')">Bebidas</button>
+          <button class="cat-btn" onclick="filterMenu(this,'postre')">Postres</button>
+        </div>
+      </div>
+      <div class="menu-grid" id="menuGrid"><!-- generado por JS --></div>
+      <p class="menu-note">* Precios de referencia — consulta disponibilidad en sucursal</p>
+    </div>
+  </section>
+
+  <!-- SUCURSALES -->
+  <section class="branches" id="sucursales">
+    <div class="container">
+  
+      <p class="section-tag">Encuéntranos</p>
+  
+      <div class="social-header">
+      
+        <a href="https://www.instagram.com/restauranteconception" target="_blank" class="social-icon" title="Instagram">
+      
+          <i class="fab fa-instagram"></i>
+      
+        </a>
+      
+        <a href="https://www.facebook.com/Restaurante-Conception-Coffee" target="_blank" class="social-icon" title="Facebook">
+      
+          <i class="fab fa-facebook-f"></i>
+      
+        </a>
+      
+        <a href="https://wa.me/50259878068" target="_blank" class="social-icon" title="WhatsApp">
+      
+          <i class="fab fa-whatsapp"></i>
+      
+        </a>
+      
+  
+        <a href="#" class="social-icon">
+          <i class="fab fa-tiktok"></i>
+        </a>
+  
+      </div>
+  
+      <h2 class="section-title">
+        Encuéntranos en <span></span>
+      </h2>
+  
+      <div class="section-line"></div>
+  
+      <div class="branches-grid" id="branchesGrid"></div>
+  
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="contact" id="contacto">
+    <div class="container">
+      
+      <p class="section-tag">VIVE LA EXPERIENCIA</p>
+      
+      <h2 class="section-title">
+        Visítanos y vive la experiencia <span>Conception Coffee</span>
+      </h2>
+      
+      <div class="section-line"></div>
+      
+      <div class="contact-grid">
+      
+        <!-- EXPERIENCIAS -->
+      
+        <div class="contact-info">
+      
+          <p class="contact-intro">
+      
+            Disfruta de un ambiente acogedor, café de calidad y platillos preparados con dedicación. Te esperamos para compartir
+            momentos especiales con familia y amigos.
+      
+          </p>
+      
+          <div class="experience-item">
+      
+            <div class="experience-icon">✨</div>
+      
+            <div>
+      
+              <div class="experience-title">
+                Ambiente acogedor
+              </div>
+      
+              <div class="experience-text">
+                Espacios diseñados para compartir con amigos, familia y compañeros.
+              </div>
+      
+            </div>
+      
+          </div>
+      
+          <div class="experience-item">
+      
+            <div class="experience-icon">🎉</div>
+      
+            <div>
+      
+              <div class="experience-title">
+                Eventos especiales
+              </div>
+      
+              <div class="experience-text">
+                Celebraciones, reuniones y experiencias personalizadas para cada ocasión.
+              </div>
+      
+            </div>
+      
+          </div>
+      
+          <div class="experience-item">
+      
+            <div class="experience-icon">☕</div>
+      
+            <div>
+      
+              <div class="experience-title">
+                Café & Restaurante
+              </div>
+      
+              <div class="experience-text">
+                Desayunos, almuerzos, cenas y bebidas preparadas con calidad y dedicación.
+              </div>
+      
+            </div>
+      
+          </div>
+      
+        </div>
+      
+    
+    <!-- CARRUSEL DE EXPERIENCIAS -->
+    
+    <div class="contact-slider">
+    
+      <div class="experiencias-slider">
+    
+        <div class="exp-slide active">
+          <img src="images/lomito.jpg" alt="Lomito">
+        </div>
+    
+        <div class="exp-slide">
+          <img src="images/Frappe.jpg" alt="Frappé">
+        </div>
+    
+        <div class="exp-slide">
+          <img src="images/desayuno-buffet.jpg" alt="Desayuno Buffet">
+        </div>
+    
+        <div class="exp-slide">
+          <img src="images/lomito.jpg" alt="Lomito">
+        </div>
+    
+      </div>
+    
+    </div>
+    
+    </div>
+    </div>
+    
+    </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#inicio" class="nav-logo">
+
+            <img src="images/logo-navbar2.png" alt="Conception Coffee" class="footer-logo">
+
+          </a>
+          <p>Un café con buenos amigos es la mejor experiencia. Visítanos en nuestras sucursales en Escuintla,
+            Guatemala.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#ejecutivo">Menú Ejecutivo</a></li>
+            <li><a href="#menu">Menú</a></li>
+            <li><a href="#sucursales">Sucursales</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Horarios</h4>
+          <ul>
+            <li><a href="#">Lun – Vie: 7AM – 9PM</a></li>
+            <li><a href="#">Sáb – Dom: 8AM – 10PM</a></li>
+            <li><a href="#contacto">Contáctanos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Conception Coffee · Todos los derechos reservados</p>
+        <p>Escuintla, Guatemala</p>
+      </div>
+    </div>
+  </footer>
+    
+  <a href="https://wa.me/50259878068" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  
+    <i class="fab fa-whatsapp"></i>
+  
+  </a>
+
+
+
+  <script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+
+</html>

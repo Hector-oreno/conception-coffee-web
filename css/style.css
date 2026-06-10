@@ -1725,5 +1725,24 @@
           background-repeat: no-repeat;
           background-position: center;
         }
-
+ 
+        .menu-cats {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          overflow-y: hidden;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding-bottom: 8px;
+        }
+        
+        .menu-cats::-webkit-scrollbar {
+         display: none;
+        }
+        
+        .cat-btn {
+         flex-shrink: 0;
+         white-space: nowrap;
+        }
+        
+      
     }

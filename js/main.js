@@ -232,6 +232,31 @@
       // Arrancar auto-play
       timer = setInterval(() => goTo(current + 1), DELAY);
 
+      // Swipe para móviles
+      const hero = document.querySelector('.hero');
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      hero.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+      hero.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+
+      const diff = touchStartX - touchEndX;
+
+      // Umbral mínimo para considerar swipe
+      if (Math.abs(diff) > 50) {
+       if (diff > 0) {
+        goTo(current + 1); // izquierda → siguiente
+          } else {
+          goTo(current - 1); // derecha → anterior
+        }
+      }
+    });
+
       // Parar al pasar el mouse encima (mejor UX)
       document.querySelector('.hero').addEventListener('mouseenter', () => clearInterval(timer));
       document.querySelector('.hero').addEventListener('mouseleave', () => {

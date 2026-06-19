@@ -25,16 +25,29 @@
       <img src="images/logo-navbar.png" alt="Conception Coffee" class="nav-logo-img">
       <span class="nav-logo-text">CONCEPTION COFFEE</span>
     </a>
+  
     <ul class="nav-links" id="navLinks">
+    
+      <li class="nav-close-item">
+        <button class="nav-close" id="navClose">✕</button>
+      </li>
+    
       <li><a href="#nosotros">Nosotros</a></li>
       <li><a href="#ejecutivo">Menú Ejecutivo</a></li>
       <li><a href="#menu">Menú</a></li>
-      <li><a href="#sucursales">Sucursales</a></li>
+      <li><a href="#sucursales">Ubicación</a></li>
       <li><a href="#contacto">Contacto</a></li>
+    
     </ul>
+  
     <a href="#contacto" class="nav-cta" id="navCta">Contáctanos</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menú">☰</button>
+  
+    <button class="nav-toggle" id="navToggle" aria-label="Menú">
+      ☰
+    </button>
   </nav>
+  
+  <div class="nav-overlay" id="navOverlay"></div>
 
     <!-- HERO SLIDER
       ╔══════════════════════════════════════════════════════════╗
@@ -103,7 +116,7 @@
   <section class="about" id="nosotros">
     <div class="container">
       <div class="about-grid">
-        <div class="about-text">
+        <div class="about-text reveal">
           <p class="section-tag">Nuestra historia</p>
           <h2 class="section-title">Más que un café,<br><span>una experiencia</span></h2>
           <div class="section-line"></div>
@@ -115,7 +128,7 @@
           </div>
           <p>Nuestro menú combina bebidas artesanales, alimentos frescos y combinaciones únicas, todo preparado con
             cuidado y pasión por nuestro equipo.</p>
-          <div class="about-stats">
+          <div class="about-stats reveal reveal-delay-2">
             <div class="stat">
               <div class="stat-num">2024</div>
               <div class="stat-label">Desde</div>
@@ -130,7 +143,7 @@
             </div>
           </div>
         </div>
-        <div class="about-visual">
+        <div class="about-visual reveal reveal-delay">
           <div class="about-img-box">
 
             <img src="images/local.png" alt="Interior Conception Coffee">
@@ -145,24 +158,31 @@
   <!-- MENÚ EJECUTIVO DE LA SEMANA -->
   <section class="ejecutivo" id="ejecutivo">
     <div class="container">
+      <div class="reveal">
       <p class="section-tag"></p>
-      <h2 class="section-title">Menú Ejecutivo <span>de la Semana</span></h2>
+      <h2 class="section-title">Menú Ejecutivo <span></span></h2>
       <div class="section-line"></div>
+      </div>
+      <div class="reveal reveal-delay">
       <div class="ejecutivo-meta" id="ejecutivoFecha">📅 Cargando...</div>
       <div class="ejecutivo-includes" id="ejecutivoIncludes"></div>
-      <div class="dias-grid" id="diasGrid"><!-- generado por JS --></div>
+      <div class="menu-hoy" id="menuHoy"> <!-- generado por JS --></div>
+      </div>
+      <div class="reveal reveal-delay-2">
+      <button class="menu-semana-btn" id="toggleSemanaBtn">▼ Ver menú semanal</button></div>
+      <div class="dias-grid reveal reveal-delay-2" id="diasGrid"><!-- generado por JS --></div>
     </div>
   </section>
 
-  <section class="featured">
+  <section class="featured" id="favoritos">
   
     <div class="container">
   
-      <p class="section-tag">
+      <p class="section-tag reveal">
         Recomendados
       </p>
   
-      <h2 class="section-title">
+      <h2 class="section-title reveal reveal-delay">
         Favoritos de la <span>Casa</span>
       </h2>
   
@@ -170,7 +190,7 @@
   
       <div class="featured-grid">
   
-        <div class="featured-card">
+        <div class="featured-card reveal">
   
           <img src="images/desayuno-buffet.jpg" alt="Desayuno Buffet">
   
@@ -186,7 +206,7 @@
   
         </div>
   
-        <div class="featured-card">
+        <div class="featured-card reveal reveal-delay">
   
           <img src="images/churrasquito.jpg" alt="Churrasquito">
   
@@ -202,7 +222,7 @@
   
         </div>
   
-        <div class="featured-card">
+        <div class="featured-card reveal reveal-delay-2">
   
           <img src="images/frappe.jpg" alt="Frappé">
   
@@ -228,20 +248,61 @@
   <!-- MENÚ GENERAL -->
   <section class="menu-section" id="menu">
     <div class="container">
-      <p class="section-tag">Lo que ofrecemos</p>
-      <h2 class="section-title">Nuestro <span>Menú</span></h2>
-      <div class="section-line"></div>
-      <div class="menu-header">
-        <div class="menu-cats" id="menuCats">
-          <button class="cat-btn active" onclick="filterMenu(this,'all')">Todo</button>
-          <button class="cat-btn" onclick="filterMenu(this,'desayuno')">Desayunos</button>
-          <button class="cat-btn" onclick="filterMenu(this,'especial')">Especiales</button>
-          <button class="cat-btn" onclick="filterMenu(this,'bebida')">Bebidas</button>
-          <button class="cat-btn" onclick="filterMenu(this,'postre')">Postres</button>
+      <p class="section-tag reveal">Lo que ofrecemos</p>
+      <h2 class="section-title reveal reveal-delay">Nuestro <span>Menú</span></h2>
+      <div class="section-line reveal reveal-delay-2"></div>
+      <div class="menu-explore reveal reveal-delay-3" id="menuExplore">
+              
+        <div class="menu-card reveal" data-cat="desayuno">
+          <i class="fa-solid fa-sun"></i>
+          <h3>Desayunos</h3>
+          <p>Buffet, omelettes y más</p>
         </div>
+      
+        <div class="menu-card reveal reveal-delay" data-cat="especial">
+          <i class="fa-solid fa-utensils"></i>
+          <h3>Especialidades</h3>
+          <p>Carnes, pastas y entradas</p>
+        </div>
+      
+        <div class="menu-card reveal reveal-delay-2" data-cat="bebidas">
+          <i class="fa-solid fa-mug-hot"></i>
+          <h3>Bebidas</h3>
+          <p>Calientes y frías</p>
+        </div>
+      
+        <div class="menu-card reveal reveal-delay-3" data-cat="postres">
+          <i class="fa-solid fa-cake-candles"></i>
+          <h3>Postres</h3>
+          <p>Favoritos de la casa</p>
+        </div>
+        
+        <div class="menu-card reveal reveal-delay-4" id="menuShowAllCard">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <h3>Ver Carta Completa</h3>        
+          <p>
+            Todos nuestros productos
+          </p>
+        
+        </div>
+
+
       </div>
+
+      <div class="menu-active-filter" id="menuActiveFilter">
+      
+        <button id="showAllBtn" style="display:none;">
+          ← Ver Todo
+        </button>
+      
+        <button id="currentCategory" class="menu-back-btn">
+          Desayunos
+        </button>
+      
+      </div>
+
       <div class="menu-grid" id="menuGrid"><!-- generado por JS --></div>
-      <p class="menu-note">* Precios de referencia — consulta disponibilidad en sucursal</p>
+      <p class="menu-note"></p>
     </div>
   </section>
 
@@ -249,9 +310,9 @@
   <section class="branches" id="sucursales">
     <div class="container">
   
-      <p class="section-tag">Encuéntranos</p>
+      <p class="section-tag">Síguenos</p>
   
-      <div class="social-header">
+      <div class="social-header reveal">
       
         <a href="https://www.instagram.com/restauranteconception" target="_blank" class="social-icon" title="Instagram">
       
@@ -278,28 +339,45 @@
   
       </div>
   
-      <h2 class="section-title">
-        Encuéntranos en <span></span>
+      <h2 class="section-title reveal reveal-delay">
+        Visítanos <span></span>
       </h2>
   
       <div class="section-line"></div>
   
-      <div class="branches-grid" id="branchesGrid"></div>
+      <div class="branches-layout">
+      
+        <div class="branches-grid reveal reveal-delay-2" id="branchesGrid">
+        </div>
+      
+        <div class="branch-map-card reveal reveal-delay-3">
+      
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d966.4026773229222!2d-91.01007163524632!3d14.334030834521055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8589271db6bce279%3A0xf52713cc9addfa85!2zVEVYQUNPIOKAoiBTYW50YSBMdWPDrWE!5e0!3m2!1ses!2sgt!4v1781651485047!5m2!1ses!2sgt"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+      
+        </div>
+      
+      </div>
   
     </div>
   </section>
 
-  <!-- CONTACTO -->
+  <!-- Vive a experiencia -->
   <section class="contact" id="contacto">
     <div class="container">
       
-      <p class="section-tag">VIVE LA EXPERIENCIA</p>
+      <p class="section-tag reveal">
+        VIVE LA EXPERIENCIA
+      </p>
       
-      <h2 class="section-title">
-        Visítanos y vive la experiencia <span>Conception Coffee</span>
+      <h2 class="section-title reveal reveal-delay">
+        Visítanos y vive la experiencia
+        <span>Conception Coffee</span>
       </h2>
       
-      <div class="section-line"></div>
+      <div class="section-line reveal reveal-delay-2"></div>
       
       <div class="contact-grid">
       
@@ -307,16 +385,18 @@
       
         <div class="contact-info">
       
-          <p class="contact-intro">
+          <p class="contact-intro reveal reveal-delay-3">
       
             Disfruta de un ambiente acogedor, café de calidad y platillos preparados con dedicación. Te esperamos para compartir
             momentos especiales con familia y amigos.
       
           </p>
       
-          <div class="experience-item">
+          <div class="experience-item reveal">
       
-            <div class="experience-icon">✨</div>
+            <div class="experience-icon">
+              <i class="fa-solid fa-heart"></i>
+            </div>
       
             <div>
       
@@ -332,9 +412,11 @@
       
           </div>
       
-          <div class="experience-item">
+          <div class="experience-item reveal reveal-delay">
       
-            <div class="experience-icon">🎉</div>
+            <div class="experience-icon">
+              <i class="fa-solid fa-champagne-glasses"></i>
+            </div>
       
             <div>
       
@@ -350,9 +432,11 @@
       
           </div>
       
-          <div class="experience-item">
+          <div class="experience-item reveal reveal-delay-2">
       
-            <div class="experience-icon">☕</div>
+            <div class="experience-icon">
+              <i class="fa-solid fa-mug-hot"></i>
+            </div>
       
             <div>
       
@@ -373,7 +457,7 @@
     
     <!-- CARRUSEL DE EXPERIENCIAS -->
     
-    <div class="contact-slider">
+    <div class="contact-slider reveal reveal-delay-3">
     
       <div class="experiencias-slider">
     
@@ -407,26 +491,52 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#inicio" class="nav-logo">
+        <div class="footer-brand reveal">
+          <a href="#inicio" class="footer-brand-link">
 
             <img src="images/logo-navbar2.png" alt="Conception Coffee" class="footer-logo">
 
+            <span class="footer-brand-name">
+              CONCEPTION COFFEE
+            </span>
+
           </a>
-          <p>Un café con buenos amigos es la mejor experiencia. Visítanos en nuestras sucursales en Escuintla,
-            Guatemala.</p>
+          <p>Café de especialidad, desayunos,
+             almuerzos y experiencias gastronómicas
+             en Santa Lucía Cotzumalguapa.</p>
         </div>
-        <div class="footer-col">
+
+        <div class="footer-social">
+        
+          <a href="https://www.instagram.com/restauranteconception" target="_blank">
+            <i class="fab fa-instagram"></i>
+          </a>
+        
+          <a href="https://www.facebook.com/Restaurante-Conception-Coffee" target="_blank">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        
+          <a href="https://wa.me/50259878068" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        
+          <a href="#">
+            <i class="fab fa-tiktok"></i>
+          </a>
+        
+        </div>
+
+        <div class="footer-col reveal reveal-delay">
           <h4>Navegación</h4>
           <ul>
             <li><a href="#nosotros">Nosotros</a></li>
             <li><a href="#ejecutivo">Menú Ejecutivo</a></li>
             <li><a href="#menu">Menú</a></li>
-            <li><a href="#sucursales">Sucursales</a></li>
+            <li><a href="#sucursales">Ubicación</a></li>
             <li><a href="#contacto">Contacto</a></li>
           </ul>
         </div>
-        <div class="footer-col">
+        <div class="footer-col reveal reveal-delay-2">
           <h4>Horarios</h4>
           <ul>
             <li><a href="#">Lun – Vie: 7AM – 9PM</a></li>

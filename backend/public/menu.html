@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <!-- =====================================================
+         CONFIGURACIÓN BÁSICA
+         ===================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+
+    <!-- =====================================================
+         SEO
+         ===================================================== -->
+
+    <title>
+        La Carta | Restaurante Conception Coffee
+    </title>
+
+    <meta
+        name="description"
+        content="Consulta La Carta de Restaurante Conception Coffee: desayunos, especialidades, bebidas, postres y más, con disponibilidad por sucursal."
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <meta
+        name="author"
+        content="Restaurante Conception Coffee"
+    >
+
+
+    <!-- =====================================================
+         OPEN GRAPH
+         ===================================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:locale"
+        content="es_GT"
+    >
+
+    <meta
+        property="og:site_name"
+        content="Conception Coffee"
+    >
+
+    <meta
+        property="og:title"
+        content="La Carta | Restaurante Conception Coffee"
+    >
+
+    <meta
+        property="og:description"
+        content="Explora desayunos, especialidades, bebidas, postres y más en La Carta de Restaurante Conception Coffee."
+    >
+
+
+    <!-- =====================================================
+         TWITTER / X
+         ===================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="La Carta | Restaurante Conception Coffee"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Explora desayunos, especialidades, bebidas, postres y más en La Carta de Restaurante Conception Coffee."
+    >
+
+
+    <!-- =====================================================
+         IDENTIDAD
+         ===================================================== -->
+
+    <meta
+        name="theme-color"
+        content="#3A1F14"
+    >
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="/images/branding/isotipo.png"
+    >
+
+
+    <!-- =====================================================
+         FUENTES
+         ===================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         ESTILOS DE LA CARTA
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="css/menu/menu-premium.css"
+    >
+
+</head>
+<body>
+
+    <!-- ENCABEZADO PRINCIPAL (HEADER) -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-logo" aria-label="Ir al inicio">
+                <span class="logo-circle">C</span> CONCEPTION COFFEE
+            </a>
+            <nav class="header-nav" aria-label="Navegación secundaria">
+                <a href="index.html" class="btn-volver">← Volver al sitio</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL (MAIN) -->
+    <main class="menu-editorial-container">
+
+        <section
+            class="editorial-hero"
+            aria-labelledby="titulo-carta"
+        >
+
+            <div class="editorial-hero-main">
+
+                <div class="editorial-hero-copy">
+
+                    <div class="meta-location">
+                        GUATEMALA · CARTA 2026
+                    </div>
+
+                    <h1
+                        id="titulo-carta"
+                        class="editorial-title"
+                    >
+                        La Carta
+                    </h1>
+
+                    <p class="editorial-subtitle">
+                        Cocina de casa servida todo el día.
+                        Café de origen, desayunos abundantes y
+                        postres hechos en el mismo día.
+                        Los precios están en quetzales e incluyen impuestos.
+                    </p>
+
+                </div>
+
+
+                <div class="sucursal-selector-container">
+
+                    <label
+                        for="selectSucursal"
+                        class="sucursal-label"
+                    >
+                        Sucursal
+                    </label>
+
+                    <div class="select-wrapper">
+
+                        <select
+                            id="selectSucursal"
+                            class="sucursal-select"
+                            aria-label="Seleccionar sucursal"
+                        >
+                            <!-- JavaScript carga las sucursales -->
+                        </select>
+
+                        <span
+                            class="select-arrow"
+                            aria-hidden="true"
+                        >
+                            ▾
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================================
+            ESPECIAL DEL DÍA — MENÚ EJECUTIVO
+        ====================================================== -->
+        <section
+            class="daily-special"
+            id="especialDelDia"
+            aria-labelledby="especialDelDiaTitulo"
+        >
+
+            <div class="daily-special-top">
+
+                <div>
+
+                    <span class="daily-special-eyebrow">
+                        Menú Ejecutivo
+                    </span>
+
+                    <span
+                        class="daily-special-date"
+                        id="especialDelDiaFecha"
+                    >
+                        Cargando especial del día...
+                    </span>
+
+                </div>
+
+                <span
+                    class="daily-special-status"
+                    id="especialDelDiaEstado"
+                    aria-live="polite"
+                ></span>
+
+            </div>
+
+
+            <div
+                class="daily-special-content"
+                id="especialDelDiaContenido"
+            >
+
+                <p class="daily-special-loading">
+                    Preparando el menú de hoy...
+                </p>
+
+            </div>
+
+
+            <div class="daily-special-actions">
+
+                <button
+                    type="button"
+                    class="daily-special-open"
+                    id="abrirEspecialDelDia"
+                    hidden
+                >
+                    Ver menú de hoy
+                    <span aria-hidden="true">→</span>
+                </button>
+
+
+                <a
+                    href="index.html#ejecutivo"
+                    class="daily-special-week"
+                >
+                    Ver menú semanal
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- LAYOUT DE DOS COLUMNAS: ÍNDICE Y PRODUCTOS -->
+        <div class="editorial-layout">
+
+            <!-- BARRA LATERAL CON ÍNDICE (ASIDE) -->
+            <aside class="sidebar-index" aria-label="Índice de categorías">
+                <nav class="sticky-nav">
+                    <ul id="categorias-list" class="index-menu">
+                        <li><a href="#desayunos" class="active"><span class="num">01</span> DESAYUNOS</a></li>
+                        <li><a href="#especialidades"><span class="num">02</span> ESPECIALIDADES</a></li>
+                        <li><a href="#bebidas"><span class="num">03</span> BEBIDAS</a></li>
+                        <li><a href="#postres"><span class="num">04</span> POSTRES</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            
+
+            <!-- CATÁLOGO DINÁMICO DE PRODUCTOS (SECTION) -->
+            <section class="catalog-content" id="contenedor-catalogos" aria-live="polite">
+                
+                <!-- SECCIÓN: DESAYUNOS (SE RENDERIZA DESDE EL BACKEND CON JS) -->
+                <section id="desayunos" class="category-block">
+                    <header class="category-header">
+                        <h2>Desayunos</h2>
+                        <span class="category-sub">BUFFET, OMELETTES Y MÁS</span>
+                    </header>
+
+                    <div class="products-list">
+                        <!-- EJEMPLO DE UN ARTÍCULO INDIVIDUAL (SEMANATICO Y LISTO PARA GOOGLE) -->
+                        <article class="product-item">
+                            <div class="product-icon-box">
+                                <svg class="coffee-icon" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="currentColor" d="M2 19h18v2H2v-2zm18-11V5H3v3c0 3.31 2.69 6 6 6h4c3.31 0 6-2.69 6-6zM5 7h13v1c0 2.21-1.79 4-4 4H9c-2.21 0-4-1.79-4-4V7z"/>
+                                </svg>
+                            </div>
+                            <div class="product-details">
+                                <div class="product-head">
+                                    <h3 class="product-title">Desayuno Buffet</h3>
+                                    <div class="product-price"><span class="currency">Q</span>78.00</div>
+                                </div>
+                                <p class="product-description">
+                                    Huevos revueltos o estrellados, frijol, crema, queso, plátanos fritos, chorizo, jamón, panqueques, salchicha, pan, tortilla y café o jugo.
+                                </p>
+                                <div class="product-tags">
+                                    <span class="tag">PARA COMPARTIR</span>
+                                    <span class="tag">TODO EL DÍA</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+
+            </section>
+        </div>
+
+    </main>
+
+    <!-- PIE DE PÁGINA (FOOTER) -->
+    <footer class="menu-footer">
+
+        <div class="menu-footer-inner">
+
+            <div>
+                <strong>
+                    CONCEPTION COFFEE
+                </strong>
+
+                <p>
+                    &copy; 2026 · Todos los derechos reservados
+                </p>
+            </div>
+
+            <a href="index.html">
+                Volver al sitio →
+            </a>
+
+        </div>
+
+    </footer>
+
+    <!-- ======================================================
+        VISOR DEL ESPECIAL DEL DÍA
+        ====================================================== -->
+    <div
+        class="daily-menu-overlay"
+        id="dailyMenuOverlay"
+        hidden
+    >
+
+        <div
+            class="daily-menu-backdrop"
+            data-close-daily-menu
+        ></div>
+
+
+        <div
+            class="daily-menu-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="dailyMenuDialogTitle"
+        >
+
+            <div class="daily-menu-dialog-header">
+
+                <span id="dailyMenuDialogTitle">
+                    Menú Ejecutivo
+                </span>
+
+                <button
+                    type="button"
+                    class="daily-menu-close"
+                    id="cerrarEspecialDelDia"
+                    aria-label="Cerrar menú del día"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                class="daily-menu-template"
+                id="dailyMenuTemplate"
+            ></div>
+
+
+            <div class="daily-menu-dialog-footer">
+
+                <a href="index.html#ejecutivo">
+                    Ver menú semanal
+                    <span aria-hidden="true">→</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- JS DEDICADO DE LA CARTA -->
+    <script src="js/menu/menuCliente.js"></script>
+    <script src="js/menu/menu.js"></script>
+</body>
+</html>

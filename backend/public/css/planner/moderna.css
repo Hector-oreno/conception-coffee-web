@@ -1,0 +1,434 @@
+/* =========================================================
+   CONCEPTION MODERNA
+   ========================================================= */
+
+.promo-moderna {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 0;
+
+    background:
+    var(--moderna-background, #F4EEE8);
+
+    color: #4b2515;
+
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.promo-moderna-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 105px;
+
+    padding: 18px 22px;
+
+    background:
+    var(--moderna-primary, #5D2C18);
+
+    color: #fff;
+}
+
+
+.promo-moderna-isotipo {
+    width: 56px;
+    height: 56px;
+
+    object-fit: contain;
+
+    margin-right: 14px;
+
+    border-radius: 50%;
+}
+
+
+.promo-moderna-header-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 1;
+}
+
+
+.promo-moderna-header-text span {
+    font-size: 0.65rem;
+
+    letter-spacing: 0.28em;
+}
+
+
+.promo-moderna-header-text strong {
+    margin-top: 5px;
+
+    font-size: 1.45rem;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+}
+
+
+.promo-moderna-hoy {
+    position: absolute;
+
+    right: 20px;
+    top: 18px;
+
+    padding: 6px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+}
+
+
+/* =========================================================
+   FOTO
+   ========================================================= */
+
+.promo-moderna-visual {
+    position: relative;
+
+    height: 285px;
+
+    overflow: hidden;
+
+    background: #dbc7b8;
+}
+
+
+.promo-moderna-visual::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.38) 0%,
+            rgba(0, 0, 0, 0) 38%
+        );
+
+    z-index: 2;
+}
+
+
+.promo-moderna-photo {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   SIN FOTO
+   ========================================================= */
+
+.promo-moderna-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    color: #6b3217;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eadfd5,
+            #d9c5b5
+        );
+}
+
+
+.promo-moderna-placeholder-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 72px;
+    height: 72px;
+
+    border: 2px solid rgba(107, 50, 23, 0.18);
+    border-radius: 50%;
+
+    font-size: 1.8rem;
+
+    opacity: 0.5;
+}
+
+
+.promo-moderna-placeholder span {
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   PRECIO
+   ========================================================= */
+
+.promo-moderna-price {
+    position: absolute;
+
+    right: 20px;
+    bottom: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    min-width: auto;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+
+    color: #fff;
+
+    text-align: right;
+
+    z-index: 5;
+}
+
+
+.promo-moderna-price small {
+    margin-bottom: 1px;
+
+    font-size: 0.52rem;
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    color: #fff;
+
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.75);
+}
+
+
+.promo-moderna-price strong {
+    margin: 0;
+
+    font-size: 1.75rem;
+    font-weight: 700;
+
+    line-height: 1;
+
+    color: #fff;
+
+    text-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.85);
+}
+
+/* =========================================================
+   INFORMACIÓN
+   ========================================================= */
+
+.promo-moderna-content {
+    position: relative;
+
+    padding: 25px 24px 20px;
+
+    background: #fff;
+}
+
+
+.promo-moderna-content::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 25px;
+
+    width: 6px;
+    height: 74px;
+
+    background:
+    var(--moderna-accent, #FF6A0A);
+}
+
+
+.promo-moderna-label {
+    display: block;
+
+    margin-left: 10px;
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.2em;
+
+    color:
+    var(--moderna-accent, #FF6A0A);
+}
+
+
+.promo-moderna-content h2 {
+    margin:
+        7px 0 5px 10px;
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 1.55rem;
+    line-height: 1.05;
+
+    color: #4b2515;
+}
+
+
+.promo-moderna-content p {
+    margin:
+        7px 0 0 10px;
+
+    font-size: 0.68rem;
+    line-height: 1.5;
+
+    color: #765b4e;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.promo-moderna-footer {
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 15px 20px;
+
+    background:
+    var(--moderna-background, #F4EEE8);
+}
+
+.promo-moderna-brand {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.promo-moderna-brand-icon {
+    display: block;
+
+    width: 38px;
+    height: 38px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+}
+
+
+.promo-moderna-brand-text {
+    display: flex;
+    flex-direction: column;
+
+    line-height: 0.9;
+}
+
+
+.promo-moderna-brand-text strong {
+    font-size: 0.67rem;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+    color:
+        var(--moderna-primary, #5D2C18);
+}
+
+
+.promo-moderna-brand-text span {
+    margin-top: 4px;
+
+    font-size: 0.54rem;
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+
+    color:
+        var(--moderna-accent, #FF6A0A);
+}
+
+
+.promo-moderna-contact {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    text-align: right;
+}
+
+
+.promo-moderna-contact strong {
+    font-size: 0.78rem;
+
+    color: #4b2515;
+}
+
+
+.promo-moderna-contact strong i {
+    margin-right: 4px;
+
+    color: #25d366;
+}
+
+
+.promo-moderna-contact small {
+    max-width: 175px;
+
+    margin-top: 4px;
+
+    font-size: 0.42rem;
+    line-height: 1.35;
+
+    color: #806c61;
+}

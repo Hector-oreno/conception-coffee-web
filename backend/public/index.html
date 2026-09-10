@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <!-- =====================================================
+       CONFIGURACIÓN BÁSICA
+       ===================================================== -->
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+
+  <!-- =====================================================
+       SEO PRINCIPAL
+       ===================================================== -->
+
+  <title>
+    Restaurante Conception Coffee | Café y Restaurante en Guatemala
+  </title>
+
+  <meta
+    name="description"
+    content="Restaurante Conception Coffee en Guatemala. Descubre nuestra carta, desayunos, almuerzos, café, menú ejecutivo, ubicaciones y experiencias para compartir."
+  >
+
+  <meta
+    name="robots"
+    content="index, follow"
+  >
+
+  <meta
+    name="author"
+    content="Restaurante Conception Coffee"
+  >
+
+
+  <!-- =====================================================
+       OPEN GRAPH
+       Facebook, WhatsApp y otras plataformas
+       ===================================================== -->
+
+  <meta
+    property="og:type"
+    content="website"
+  >
+
+  <meta
+    property="og:locale"
+    content="es_GT"
+  >
+
+  <meta
+    property="og:site_name"
+    content="Conception Coffee"
+  >
+
+  <meta
+    property="og:title"
+    content="Restaurante Conception Coffee | Café y Restaurante en Guatemala"
+  >
+
+  <meta
+    property="og:description"
+    content="Descubre La Carta, menú ejecutivo, desayunos, café, ubicaciones y experiencias de Restaurante Conception Coffee."
+  >
+
+
+  <!-- =====================================================
+       TWITTER / X
+       ===================================================== -->
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  >
+
+  <meta
+    name="twitter:title"
+    content="Restaurante Conception Coffee | Café y Restaurante en Guatemala"
+  >
+
+  <meta
+    name="twitter:description"
+    content="Descubre La Carta, menú ejecutivo, desayunos, café, ubicaciones y experiencias de Restaurante Conception Coffee."
+  >
+
+
+  <!-- =====================================================
+       COLOR DEL NAVEGADOR
+       ===================================================== -->
+
+  <meta
+    name="theme-color"
+    content="#3A1F14"
+  >
+
+
+  <!-- =====================================================
+     DATOS ESTRUCTURADOS — RESTAURANTE
+     ===================================================== -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Restaurante Conception Coffee",
+    "alternateName": "Conception Coffee",
+    "description": "Restaurante y café con desayunos, almuerzos, menú ejecutivo, bebidas y experiencias para compartir.",
+    "telephone": "+50259878068",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "KM 87.5 Carretera al Pacífico, interior de Gasolinera Texaco",
+      "addressLocality": "Santa Lucía Cotzumalguapa",
+      "addressRegion": "Escuintla",
+      "addressCountry": "GT"
+    },
+    "servesCuisine": [
+      "Cocina guatemalteca",
+      "Desayunos",
+      "Café"
+    ],
+    "currenciesAccepted": "GTQ",
+    "sameAs": [
+      "https://www.instagram.com/restauranteconception",
+      "https://www.facebook.com/people/Restaurante-Conception-Coffee/61587045759034/"
+    ]
+  }
+  </script>
+
+
+
+  <!-- =====================================================
+     IDENTIDAD DEL SITIO
+     ===================================================== -->
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="/images/branding/isotipo.png"
+  >
+
+
+
+  <!-- =====================================================
+       FUENTES
+       ===================================================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- =====================================================
+       ICONOS
+       ===================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
+
+
+  <!-- =====================================================
+       ESTILOS
+       ===================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
+
+</head>
+
+<body>
+
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <header>
+    <nav id="navbar">
+      <a href="#inicio" class="nav-logo">
+        <img src="images/uploads/logo-navbar.png" alt="Conception Coffee Logo" class="nav-logo-img">
+        <span class="nav-logo-text">CONCEPTION COFFEE</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li class="nav-close-item">
+          <button class="nav-close" id="navClose" aria-label="Cerrar menú">✕</button>
+        </li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#ejecutivo">Menú Ejecutivo</a></li>
+        <li><a href="#sucursales">Ubicación</a></li>
+      </ul>
+
+      <a href="#contacto" class="nav-cta" id="navCta">Contáctanos</a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir Menú">
+        ☰
+      </button>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main>
+
+    <!-- HERO / SLIDER PRINCIPAL -->
+    <section class="hero" id="inicio">
+      <div class="slider-track" id="slider-track-cliente"></div>
+
+      <!-- Flechas de navegación -->
+      <button class="slider-arrow slider-prev" onclick="sliderMove(-1)" aria-label="Anterior">&#8592;</button>
+      <button class="slider-arrow slider-next" onclick="sliderMove(1)" aria-label="Siguiente">&#8594;</button>
+
+      <!-- Contenido superpuesto -->
+      <div class="hero-content">
+
+        <p class="hero-tag">
+          Restaurante
+        </p>
+
+        <h1 class="hero-title">
+          Conception Coffee
+        </h1>
+
+        <p class="hero-sub">
+          Sabores para compartir,
+          momentos para recordar.
+        </p>
+
+        <div class="hero-btns">
+
+            <a
+                href="#ejecutivo"
+                class="btn-primary">
+                Ver menú ejecutivo
+            </a>
+
+            <a
+                href="#sucursales"
+                class="btn-outline">
+                Visítanos
+            </a>
+
+        </div>
+
+      </div>
+
+      <!-- Puntos Indicadores -->
+      <div class="slider-dots" id="sliderDots"></div>
+
+      <div class="hero-scroll">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- TARJETAS RÁPIDAS -->
+    <section class="quick-links">
+      <article class="quick-card reveal">
+        <h3>Especialidades</h3>
+        <p>Lo mejor de nuestra cocina esta semana.</p>
+        <a href="#ejecutivo">Descubrir</a>
+      </article>
+
+      <article class="quick-card reveal reveal-delay">
+        <h3>Visítanos</h3>
+        <p>Conoce nuestras instalaciones y ubicaciones.</p>
+        <a href="#sucursales">Ver Sedes</a>
+      </article>
+
+      <article class="quick-card reveal reveal-delay-2">
+        <h3>Eventos & Catering</h3>
+        <p>Haz de tu evento algo especial con Conception Coffee.</p>
+        <a href="#contacto">Cotizar</a>
+      </article>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section class="about" id="nosotros">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <p class="section-tag">Nuestra historia</p>
+            <h2 class="section-title">Más que un café,<br><span>una experiencia</span></h2>
+            <div class="section-line"></div>
+            <p>Conception Coffee nació con una visión simple: crear un espacio donde cada visita se convierta en un
+              momento especial. Desde nuestras puertas en Escuintla, hemos construido un lugar cálido y acogedor que ya
+              sientes tuyo desde la primera vez que entras.</p>
+            
+            <blockquote class="about-quote">
+              <p>"Advertencia: una vez que pruebas, vas a volver."</p>
+            </blockquote>
+
+            <p>Nuestro menú combina bebidas artesanales, alimentos frescos y combinaciones únicas, todo preparado con
+              cuidado y pasión por nuestro equipo.</p>
+
+            <div class="about-stats reveal reveal-delay-2">
+              <div class="stat">
+                <div class="stat-num">2024</div>
+                <div class="stat-label">Desde</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">+30</div>
+                <div class="stat-label">Productos</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Calidad</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-visual reveal reveal-delay">
+            <div class="about-img-box">
+              <img src="images/uploads/local.png" alt="Interior Conception Coffee Escuintla">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENÚ EJECUTIVO -->
+    <section class="ejecutivo" id="ejecutivo">
+      <div class="container">
+        <div class="reveal">
+          <h2 class="section-title">Menú Ejecutivo <span></span></h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="reveal reveal-delay">
+          <div class="ejecutivo-meta" id="ejecutivoFecha">📅 Cargando...</div>
+          <div class="menu-info-bar" id="ejecutivoIncludes">
+            <span>Todos nuestros platillos incluyen: <strong>Refresco natural, tortillas y fruta de temporada</strong></span>
+          </div>
+
+          <div
+            class="ejecutivo-contacto"
+            id="ejecutivoContacto">
+          </div>
+
+          <div class="menu-hoy" id="menuHoy"><!-- JS render --></div>
+        </div>
+        
+        <div class="dias-grid reveal reveal-delay-2" id="diasGrid"><!-- JS render --></div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================
+      FAVORITOS DE LA CASA
+       ====================================================== -->
+    <section
+      class="featured"
+      id="favoritos"
+      aria-labelledby="favoritosTitulo"
+    >
+
+      <div class="container">
+
+          <p class="section-tag reveal">
+              Recomendados
+          </p>
+
+          <div class="featured-heading">
+
+              <div>
+
+                  <h2
+                    class="section-title reveal reveal-delay"
+                    id="favoritosTitulo"
+                  >
+                    Favoritos de la <span>Casa</span>
+                  </h2>
+
+                  <div
+                    class="section-line"
+                    aria-hidden="true"
+                  ></div>
+
+              </div>
+
+
+              <a
+                href="menu.html"
+                class="featured-carta-link reveal"
+              >
+                Explorar La Carta
+                <span aria-hidden="true">→</span>
+              </a>
+
+          </div>
+
+
+          <!-- CATEGORÍAS DINÁMICAS -->
+          <div
+            class="featured-tabs reveal"
+            aria-label="Filtrar favoritos por categoría"
+          >
+          </div>
+
+
+          <!-- PRODUCTOS DESTACADOS -->
+          <div class="featured-carousel-wrapper reveal">
+
+            <div
+                class="featured-carousel"
+                id="carousel-destacados"
+                aria-live="polite"
+            >
+            </div>
+
+          </div>
+
+
+          <!-- ENLACE MÓVIL -->
+          <div class="featured-mobile-link">
+
+            <a
+                href="menu.html"
+                class="featured-carta-link"
+            >
+                Explorar La Carta
+                <span aria-hidden="true">→</span>
+            </a>
+
+          </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ======================================================
+      SUCURSALES
+      ====================================================== -->
+    <section
+      class="branches"
+      id="sucursales"
+      aria-labelledby="sucursalesTitulo"
+    >
+
+      <div class="container">
+
+          <!-- REDES SOCIALES -->
+          <p class="section-tag">
+              Síguenos
+          </p>
+
+          <div
+            class="social-header reveal"
+            aria-label="Redes sociales de Conception Coffee"
+          >
+
+            <a
+                href="https://www.instagram.com/restauranteconception"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon"
+                aria-label="Instagram de Conception Coffee"
+                title="Instagram"
+            >
+                <i
+                    class="fab fa-instagram"
+                    aria-hidden="true"
+                ></i>
+            </a>
+
+
+            <a
+                href="https://www.facebook.com/people/Restaurante-Conception-Coffee/61587045759034/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon"
+                aria-label="Facebook de Conception Coffee"
+                title="Facebook"
+            >
+                <i
+                    class="fab fa-facebook-f"
+                    aria-hidden="true"
+                ></i>
+            </a>
+
+
+            <a
+                href="https://wa.me/50259878068"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon"
+                aria-label="WhatsApp de Conception Coffee"
+                title="WhatsApp"
+            >
+                <i
+                    class="fab fa-whatsapp"
+                    aria-hidden="true"
+                ></i>
+            </a>
+
+          </div>
+
+
+          <!-- TÍTULO -->
+          <h2
+            class="section-title reveal reveal-delay"
+            id="sucursalesTitulo"
+          >
+            Visítanos
+            <span></span>
+          </h2>
+
+          <div
+            class="section-line"
+            aria-hidden="true"
+          ></div>
+
+
+          <!-- CONTENIDO -->
+          <div class="branches-layout">
+
+            <!-- ==========================================
+                 INFORMACIÓN DE SUCURSAL
+                 ========================================== -->
+            <div
+                class="branch-card-container reveal reveal-delay-2"
+            >
+
+                <article
+                    id="sucursalCardInfo"
+                    class="branch-card"
+                    aria-live="polite"
+                >
+                    <p>
+                        Cargando información de sucursales...
+                    </p>
+                </article>
+
+
+                <!-- NAVEGACIÓN ENTRE SUCURSALES -->
+                <div
+                    class="slider-controls"
+                    aria-label="Selector de sucursal"
+                >
+
+                    <button
+                        type="button"
+                        id="btnPrevBranch"
+                        class="btn-slider"
+                        aria-label="Ver sucursal anterior"
+                    >
+                        <span aria-hidden="true">
+                            ←
+                        </span>
+
+                        Anterior
+                    </button>
+
+
+                    <span
+                        id="sliderCounter"
+                        class="slider-counter"
+                        aria-live="polite"
+                    >
+                        1 de 1
+                    </span>
+
+
+                    <button
+                        type="button"
+                        id="btnNextBranch"
+                        class="btn-slider"
+                        aria-label="Ver siguiente sucursal"
+                    >
+                        Siguiente
+
+                        <span aria-hidden="true">
+                            →
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                 MAPA / UBICACIÓN
+                 ========================================== -->
+            <div
+                class="branch-map-card reveal reveal-delay-3"
+            >
+
+                <iframe
+                    id="mapaDinamico"
+                    src=""
+                    title="Ubicación de Conception Coffee"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+
+            </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================
+     EXPERIENCIA & CONTACTO
+     ====================================================== -->
+    <section
+      class="contact"
+      id="contacto"
+      aria-labelledby="experienciaTitulo"
+    >
+
+      <div class="container">
+
+        <p class="section-tag reveal">
+            Vive la experiencia
+        </p>
+
+        <h2
+            class="section-title reveal reveal-delay"
+            id="experienciaTitulo"
+        >
+            Visítanos y vive la experiencia
+            <span>Conception Coffee</span>
+        </h2>
+
+        <div
+            class="section-line reveal reveal-delay-2"
+            aria-hidden="true"
+        ></div>
+
+
+        <div class="contact-grid">
+
+            <!-- ==========================================
+                 INFORMACIÓN
+                 ========================================== -->
+            <div class="contact-info">
+
+                <p
+                    class="contact-intro reveal reveal-delay-3"
+                >
+                    Disfruta de un ambiente acogedor,
+                    café de calidad y platillos preparados
+                    con dedicación. Te esperamos para
+                    compartir momentos especiales.
+                </p>
+
+
+                <article class="experience-item reveal">
+
+                    <div
+                        class="experience-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+
+                    <div>
+
+                        <h3 class="experience-title">
+                            Ambiente acogedor
+                        </h3>
+
+                        <p class="experience-text">
+                            Espacios diseñados para compartir
+                            con amigos, familia y compañeros.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="experience-item reveal reveal-delay"
+                >
+
+                    <div
+                        class="experience-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-solid fa-champagne-glasses"></i>
+                    </div>
+
+                    <div>
+
+                        <h3 class="experience-title">
+                            Eventos especiales
+                        </h3>
+
+                        <p class="experience-text">
+                            Celebraciones, reuniones y
+                            experiencias personalizadas para
+                            cada ocasión.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article
+                    class="experience-item reveal reveal-delay-2"
+                >
+
+                    <div
+                        class="experience-icon"
+                        aria-hidden="true"
+                    >
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+
+                    <div>
+
+                        <h3 class="experience-title">
+                            Café &amp; Restaurante
+                        </h3>
+
+                        <p class="experience-text">
+                            Desayunos, almuerzos, cenas y
+                            bebidas preparadas con calidad
+                            y dedicación.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <a
+                    href="https://wa.me/50259878068?text=Hola,%20me%20gustaría%20más%20información%20sobre%20Conception%20Coffee."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="experience-cta"
+                >
+                    Contactar por WhatsApp
+
+                    <i
+                        class="fab fa-whatsapp"
+                        aria-hidden="true"
+                    ></i>
+
+                    <span aria-hidden="true">
+                        →
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ==========================================
+                 GALERÍA DE EXPERIENCIAS
+                 ========================================== -->
+            <div
+                class="contact-slider reveal reveal-delay-3"
+                aria-label="Galería de experiencias en Conception Coffee"
+            >
+
+                <div
+                    class="experiencias-slider"
+                    id="experiencias-track-cliente"
+                    aria-live="polite"
+                ></div>
+
+
+                <div class="experience-slider-controls">
+
+                    <button
+                        type="button"
+                        class="slider-arrow slider-prev"
+                        id="experienciaPrev"
+                        aria-label="Ver experiencia anterior"
+                    >
+                        ←
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="slider-arrow slider-next"
+                        id="experienciaNext"
+                        aria-label="Ver siguiente experiencia"
+                    >
+                        →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ======================================================
+     PIE DE PÁGINA
+     ====================================================== -->
+  <footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-grid">
+
+            <!-- MARCA -->
+            <div class="footer-brand reveal">
+
+                <a
+                    href="#inicio"
+                    class="footer-brand-link"
+                    aria-label="Volver al inicio de Conception Coffee"
+                >
+                    <img
+                        src="images/uploads/logo-navbar2.png"
+                        alt=""
+                        class="footer-logo"
+                    >
+
+                    <span class="footer-brand-name">
+                        CONCEPTION COFFEE
+                    </span>
+                </a>
+
+
+                <p>
+                    Conception Coffee nació con una visión simple: crear un espacio
+                    donde cada visita se convierta en un momento especial. Hemos
+                    construido lugares cálidos y acogedores que se sienten tuyos
+                    desde la primera vez que entras.
+                </p>
+
+
+                <div
+                    class="footer-social"
+                    aria-label="Redes sociales de Conception Coffee"
+                >
+
+                    <a
+                        href="https://www.instagram.com/restauranteconception"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram de Conception Coffee"
+                    >
+                        <i
+                            class="fab fa-instagram"
+                            aria-hidden="true"
+                        ></i>
+                    </a>
+
+
+                    <a
+                        href="https://www.facebook.com/people/Restaurante-Conception-Coffee/61587045759034/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook de Conception Coffee"
+                    >
+                        <i
+                            class="fab fa-facebook-f"
+                            aria-hidden="true"
+                        ></i>
+                    </a>
+
+
+                    <a
+                        href="https://wa.me/50259878068"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="WhatsApp de Conception Coffee"
+                    >
+                        <i
+                            class="fab fa-whatsapp"
+                            aria-hidden="true"
+                        ></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVEGACIÓN -->
+            <div
+                class="footer-col footer-navigation reveal reveal-delay"
+            >
+
+                <h2>Explora</h2>
+
+                <nav
+                  aria-label="Navegación del pie de página"
+                >
+
+                  <ul>
+
+                    <li>
+                      <a href="#nosotros">
+                        Nosotros
+                      </a>
+                    </li>
+
+                    <li>
+                      <a href="#ejecutivo">
+                        Menú Ejecutivo
+                      </a>
+                    </li>
+
+                    <li>
+                      <a href="#favoritos">
+                        Favoritos de la Casa
+                      </a>
+                    </li>
+
+                    <li>
+                      <a href="menu.html">
+                        La Carta
+                      </a>
+                    </li>
+
+                    <li>
+                      <a href="#sucursales">
+                        Ubicación
+                      </a>
+                    </li>
+
+                  </ul>
+
+                </nav>
+
+            </div>
+
+
+            <!-- CONTACTO -->
+            <div class="footer-col reveal reveal-delay-2">
+
+                <h2>Contacto</h2>
+
+                <ul>
+
+                    <li>
+                        <a href="tel:+50259878068">
+                            +502 5987-8068
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            href="https://wa.me/50259878068"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Escríbenos por WhatsApp
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#sucursales">
+                            Ver sucursales
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 Conception Coffee ·
+                Todos los derechos reservados
+            </p>
+
+            <p>
+                Café, cocina y experiencias para compartir en Guatemala.
+            </p>
+
+        </div>
+
+    </div>
+
+  </footer>
+
+  
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a
+    href="https://wa.me/50259878068"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contactar a Conception Coffee por WhatsApp"
+  >
+    <i
+        class="fab fa-whatsapp"
+        aria-hidden="true"
+    ></i>
+  </a>
+
+<!-- ========================================================= -->
+<!-- MÓDULO HERO -->
+<!-- ========================================================= -->
+
+<script src="js/hero/heroCliente.js"></script>
+
+<!-- ========================================================= -->
+<!-- MÓDULO PLANNER -->
+<!-- ========================================================= -->
+
+<script src="js/planner/plannerPublico.js"></script>
+
+<!-- ========================================================= -->
+<!-- MÓDULO FAVORITOS -->
+<!-- ========================================================= -->
+
+<script src="js/favoritos/favoritos.js"></script>
+
+<!-- ========================================================= -->
+<!-- MÓDULO EXPERIENCIAS -->
+<!-- ========================================================= -->
+
+<script src="js/experiencias/experienciasCliente.js"></script>
+
+<!-- ========================================================= -->
+<!-- MÓDULO SUCURSALES -->
+<!-- ========================================================= -->
+
+<script src="js/sucursales/sucursalesPublico.js"></script>
+
+<!-- ========================================================= -->
+<!-- BOOTSTRAP GENERAL DEL SISTEMA -->
+<!-- ========================================================= -->
+
+  
+<script src="js/main.js"></script>
+
+</body>
+</html>

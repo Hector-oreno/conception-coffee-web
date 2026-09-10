@@ -1,0 +1,1831 @@
+/* ==========================================================================
+   CONCEPTION COFFEE - ESTILOS EDITORIALES PREMIUM (MENÚ CARTA)
+   ========================================================================== */
+
+:root {
+    --bg-cream: #f6f3ed;
+    --bg-card: #ece6da;
+    --text-primary: #2a221b;
+    --text-muted: #73685d;
+    --accent-gold: #b38b59;
+    --border-color: #e2dacd;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-cream);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- HEADER PRINCIPAL --- */
+.site-header {
+    padding: 2rem 5%;
+    background-color: var(--bg-cream);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.logo-circle {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--text-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+}
+
+.btn-volver {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+.btn-volver:hover {
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   HERO EDITORIAL
+   ========================================================================== */
+
+.menu-editorial-container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding:
+        1.25rem
+        5%
+        4rem;
+}
+
+
+.editorial-hero {
+    margin-bottom: 1.15rem;
+}
+
+.editorial-hero-main {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(240px, 320px);
+
+    align-items: center;
+
+    gap:
+        clamp(3rem, 8vw, 7rem);
+}
+
+
+.editorial-hero-copy {
+    min-width: 0;
+}
+
+
+
+.meta-location {
+    margin-bottom: .85rem;
+
+    color: var(--text-muted);
+
+    font-size: .68rem;
+
+    letter-spacing: 2.5px;
+
+    text-transform: uppercase;
+}
+
+
+.editorial-title {
+    margin-bottom: 1.15rem;
+
+    font-family: var(--font-serif);
+
+    font-size:
+        clamp(3.5rem, 7vw, 5.5rem);
+
+    font-weight: 400;
+
+    font-style: italic;
+
+    line-height: .95;
+}
+
+
+.editorial-subtitle {
+    max-width: 500px;
+
+    color: var(--text-muted);
+
+    font-size: .88rem;
+
+    font-weight: 300;
+
+    line-height: 1.65;
+}
+
+
+/* ==========================================================================
+   SELECTOR DE SUCURSAL
+   ========================================================================== */
+
+.sucursal-selector-container {
+    display: block;
+
+    margin: 0;
+
+    transform: translateY(-.35rem);
+
+    padding-bottom:
+        .25rem;
+}
+
+
+.sucursal-label {
+    display: block;
+
+    margin-bottom:
+        .35rem;
+
+    padding: 0;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        .58rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .18em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.select-wrapper {
+    position: relative;
+
+    min-width: 240px;
+}
+
+
+.sucursal-select {
+    width: 100%;
+
+    appearance: none;
+
+    -webkit-appearance: none;
+
+    padding:
+        .55rem
+        1.8rem
+        .55rem
+        0;
+
+    background: transparent;
+
+    border: 0;
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    border-radius: 0;
+
+    color: var(--text-primary);
+
+    font-family: var(--font-sans);
+
+    font-size: .82rem;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease;
+}
+
+
+.sucursal-select:hover,
+.sucursal-select:focus {
+    border-color: var(--text-primary);
+}
+
+
+.select-arrow {
+    position: absolute;
+
+    right: 0;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: var(--text-muted);
+
+    font-size: .65rem;
+
+    pointer-events: none;
+}
+
+
+/* ==========================================================
+   ESPECIAL DEL DÍA — EDITORIAL COMPACTO
+   ========================================================== */
+
+.daily-special {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    grid-template-areas:
+        "meta actions"
+        "content actions";
+
+    column-gap:
+        4rem;
+
+    row-gap:
+        .75rem;
+
+    align-items:
+        center;
+
+    margin:
+        0
+        0
+        2.75rem;
+
+    padding:
+        1.35rem
+        0;
+
+    border-top:
+        1px solid var(--border-color);
+
+    border-bottom:
+        1px solid var(--border-color);
+}
+
+
+.daily-special-top {
+    grid-area: meta;
+
+    display: block;
+
+    margin: 0;
+}
+
+
+.daily-special-top > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: .8rem;
+}
+
+
+.daily-special-eyebrow {
+    color:
+        var(--accent-gold);
+
+    font-size:
+        .6rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .18em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.daily-special-date {
+    color:
+        var(--text-muted);
+
+    font-size:
+        .65rem;
+}
+
+
+.daily-special-status {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    margin: -1px;
+    padding: 0;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+.daily-special-content {
+    grid-area: content;
+
+    max-width: none;
+}
+
+
+.daily-special-main {
+    display: block;
+}
+
+
+.daily-special-title {
+    margin: 0;
+
+    color:
+        var(--text-primary);
+
+    font-family:
+        var(--font-serif);
+
+    font-size:
+        clamp(1.9rem, 3vw, 2.35rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        1;
+}
+
+
+.daily-special-sides {
+    margin:
+        .4rem
+        0
+        0;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        .75rem;
+}
+
+
+.daily-special-price {
+    margin-top:
+        .5rem;
+
+    font-family:
+        var(--font-serif);
+
+    font-size:
+        1.4rem;
+}
+
+
+.daily-special-actions {
+    grid-area: actions;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+
+    gap: .55rem;
+
+    margin: 0;
+}
+
+.daily-special-open,
+.daily-special-week {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: .55rem;
+
+    padding:
+        .45rem
+        0;
+
+    background: transparent;
+
+    border: 0;
+
+    border-bottom:
+        1px solid rgba(42, 34, 27, .18);
+
+    border-radius: 0;
+
+    color: var(--text-primary);
+
+    font-family: var(--font-sans);
+
+    font-size: .68rem;
+
+    font-weight: 500;
+
+    letter-spacing: .04em;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        color .2s ease,
+        border-color .2s ease;
+}
+
+
+.daily-special-open:hover,
+.daily-special-week:hover {
+    color: var(--accent-gold);
+
+    border-color: var(--accent-gold);
+}
+
+
+.daily-special-open:focus-visible,
+.daily-special-week:focus-visible {
+    outline:
+        2px solid var(--accent-gold);
+
+    outline-offset: 4px;
+}
+
+
+.daily-special-loading {
+    margin: 0;
+
+    color: var(--text-muted);
+
+    font-size: .8rem;
+}
+
+
+/* ==========================================================================
+   LAYOUT EDITORIAL
+   ========================================================================== */
+
+.editorial-layout {
+    display: grid;
+
+    grid-template-columns:
+        210px
+        minmax(0, 1fr);
+
+    gap: 3.25rem;
+
+    align-items: start;
+}
+
+
+.sidebar-index {
+    min-width: 0;
+
+    position: sticky;
+
+    top: 1.5rem;
+
+    align-self: start;
+}
+
+
+.sticky-nav {
+    position: static;
+}
+
+
+.index-menu {
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.index-menu li {
+    margin-bottom: 1.1rem;
+}
+
+
+.index-menu a {
+    display: flex;
+
+    align-items: center;
+
+    gap: .75rem;
+
+    color: var(--text-muted);
+
+    font-size: .72rem;
+
+    letter-spacing: 2px;
+
+    text-decoration: none;
+
+    transition:
+        color .2s ease;
+}
+
+
+.index-menu a.active,
+.index-menu a:hover {
+    color: var(--text-primary);
+
+    font-weight: 600;
+}
+
+
+.index-menu .num {
+    flex-shrink: 0;
+
+    font-size: .62rem;
+
+    opacity: .6;
+}
+
+
+/* ==========================================================================
+   CATÁLOGO
+   ========================================================================== */
+
+.catalog-content {
+    min-width: 0;
+}
+
+
+.category-block {
+    margin-bottom: 3.25rem;
+
+    scroll-margin-top: 2rem;
+}
+
+
+.category-header {
+    display: flex;
+
+    align-items: baseline;
+
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    margin-bottom: 1.6rem;
+
+    padding-bottom: .5rem;
+
+    border-bottom:
+        1px solid var(--text-primary);
+}
+
+
+.category-header h2 {
+    margin: 0;
+
+    font-family: var(--font-serif);
+
+    font-size:
+        clamp(2.15rem, 4vw, 2.65rem);
+
+    font-weight: 400;
+
+    line-height: 1;
+}
+
+
+.category-sub {
+    color: var(--text-muted);
+
+    font-size: .62rem;
+
+    letter-spacing: 2px;
+}
+
+
+/* ==========================================================================
+   PRODUCTOS
+   ========================================================================== */
+
+.products-list {
+    width: 100%;
+}
+
+
+.product-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 1.25rem;
+
+    margin-bottom: 1.4rem;
+
+    padding-bottom: 1.4rem;
+
+    border-bottom:
+        1px solid var(--border-color);
+}
+
+
+.product-item:last-child {
+    margin-bottom: 0;
+}
+
+
+.product-icon-box {
+    width: 64px;
+
+    height: 64px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background:
+        rgba(0, 0, 0, .025);
+}
+
+
+.product-img-thumb {
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.product-details {
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+.product-head {
+    display: flex;
+
+    align-items: baseline;
+
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    margin-bottom: .4rem;
+}
+
+
+.product-title {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-family: var(--font-serif);
+
+    font-size: 1.45rem;
+
+    font-weight: 600;
+
+    line-height: 1.15;
+}
+
+
+.product-price {
+    flex-shrink: 0;
+
+    color: var(--text-primary);
+
+    font-family: var(--font-serif);
+
+    font-size: 1.3rem;
+
+    white-space: nowrap;
+}
+
+
+.currency {
+    margin-right: 2px;
+
+    font-size: .72em;
+
+    vertical-align: super;
+}
+
+
+.product-description {
+    max-width: 650px;
+
+    margin:
+        0
+        0
+        .65rem;
+
+    color: var(--text-muted);
+
+    font-size: .8rem;
+
+    line-height: 1.6;
+}
+
+
+.product-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: .5rem;
+}
+
+
+.product-tags:empty {
+    display: none;
+}
+
+
+.tag {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding:
+        .2rem
+        .6rem;
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius: 999px;
+
+    color: var(--text-muted);
+
+    font-size: .56rem;
+
+    letter-spacing: 1.4px;
+
+    text-transform: uppercase;
+}
+
+
+/* ==========================================================================
+   VISOR DEL MENÚ EJECUTIVO
+   ========================================================================== */
+
+.daily-menu-open {
+    overflow: hidden;
+}
+
+
+.daily-menu-overlay[hidden] {
+    display: none;
+}
+
+
+.daily-menu-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 2rem;
+
+    opacity: 0;
+
+    transition:
+        opacity .22s ease;
+}
+
+
+.daily-menu-overlay.is-open {
+    opacity: 1;
+}
+
+
+.daily-menu-backdrop {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(28, 22, 18, .62);
+
+    backdrop-filter:
+        blur(6px);
+}
+
+
+.daily-menu-dialog {
+    position: relative;
+
+    z-index: 1;
+
+    width:
+        min(760px, 100%);
+
+    max-height:
+        calc(100vh - 4rem);
+
+    overflow-y: auto;
+
+    background:
+        var(--bg-cream);
+
+    box-shadow:
+        0 30px 80px
+        rgba(0, 0, 0, .22);
+
+    transform:
+        translateY(14px);
+
+    transition:
+        transform .22s ease;
+}
+
+
+.daily-menu-overlay.is-open
+.daily-menu-dialog {
+    transform:
+        translateY(0);
+}
+
+
+.daily-menu-dialog-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        1rem
+        1.25rem;
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        .62rem;
+
+    letter-spacing:
+        .18em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.daily-menu-close {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 0;
+
+    background:
+        transparent;
+
+    border:
+        1px solid var(--border-color);
+
+    border-radius: 50%;
+
+    color:
+        var(--text-primary);
+
+    font-family:
+        var(--font-serif);
+
+    font-size:
+        1.5rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+.daily-menu-template {
+    padding: 0;
+}
+
+
+.daily-menu-dialog-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    padding:
+        1rem
+        1.25rem;
+
+    border-top:
+        1px solid var(--border-color);
+}
+
+
+.daily-menu-dialog-footer a {
+    color:
+        var(--text-primary);
+
+    font-size:
+        .68rem;
+
+    text-decoration: none;
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    padding-bottom:
+        .3rem;
+}
+
+
+.menu-footer {
+    border-top:
+        1px solid var(--border-color);
+
+    background:
+        var(--bg-cream);
+}
+
+.menu-footer-inner {
+    max-width:
+        1200px;
+
+    margin:
+        0 auto;
+
+    padding:
+        2rem
+        5%;
+
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        space-between;
+
+    gap:
+        2rem;
+}
+
+.menu-footer strong {
+    color:
+        var(--text-primary);
+
+    font-size:
+        .62rem;
+
+    font-weight:
+        600;
+
+    letter-spacing:
+        .18em;
+}
+
+.menu-footer p {
+    margin-top:
+        .35rem;
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        .65rem;
+}
+
+.menu-footer a {
+    padding-bottom:
+        .25rem;
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        .65rem;
+
+    text-decoration:
+        none;
+}
+
+
+/* ==========================================================================
+   PLANTILLA BASE
+   ========================================================================== */
+
+.daily-menu-template
+.menu-plantilla {
+    width: 100%;
+
+    min-height: 460px;
+
+    background:
+        var(--menu-fondo);
+
+    color:
+        var(--menu-primario);
+}
+
+
+.daily-menu-template
+.menu-plantilla-imagen {
+    overflow: hidden;
+}
+
+
+.daily-menu-template
+.menu-plantilla-imagen img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.daily-menu-template
+.menu-plantilla-contenido {
+    padding:
+        2.5rem;
+}
+
+
+.daily-menu-template
+.menu-plantilla-eyebrow {
+    display: block;
+
+    margin-bottom:
+        .8rem;
+
+    color:
+        var(--menu-acento);
+
+    font-family:
+        var(--font-sans);
+
+    font-size:
+        .62rem;
+
+    font-weight: 600;
+
+    letter-spacing:
+        .2em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.daily-menu-template
+.menu-plantilla h3 {
+    max-width:
+        520px;
+
+    margin: 0;
+
+    color:
+        var(--menu-primario);
+
+    font-family:
+        var(--font-serif);
+
+    font-size:
+        clamp(2.7rem, 7vw, 4.6rem);
+
+    font-weight:
+        500;
+
+    line-height:
+        .92;
+}
+
+
+.daily-menu-template
+.menu-plantilla-precio {
+    margin-top:
+        1rem;
+
+    font-family:
+        var(--font-serif);
+
+    font-size:
+        1.8rem;
+}
+
+
+.daily-menu-template
+.menu-plantilla-acomp {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap:
+        .55rem
+        1.5rem;
+
+    margin-top:
+        1.5rem;
+
+    padding-top:
+        1rem;
+
+    border-top:
+        1px solid
+        rgba(42, 34, 27, .12);
+
+    color:
+        var(--text-muted);
+
+    font-size:
+        .78rem;
+}
+
+
+.daily-menu-template
+.menu-plantilla-acomp span +
+span::before {
+    content: "·";
+
+    margin-right:
+        1.5rem;
+
+    color:
+        var(--menu-acento);
+}
+
+
+.daily-menu-template
+.menu-plantilla-clasica.menu-con-foto {
+    display: grid;
+
+    grid-template-columns:
+        1.05fr
+        .95fr;
+
+    min-height:
+        500px;
+}
+
+
+.daily-menu-template
+.menu-plantilla-clasica
+.menu-plantilla-imagen {
+    min-height:
+        500px;
+}
+
+
+.daily-menu-template
+.menu-plantilla-clasica
+.menu-plantilla-contenido {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE — TABLET
+   ========================================================================== */
+
+@media (max-width: 850px) {
+
+    .site-header {
+        padding:
+            1.15rem
+            5%;
+    }
+
+
+    .menu-editorial-container {
+        padding:
+            1rem
+            5%
+            3rem;
+    }
+
+
+    .editorial-hero {
+        margin-bottom:
+            1.5rem;
+    }
+
+
+    .editorial-title {
+        font-size:
+            clamp(3.4rem, 12vw, 5rem);
+    }
+
+
+    .sucursal-selector-container {
+        
+        transform: none;
+        justify-content:
+            flex-start;
+
+        margin-bottom:
+            1.25rem;
+    }
+
+
+    .select-wrapper {
+        min-width:
+            min(280px, 70vw);
+    }
+
+
+    .daily-special {
+        margin-bottom:
+            2.5rem;
+    }
+
+
+    .editorial-layout {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            2rem;
+    }
+
+
+    .sticky-nav {
+        position: relative;
+
+        top: auto;
+
+        margin: 0;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+    }
+
+
+    .sticky-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+
+    .index-menu {
+        display: flex;
+
+        width: max-content;
+
+        gap: 1.75rem;
+
+        padding-bottom:
+            .6rem;
+    }
+
+
+    .index-menu li {
+        margin: 0;
+    }
+
+
+    .index-menu a {
+        white-space: nowrap;
+    }
+
+
+    .editorial-hero-main {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            1.5rem;
+    }
+
+
+    .sucursal-selector-container {
+        max-width:
+            320px;
+
+        padding-bottom: 0;
+    }
+
+
+    .sidebar-index {
+        position: static;
+
+        top: auto;
+
+        align-self: auto;
+    }
+
+
+    .sticky-nav {
+        position: relative;
+
+        top: auto;
+
+        margin: 0;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+    }
+
+
+
+}
+
+
+/* ==========================================================================
+   RESPONSIVE — MÓVIL
+   ========================================================================== */
+
+@media (max-width: 560px) {
+
+    .site-header {
+        padding:
+            1rem
+            1.25rem;
+    }
+
+
+    .brand-logo {
+        font-size:
+            .72rem;
+
+        letter-spacing:
+            1.5px;
+    }
+
+
+    .logo-circle {
+        width: 28px;
+
+        height: 28px;
+    }
+
+
+    .btn-volver {
+        font-size:
+            .62rem;
+
+        letter-spacing:
+            1px;
+    }
+
+
+    .menu-editorial-container {
+        padding:
+            .85rem
+            1.25rem
+            3rem;
+    }
+
+
+    .meta-location {
+        margin-bottom:
+            .65rem;
+
+        font-size:
+            .58rem;
+
+        letter-spacing:
+            2px;
+    }
+
+
+    .editorial-title {
+        margin-bottom:
+            .9rem;
+
+        font-size:
+            clamp(3.4rem, 18vw, 4.6rem);
+    }
+
+
+    .editorial-subtitle {
+        max-width: 100%;
+
+        font-size:
+            .78rem;
+
+        line-height:
+            1.65;
+    }
+
+
+    /* SELECTOR */
+
+    .sucursal-selector-container {
+        display: block;
+
+        margin-top:
+            1.5rem;
+
+        margin-bottom:
+            1.25rem;
+    }
+
+
+    .sucursal-label {
+        display: block;
+
+        padding: 0;
+
+        margin-bottom:
+            .35rem;
+    }
+
+
+    .select-wrapper {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+
+    /* ESPECIAL */
+
+    .daily-special {
+        display: block;
+
+        padding:
+            1.25rem
+            0;
+    }
+
+
+    .daily-special-top {
+        align-items:
+            flex-start;
+
+        gap:
+            .75rem;
+
+        margin-bottom:
+            1rem;
+    }
+
+
+    .daily-special-top > div {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+        gap:
+            .25rem;
+    }
+
+
+    .daily-special-status {
+        text-align:
+            right;
+    }
+
+
+    .daily-special-main {
+        align-items:
+            flex-start;
+
+        gap:
+            1rem;
+    }
+
+
+    
+    .daily-special-price {
+        font-size:
+            1.4rem;
+    }
+
+
+    .daily-special-title {
+        max-width: 100%;
+
+        font-size:
+            2rem;
+
+        line-height:
+            1;
+    }
+
+
+    .daily-special-actions {
+        display: flex;
+
+        flex-direction: row;
+
+        align-items: center;
+
+        justify-content: flex-start;
+
+        flex-wrap: wrap;
+
+        gap:
+            .5rem
+            1.5rem;
+
+        margin-top:
+            1.25rem;
+    }
+
+
+    .daily-special-open,
+    .daily-special-week {
+        font-size: .64rem;
+    }
+
+
+
+    /* CATEGORÍAS */
+
+    .category-block {
+        margin-bottom:
+            2.5rem;
+    }
+
+
+    .category-header {
+        margin-bottom:
+            1.25rem;
+    }
+
+
+    .category-header h2 {
+        font-size:
+            2.1rem;
+    }
+
+
+    /* PRODUCTOS */
+
+    .product-item {
+        gap:
+            .9rem;
+
+        margin-bottom:
+            1.15rem;
+
+        padding-bottom:
+            1.15rem;
+    }
+
+
+    .product-icon-box {
+        width: 54px;
+
+        height: 54px;
+    }
+
+
+    .product-head {
+        gap:
+            .75rem;
+    }
+
+
+    .product-title {
+        font-size:
+            1.25rem;
+    }
+
+
+    .product-price {
+        font-size:
+            1.15rem;
+    }
+
+
+    .product-description {
+        font-size:
+            .74rem;
+    }
+
+    .index-menu {
+        gap: 2rem;
+
+        padding:
+            0
+            1.25rem
+            .75rem
+            0;
+    }
+
+    .sticky-nav {
+        width: 100%;
+
+        overflow-x: auto;
+
+        overscroll-behavior-x: contain;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .index-menu a {
+        font-size: .65rem;
+
+        letter-spacing: .14em;
+    }
+
+
+    .menu-footer-inner {
+        padding:
+            1.75rem
+            1.25rem;
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            1rem;
+    }
+
+
+    /* ==========================================================
+    VISOR ESPECIAL DEL DÍA — MÓVIL
+    ========================================================== */
+
+    .daily-menu-overlay {
+        padding: 8px 24px;  
+    }
+
+
+    .daily-menu-dialog {
+        width: 100%;
+
+        max-height:
+            calc(100dvh - 16px);
+    }
+
+
+    .daily-menu-dialog-header {
+        padding:
+            .85rem
+            1rem;
+    }
+
+
+    .daily-menu-template
+    .menu-plantilla {
+        min-height: 0;
+    }
+
+
+    /* CON FOTO */
+
+    .daily-menu-template
+    .menu-plantilla.menu-con-foto {
+        display: block;
+
+        min-height: 0;
+    }
+
+
+    .daily-menu-template
+    .menu-con-foto
+    .menu-plantilla-imagen {
+        width: 100%;
+        height: 260px;
+
+        min-height: 0;
+    }
+
+
+    .daily-menu-template
+    .menu-con-foto
+    .menu-plantilla-contenido {
+        padding:
+            1.5rem
+            1.75rem
+            1.75rem;
+    }
+
+
+    /* SIN FOTO */
+
+    .daily-menu-template
+    .menu-plantilla.menu-sin-foto {
+        min-height: 0;
+    }
+
+
+    .daily-menu-template
+    .menu-sin-foto
+    .menu-plantilla-contenido {
+        min-height: 0;
+
+        padding:
+            2.25rem
+            2rem
+            2.5rem;
+    }
+
+
+    /* TIPOGRAFÍA */
+
+    .daily-menu-template
+    .menu-plantilla h3 {
+        font-size:
+            clamp(2.5rem, 13vw, 3.5rem);
+
+        line-height:
+            .9;
+    }
+
+
+    .daily-menu-template
+    .menu-plantilla-acomp {
+        margin-top:
+            1.25rem;
+
+        padding-top:
+            .9rem;
+    }
+
+
+    .daily-menu-dialog-footer {
+        padding:
+            .85rem
+            1rem;
+    }
+
+
+
+}

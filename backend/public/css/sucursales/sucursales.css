@@ -1,0 +1,158 @@
+/* ==========================================
+   ESTILOS: MÓDULO GESTIÓN DE SUCURSALES
+   ========================================== */
+
+/* Header de la Sección */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-header h2 {
+    font-size: 1.75rem;
+    color: #2c211b; /* Tono café oscuro */
+    margin: 0 0 0.25rem 0;
+    font-family: inherit;
+}
+
+.admin-header p {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Botón Nueva Sucursal */
+.btn-nueva-sucursal {
+    background-color: #3e2723; /* Café corporativo */
+    color: #ffffff;
+    border: none;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-nueva-sucursal:hover {
+    background-color: #5d4037;
+    transform: translateY(-1px);
+}
+
+/* Contenedor de Tabla */
+.tabla-contenedor {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e2ded8;
+    overflow-x: auto; /* Scroll horizontal si es pantalla chica */
+    padding: 0.5rem;
+}
+
+/* Estilos de la Tabla */
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.tabla-admin thead tr {
+    background-color: #fbf9f6;
+    border-bottom: 2px solid #e8e2d9;
+}
+
+.tabla-admin th {
+    padding: 1rem 0.85rem;
+    color: #4a3b32;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tabla-admin td {
+    padding: 1rem 0.85rem;
+    color: #333333;
+    border-bottom: 1px solid #f0ece6;
+    vertical-align: middle;
+}
+
+.tabla-admin tbody tr:hover {
+    background-color: #fcfbfa;
+}
+
+.tabla-admin tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badges de Estado */
+.badge {
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-activa {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #c3e6cb;
+}
+
+.badge-inactiva {
+    background-color: #fbeae8;
+    color: #d9534f;
+    border: 1px solid #f5c6cb;
+}
+
+/* Botones de Acción en la Tabla */
+.btn-accion-tabla {
+    background-color: #f5f3f0;
+    border: 1px solid #dcd6cd;
+    border-radius: 6px;
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.btn-accion-tabla:hover {
+    background-color: #e2ded8;
+    border-color: #beb7ac;
+}
+
+/* Botones de Estado en la Tabla */
+.btn-estado {
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-inactivar {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.btn-inactivar:hover {
+    background-color: #ffcdd2;
+}
+
+.btn-activar {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.btn-activar:hover {
+    background-color: #c8e6c9;
+}

@@ -1,0 +1,178 @@
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS: MÓDULO DE AUDITORÍA Y SEGURIDAD (IPs)
+   ========================================================================== */
+
+/* Bloque para Direcciones IP */
+code.ip-block {
+    background-color: #272c34;
+    color: #61afef;
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* Truncar texto largo de User-Agent (Navegadores) */
+.text-truncate-ua {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    display: block;
+    color: #6c757d;
+    font-size: 0.82rem;
+}
+
+/* Badges de Estado de Sesión */
+.badge-sesion-activa {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    border: 1px solid #c3e6cb;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-sesion-cerrada {
+    background-color: #f1f3f5;
+    color: #495057;
+    border: 1px solid #dee2e6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-sesion-revocada {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Botón para Revocar Sesión a la fuerza */
+.btn-revocar {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-revocar:hover {
+    background-color: #bd2130;
+}
+
+
+/* =========================================================
+   FILTROS DE AUDITORÍA
+   ========================================================= */
+
+.auditoria-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin: 18px 0 14px;
+}
+
+
+.auditoria-filtros {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.auditoria-filtro {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 8px 13px;
+
+    border: 1px solid #dfd4cc;
+    border-radius: 9px;
+
+    background: #fff;
+
+    color: #74503d;
+
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease;
+}
+
+
+.auditoria-filtro:hover {
+    background: #faf5f1;
+
+    border-color: #cdb9ab;
+}
+
+
+.auditoria-filtro.active {
+    background: #6b3d28;
+
+    border-color: #6b3d28;
+
+    color: #fff;
+}
+
+
+.auditoria-resumen {
+    color: #8a786e;
+
+    font-size: 0.76rem;
+    font-weight: 500;
+}
+
+
+.badge-sesion-expirada {
+    display: inline-flex;
+
+    padding: 4px 9px;
+
+    border-radius: 999px;
+
+    background: #eee9e5;
+
+    color: #756961;
+
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+
+@media (max-width: 700px) {
+
+    .auditoria-toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    .auditoria-filtros {
+        flex-wrap: wrap;
+    }
+
+}

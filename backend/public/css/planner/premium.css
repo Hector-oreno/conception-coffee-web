@@ -1,0 +1,392 @@
+/* =========================================================
+   CONCEPTION PREMIUM
+   ========================================================= */
+
+.promo-premium {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 0;
+
+    background:
+        var(--premium-primary, #24150F);
+
+    color: #f8f0e6;
+
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.promo-premium-header {
+    display: flex;
+    align-items: center;
+
+    min-height: 82px;
+
+    padding: 17px 20px;
+
+    border-bottom:
+        1px solid rgba(216, 177, 118, 0.28);
+
+    background:
+        var(--premium-primary, #24150F);
+}
+
+
+.promo-premium-isotipo {
+    width: 45px;
+    height: 45px;
+
+    object-fit: contain;
+
+    margin-right: 11px;
+
+    border-radius: 50%;
+}
+
+
+.promo-premium-brand {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.promo-premium-brand span {
+    font-family: "Playfair Display", serif;
+
+    font-size: 0.92rem;
+    font-weight: 700;
+
+    color: #f8f0e6;
+}
+
+
+.promo-premium-brand small {
+    margin-top: 3px;
+
+    font-size: 0.48rem;
+
+    letter-spacing: 0.2em;
+
+    color:
+        var(--premium-accent, #D8B176);
+}
+
+
+.promo-premium-day {
+    margin-left: auto;
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.2em;
+
+    color:
+        var(--premium-accent, #D8B176);
+}
+
+
+/* =========================================================
+   NOMBRE DEL PLATO
+   ========================================================= */
+
+.promo-premium-heading {
+    padding: 23px 24px 19px;
+
+    text-align: center;
+
+    background:
+        var(--premium-primary, #24150F);
+}
+
+
+.promo-premium-heading > span {
+    font-size: 0.5rem;
+    font-weight: 600;
+
+    letter-spacing: 0.28em;
+
+    color:
+    var(--premium-accent, #D8B176);
+}
+
+
+.promo-premium-heading h2 {
+    margin: 7px 0 5px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1.75rem;
+    line-height: 1;
+
+    color: #fffaf4;
+}
+
+
+.promo-premium-heading p {
+    margin: 0;
+
+    font-size: 0.62rem;
+
+    color: #cbbdb5;
+}
+
+
+/* =========================================================
+   FOTOGRAFÍA
+   ========================================================= */
+
+.promo-premium-visual {
+    position: relative;
+
+    height: 270px;
+
+    margin: 0 18px;
+
+    overflow: hidden;
+
+    border-radius: 150px 150px 14px 14px;
+
+    background: #39251c;
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.28);
+}
+
+
+.promo-premium-photo {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+.promo-premium-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    background:
+        var(--premium-primary, #24150F);
+
+    color:
+        var(--premium-accent, #D8B176);
+}
+
+
+.promo-premium-placeholder-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 70px;
+    height: 70px;
+
+    border:
+        1px solid rgba(216, 177, 118, 0.35);
+
+    border-radius: 50%;
+
+    font-size: 1.6rem;
+}
+
+
+.promo-premium-placeholder span {
+    font-size: 0.55rem;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   PRECIO
+   ========================================================= */
+
+.promo-premium-price {
+    position: absolute;
+
+    right: 15px;
+    bottom: 15px;
+
+    min-width: 94px;
+
+    padding: 10px 14px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 12px;
+
+    background:
+        rgba(36, 21, 15, 0.9);
+
+    text-align: center;
+}
+
+
+.promo-premium-price small {
+    display: block;
+
+    font-size: 0.48rem;
+
+    letter-spacing: 0.15em;
+
+    color:
+        var(--premium-accent, #D8B176);
+}
+
+
+.promo-premium-price strong {
+    display: block;
+
+    margin-top: 2px;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1.45rem;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   DETALLE EDITORIAL
+   ========================================================= */
+
+.promo-premium-detail {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 19px 24px 12px;
+
+    text-align: center;
+}
+
+
+.promo-premium-detail span {
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        rgba(216, 177, 118, 0.35);
+}
+
+
+.promo-premium-detail p {
+    max-width: 175px;
+
+    margin: 0;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 0.62rem;
+    font-style: italic;
+
+    line-height: 1.35;
+
+    color: #d7c8bf;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.promo-premium-footer {
+    margin-top: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 18px 17px;
+
+    background:
+        var(--premium-bottom, #F5EEE5);
+
+    color: #4b2515;
+}
+
+
+.promo-premium-logo {
+    width: 112px;
+    height: 44px;
+
+    padding: 4px;
+
+    border-radius: 6px;
+
+    background: #fff;
+
+    object-fit: contain;
+}
+
+
+.promo-premium-contact {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    text-align: right;
+}
+
+
+.promo-premium-contact strong {
+    font-size: 0.75rem;
+
+    color: #4b2515;
+}
+
+
+.promo-premium-contact i {
+    margin-right: 4px;
+
+    color: #25d366;
+}
+
+
+.promo-premium-contact small {
+    max-width: 165px;
+
+    margin-top: 4px;
+
+    font-size: 0.4rem;
+    line-height: 1.35;
+
+    color: #826d61;
+}

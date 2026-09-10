@@ -1,7 +1,7 @@
     const crypto = require('crypto'); // Módulo nativo de Node.js para generar UUIDs/JTIs
     const bcrypt = require('bcryptjs');
     const jwt = require('jsonwebtoken');
-    const UsuarioModel = require('../models/UsuarioModel');
+    const UsuarioModel = require('../models/usuarioModel');
 
     const JWT_SECRET =
         process.env.JWT_SECRET;

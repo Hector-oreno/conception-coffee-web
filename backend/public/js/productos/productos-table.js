@@ -4,130 +4,415 @@ const ProductosTable = {
 
     
     async cargarProductos() {
-        const tbody = document.getElementById('tabla-productos-body');
-        const overlay = document.getElementById('loadingOverlay');
-        const mensajeVacio = document.getElementById('mensajeVacio');
-        
-        if (!tbody) return;
 
-        try {
-            // 1. Mostrar overlay de carga si existe
-            if (overlay) overlay.style.display = 'flex';
+        const tbody =
+            document.getElementById(
+                'tabla-productos-body'
+            );
 
-            // 2. Obtener los parámetros globales necesarios
-            const inputBuscar = document.getElementById('buscarProducto');
-            const textoBuscar = inputBuscar ? inputBuscar.value : '';
-            const sucursalId = typeof Productos !== 'undefined' && typeof Productos.obtenerSucursalSeleccionada === 'function'
-                ? Productos.obtenerSucursalSeleccionada()
-                : (window.sucursalActivaId || null);
+        const overlay =
+            document.getElementById(
+                'loadingOverlay'
+            );
 
-            // 3. Si no hay sucursal seleccionada, limpiamos y salimos
-            if (!sucursalId) {
-                tbody.innerHTML = '';
-                if (mensajeVacio) mensajeVacio.classList.remove('d-none');
-                return;
-            }
-
-            if (mensajeVacio) mensajeVacio.classList.add('d-none');
-
-            // 4. Invocar la capa de acciones físicas
-            const resultado = await ProductosActions.obtenerProductos(textoBuscar, sucursalId);
-
-            // 5. Evaluar y pintar los datos
-            if (resultado.success) {
-                // Seteamos la variable global por si la usas en otro lado
-                window.productosGlobal = resultado.data;
-                this.renderizar(resultado.data);
-            } else {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">No se encontraron productos para esta sucursal.</td></tr>`;
-            }
-
-        } catch (error) {
-            console.error('Error al orquestar la tabla de productos:', error);
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: red;">Error de conexión con el servidor backend.</td></tr>`;
-        } finally {
-            // 6. Ocultar overlay de carga pase lo que pase
-            if (overlay) overlay.style.display = 'none';
-        }
-    },
+        const mensajeVacio =
+            document.getElementById(
+                'mensajeVacio'
+            );
 
 
-
-    // 1. Filtrado rápido visual en el navegador (Tu función original intacta)
-    filtrarProductosTabla() {
-        const texto = document.getElementById('buscarProducto').value.toLowerCase();
-        const filas = document.querySelectorAll('#tabla-productos-body tr');
-
-        filas.forEach(fila => {
-            const celdaNombre = fila.getElementsByTagName('td')[1];
-            if (celdaNombre) {
-                const nombre = celdaNombre.textContent.toLowerCase();
-                fila.style.display = nombre.includes(texto) ? '' : 'none';
-            }
-        });
-    },
-
-    // 2. Renderizado real adaptado con tu lógica multi-sucursal y diseño premium
-    renderizar(productosGlobal) {
-        const tbody = document.getElementById('tabla-productos-body');
-        if (!tbody) return;
-
-        if (!productosGlobal || productosGlobal.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">No se encontraron productos para esta sucursal o término de búsqueda.</td></tr>`;
+        if (!tbody) {
             return;
         }
 
-        // Construcción del HTML exactamente como lo tenías en admin.js
-        tbody.innerHTML = productosGlobal.map(prod => {
-            // Lógica exacta de tus imágenes
-            let urlImagen = prod.imagen && prod.imagen.trim() !== "" ? prod.imagen : null;
-            if (urlImagen) {
-                if (!urlImagen.startsWith('http')) {
-                    const rutaLimpia = urlImagen.startsWith('/') ? urlImagen : `/${urlImagen}`;
-                    urlImagen = rutaLimpia;
-                }
-            } else {
-                urlImagen = '/images/uploads/Logo_carta.png'; 
+
+        try {
+
+            // ======================================================
+            // MOSTRAR CARGA
+            // ======================================================
+
+            if (overlay) {
+                overlay.style.display = 'flex';
             }
 
-            return `
+
+            // ======================================================
+            // OBTENER FILTROS ACTUALES
+            // ======================================================
+
+            const inputBuscar =
+                document.getElementById(
+                    'buscarProducto'
+                );
+
+
+            const textoBuscar =
+                inputBuscar
+                    ? inputBuscar.value.trim()
+                    : '';
+
+
+            const sucursalId =
+                Productos
+                    .obtenerSucursalSeleccionada();
+
+
+            // ======================================================
+            // VALIDAR SUCURSAL
+            // ======================================================
+
+            if (!sucursalId) {
+
+                tbody.innerHTML = '';
+
+                if (mensajeVacio) {
+                    mensajeVacio.classList.remove(
+                        'd-none'
+                    );
+                }
+
+                return;
+
+            }
+
+
+            if (mensajeVacio) {
+                mensajeVacio.classList.add(
+                    'd-none'
+                );
+            }
+
+
+            // ======================================================
+            // CONSULTAR API
+            // ======================================================
+
+            const resultado =
+                await ProductosActions
+                    .obtenerProductos(
+                        textoBuscar,
+                        sucursalId
+                    );
+
+
+            // ======================================================
+            // RENDERIZAR RESPUESTA REAL DE BD
+            // ======================================================
+
+            if (
+                resultado.success &&
+                Array.isArray(resultado.data)
+            ) {
+
+                
+                this.renderizar(
+                    resultado.data
+                );
+
+
+                return;
+
+            }
+
+
+            this.renderizar([]);
+
+
+        } catch (error) {
+
+            console.error(
+                'Error al cargar productos:',
+                error
+            );
+
+
+            tbody.innerHTML = `
                 <tr>
-                    <td><img src="${urlImagen}" alt="${prod.nombre}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"></td>
-                    <td>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <button class="star-toggle-btn" onclick="conmutarDestacado(${prod.id}, ${prod.destacado})" style="background: none; border: none; cursor: pointer; padding: 0;">
-                                <i class="${prod.destacado ? 'fas' : 'far'} fa-star" 
-                                    style="color: ${prod.destacado ? '#ffc107' : '#ccc'}; font-size: 1.1rem;">
-                                </i>
-                            </button>
-                            <strong>${prod.nombre}</strong>
-                        </div>
-                    </td>
-                    <td>${prod.categoria_nombre || 'Sin categoría'}</td>
-                    <td>Q${parseFloat(prod.precio).toFixed(2)}</td>
-                    <td>
-                        <button class="badge-status-btn" onclick="conmutarDisponibilidad(${prod.id}, ${prod.disponible})" style="background: none; border: none; cursor: pointer; padding: 0;">
-                            <span class="role-badge ${prod.disponible ? 'disponible' : 'no-disponible'}">
-                                 ${prod.disponible ? 'Disponible' : 'Agotado'}
-                            </span>
-                        </button>
-                    </td>
-                    <td class="acciones-producto">
-                        <button class="btn-editar" title="Editar Producto" onclick="abrirModalEditar(${prod.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-
-                        <button class="btn-sucursal" title="Administrar Sucursales" onclick="abrirModalSucursales(${prod.id})">
-                            <i class="fas fa-store"></i>
-                        </button>
-
-                        <button class="btn-eliminar" title="Eliminar Producto" onclick="darBajaProducto(${prod.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                    <td
+                        colspan="6"
+                        class="productos-estado-tabla productos-estado-error"
+                    >
+                        No fue posible cargar los productos.
                     </td>
                 </tr>
             `;
-        }).join('');
+
+
+        } finally {
+
+            if (overlay) {
+                overlay.style.display =
+                    'none';
+            }
+
+        }
+
+    },
+
+
+
+    // 2. Renderizado real adaptado con tu lógica multi-sucursal y diseño premium
+    renderizar(productosGlobal) {
+
+        const tbody =
+            document.getElementById(
+                'tabla-productos-body'
+            );
+
+
+        if (!tbody) {
+            return;
+        }
+
+
+        if (
+            !Array.isArray(productosGlobal) ||
+            productosGlobal.length === 0
+        ) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="productos-estado-tabla"
+                    >
+                        No se encontraron productos
+                        para esta sucursal.
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tbody.innerHTML =
+            productosGlobal
+                .map(prod => {
+
+                    let urlImagen =
+                        prod.imagen &&
+                        prod.imagen.trim() !== ''
+                            ? prod.imagen
+                            : '/images/uploads/Logo_carta.png';
+
+
+                    if (
+                        urlImagen &&
+                        !urlImagen.startsWith('http')
+                    ) {
+
+                        urlImagen =
+                            urlImagen.startsWith('/')
+                                ? urlImagen
+                                : `/${urlImagen}`;
+
+                    }
+
+
+                    const destacado =
+                        Number(prod.destacado) === 1;
+
+
+                    const disponible =
+                        Number(prod.disponible) === 1;
+
+
+                    const precio =
+                        Number(prod.precio);
+
+
+                    return `
+
+                        <tr>
+
+                            <td>
+
+                                <img
+                                    src="${urlImagen}"
+                                    alt="${prod.nombre}"
+                                    class="producto-thumbnail"
+                                    loading="lazy"
+                                >
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="producto-nombre-wrap">
+
+                                    <button
+                                        type="button"
+                                        class="
+                                            producto-favorito-btn
+                                            ${destacado ? 'is-active' : ''}
+                                        "
+                                        title="${
+                                            destacado
+                                                ? 'Quitar de destacados'
+                                                : 'Marcar como destacado'
+                                        }"
+                                        onclick="
+                                            conmutarDestacado(
+                                                ${prod.id},
+                                                ${destacado ? 1 : 0}
+                                            )
+                                        "
+                                    >
+
+                                        <i
+                                            class="${
+                                                destacado
+                                                    ? 'fas'
+                                                    : 'far'
+                                            } fa-star"
+                                        ></i>
+
+                                    </button>
+
+
+                                    <span class="producto-nombre">
+                                        ${prod.nombre}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                ${
+                                    prod.categoria_nombre ||
+                                    'Sin categoría'
+                                }
+                            </td>
+
+
+                            <td>
+
+                                <span class="producto-precio">
+
+                                    Q${
+                                        Number.isFinite(precio)
+                                            ? precio.toFixed(2)
+                                            : '0.00'
+                                    }
+
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="producto-estado-btn"
+                                    onclick="
+                                        conmutarDisponibilidad(
+                                            ${prod.id},
+                                            ${disponible ? 1 : 0}
+                                        )
+                                    "
+                                    title="Cambiar disponibilidad"
+                                >
+
+                                    <span
+                                        class="
+                                            producto-estado
+                                            ${
+                                                disponible
+                                                    ? 'producto-estado--disponible'
+                                                    : 'producto-estado--agotado'
+                                            }
+                                        "
+                                    >
+                                        ${
+                                            disponible
+                                                ? 'Disponible'
+                                                : 'Agotado'
+                                        }
+                                    </span>
+
+                                </button>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="producto-acciones">
+
+                                    <button
+                                        type="button"
+                                        class="
+                                            producto-accion
+                                            producto-accion--editar
+                                        "
+                                        title="Editar producto"
+                                        onclick="
+                                            abrirModalEditar(
+                                                ${prod.id}
+                                            )
+                                        "
+                                    >
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="
+                                            producto-accion
+                                            producto-accion--sucursal
+                                        "
+                                        title="Administrar sucursales"
+                                        onclick="
+                                            abrirModalSucursales(
+                                                ${prod.id}
+                                            )
+                                        "
+                                    >
+                                        <i class="fas fa-store"></i>
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="
+                                            producto-accion
+                                            producto-accion--baja
+                                        "
+                                        title="
+                                            Dar de baja en esta sucursal
+                                        "
+                                        onclick="
+                                            darBajaProducto(
+                                                ${prod.id}
+                                            )
+                                        "
+                                    >
+                                        <i class="fas fa-box-archive"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                })
+                .join('');
+
     },
 
     

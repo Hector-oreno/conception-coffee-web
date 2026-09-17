@@ -8,6 +8,22 @@ document.addEventListener("DOMContentLoaded", async () => {
         Productos.iniciar();
     }
 
+
+    const sidebarToggle =
+        document.getElementById(
+            'sidebarToggle'
+        );
+
+    if (sidebarToggle) {
+
+        sidebarToggle.addEventListener(
+            'click',
+            alternarSidebarAdmin
+        );
+
+    }
+
+
 });
 
 // =========================================================================
@@ -41,14 +57,25 @@ function cerrarModalSucursales() {
 
 // Función para eliminar el producto por sucursal
 async function darBajaProducto(id) {
-    if (!confirm('¿Estás seguro de que deseas eliminar este producto por completo?')) return;
+    if (
+        !confirm(
+            '¿Deseas dar de baja este producto en la sucursal seleccionada?'
+        )
+    ) {
+        return;
+    }
     
     const resultado = await ProductosActions.darBajaProducto(id);
     if (resultado.success) {
-        alert('Producto eliminado correctamente.');
+        alert('Producto dado de baja correctamente.');
         await cargarProductos();
     } else {
-        alert(`Error al eliminar: ${resultado.message || 'Intente de nuevo.'}`);
+        alert(
+            `Error al dar de baja: ${
+                resultado.message ||
+                'Intente de nuevo.'
+            }`
+        );
     }
 }
 
@@ -72,14 +99,214 @@ async function conmutarDestacado(id, destacadoActual) {
     }
 }
 
+
 // =========================================================================
-// ENRUTADOR GLOBAL DE LA INTERFAZ DE USUARIO (UI)
+// SIDEBAR ADMINISTRATIVO
+// =========================================================================
+
+function obtenerContenedorAdmin() {
+
+    return document.querySelector(
+        '.admin-container'
+    );
+
+}
+
+
+function colapsarSidebarAdmin() {
+
+    const contenedor =
+        obtenerContenedorAdmin();
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    contenedor.classList.add(
+        'sidebar-collapsed'
+    );
+
+
+    const boton =
+        document.getElementById(
+            'sidebarToggle'
+        );
+
+
+    if (boton) {
+
+        boton.setAttribute(
+            'aria-label',
+            'Expandir menú'
+        );
+
+        boton.title =
+            'Expandir menú';
+
+    }
+
+}
+
+
+function expandirSidebarAdmin() {
+
+    const contenedor =
+        obtenerContenedorAdmin();
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    contenedor.classList.remove(
+        'sidebar-collapsed'
+    );
+
+
+    const boton =
+        document.getElementById(
+            'sidebarToggle'
+        );
+
+
+    if (boton) {
+
+        boton.setAttribute(
+            'aria-label',
+            'Contraer menú'
+        );
+
+        boton.title =
+            'Contraer menú';
+
+    }
+
+}
+
+
+function alternarSidebarAdmin() {
+
+    const contenedor =
+        obtenerContenedorAdmin();
+
+
+    if (!contenedor) {
+        return;
+    }
+
+
+    if (
+        contenedor.classList.contains(
+            'sidebar-collapsed'
+        )
+    ) {
+
+        expandirSidebarAdmin();
+
+    } else {
+
+        colapsarSidebarAdmin();
+
+    }
+
+}
+
+
+// =========================================================================
+// ENRUTADOR GLOBAL DEL PANEL ADMINISTRATIVO
 // =========================================================================
 
 function cambiarSeccion(seccion) {
 
     // ==========================================================
-    // VALIDAR PERMISO VISUAL DE LA SECCIÓN
+    // CONFIGURACIÓN CENTRAL DE SECCIONES
+    // ==========================================================
+
+    const configuracionSecciones = {
+
+        productos: {
+            id: 'seccion-productos',
+            titulo: 'Gestión de Productos',
+            subtitulo:
+                'Administra los platillos, precios y disponibilidad de la vitrina digital.'
+        },
+
+        ejecutivo: {
+            id: 'seccion-ejecutivo',
+            titulo: 'Menú de la Semana',
+            subtitulo:
+                'Planifica y actualiza los platos ejecutivos para la rotación semanal.'
+        },
+
+        hero: {
+            id: 'seccion-hero',
+            titulo: 'Sliders de Inicio',
+            subtitulo:
+                'Configura las imágenes principales de la página de inicio.'
+        },
+
+        experiencias: {
+            id: 'seccion-experiencias',
+            titulo: 'Sección Experiencias',
+            subtitulo:
+                'Administra las reseñas y los comentarios destacados de tus clientes.'
+        },
+
+        sucursales: {
+            id: 'seccion-sucursales',
+            titulo: 'Gestión de Sucursales',
+            subtitulo:
+                'Administra la información de tus sucursales, horarios y ubicaciones.'
+        },
+
+        plantillas: {
+            id: 'seccion-plantillas',
+            titulo: 'Plantillas del Menú',
+            subtitulo:
+                'Personaliza la presentación visual del Menú Ejecutivo.'
+        },
+
+        usuarios: {
+            id: 'seccion-usuarios',
+            titulo: 'Gestión de Usuarios',
+            subtitulo:
+                'Administra los accesos, roles y sucursales del personal.'
+        },
+
+        auditoria: {
+            id: 'seccion-auditoria',
+            titulo: 'Auditoría y Seguridad',
+            subtitulo:
+                'Monitorea las IPs de origen, sesiones activas e historial de conexiones.'
+        }
+
+    };
+
+
+    // ==========================================================
+    // VALIDAR SECCIÓN
+    // ==========================================================
+
+    const dataSeccion =
+        configuracionSecciones[seccion];
+
+
+    if (!dataSeccion) {
+
+        console.warn(
+            `La sección "${seccion}" no está registrada.`
+        );
+
+        return;
+
+    }
+
+
+    // ==========================================================
+    // VALIDAR PERMISOS VISUALES
     // ==========================================================
 
     const usuarioSesion =
@@ -100,8 +327,8 @@ function cambiarSeccion(seccion) {
 
         if (!permisos.includes(seccion)) {
 
-            console.trace(
-                `Acceso denegado a la sección: ${seccion}`
+            console.warn(
+                `Acceso visual denegado a: ${seccion}`
             );
 
             return;
@@ -111,170 +338,247 @@ function cambiarSeccion(seccion) {
     }
 
 
+    // ==========================================================
+    // OCULTAR TODAS LAS SECCIONES DEL ADMIN
+    // ==========================================================
+    //
+    // IMPORTANTE:
+    // - Quitamos is-active.
+    // - Eliminamos cualquier display inline heredado.
+    // - El CSS global decide qué módulo se ve.
+    //
+    // Esto evita que Productos, Planner, Sliders, Usuarios,
+    // Auditoría, etc. se acumulen en pantalla.
+    // ==========================================================
 
-    // 1. CONTROL DE EMERGENCIA: Asegurar que la sección ejecutivo no esté atrapada en productos
-    const seccionEjecutivo = document.getElementById('seccion-ejecutivo');
-    const seccionProductos = document.getElementById('seccion-productos');
-    const contenedorMain = document.querySelector('.main.main-content') || document.querySelector('.main-content');
+    document
+        .querySelectorAll('.admin-module')
+        .forEach(modulo => {
 
-    if (seccionEjecutivo && seccionProductos && contenedorMain) {
-        // Si por algún error de renderizado la sección ejecutivo quedó metida dentro de productos
-        if (seccionProductos.contains(seccionEjecutivo)) {
-            // La sacamos de ahí y la ponemos de vuelta en el contenedor principal como hermana
-            contenedorMain.appendChild(seccionEjecutivo);
-        }
+            modulo.classList.remove(
+                'is-active'
+            );
+
+            modulo.style.removeProperty(
+                'display'
+            );
+
+        });
+
+
+    // ==========================================================
+    // OBTENER SECCIÓN SOLICITADA
+    // ==========================================================
+
+    const seccionObjetivo =
+        document.getElementById(
+            dataSeccion.id
+        );
+
+
+    if (!seccionObjetivo) {
+
+        console.error(
+            `No existe #${dataSeccion.id} en admin.html`
+        );
+
+        return;
+
     }
 
-    // 2. Configuración normal de tus secciones
-    const configuracionSecciones = {
-        'productos': {
-            id: 'seccion-productos',
-            titulo: 'Gestión de Productos',
-            subtitulo: 'Administra los platillos, precios y disponibilidad de la vitrina digital.'
-        },
-        'ejecutivo': {
-            id: 'seccion-ejecutivo',
-            titulo: 'Menú de la Semana',
-            subtitulo: 'Planifica y actualiza los platos ejecutivos para la rotación semanal.'
-        },
-        'hero': {
-            id: 'seccion-hero',
-            titulo: 'Sliders de Inicio',
-            subtitulo: 'Configura las imágenes principales de la página de inicio.'
-        },
-        'experiencias': {
-            id: 'seccion-experiencias',
-            titulo: 'Sección Experiencias',
-            subtitulo: 'Administra las reseñas y los comentarios destacados de tus clientes.'
-        },
 
-        'sucursales': {
-            id: 'seccion-sucursales',
-            titulo: 'Gestión de Sucursales',
-            subtitulo: 'Administra la información de tus sucursales, horarios y ubicaciones.'
-        },
+    // ==========================================================
+    // MOSTRAR ÚNICAMENTE LA SECCIÓN SOLICITADA
+    // ==========================================================
 
-        'plantillas': {
-            id: 'seccion-plantillas',
-            titulo: 'Plantillas del Menú',
-            subtitulo: 'Personaliza la presentación visual del Menú Ejecutivo.'
-        },
-
-        'usuarios': {
-            id: 'seccion-usuarios',
-            titulo: 'Gestión de Usuarios',
-            subtitulo: 'Administra los accesos, roles y sucursales del personal.'
-        },
-
-        'auditoria': {
-            id: 'seccion-auditoria',
-            titulo: 'Auditoría y Seguridad',
-            subtitulo: 'Monitorea las IPs de origen, sesiones activas e historial de conexiones.'
-        }
-        
-
-    };
-
-    // 3. Ocultar de forma automática todas las secciones declaradas
-    Object.values(configuracionSecciones).forEach(sec => {
-        const elemento = document.getElementById(sec.id);
-        if (elemento) elemento.style.display = 'none';
-    });
-
-    // 4. Manejo estético de botones del Menú Lateral (.active)
-    const botones = document.querySelectorAll('.menu-btn');
-    botones.forEach(btn => btn.classList.remove('active'));
-    
-    const botonActivo = Array.from(botones).find(btn => {
-        const attr = btn.getAttribute('onclick') || '';
-        return attr.includes(seccion);
-    });
-    if (botonActivo) botonActivo.classList.add('active');
-
-    // 5. Renderizar textos y títulos dinámicos
-    const dataSeccion = configuracionSecciones[seccion];
-
-    if (dataSeccion) {
-        const seccionObjetivo = document.getElementById(dataSeccion.id);
-        const tituloGlobal = document.getElementById("section-title");
-        const subtituloGlobal = document.getElementById("section-subtitle");
-
-        // Mostrar únicamente la sección seleccionada
-        if (seccionObjetivo) {
-            seccionObjetivo.style.display = "block";
-        }
-
-        // Actualizar títulos
-        if (tituloGlobal) {
-            tituloGlobal.innerText = dataSeccion.titulo;
-        }
-
-        if (subtituloGlobal) {
-            subtituloGlobal.innerText = dataSeccion.subtitulo;
-        }
-
-        // Inicializar Planner únicamente al entrar al módulo
-        if (
-            seccion === "ejecutivo" &&
-            typeof Planner !== "undefined" &&
-            typeof Planner.iniciar === "function"
-        ) {
-            Planner.iniciar();
-        }
+    seccionObjetivo.classList.add(
+        'is-active'
+    );
 
 
-        // Sliders
-        if (
-            seccion === "hero" &&
-            typeof cargarSlidersAdmin === "function"
-        ) {
-            cargarSlidersAdmin();
-        }
+    // ==========================================================
+    // ACTUALIZAR BOTÓN ACTIVO
+    // ==========================================================
+
+    document
+        .querySelectorAll('.menu-btn')
+        .forEach(btn => {
+
+            btn.classList.toggle(
+                'active',
+                btn.dataset.seccion === seccion
+            );
+
+        });
 
 
-        // Experiencias
-        if (
-            seccion === "experiencias" &&
-            typeof cargarExperienciasAdmin === "function"
-        ) {
-            cargarExperienciasAdmin();
-        }
+    // ==========================================================
+    // TÍTULO / SUBTÍTULO
+    // ==========================================================
+
+    const titulo =
+        document.getElementById(
+            'section-title'
+        );
+
+    const subtitulo =
+        document.getElementById(
+            'section-subtitle'
+        );
 
 
-        // Plantillas
-        if (
-            seccion === "plantillas" &&
-            typeof PlantillasAdmin !== "undefined" &&
-            typeof PlantillasAdmin.iniciar === "function"
-        ) {
-            PlantillasAdmin.iniciar();
-        }
+    if (titulo) {
 
+        titulo.textContent =
+            dataSeccion.titulo;
 
-        // Usuarios
-        if (
-            seccion === "usuarios" &&
-            typeof cargarUsuarios === "function"
-        ) {
-            cargarUsuarios();
-        }
-
-
-        // Auditoría
-        if (
-            seccion === "auditoria" &&
-            typeof cargarAuditoriaIPs === "function"
-        ) {
-            cargarAuditoriaIPs();
-        }
-
-
-
-    } else {
-        console.warn(`La sección "${seccion}" no está registrada.`);
     }
+
+
+    if (subtitulo) {
+
+        subtitulo.textContent =
+            dataSeccion.subtitulo;
+
+    }
+
+
+    // ==========================================================
+    // CARGA ESPECÍFICA DEL MÓDULO
+    // ==========================================================
+
+    switch (seccion) {
+
+        case 'productos':
+
+            if (
+                typeof cargarProductos ===
+                'function'
+            ) {
+
+                cargarProductos();
+
+            }
+
+            break;
+
+
+        case 'ejecutivo':
+
+            if (
+                typeof Planner !== 'undefined' &&
+                typeof Planner.iniciar ===
+                'function'
+            ) {
+
+                Planner.iniciar();
+
+            }
+
+            break;
+
+
+        case 'hero':
+
+            if (
+                typeof cargarSlidersAdmin ===
+                'function'
+            ) {
+
+                cargarSlidersAdmin();
+
+            }
+
+            break;
+
+
+        case 'experiencias':
+
+            if (
+                typeof cargarExperienciasAdmin ===
+                'function'
+            ) {
+
+                cargarExperienciasAdmin();
+
+            }
+
+            break;
+
+
+        case 'sucursales':
+
+            if (
+                typeof cargarTablaSucursales ===
+                'function'
+            ) {
+
+                cargarTablaSucursales();
+
+            }
+
+            break;
+
+
+        case 'plantillas':
+
+            if (
+                typeof PlantillasAdmin !== 'undefined' &&
+                typeof PlantillasAdmin.iniciar ===
+                'function'
+            ) {
+
+                PlantillasAdmin.iniciar();
+
+            }
+
+            break;
+
+
+        case 'usuarios':
+
+            if (
+                typeof cargarUsuarios ===
+                'function'
+            ) {
+
+                cargarUsuarios();
+
+            }
+
+            break;
+
+
+        case 'auditoria':
+
+            if (
+                typeof cargarAuditoriaIPs ===
+                'function'
+            ) {
+
+                cargarAuditoriaIPs();
+
+            }
+
+            break;
+
+    }
+
+
+    // ==========================================================
+    // EXPANDIR SIDEBAR AL CAMBIAR DE MÓDULO
+    // ==========================================================
+
+    if (
+        typeof expandirSidebarAdmin ===
+        'function'
+    ) {
+
+        expandirSidebarAdmin();
+
+    }
+
 }
-
 
 // Cargar el select de sucursales en la pestaña de Productos
 async function cargarSelectSucursalesAdmin() {

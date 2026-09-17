@@ -2,76 +2,144 @@ const Productos = {
 
     async iniciar() {
 
-        // Escuchar cuando el usuario cambia de sucursal en el combo desplegable
-        const selectSucursal = document.getElementById('selectSucursal');
+        const selectSucursal =
+            document.getElementById(
+                'selectSucursal'
+            );
+
+
+        // ======================================================
+        // CAMBIO DE SUCURSAL
+        // ======================================================
 
         if (selectSucursal) {
-            selectSucursal.addEventListener('change', (e) => {
-                const idSucursal = e.target.value;
-        
-                // Verificamos cuál es la función encargada de cargar los productos
-                if (typeof Productos !== 'undefined' && typeof Productos.cargar === 'function') {
-                    Productos.cargar(idSucursal); 
-                } else if (typeof cargarProductos === 'function') {
-                    cargarProductos(idSucursal);
-                }
-            });
-        }
-           
-        // Carga inicial
-        cargarProductos();
 
-        await ProductosForm.inicializarCategorias();
-        Productos.inicializarBuscador();
+            selectSucursal.addEventListener(
+                'change',
+                async () => {
+
+                    await cargarProductos();
+
+                }
+            );
+
+        }
+
+
+        // ======================================================
+        // CARGA INICIAL
+        // ======================================================
+
+        await ProductosForm
+            .inicializarCategorias();
+
+
+        this.inicializarBuscador();
+
+
+        await cargarProductos();
 
     },
 
+
+    // ==========================================================
+    // BUSCADOR
+    // ==========================================================
 
     inicializarBuscador() {
 
-        const inputBuscar = document.getElementById('buscarProducto');
+        const inputBuscar =
+            document.getElementById(
+                'buscarProducto'
+            );
 
-        if (inputBuscar) {
 
-            inputBuscar.addEventListener('input', () => {
-
-                cargarProductos();
-
-            });
-
+        if (!inputBuscar) {
+            return;
         }
+
+
+        inputBuscar.addEventListener(
+            'input',
+            async () => {
+
+                await cargarProductos();
+
+            }
+        );
 
     },
 
 
+    // ==========================================================
+    // SUCURSAL SELECCIONADA
+    // ÚNICA FUENTE DE VERDAD DEL MÓDULO PRODUCTOS
+    // ==========================================================
 
     obtenerSucursalSeleccionada() {
 
-        const select = document.getElementById('selectSucursal');
+        const select =
+            document.getElementById(
+                'selectSucursal'
+            );
 
-        return select ? select.value : '1';
+
+        if (!select) {
+            return null;
+        }
+
+
+        const sucursalId =
+            Number(select.value);
+
+
+        if (
+            !Number.isInteger(sucursalId) ||
+            sucursalId <= 0
+        ) {
+
+            return null;
+
+        }
+
+
+        return sucursalId;
 
     },
 
-    manejarCargaConLoader() {
 
-        const overlay = document.getElementById('loadingOverlay');
+    // ==========================================================
+    // RECARGA CON LOADER
+    // ==========================================================
 
-        if (overlay)
-            overlay.style.display = 'flex';
+    async manejarCargaConLoader() {
 
-        setTimeout(async () => {
+        const overlay =
+            document.getElementById(
+                'loadingOverlay'
+            );
+
+
+        try {
+
+            if (overlay) {
+                overlay.style.display =
+                    'flex';
+            }
+
 
             await cargarProductos();
 
-            if (overlay)
-                overlay.style.display = 'none';
 
-        }, 1200);
+        } finally {
 
-    },
+            if (overlay) {
+                overlay.style.display =
+                    'none';
+            }
 
+        }
 
-    
+    }
 
 };

@@ -35,6 +35,43 @@ function headersProductos(
 }
 
 
+function obtenerSucursalProductos() {
+
+    if (
+        typeof Productos === 'undefined' ||
+        typeof Productos.obtenerSucursalSeleccionada !== 'function'
+    ) {
+
+        throw new Error(
+            'No fue posible determinar la sucursal seleccionada.'
+        );
+
+    }
+
+
+    const sucursalId =
+        Number(
+            Productos.obtenerSucursalSeleccionada()
+        );
+
+
+    if (
+        !Number.isInteger(sucursalId) ||
+        sucursalId <= 0
+    ) {
+
+        throw new Error(
+            'Selecciona una sucursal válida.'
+        );
+
+    }
+
+
+    return sucursalId;
+
+}
+
+
 // ==========================================================
 // ACTIONS
 // ==========================================================
@@ -154,8 +191,10 @@ const ProductosActions = {
                                     nuevoEstado,
 
                                 sucursal_id:
-                                    window.sucursalActivaId ||
-                                    1
+                                    typeof Productos !== 'undefined' &&
+                                    typeof Productos.obtenerSucursalSeleccionada === 'function'
+                                        ? Productos.obtenerSucursalSeleccionada()
+                                        : 1
 
                             })
                     }
@@ -229,8 +268,10 @@ const ProductosActions = {
                                     nuevoDestacado,
 
                                 sucursal_id:
-                                    window.sucursalActivaId ||
-                                    1
+                                    typeof Productos !== 'undefined' &&
+                                    typeof Productos.obtenerSucursalSeleccionada === 'function'
+                                        ? Productos.obtenerSucursalSeleccionada()
+                                        : 1
 
                             })
                     }
@@ -292,8 +333,10 @@ const ProductosActions = {
                             JSON.stringify({
 
                                 sucursal_id:
-                                    window.sucursalActivaId ||
-                                    1
+                                    typeof Productos !== 'undefined' &&
+                                    typeof Productos.obtenerSucursalSeleccionada === 'function'
+                                        ? Productos.obtenerSucursalSeleccionada()
+                                        : 1
 
                             })
                     }
@@ -399,8 +442,26 @@ const ProductosActions = {
 
     async obtenerProductos(
         textoBuscar = "",
-        sucursalId = 1
+        sucursalId
     ) {
+
+        const sucursalNumero =
+            Number(sucursalId);
+
+
+        if (
+            !Number.isInteger(sucursalNumero) ||
+            sucursalNumero <= 0
+        ) {
+
+            return {
+                success: false,
+                message:
+                    'Selecciona una sucursal válida.'
+            };
+
+        }
+
 
         try {
 
@@ -410,7 +471,7 @@ const ProductosActions = {
                     textoBuscar || ""
                 )}` +
                 `&sucursal=${encodeURIComponent(
-                    sucursalId
+                    sucursalNumero
                 )}`;
 
 
@@ -451,7 +512,8 @@ const ProductosActions = {
 
             return {
                 success: false,
-                message: error.message
+                message:
+                    error.message
             };
 
         }
@@ -582,9 +644,91 @@ const ProductosActions = {
 
         }
 
+    },
+
+    async actualizarProductoSucursal(
+        productoId,
+        sucursalId,
+        datos
+    ) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/productos/${productoId}/sucursal`,
+                    {
+                        method:
+                            "PATCH",
+
+                        headers:
+                            headersProductos({
+                                "Content-Type":
+                                    "application/json"
+                            }),
+
+                        body:
+                            JSON.stringify({
+
+                                precio:
+                                    Number(datos.precio),
+
+                                disponible:
+                                    Number(datos.disponible),
+
+                                destacado:
+                                    Number(datos.destacado),
+
+                                sucursal_id:
+                                    Number(sucursalId)
+
+                            })
+
+                    }
+                );
+
+
+            const resultado =
+            await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    resultado.message ||
+                    `Error HTTP ${response.status}`
+                );
+
+            }
+
+
+            return resultado;
+
+
+        } catch (error) {
+
+            console.error(
+                "Error en actualizarProductoSucursal:",
+                error
+            );
+
+
+            return {
+                success: false,
+                message:
+                    error.message
+            };
+
+        }
+
     }
 
+
+
+
 };
+
+
 
 
 // ==========================================================

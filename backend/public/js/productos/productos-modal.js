@@ -1,70 +1,6 @@
 const ProductosModal = {
 
-    abrirModalNuevoProducto() {
-
-        document.getElementById('seccion-sucursales').style.display = 'block';
-
-        document.getElementById('modal-title').innerText = 'Nuevo Producto';
-
-        document.getElementById('form-producto').reset();
-
-        document.getElementById('producto-id').value = '';
-
-        // Inyectar dinámicamente las sucursales que existen en el selector principal
-        const selectSucursal = document.getElementById('selectSucursal');
-
-        const contenedor = document.getElementById('contenedor-sucursales-modal');
-
-        if (contenedor && selectSucursal) {
-
-            contenedor.innerHTML = '';
-
-            Array.from(selectSucursal.options).forEach(option => {
-
-                if (option.value === "") return;
-
-                const estaSeleccionada = (option.value === selectSucursal.value);
-
-                const div = document.createElement('label');
-
-                div.className = 'branch-card';
-
-                div.innerHTML = `
-                    <input
-                        type="checkbox"
-                        name="sucursales_alta"
-                        value="${option.value}"
-                        ${estaSeleccionada ? 'checked' : ''}>
-
-                    <div class="branch-card-content">
-
-                        <div class="branch-card-title">
-
-                            <i class="fas fa-store"></i>
-
-                            ${option.text}
-
-                        </div>
-
-                        <small>
-
-                            Disponible desde la creación del producto
-
-                        </small>
-
-                    </div>
-                `;
-
-                contenedor.appendChild(div);
-
-            });
-
-        }
-
-        document.getElementById('modal-producto').style.display = 'flex';
-
-    },
-
+    
     cerrarModal() {
 
         document.getElementById('modal-producto').style.display = 'none';
@@ -73,10 +9,14 @@ const ProductosModal = {
 
     async abrirEditar(id) {
         try {
+
+            if (typeof colapsarSidebarAdmin === 'function') {
+                colapsarSidebarAdmin();
+            }
+
             // Obtenemos la sucursal seleccionada desde el estado de la app
-            const sucursalId = typeof Productos !== 'undefined' && typeof Productos.obtenerSucursalSeleccionada === 'function'
-                ? Productos.obtenerSucursalSeleccionada()
-                : (window.sucursalActivaId || 1);
+            const sucursalId =
+                Productos.obtenerSucursalSeleccionada();
 
             // Llamamos a la capa de acciones para traer la data limpia
             const resultado = await ProductosActions.obtenerProductoPorId(id, sucursalId);
@@ -85,7 +25,6 @@ const ProductosModal = {
                 const prod = resultado.data;
 
                 // Llenado y comportamiento estético del formulario
-                document.getElementById('seccion-sucursales').style.display = 'none';
                 document.getElementById('modal-title').innerText = 'Editar Producto';
                 document.getElementById('producto-id').value = prod.id;
                 document.getElementById('prod-nombre').value = prod.nombre;
@@ -93,34 +32,8 @@ const ProductosModal = {
                 document.getElementById('prod-categoria').value = prod.categoria_id; 
                 document.getElementById('prod-descripcion').value = prod.descripcion || '';
                 document.getElementById('prod-destacado').checked = prod.destacado === 1;
-
-                // --- INYECCIÓN INTELIGENTE DE SUCURSALES EN EDICIÓN ---
-                const selectSucursal = document.getElementById('selectSucursal');
-                const contenedor = document.getElementById('contenedor-sucursales-modal');
                 
-                if (contenedor && selectSucursal) {
-                    contenedor.innerHTML = '';
-                    
-                    Array.from(selectSucursal.options).forEach(option => {
-                        if (option.value === "") return;
-
-                        const div = document.createElement('div');
-                        div.style.display = 'flex';
-                        div.style.alignItems = 'center';
-                        div.style.gap = '10px';
-                        
-                        const perteneceASucursal = (option.value === sucursalId.toString());
-
-                        div.innerHTML = `
-                            <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer;">
-                                <input type="checkbox" name="sucursales_alta" value="${option.value}" ${perteneceASucursal ? 'checked' : ''} style="width: 18px; height: 18px; cursor: pointer;">
-                                <span>${option.text}</span>
-                            </label>
-                        `;
-                        contenedor.appendChild(div);
-                    });
-                }
-
+                
                 // Desplegar visualmente el contenedor del modal
                 document.getElementById('modal-producto').style.display = 'flex';
             } else {
@@ -134,40 +47,152 @@ const ProductosModal = {
 
     // Abre el modal configurado para crear un producto nuevo
     abrirCrear() {
-        // 1. Cambiamos títulos y mostramos la selección de múltiples sucursales
-        document.getElementById('seccion-sucursales').style.display = 'block';
-        document.getElementById('modal-title').innerText = 'Agregar Nuevo Producto';
-        
-        // 2. Limpiamos el formulario por si quedó data de una edición anterior
-        this.limpiarFormulario();
 
-        // 3. Inyectamos la lista de sucursales disponibles para que el admin elija dónde darlo de alta
-        const selectSucursal = document.getElementById('selectSucursal');
-        const contenedor = document.getElementById('contenedor-sucursales-modal');
-        
-        if (contenedor && selectSucursal) {
-            contenedor.innerHTML = '';
-            Array.from(selectSucursal.options).forEach(option => {
-                if (option.value === "") return; // Ignoramos el placeholder "Seleccionar Sucursal"
+        // ======================================================
+        // COLAPSAR SIDEBAR PARA DAR MÁS ESPACIO
+        // ======================================================
 
-                const div = document.createElement('div');
-                div.style.display = 'flex';
-                div.style.alignItems = 'center';
-                div.style.gap = '10px';
-                div.innerHTML = `
-                    <label style="display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer;">
-                        <input type="checkbox" name="sucursales_alta" value="${option.value}" style="width: 18px; height: 18px; cursor: pointer;">
-                        <span>${option.text}</span>
-                    </label>
-                `;
-                contenedor.appendChild(div);
-            });
+        if (
+            typeof colapsarSidebarAdmin ===
+            'function'
+        ) {
+
+            colapsarSidebarAdmin();
+
         }
 
-        // 4. Mostramos el modal en pantalla
-        document.getElementById('modal-producto').style.display = 'flex';
-    },
 
+        // ======================================================
+        // LIMPIAR FORMULARIO
+        // ======================================================
+
+        this.limpiarFormulario();
+
+
+        // ======================================================
+        // ELEMENTOS DEL MODAL
+        // ======================================================
+
+        const titulo =
+            document.getElementById(
+                'modal-title'
+            );
+
+        const selectSucursal =
+            document.getElementById(
+                'selectSucursal'
+            );
+
+        const contenedor =
+            document.getElementById(
+                'contenedor-sucursales-modal'
+            );
+
+
+        // ======================================================
+        // CONFIGURAR TÍTULO
+        // ======================================================
+
+        if (titulo) {
+
+            titulo.innerText =
+                'Agregar Nuevo Producto';
+
+        }
+
+
+        // ======================================================
+        // GENERAR SUCURSALES DISPONIBLES
+        // ======================================================
+
+        if (
+            contenedor &&
+            selectSucursal
+        ) {
+
+            contenedor.innerHTML = '';
+
+
+            Array
+                .from(selectSucursal.options)
+                .forEach(option => {
+
+                    if (!option.value) {
+                        return;
+                    }
+
+
+                    const seleccionada =
+                        option.value ===
+                        selectSucursal.value;
+
+
+                    const label =
+                        document.createElement(
+                            'label'
+                        );
+
+
+                    label.className =
+                        'branch-card';
+
+
+                    label.innerHTML = `
+
+                        <input
+                            type="checkbox"
+                            name="sucursales_alta"
+                            value="${option.value}"
+                            ${seleccionada ? 'checked' : ''}
+                        >
+
+                        <div class="branch-card-content">
+
+                            <div class="branch-card-title">
+
+                                <i class="fas fa-store"></i>
+
+                                ${option.text}
+
+                            </div>
+
+                            <small>
+                                Disponible desde la creación
+                            </small>
+
+                        </div>
+
+                    `;
+
+
+                    contenedor.appendChild(
+                        label
+                    );
+
+                });
+
+        }
+
+
+        // ======================================================
+        // ABRIR MODAL
+        // ======================================================
+
+        const modal =
+            document.getElementById(
+                'modal-producto'
+            );
+
+
+        if (modal) {
+
+            modal.style.display =
+                'flex';
+
+        }
+
+    },
+    
     // Cierra el modal de forma segura
     cerrar() {
         document.getElementById('modal-producto').style.display = 'none';
@@ -191,6 +216,10 @@ const ProductosModal = {
     // Abre el modal secundario para gestionar las sucursales del producto
     async abrirSucursales(id) {
         try {
+
+            if (typeof colapsarSidebarAdmin === 'function') {
+                colapsarSidebarAdmin();
+            }
             // Llamamos a la capa de acciones físicas para traer la data limpia
             const resultado = await ProductosActions.obtenerProductoSucursales(id);
 
@@ -263,35 +292,113 @@ function renderSucursalesProducto(lista) {
 }
 
 function renderSucursalAsignada(sucursal) {
+
+    const productoId =
+        Number(sucursal.id || sucursal.producto_id);
+
+    const sucursalId =
+        Number(sucursal.sucursal_id);
+
+
     return `
-        <div class="sucursal-card">
+        <div
+            class="sucursal-card"
+            id="card-sucursal-${sucursalId}"
+        >
+
             <div class="sucursal-card-header">
+
                 <label class="sucursal-check">
-                    <input type="checkbox" checked disabled>
-                    <span>${sucursal.sucursal_nombre}</span>
+
+                    <input
+                        type="checkbox"
+                        checked
+                        disabled
+                    >
+
+                    <span>
+                        ${sucursal.sucursal_nombre}
+                    </span>
+
                 </label>
+
             </div>
+
+
             <div class="sucursal-card-body">
+
                 <div class="campo-sucursal">
-                    <label>Precio</label>
-                    <input type="number" value="${sucursal.precio ?? ""}" step="0.01">
+
+                    <label>
+                        Precio
+                    </label>
+
+                    <input
+                        id="precio-${sucursalId}"
+                        type="number"
+                        value="${sucursal.precio ?? ""}"
+                        step="0.01"
+                        min="0"
+                    >
+
                 </div>
+
+
                 <div class="campo-sucursal campo-center">
-                    <label>Disponible</label>
-                    <input type="checkbox" ${Number(sucursal.disponible) ? "checked" : ""}>
+
+                    <label>
+                        Disponible
+                    </label>
+
+                    <input
+                        id="disponible-${sucursalId}"
+                        type="checkbox"
+                        ${Number(sucursal.disponible) === 1 ? "checked" : ""}
+                    >
+
                 </div>
+
+
                 <div class="campo-sucursal campo-center">
-                    <label>Favorito</label>
-                    <input type="checkbox" ${Number(sucursal.destacado) ? "checked" : ""}>
+
+                    <label>
+                        Favorito
+                    </label>
+
+                    <input
+                        id="favorito-${sucursalId}"
+                        type="checkbox"
+                        ${Number(sucursal.destacado) === 1 ? "checked" : ""}
+                    >
+
                 </div>
+
             </div>
+
+
             <div class="sucursal-card-footer">
-                <button class="btn-guardar-sucursal">
-                    <i class="fas fa-save"></i> Guardar
+
+                <button
+                    type="button"
+                    class="btn-guardar-sucursal"
+                    onclick="
+                        guardarSucursalExistente(
+                            ${productoId},
+                            ${sucursalId}
+                        )
+                    "
+                >
+
+                    <i class="fas fa-save"></i>
+                    Guardar
+
                 </button>
+
             </div>
+
         </div>
     `;
+
 }
 
 function renderSucursalNoAsignada(sucursal) {
@@ -403,4 +510,151 @@ async function guardarSucursalNueva(productoId, sucursalId) {
     } catch (error) {
         console.error('Error en flujo guardarSucursalNueva:', error);
     }
+}
+
+async function guardarSucursalExistente(
+    productoId,
+    sucursalId
+) {
+
+    const precioInput =
+        document.getElementById(
+            `precio-${sucursalId}`
+        );
+
+    const disponibleInput =
+        document.getElementById(
+            `disponible-${sucursalId}`
+        );
+
+    const favoritoInput =
+        document.getElementById(
+            `favorito-${sucursalId}`
+        );
+
+
+    if (
+        !precioInput ||
+        !disponibleInput ||
+        !favoritoInput
+    ) {
+
+        console.error(
+            'No se encontraron los controles de la sucursal.',
+            {
+                productoId,
+                sucursalId
+            }
+        );
+
+        return;
+
+    }
+
+
+    const precio =
+        Number(precioInput.value);
+
+
+    if (
+        !Number.isFinite(precio) ||
+        precio < 0
+    ) {
+
+        alert(
+            'Debe ingresar un precio válido.'
+        );
+
+        return;
+
+    }
+
+
+    const disponible =
+        disponibleInput.checked
+            ? 1
+            : 0;
+
+
+    const destacado =
+        favoritoInput.checked
+            ? 1
+            : 0;
+
+
+    try {
+
+        const resultado =
+            await ProductosActions
+                .actualizarProductoSucursal(
+                    productoId,
+                    sucursalId,
+                    {
+                        precio,
+                        disponible,
+                        destacado
+                    }
+                );
+
+
+        if (!resultado.success) {
+
+            throw new Error(
+                resultado.message ||
+                'No fue posible guardar los cambios.'
+            );
+
+        }
+
+        // ==================================================
+        // VOLVER A CONSULTAR LA BD
+        // ==================================================
+
+        const productoIdActual =
+            document.getElementById(
+                'modalProductoId'
+            ).value;
+
+
+        await ProductosModal
+            .abrirSucursales(
+                productoIdActual
+            );
+
+
+        if (
+            typeof utils !== 'undefined' &&
+            typeof utils.mostrarMensajeExito ===
+                'function'
+        ) {
+
+            utils.mostrarMensajeExito(
+                'Sucursal actualizada',
+                'Los cambios fueron guardados correctamente.'
+            );
+
+        } else {
+
+            alert(
+                'Cambios guardados correctamente.'
+            );
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            'Error guardando cambios de sucursal:',
+            error
+        );
+
+
+        alert(
+            error.message ||
+            'No fue posible guardar los cambios.'
+        );
+
+    }
+
 }

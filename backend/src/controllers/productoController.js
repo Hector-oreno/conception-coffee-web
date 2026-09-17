@@ -576,209 +576,180 @@ const agregarProductoASucursal = async (req, res) => {
 };
 
 
-// 6. ELIMINAR / DAR DE BAJA GENERAL DEL NEGOCIO o por sucursal
+// ==========================================================================
+// 6. REMOVER PRODUCTO DE UNA SUCURSAL
+// No elimina el producto maestro.
+// ==========================================================================
+
 const eliminarProducto = async (req, res) => {
+
     try {
-        const { id } = req.params; // ID del producto
-        
-        // ==========================================================================
-        // REMOVER PRODUCTO DE UNA SUCURSAL
-        // No elimina el producto maestro.
-        // ==========================================================================
 
-        const eliminarProducto = async (req, res) => {
+        const productoId =
+            Number(req.params.id);
 
-            try {
 
-                const productoId =
-                    Number(req.params.id);
+        // ======================================================
+        // VALIDAR PRODUCTO
+        // ======================================================
 
+        if (
+            !Number.isInteger(productoId) ||
+            productoId <= 0
+        ) {
 
-                // ======================================================
-                // VALIDAR PRODUCTO
-                // ======================================================
+            return res.status(400).json({
 
-                if (
-                    !Number.isInteger(productoId) ||
-                    productoId <= 0
-                ) {
+                success: false,
 
-                    return res.status(400).json({
+                message:
+                    'El producto indicado no es válido.'
 
-                        success: false,
-
-                        message:
-                            'El producto indicado no es válido.'
-
-                    });
-
-                }
-
-
-                // ======================================================
-                // SUCURSAL AUTORIZADA
-                // ======================================================
-
-                const sucursalId =
-                    obtenerSucursalAutorizada(req);
-
-
-                if (!sucursalId) {
-
-                    return res.status(403).json({
-
-                        success: false,
-
-                        message:
-                            'No tienes una sucursal autorizada para realizar esta operación.'
-
-                    });
-
-                }
-
-
-                // ======================================================
-                // OBTENER ESTADO ANTERIOR PARA AUDITORÍA
-                // ======================================================
-
-                const valorAnterior =
-                    await productoModel.obtenerProductoPorId(
-                        productoId,
-                        sucursalId
-                    );
-
-
-                if (!valorAnterior) {
-
-                    return res.status(404).json({
-
-                        success: false,
-
-                        message:
-                            'El producto no está asignado a esta sucursal.'
-
-                    });
-
-                }
-
-
-                // ======================================================
-                // REMOVER ÚNICAMENTE DE LA SUCURSAL AUTORIZADA
-                // ======================================================
-
-                const borradoExitoso =
-                    await productoModel.eliminarDeSucursal(
-                        productoId,
-                        sucursalId
-                    );
-
-
-                if (!borradoExitoso) {
-
-                    return res.status(404).json({
-
-                        success: false,
-
-                        message:
-                            'El producto no estaba asignado a esta sucursal.'
-
-                    });
-
-                }
-
-
-                // ======================================================
-                // AUDITORÍA REAL
-                // ======================================================
-
-                await auditoriaModel.registrarMovimiento({
-
-                    id_usuario:
-                        req.usuario.id,
-
-                    rol_usuario:
-                        req.usuario.rol,
-
-                    accion:
-                        'DESVINCULAR',
-
-                    tabla_afectada:
-                        'producto_sucursal',
-
-                    id_registro_afectado:
-                        productoId,
-
-                    descripcion:
-                        `Producto ${productoId} removido de la sucursal ${sucursalId}.`,
-
-                    valor_anterior:
-                        JSON.stringify(
-                            valorAnterior
-                        ),
-
-                    valor_nuevo:
-                        null
-
-                });
-
-
-                return res.json({
-
-                    success: true,
-
-                    message:
-                        'El producto fue removido de la sucursal correctamente.',
-
-                    sucursal_id:
-                        sucursalId
-
-                });
-
-
-            } catch (error) {
-
-                console.error(
-                    'Error en eliminarProducto:',
-                    error
-                );
-
-
-                return res.status(500).json({
-
-                    success: false,
-
-                    message:
-                        'Error en el servidor al remover el producto de la sucursal.'
-
-                });
-
-            }
-
-        };
-
-        // Ejecutamos el borrado local (baja lógica por sucursal)
-        const borradoExitoso = await productoModel.eliminarDeSucursal(id, sucursalId);
-
-        if (borradoExitoso) {
-            return res.json({ 
-                success: true, 
-                message: 'El producto ha sido removido de la vitrina de esta sucursal.' 
             });
-        } else {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'El producto no estaba asignado a esta sucursal.' 
-            });
+
         }
-    } catch (error) {
-        console.error('Error en eliminarProducto:', error);
-        return res.status(500).json({ 
-            success: false, 
-            message: 'Error en el servidor al intentar remover el producto de la sucursal.' 
-        });
-    }
-};
 
+
+        // ======================================================
+        // SUCURSAL AUTORIZADA
+        // ======================================================
+
+        const sucursalId =
+            obtenerSucursalAutorizada(req);
+
+
+        if (!sucursalId) {
+
+            return res.status(403).json({
+
+                success: false,
+
+                message:
+                    'No tienes una sucursal autorizada para realizar esta operación.'
+
+            });
+
+        }
+
+
+        // ======================================================
+        // ESTADO ANTERIOR PARA AUDITORÍA
+        // ======================================================
+
+        const valorAnterior =
+            await productoModel.obtenerProductoPorId(
+                productoId,
+                sucursalId
+            );
+
+
+        if (!valorAnterior) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message:
+                    'El producto no está asignado a esta sucursal.'
+
+            });
+
+        }
+
+
+        // ======================================================
+        // REMOVER ÚNICAMENTE DE LA SUCURSAL
+        // ======================================================
+
+        const borradoExitoso =
+            await productoModel.eliminarDeSucursal(
+                productoId,
+                sucursalId
+            );
+
+
+        if (!borradoExitoso) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message:
+                    'El producto no estaba asignado a esta sucursal.'
+
+            });
+
+        }
+
+
+        // ======================================================
+        // AUDITORÍA
+        // ======================================================
+
+        await auditoriaModel.registrarMovimiento({
+
+            id_usuario:
+                req.usuario.id,
+
+            rol_usuario:
+                req.usuario.rol,
+
+            accion:
+                'DAR_BAJA',
+
+            tabla_afectada:
+                'producto_sucursal',
+
+            id_registro_afectado:
+                productoId,
+
+            descripcion:
+                `Producto ${productoId} dado de baja en la sucursal ${sucursalId}.`,
+
+            valor_anterior:
+                JSON.stringify(
+                    valorAnterior
+                ),
+
+            valor_nuevo:
+                null
+
+        });
+
+
+        return res.json({
+
+            success: true,
+
+            message:
+                'El producto fue dado de baja correctamente.',
+
+            sucursal_id:
+                sucursalId
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            'Error en eliminarProducto:',
+            error
+        );
+
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                'Error en el servidor al remover el producto de la sucursal.'
+
+        });
+
+    }
+
+};
 
 // ==========================================================================
 // CAMBIAR DISPONIBILIDAD DE PRODUCTO
@@ -1106,6 +1077,207 @@ const cambiarDestacado = async (req, res) => {
 
 };
 
+// ==========================================================================
+// ACTUALIZAR DATOS OPERATIVOS DE UN PRODUCTO EN UNA SUCURSAL
+// Solo modifica producto_sucursal.
+// ==========================================================================
+
+const actualizarProductoSucursal = async (req, res) => {
+
+    try {
+
+        const productoId =
+            Number(req.params.id);
+
+        const sucursalId =
+            obtenerSucursalAutorizada(req);
+
+
+        // ======================================================
+        // VALIDACIONES
+        // ======================================================
+
+        if (
+            !Number.isInteger(productoId) ||
+            productoId <= 0
+        ) {
+
+            return res.status(400).json({
+                success: false,
+                message:
+                    'El producto indicado no es válido.'
+            });
+
+        }
+
+
+        if (!sucursalId) {
+
+            return res.status(403).json({
+                success: false,
+                message:
+                    'No tienes una sucursal autorizada para realizar esta operación.'
+            });
+
+        }
+
+
+        const precio =
+            Number(req.body.precio);
+
+        const disponible =
+            Number(req.body.disponible) === 1
+                ? 1
+                : 0;
+
+        const destacado =
+            Number(req.body.destacado) === 1
+                ? 1
+                : 0;
+
+
+        if (
+            !Number.isFinite(precio) ||
+            precio < 0
+        ) {
+
+            return res.status(400).json({
+                success: false,
+                message:
+                    'El precio indicado no es válido.'
+            });
+
+        }
+
+
+        // ======================================================
+        // ESTADO ANTERIOR
+        // ======================================================
+
+        const valorAnterior =
+            await productoModel.obtenerProductoPorId(
+                productoId,
+                sucursalId
+            );
+
+
+        if (!valorAnterior) {
+
+            return res.status(404).json({
+                success: false,
+                message:
+                    'El producto no está asignado a esta sucursal.'
+            });
+
+        }
+
+
+        // ======================================================
+        // ACTUALIZAR SOLAMENTE producto_sucursal
+        // ======================================================
+
+        const modificado =
+            await productoModel.modificarProductoSucursal(
+                productoId,
+                sucursalId,
+                {
+                    precio,
+                    disponible,
+                    destacado
+                }
+            );
+
+
+        if (!modificado) {
+
+            return res.status(400).json({
+                success: false,
+                message:
+                    'No fue posible actualizar los datos de la sucursal.'
+            });
+
+        }
+
+
+        // ======================================================
+        // LEER NUEVAMENTE DESDE BD
+        // ======================================================
+
+        const valorNuevo =
+            await productoModel.obtenerProductoPorId(
+                productoId,
+                sucursalId
+            );
+
+
+        // ======================================================
+        // AUDITORÍA
+        // ======================================================
+
+        await auditoriaModel.registrarMovimiento({
+
+            id_usuario:
+                req.usuario.id,
+
+            rol_usuario:
+                req.usuario.rol,
+
+            accion:
+                'MODIFICAR_SUCURSAL',
+
+            tabla_afectada:
+                'producto_sucursal',
+
+            id_registro_afectado:
+                productoId,
+
+            descripcion:
+                `Se actualizaron los datos del producto ${productoId} en la sucursal ${sucursalId}.`,
+
+            valor_anterior:
+                JSON.stringify(valorAnterior),
+
+            valor_nuevo:
+                JSON.stringify(valorNuevo)
+
+        });
+
+
+        return res.json({
+
+            success: true,
+
+            message:
+                'Datos de la sucursal actualizados correctamente.',
+
+            data:
+                valorNuevo
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            'Error en actualizarProductoSucursal:',
+            error
+        );
+
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                'Error al actualizar los datos del producto en la sucursal.'
+
+        });
+
+    }
+
+};
+
+
 module.exports = {
     getProductos,
     getProductosDestacados,
@@ -1117,6 +1289,7 @@ module.exports = {
     cambiarDestacado,
     getProductoSucursales,
     agregarProductoASucursal,
-    obtenerSucursalAutorizada
+    obtenerSucursalAutorizada,
+    actualizarProductoSucursal
     
 };

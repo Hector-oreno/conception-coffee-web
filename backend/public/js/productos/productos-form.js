@@ -48,10 +48,58 @@ const ProductosForm = {
             const destacado = document.getElementById('prod-destacado').checked ? 1 : 0;
             const inputImagen = document.getElementById('prod-imagen');
 
+            const categoriaNumero =
+                Number(categoriaId);
+
+            const precioNumero =
+                Number(precio);
+
+
+            if (!nombre.trim()) {
+
+                alert(
+                    'El nombre del producto es obligatorio.'
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !Number.isFinite(precioNumero) ||
+                precioNumero < 0
+            ) {
+
+                alert(
+                    'Ingresa un precio válido.'
+                );
+
+            return;
+
+            }
+
+
+            if (
+                !Number.isInteger(categoriaNumero) ||
+                categoriaNumero <= 0
+            ) {
+
+                alert(
+                    'Selecciona una categoría válida.'
+                );
+
+                return;
+
+            }
+
+
+
+
             // 2. Adjuntamos los datos usando las llaves exactas que busca tu productoController.js
             formData.append('nombre', nombre.trim());
-            formData.append('precio', parseFloat(precio) || 0.00);
-            formData.append('categoria_id', parseInt(categoriaId, 10) || 1); // Evita el NaN de raíz
+            formData.append('precio', precioNumero);
+            formData.append('categoria_id', categoriaNumero);
             formData.append('descripcion', descripcion.trim());
             formData.append('destacado', destacado);
 
@@ -75,11 +123,23 @@ const ProductosForm = {
                 formData.append('sucursales', JSON.stringify(sucursalesSeleccionadas));
             } else {
                 // Modo EDICIÓN: Agregamos la sucursal activa
-                const sucursalId = typeof Productos !== 'undefined' && typeof Productos.obtenerSucursalSeleccionada === 'function'
-                    ? Productos.obtenerSucursalSeleccionada()
-                    : (window.sucursalActivaId || 1);
-                
-                formData.append('sucursalId', sucursalId);
+                const sucursalId =
+                    Productos.obtenerSucursalSeleccionada();
+
+                if (!sucursalId) {
+
+                    alert(
+                        'Selecciona una sucursal antes de editar el producto.'
+                    );
+
+                    return;
+
+                }
+
+                formData.append(
+                    'sucursal_id',
+                    sucursalId  
+                );
             }
 
             // 5. Enviamos de forma física al módulo de acciones de la API

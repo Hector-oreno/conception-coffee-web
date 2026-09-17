@@ -71,10 +71,18 @@ router.post(
     productoController.crearProducto
 );
 
-/**
- * ACTUALIZAR PRODUCTO (DATOS GLOBALES Y PRECIO POR SUCURSAL)
- * Permite actualizar textos, categorías y opcionalmente reemplazar la imagen.
- */
+
+router.patch(
+    '/:id/sucursal',
+    verificarToken,
+    verificarRoles(
+        'admin',
+        'gerente'
+    ),
+    productoController.actualizarProductoSucursal
+);
+
+
 /**
  * ACTUALIZAR PRODUCTO (DATOS GLOBALES Y PRECIO POR SUCURSAL)
  * Permite actualizar textos, categorías y opcionalmente reemplazar la imagen.

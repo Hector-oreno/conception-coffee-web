@@ -1,0 +1,469 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   PLANNER · SIDEBAR INTERNO DEL WORKSPACE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   CONTENEDOR
+   ========================================================================== */
+
+.planner-workspace .planner-sidebar {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+
+    padding: 20px 16px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border-right:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #faf9f7;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7d0ca transparent;
+}
+
+
+/* ==========================================================================
+   SEMANA ACTUAL
+   ========================================================================== */
+
+.planner-workspace .planner-sidebar > h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
+#plannerSemanaRango {
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.61rem;
+
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   PROGRESO
+   ========================================================================== */
+
+.planner-progress {
+    margin: 18px 0;
+    padding: 12px;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+
+.planner-progress > span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.56rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+
+#plannerProgresoTexto {
+    display: block;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.planner-progress-bar {
+    width: 100%;
+    height: 6px;
+
+    overflow: hidden;
+
+    margin-top: 9px;
+
+    border-radius: 999px;
+
+    background: #ebe7e3;
+}
+
+
+.planner-progress-fill {
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        var(--admin-accent, #9a6342);
+
+    transition:
+        width 0.25s ease;
+}
+
+
+/* ==========================================================================
+   SUCURSALES
+   ========================================================================== */
+
+.planner-branch-box {
+    margin-bottom: 18px;
+    padding: 12px;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+
+.planner-branch-box > label:first-child {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.56rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.055em;
+}
+
+
+.planner-check {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 0 0 7px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.64rem;
+
+    cursor: pointer;
+}
+
+
+.planner-check input {
+    width: 15px;
+    height: 15px;
+
+    flex: 0 0 15px;
+
+    margin: 0;
+
+    accent-color:
+        var(--admin-accent, #9a6342);
+
+    cursor: pointer;
+}
+
+
+#plannerSucursalesContainer {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.planner-branch-item {
+    min-height: 30px;
+
+    margin: 0;
+    padding: 6px 7px;
+
+    border-radius: 7px;
+
+    transition:
+        background 0.17s ease;
+}
+
+
+.planner-branch-item:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+}
+
+
+/* ==========================================================================
+   SUCURSAL FIJA DEL GERENTE
+   ========================================================================== */
+
+.planner-gerente-sucursal {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px;
+
+    border-radius: 9px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #825238);
+}
+
+
+.planner-gerente-sucursal > i {
+    flex: 0 0 auto;
+
+    font-size: 0.78rem;
+}
+
+
+.planner-gerente-sucursal > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+
+.planner-gerente-sucursal small {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.51rem;
+}
+
+
+.planner-gerente-sucursal strong {
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.63rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   LISTADO DE DÍAS
+   ========================================================================== */
+
+.planner-days {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.planner-day-item {
+    position: relative;
+
+    min-width: 0;
+    min-height: 48px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 2px;
+
+    padding: 8px 10px 8px 13px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.17s ease,
+        background 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+.planner-day-item::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+
+    width: 3px;
+
+    border-radius:
+        0 999px 999px 0;
+
+    background: transparent;
+
+    transition:
+        background 0.17s ease;
+}
+
+
+.planner-day-item:hover {
+    border-color: #d8c8bd;
+
+    background: #fdfbf9;
+
+    transform:
+        translateX(2px);
+}
+
+
+.planner-day-item.active {
+    border-color: #d7c0b1;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+}
+
+
+.planner-day-item.active::before {
+    background:
+        var(--admin-accent, #9a6342);
+}
+
+
+.planner-day-item strong {
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.64rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.planner-day-item small {
+    overflow: hidden;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.54rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.planner-day-item.active strong {
+    color:
+        var(--admin-accent-hover, #825238);
+}
+
+
+/* ==========================================================================
+   SCROLLBAR
+   ========================================================================== */
+
+.planner-workspace .planner-sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.planner-workspace .planner-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.planner-workspace .planner-sidebar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d7d0ca;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .planner-workspace .planner-sidebar {
+        padding: 14px;
+
+        border-right: 0;
+        border-bottom:
+            1px solid
+            var(--admin-border, #ebe7e3);
+    }
+
+
+    .planner-days {
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 620px) {
+
+    .planner-days {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}

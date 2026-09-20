@@ -456,9 +456,11 @@ const PlannerAPI = {
             `${CONFIG.API_BASE_URL}/planner/emojis`,
             {
                 method: "POST",
-                headers: {
+
+                headers: headersPlanner({
                     "Content-Type": "application/json"
-                },
+                }),
+
                 body: JSON.stringify({
                     palabra_clave: palabra,
                     emoji: emoji
@@ -469,6 +471,241 @@ const PlannerAPI = {
         return await response.json();
 
     },
+
+
+    // ======================================================
+    // ACTUALIZAR EMOJI
+    // ======================================================
+
+    async actualizarEmoji(
+        id,
+        palabra,
+        emoji
+    ) {
+
+        try {
+
+            const response = await fetch(
+                `${CONFIG.API_BASE_URL}/planner/emojis/${id}`,
+                {
+                    method: "PUT",
+
+                    headers: headersPlanner({
+                        "Content-Type": "application/json"
+                    }),
+
+                    body: JSON.stringify({
+                        palabra_clave: palabra,
+                        emoji: emoji
+                    })
+                }
+            );
+
+
+            const resultado =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                return {
+                    success: false,
+                    message:
+                        resultado.message ||
+                        "No fue posible actualizar el emoji."
+                };
+
+            }
+
+
+            return resultado;
+
+        } catch (error) {
+
+            console.error(
+                "Error en PlannerAPI.actualizarEmoji:",
+                error
+            );
+
+
+            return {
+                success: false,
+                message:
+                    "No fue posible comunicarse con el servidor."
+            };
+
+        }
+
+    },
+
+
+    // ======================================================
+    // DESACTIVAR EMOJI
+    // ======================================================
+
+    async desactivarEmoji(id) {
+
+        try {
+
+            const response = await fetch(
+                `${CONFIG.API_BASE_URL}/planner/emojis/${id}/desactivar`,
+                {
+                    method: "PATCH",
+
+                    headers:
+                        headersPlanner()
+                }
+            );
+
+
+            const resultado =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                return {
+                    success: false,
+                    message:
+                        resultado.message ||
+                        "No fue posible desactivar el emoji."
+                };
+
+            }
+
+
+            return resultado;
+
+        } catch (error) {
+
+            console.error(
+                "Error en PlannerAPI.desactivarEmoji:",
+                error
+            );
+
+
+            return {
+                success: false,
+                message:
+                    "No fue posible comunicarse con el servidor."
+            };
+
+        }
+
+    },
+
+
+    // ======================================================
+    // OBTENER EMOJIS INACTIVOS
+    // ======================================================
+
+    async obtenerEmojisInactivos() {
+
+        try {
+
+            const response = await fetch(
+                `${CONFIG.API_BASE_URL}/planner/emojis/inactivos`,
+                {
+                    headers:
+                        headersPlanner()
+                }
+            );
+
+
+            const resultado =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                return {
+                    success: false,
+                    data: [],
+                    message:
+                        resultado.message ||
+                        "No fue posible obtener los emojis inactivos."
+                };
+
+            }
+
+
+            return resultado;
+
+        } catch (error) {
+
+            console.error(
+                "Error en PlannerAPI.obtenerEmojisInactivos:",
+                error
+            );
+
+
+            return {
+                success: false,
+                data: [],
+                message:
+                    "No fue posible comunicarse con el servidor."
+            };
+
+        }
+
+    },
+
+
+    // ======================================================
+    // REACTIVAR EMOJI
+    // ======================================================
+
+    async reactivarEmoji(id) {
+
+        try {
+
+            const response = await fetch(
+                `${CONFIG.API_BASE_URL}/planner/emojis/${id}/reactivar`,
+                {
+                    method: "PATCH",
+
+                    headers:
+                        headersPlanner()
+                }
+            );
+
+
+            const resultado =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                return {
+                    success: false,
+                    message:
+                        resultado.message ||
+                        "No fue posible reactivar el emoji."
+                };
+
+            }
+
+
+            return resultado;
+
+        } catch (error) {
+
+            console.error(
+                "Error en PlannerAPI.reactivarEmoji:",
+                error
+            );
+
+
+            return {
+                success: false,
+                message:
+                    "No fue posible comunicarse con el servidor."
+            };
+
+        }
+
+    },
+
 
 
     async obtenerGuarniciones() {
@@ -495,9 +732,10 @@ const PlannerAPI = {
             {
                 method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: headersPlanner({
+                    "Content-Type":
+                        "application/json"
+                }),
 
                 body: JSON.stringify({
                     nombre
@@ -505,7 +743,22 @@ const PlannerAPI = {
             }
         );
 
-        return await response.json();
+
+        const resultado =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                resultado.message ||
+                `Error HTTP ${response.status}`
+            );
+
+        }
+
+
+        return resultado;
 
     },
 
@@ -779,9 +1032,9 @@ const PlannerAPI = {
                 {
                     method: "PUT",
 
-                    headers: {
+                    headers: headersPlanner({
                         "Content-Type": "application/json"
-                    },
+                    }),
 
                     body: JSON.stringify({
                         configuracion,

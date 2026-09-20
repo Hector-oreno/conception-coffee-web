@@ -134,7 +134,7 @@ const PlannerEmojis = {
     emojis: [],
 
     busquedaActual: "",
-
+    viendoInactivos: false,
     modoSeleccion: false,
     resolveSeleccion: null,
     palabraPendiente: null,
@@ -144,6 +144,24 @@ const PlannerEmojis = {
         await this.cargarEmojis();
 
         const input = document.getElementById("buscarEmoji");
+
+        const btnInactivos =
+            document.getElementById(
+                "btnEmojisInactivos"
+            );
+
+
+        if (btnInactivos) {
+
+            btnInactivos.onclick = () => {
+
+                this.alternarInactivos();
+
+            };
+
+        }
+
+
 
         if (!input) return;
 
@@ -166,10 +184,20 @@ const PlannerEmojis = {
             }
 
             const filtrados =
-                this.emojis.filter(item =>
-                    String(item.palabra_clave)
-                        .toLowerCase()
-                        .includes(texto)
+                this.emojis.filter(
+                    item => {
+
+                        const palabra =
+                            String(
+                                item.palabra_clave || ""
+                            )
+                            .toLowerCase();
+
+                        return palabra.includes(
+                            texto
+                        );
+
+                    }
                 );
 
             this.renderEmojis(
@@ -330,6 +358,77 @@ const PlannerEmojis = {
         `).join("");
 
 
+        // ==========================================
+        // ACCIONES ADMINISTRATIVAS
+        // ==========================================
+
+        if (!this.modoSeleccion) {
+
+            contenedor
+                .querySelectorAll(
+                    ".btn-editar-emoji"
+                )
+                .forEach(boton => {
+
+                    boton.onclick = (e) => {
+
+                        e.stopPropagation();
+
+                        const id =
+                            Number(
+                                boton.dataset.id
+                            );
+
+
+                        const item =
+                            this.emojis.find(
+                                emoji =>
+                                    Number(emoji.id) === id
+                            );
+
+
+                        if (item) {
+
+                            this.abrirEdicionEmoji(
+                                item
+                            );
+
+                        }
+
+                    };
+
+                });
+
+
+            contenedor
+                .querySelectorAll(
+                    ".btn-desactivar-emoji"
+                )
+                .forEach(boton => {
+
+                    boton.onclick = async (e) => {
+
+                        e.stopPropagation();
+
+                        const id =
+                            Number(
+                                boton.dataset.id
+                            );
+
+
+                        await this.desactivarEmoji(
+                            id
+                        );
+
+                    };
+
+                });
+
+        }
+
+
+
+
         // =====================================
         // MODO SELECCIÓN
         // =====================================
@@ -340,7 +439,7 @@ const PlannerEmojis = {
                 .querySelectorAll(".emoji-card")
                 .forEach((card, index) => {
 
-                    card.style.cursor = "pointer";
+                    card.classList.add("emoji-card-selectable");
 
                     card.onclick = async () => {
 
@@ -524,7 +623,11 @@ const PlannerEmojis = {
 
             await this.cargarEmojis();
 
+            await this.actualizarMetricas();
 
+
+
+            
             // ==========================================
             // LIMPIAR BUSCADOR
             // ==========================================
@@ -546,14 +649,28 @@ const PlannerEmojis = {
             // MOSTRAR EL REGISTRO NUEVO
             // ==========================================
 
+            const textoBusqueda =
+                String(
+                    palabra || ""
+                )
+                .toLowerCase();
+
+
             const encontrados =
                 this.emojis.filter(
-                    item =>
-                        item.palabra_clave
-                            .toLowerCase()
-                            .includes(
-                                palabra.toLowerCase()
+                    item => {
+
+                        const palabraClave =
+                            String(
+                                item.palabra_clave || ""
                             )
+                            .toLowerCase();
+
+                        return palabraClave.includes(
+                            textoBusqueda
+                        );
+
+                    }
                 );
 
             this.renderEmojis(
@@ -578,27 +695,549 @@ const PlannerEmojis = {
     },
 
 
-    async seleccionarEmoji(palabra) {
+    async desactivarEmoji(id) {
 
-        this.modoSeleccion = true;
-        this.palabraPendiente = palabra;
+        const confirmar =
+            confirm(
+                "¿Deseas desactivar esta asociación de emoji?\n\n" +
+                "No se eliminará y podrás reactivarla después."
+            );
+
+
+        if (!confirmar) {
+            return;
+        }
+
+
+        const resultado =
+            await PlannerAPI.desactivarEmoji(
+                id
+            );
+
+
+        if (!resultado.success) {
+
+            alert(
+                resultado.message ||
+                "No fue posible desactivar el emoji."
+            );
+
+            return;
+
+        }
+
 
         await this.cargarEmojis();
+        await this.actualizarMetricas();
 
-        mostrarModalEstatico("modalEmojis");
 
-        this.renderEmojis();
-
-        return new Promise(resolve => {
-
-            this.resolveSeleccion = resolve;
-
-        });
+    
 
     },
 
-    
-    
+ 
+    async alternarInactivos() {
+
+        const boton =
+            document.getElementById(
+                "btnEmojisInactivos"
+            );
+
+
+        // ==========================================
+        // VOLVER A ACTIVOS
+        // ==========================================
+
+        if (this.viendoInactivos) {
+
+            this.viendoInactivos =
+                false;
+
+
+            if (boton) {
+
+                boton.innerHTML = `
+                    <i class="fas fa-box-archive"></i>
+                    Emojis Inactivos
+                `;
+
+            }
+
+
+            await this.cargarEmojis();
+
+            
+            return;
+
+        }
+
+
+        // ==========================================
+        // MOSTRAR INACTIVOS
+        // ==========================================
+
+        const resultado =
+            await PlannerAPI
+                .obtenerEmojisInactivos();
+
+
+        if (!resultado.success) {
+
+            alert(
+                resultado.message ||
+                "No fue posible obtener los emojis inactivos."
+            );
+
+            return;
+
+        }
+
+
+        this.viendoInactivos =
+            true;
+
+
+        if (boton) {
+
+            boton.innerHTML = `
+                <i class="fas fa-arrow-left"></i>
+                Volver al Diccionario
+            `;
+
+        }
+
+
+        this.renderEmojisInactivos(
+            resultado.data
+        );
+
+    },
+
+
+    renderEmojisInactivos(lista) {
+
+        const contenedor =
+            document.getElementById(
+                "listaEmojis"
+            );
+
+
+        if (!contenedor) {
+            return;
+        }
+
+
+        if (
+            !Array.isArray(lista) ||
+            lista.length === 0
+        ) {
+
+            contenedor.innerHTML = `
+                <div class="catalogo-empty">
+                    <p>
+                        No existen emojis inactivos.
+                    </p>
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        contenedor.innerHTML =
+            lista.map(item => `
+
+                <div class="emoji-card emoji-card-inactive">
+
+                    <div class="emoji-icon">
+                        ${item.emoji}
+                    </div>
+
+                    <div class="emoji-info">
+
+                        <h4>
+                            ${item.palabra_clave}
+                        </h4>
+
+                        <small>
+                            Inactivo
+                        </small>
+
+                    </div>
+
+                    <div class="emoji-card-actions">
+
+                        <button
+                            type="button"
+                            class="btn-reactivar-emoji"
+                            data-id="${item.id}"
+                            title="Reactivar emoji"
+                        >
+                            <i class="fas fa-rotate-left"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `).join("");
+
+
+        contenedor
+            .querySelectorAll(
+                ".btn-reactivar-emoji"
+            )
+            .forEach(boton => {
+
+                boton.onclick = async () => {
+
+                    const id =
+                        Number(
+                            boton.dataset.id
+                        );
+
+
+                    await this.reactivarEmoji(
+                        id
+                    );
+
+                };
+
+            });
+
+    },
+
+
+    async reactivarEmoji(id) {
+
+        const resultado =
+            await PlannerAPI.reactivarEmoji(
+                id
+            );
+
+
+        if (!resultado.success) {
+
+            alert(
+                resultado.message ||
+                "No fue posible reactivar el emoji."
+            );
+
+            return;
+
+        }
+
+
+        const inactivos =
+            await PlannerAPI
+                .obtenerEmojisInactivos();
+
+
+        if (inactivos.success) {
+
+            this.renderEmojisInactivos(
+                inactivos.data
+            );
+
+        }
+
+
+        if (
+            typeof PlannerDashboard !== "undefined"
+        ) {
+
+            await PlannerDashboard
+                .cargarMetricasDashboard();
+
+        }
+
+    },
+
+
+    abrirEdicionEmoji(item) {
+
+        if (!item) {
+            return;
+        }
+
+
+        const contenedor =
+            document.getElementById(
+                "listaEmojis"
+            );
+
+
+        if (!contenedor) {
+            return;
+        }
+
+
+        const palabraActual =
+            String(
+                item.palabra_clave || ""
+            );
+
+
+        const emojiActual =
+            String(
+                item.emoji || ""
+            );
+
+
+        contenedor.innerHTML = `
+
+            <div class="emoji-register emoji-edit">
+
+                <div class="emoji-edit-header">
+
+                    <span class="emoji-edit-current">
+                        ${emojiActual}
+                    </span>
+
+                    <div>
+
+                        <h4>
+                            Editar asociación
+                        </h4>
+
+                        <p>
+                            Modifica la palabra o selecciona
+                            un nuevo emoji.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="emoji-edit-field">
+
+                    <label for="emojiEditarPalabra">
+                        Palabra clave
+                    </label>
+
+                    <input
+                        type="text"
+                        id="emojiEditarPalabra"
+                        value="${palabraActual}"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="emoji-edit-field">
+
+                    <label>
+                        Emoji
+                    </label>
+
+                    <input
+                        type="hidden"
+                        id="emojiEditarSeleccionado"
+                        value="${emojiActual}"
+                    >
+
+                    <div class="emoji-palette">
+
+                        ${this.PALETA.map(emoji => `
+
+                            <button
+                                type="button"
+                                class="emoji-palette-option
+                                ${
+                                    emoji === emojiActual
+                                        ? "selected"
+                                        : ""
+                                }"
+                                data-emoji="${emoji}"
+                            >
+                                ${emoji}
+                            </button>
+
+                        `).join("")}
+
+                    </div>
+
+                </div>
+
+
+                <div class="emoji-edit-actions">
+
+                    <button
+                        type="button"
+                        id="btnCancelarEdicionEmoji"
+                        class="btn-secondary"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btnGuardarEdicionEmoji"
+                        class="btn-primary"
+                    >
+                        Guardar Cambios
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        const inputEmoji =
+            document.getElementById(
+                "emojiEditarSeleccionado"
+            );
+
+
+        contenedor
+            .querySelectorAll(
+                ".emoji-palette-option"
+            )
+            .forEach(boton => {
+
+                boton.onclick = () => {
+
+                    contenedor
+                        .querySelectorAll(
+                            ".emoji-palette-option"
+                        )
+                        .forEach(opcion => {
+
+                            opcion.classList.remove(
+                                "selected"
+                            );
+
+                        });
+
+
+                    boton.classList.add(
+                        "selected"
+                    );
+
+
+                    if (inputEmoji) {
+
+                        inputEmoji.value =
+                            boton.dataset.emoji;
+
+                    }
+
+                };
+
+            });
+
+
+        const cancelar =
+            document.getElementById(
+                "btnCancelarEdicionEmoji"
+            );
+
+
+        if (cancelar) {
+
+            cancelar.onclick = () => {
+
+                this.renderEmojis(
+                    this.emojis
+                );
+
+            };
+
+        }
+
+
+        const guardar =
+            document.getElementById(
+                "btnGuardarEdicionEmoji"
+            );
+
+
+        if (guardar) {
+
+            guardar.onclick = async () => {
+
+                const inputPalabra =
+                    document.getElementById(
+                        "emojiEditarPalabra"
+                    );
+
+
+                const palabra =
+                    String(
+                        inputPalabra?.value || ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const emoji =
+                    String(
+                        inputEmoji?.value || ""
+                    )
+                    .trim();
+
+
+                if (!palabra || !emoji) {
+
+                    alert(
+                        "La palabra y el emoji son obligatorios."
+                    );
+
+                    return;
+
+                }
+
+
+                const resultado =
+                    await PlannerAPI.actualizarEmoji(
+                        item.id,
+                        palabra,
+                        emoji
+                    );
+
+
+                if (!resultado.success) {
+
+                    alert(
+                        resultado.message ||
+                        "No fue posible actualizar el emoji."
+                    );
+
+                    return;
+
+                }
+
+
+                await this.cargarEmojis();
+
+                await this.actualizarMetricas();
+
+            };
+
+        }
+
+    },
+
+    async actualizarMetricas() {
+
+        if (
+            typeof PlannerDashboard !== "undefined" &&
+            typeof PlannerDashboard.cargarMetricasDashboard === "function"
+        ) {
+
+            await PlannerDashboard
+                .cargarMetricasDashboard();
+
+        }
+
+    },
+
+
 
 };
 

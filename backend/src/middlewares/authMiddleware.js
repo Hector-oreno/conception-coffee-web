@@ -265,13 +265,16 @@ const verificarToken = async (req, res, next) => {
         // ==================================================
 
         if (
-            error.name === 'TokenExpiredError'
+            error.name === "TokenExpiredError"
         ) {
 
             return res.status(401).json({
+
                 success: false,
+
                 message:
-                    'El token ha expirado.'
+                    "El token ha expirado."
+
             });
 
         }
@@ -282,37 +285,80 @@ const verificarToken = async (req, res, next) => {
         // ==================================================
 
         if (
-            error.name === 'JsonWebTokenError' ||
-            error.name === 'NotBeforeError'
+            error.name === "JsonWebTokenError" ||
+            error.name === "NotBeforeError"
         ) {
 
             return res.status(401).json({
+
                 success: false,
+
                 message:
-                    'Token inválido.'
+                    "Token inválido."
+
             });
 
         }
 
 
         // ==================================================
-        // ERROR INTERNO
+        // ERROR TEMPORAL DE BASE DE DATOS / RED
+        // ==================================================
+
+        const erroresConexion = [
+            "ECONNRESET",
+            "ECONNREFUSED",
+            "ETIMEDOUT",
+            "ENOTFOUND",
+            "EAI_AGAIN",
+            "PROTOCOL_CONNECTION_LOST"
+        ];
+
+
+        if (
+            erroresConexion.includes(
+                error.code
+            )
+        ) {
+
+            console.error(
+                "Base de datos temporalmente no disponible durante autenticación:",
+                error.code
+            );
+
+
+            return res.status(503).json({
+
+                success: false,
+
+                message:
+                    "El servicio de base de datos no está disponible temporalmente. Intenta nuevamente."
+
+            });
+
+        }
+
+
+        // ==================================================
+        // ERROR INTERNO NO IDENTIFICADO
         // ==================================================
 
         console.error(
-            'Error verificando autenticación:',
+            "Error verificando autenticación:",
             error
         );
 
 
         return res.status(500).json({
+
             success: false,
+
             message:
-                'Error interno verificando la sesión.'
+                "Error interno verificando la sesión."
+
         });
 
     }
-
 };
 
 

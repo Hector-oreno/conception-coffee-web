@@ -12,20 +12,28 @@ const PlannerCatalogo = {
 
         this.inicializarPreview();
 
-        await this.cargarCatalogo();
+        if (
+            Array.isArray(Planner.catalogo) &&
+            Planner.catalogo.length > 0
+        ) {
+
+            this.renderCatalogo();
+
+        } else {
+
+            await this.cargarCatalogo();
+
+        }
 
 
         const btnGuardar = document.getElementById("btnGuardarPlatillo");
 
         if (btnGuardar) {
 
-            btnGuardar.addEventListener("click", (e) => {
-
+            btnGuardar.onclick = (e) => {
                 e.preventDefault();
-
                 this.guardarPlatillo();
-
-            });
+            };
 
         }
 
@@ -34,19 +42,16 @@ const PlannerCatalogo = {
 
         if (btnNuevo) {
 
-            btnNuevo.addEventListener("click", (e) => {
-
+            btnNuevo.onclick = (e) => {
                 e.preventDefault();
-
                 e.stopPropagation();
 
-                
+                this.limpiarFormulario();
 
-                console.log(document.getElementById("modalNuevoPlatillo"));
-
-                mostrarModalEstatico("modalNuevoPlatillo");
-
-            });
+                mostrarModalEstatico(
+                    "modalNuevoPlatillo"
+                );
+            };
 
         }
 
@@ -54,11 +59,9 @@ const PlannerCatalogo = {
 
         if (btnCerrar) {
 
-            btnCerrar.addEventListener("click", () => {
-
+            btnCerrar.onclick = () => {
                 this.cerrarModalNuevo();
-
-            });
+            };
 
         } 
         
@@ -66,11 +69,11 @@ const PlannerCatalogo = {
 
         if (buscador) {
 
-            buscador.addEventListener("input", (e) => {
-
-                this.buscarPlatillo(e.target.value);
-
-            });
+            buscador.oninput = (e) => {
+                this.buscarPlatillo(
+                    e.target.value
+                );
+            };
 
         }
 
@@ -80,11 +83,9 @@ const PlannerCatalogo = {
 
         if (btnInactivos) {
 
-            btnInactivos.addEventListener("click", () => {
-
+            btnInactivos.onclick = () => {
                 this.abrirInactivos();
-
-            });
+            };
 
         }
 
@@ -93,15 +94,10 @@ const PlannerCatalogo = {
 
 
 
-    abrirModalNuevo() {
-
-        document.getElementById("modalNuevoPlatillo").style.display = "flex";
-
-    },
-
+    
     cerrarModalNuevo() {
 
-        document.getElementById("modalNuevoPlatillo").style.display = "none";
+       
 
         ocultarModalEstatico("modalNuevoPlatillo");
 
@@ -139,17 +135,42 @@ const PlannerCatalogo = {
 
         try {
 
-            const result = await PlannerAPI.obtenerCatalogo();
+            if (
+                typeof Planner !== "undefined" &&
+                typeof Planner.cargarCatalogo ===
+                    "function"
+            ) {
 
-            if (!result.success) return;
+                await Planner.cargarCatalogo();
 
-            this.catalogo = result.data;
+                return;
+
+            }
+
+
+            // Fallback de seguridad
+            const result =
+                await PlannerAPI.obtenerCatalogo();
+
+
+            if (!result.success) {
+                return;
+            }
+
+
+            this.catalogo =
+                result.data;
+
 
             this.renderCatalogo();
 
+
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Error cargando catálogo:",
+                error
+            );
 
         }
 
@@ -220,24 +241,19 @@ const PlannerCatalogo = {
 
             }
 
-            alert("Platillo creado correctamente.");
+            alert(
+                this.modoFormulario === "nuevo"
+                    ? "Platillo creado correctamente."
+                    : "Platillo actualizado correctamente."
+            );
 
-            document.getElementById("catalogoNombre").value = "";
-
-            document.getElementById("catalogoPrecio").value = "";
-
-            document.getElementById("catalogoGuarniciones").value = "";
-
-            document.getElementById("catalogoImagen").value = "";
-
-            document.getElementById("catalogoPreview").src =
-                "images/uploads/Logo_carta.png";
 
             this.limpiarFormulario();
-
             this.cerrarModalNuevo();
 
             await this.cargarCatalogo();
+
+            await this.actualizarMetricas();
 
             } catch (error) {
 
@@ -355,7 +371,15 @@ const PlannerCatalogo = {
 
     buscarPlatillo(texto) {
 
-        texto = texto.toLowerCase().trim();
+        texto =
+            String(texto || "")
+                .toLowerCase()
+                .trim();
+
+
+        // ==========================================
+        // SIN TEXTO → MOSTRAR TODO
+        // ==========================================
 
         if (!texto) {
 
@@ -365,21 +389,45 @@ const PlannerCatalogo = {
 
         }
 
-        const resultados = this.catalogo.filter(platillo => {
 
-            return (
+        // ==========================================
+        // FILTRAR CATÁLOGO
+        // ==========================================
 
-                platillo.nombre_plato.toLowerCase().includes(texto) ||
+        const resultados =
+            this.catalogo.filter(
+                platillo => {
 
-                platillo.acompanamientos_defecto
-                    .toLowerCase()
-                    .includes(texto)
+                    const nombre =
+                        String(
+                            platillo.nombre_plato || ""
+                        )
+                        .toLowerCase();
 
+
+                    const acompanamientos =
+                        String(
+                            platillo.acompanamientos_defecto || ""
+                        )
+                        .toLowerCase();
+
+
+                    return (
+                        nombre.includes(texto) ||
+                        acompanamientos.includes(texto)
+                    );
+
+                }
             );
 
-        });
 
-        this.renderCatalogo(resultados);
+        // ==========================================
+        // RENDERIZAR RESULTADOS
+        // ==========================================
+
+        this.renderCatalogo(
+            resultados
+        );
 
     },
 
@@ -519,6 +567,8 @@ const PlannerCatalogo = {
 
         await this.abrirInactivos();
 
+        await this.actualizarMetricas();
+
     },
 
 
@@ -607,7 +657,26 @@ const PlannerCatalogo = {
 
         await this.cargarCatalogo();
 
+
+        await this.actualizarMetricas();
+
+
         alert("Platillo desactivado correctamente.");
+
+    },
+
+
+    async actualizarMetricas() {
+
+        if (
+            typeof PlannerDashboard !== "undefined" &&
+            typeof PlannerDashboard.cargarMetricasDashboard === "function"
+        ) {
+
+            await PlannerDashboard
+                .cargarMetricasDashboard();
+
+        }
 
     },
 

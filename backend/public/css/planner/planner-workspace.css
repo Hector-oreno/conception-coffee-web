@@ -1,0 +1,1207 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   PLANNER · WORKSPACE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   BACKDROP
+   ========================================================================== */
+
+.planner-workspace-backdrop {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background: rgba(31, 25, 21, 0.52);
+
+    backdrop-filter: blur(4px);
+}
+
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================================== */
+
+.planner-workspace {
+    width: min(1280px, 100%);
+    height: min(820px, calc(100vh - 36px));
+
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 18px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 28px 75px
+        rgba(31, 25, 21, 0.24);
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.planner-workspace-header {
+    flex: 0 0 auto;
+
+    min-height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 18px;
+
+    border-bottom:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #ffffff;
+}
+
+
+.planner-header-left {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.planner-logo {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.9rem;
+}
+
+
+.planner-header-left > div:last-child {
+    min-width: 0;
+}
+
+
+.planner-header-left h2 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+.planner-header-left p {
+    margin: 2px 0 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.61rem;
+
+    line-height: 1.4;
+}
+
+
+.planner-close-btn {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f6f3f1;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        color 0.17s ease;
+}
+
+
+.planner-close-btn:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   ÁREA DE TRABAJO
+   ========================================================================== */
+
+.planner-workspace-content {
+    flex: 1 1 auto;
+
+    min-width: 0;
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        245px minmax(0, 1fr);
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   EDITOR
+   ========================================================================== */
+
+.planner-editor {
+    min-width: 0;
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 20px;
+
+    background: #f8f7f5;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7d0ca transparent;
+}
+
+
+.planner-editor-card {
+    width: min(820px, 100%);
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================================================
+   CABECERA DEL DÍA
+   ========================================================================== */
+
+.planner-editor-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 14px;
+}
+
+
+.planner-editor-title > div {
+    min-width: 0;
+}
+
+
+.planner-editor-title h2 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+
+.planner-editor-title small {
+    display: block;
+
+    margin-top: 2px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.6rem;
+}
+
+
+.planner-status-chip {
+    flex: 0 0 auto;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    background: #fff3d8;
+
+    color: #946300;
+
+    font-size: 0.53rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+
+.planner-status-chip.publicado {
+    background: #e7f4ea;
+
+    color: #37794a;
+}
+
+
+.planner-status-chip.borrador {
+    background: #fff3d8;
+
+    color: #946300;
+}
+
+
+/* ==========================================================================
+   SECCIONES DEL EDITOR
+   ========================================================================== */
+
+.planner-section {
+    margin-bottom: 12px;
+    padding: 16px;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 3px 12px
+        rgba(45, 35, 29, 0.025);
+}
+
+
+.planner-section h4 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+
+.planner-section > p {
+    margin: 3px 0 13px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.6rem;
+
+    line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   ESTADO DEL SERVICIO
+   ========================================================================== */
+
+.planner-state-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+
+.planner-state-card {
+    min-width: 0;
+    min-height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 10px;
+
+    border:
+        1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.17s ease,
+        background 0.17s ease,
+        color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+.planner-state-card i {
+    font-size: 0.9rem;
+}
+
+
+.planner-state-card span {
+    font-size: 0.59rem;
+    font-weight: 650;
+}
+
+
+.planner-state-card:hover {
+    border-color: #d2bcad;
+
+    background: #fdfaf8;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.planner-state-card.active {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #825238);
+
+    box-shadow:
+        inset 0 0 0 1px
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   SELECTOR DE PRODUCTO
+   ========================================================================== */
+
+.planner-product-selector {
+    margin-top: 8px;
+}
+
+
+.planner-product-selector select {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 11px;
+
+    border:
+        1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 9px;
+
+    outline: 0;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.66rem;
+
+    cursor: pointer;
+}
+
+
+.planner-product-selector select:focus {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(154, 99, 66, 0.08);
+}
+
+
+/* ==========================================================================
+   PREVIEW DEL PRODUCTO
+   ========================================================================== */
+
+.planner-preview-card {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 12px;
+    padding: 12px;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+
+.planner-preview-image {
+    width: 76px;
+    height: 76px;
+
+    flex: 0 0 76px;
+
+    overflow: hidden;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background: #f5f2ef;
+}
+
+
+.planner-preview-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.planner-preview-info {
+    min-width: 0;
+}
+
+
+.planner-preview-info h3 {
+    margin: 0;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.planner-preview-info > span {
+    display: block;
+
+    margin-top: 3px;
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.77rem;
+    font-weight: 700;
+}
+
+
+.planner-preview-info p {
+    margin: 4px 0 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.58rem;
+
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   PERSONALIZACIÓN
+   ========================================================================== */
+
+.planner-section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+}
+
+
+.planner-section-header > div {
+    min-width: 0;
+}
+
+
+.planner-section-header p {
+    margin: 3px 0 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.59rem;
+
+    line-height: 1.45;
+}
+
+
+.planner-origin-badge {
+    flex: 0 0 auto;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    font-size: 0.51rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.planner-origin-badge.catalogo,
+.planner-origin-badge.badge-master {
+    background: #e9f4ec;
+
+    color: #39794b;
+}
+
+
+.planner-origin-badge.personalizado,
+.planner-origin-badge.badge-custom {
+    background: #fff2d5;
+
+    color: #956600;
+}
+
+
+.planner-origin-badge.badge-empty {
+    background: #efedeb;
+
+    color: #756d67;
+}
+
+
+.planner-origin-badge.badge-published {
+    background: #e8eef9;
+
+    color: #4c648b;
+}
+
+
+/* ==========================================================================
+   OPCIONES
+   ========================================================================== */
+
+.planner-options {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 13px;
+}
+
+
+.planner-option {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.61rem;
+    font-weight: 550;
+
+    cursor: pointer;
+}
+
+
+.planner-option input {
+    width: 15px;
+    height: 15px;
+
+    flex: 0 0 15px;
+
+    margin: 0;
+
+    accent-color:
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   CAMPOS PERSONALIZADOS
+   ========================================================================== */
+
+.planner-custom-fields {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr) 190px;
+
+    gap: 10px;
+
+    margin-top: 12px;
+}
+
+
+.planner-field {
+    position: relative;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.planner-field label {
+    margin-bottom: 5px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.57rem;
+    font-weight: 700;
+}
+
+
+.planner-field input,
+.planner-section textarea,
+.planner-section > input[type="text"] {
+    width: 100%;
+
+    padding: 9px 10px;
+
+    border:
+        1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 8px;
+
+    outline: 0;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.63rem;
+}
+
+
+.planner-field input {
+    min-height: 38px;
+}
+
+
+.planner-section textarea {
+    min-height: 82px;
+
+    resize: vertical;
+}
+
+
+.planner-field input:focus,
+.planner-section textarea:focus,
+.planner-section > input[type="text"]:focus {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(154, 99, 66, 0.08);
+}
+
+
+.planner-field small {
+    margin-top: 4px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.52rem;
+
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   SUGERENCIAS DE GUARNICIONES
+   ========================================================================== */
+
+.planner-guarniciones-sugerencias {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 59px;
+
+    z-index: 20;
+
+    max-height: 180px;
+
+    overflow-y: auto;
+
+    padding: 5px;
+
+    border:
+        1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 10px 25px
+        rgba(31, 25, 21, 0.12);
+}
+
+
+.planner-guarnicion-sugerencia {
+    width: 100%;
+
+    display: block;
+
+    padding: 7px 8px;
+
+    border: 0;
+    border-radius: 6px;
+
+    background: transparent;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.58rem;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.planner-guarnicion-sugerencia:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+}
+
+
+.planner-guarnicion-sugerencia.crear {
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-weight: 650;
+}
+
+
+/* ==========================================================================
+   CHIPS DE GUARNICIONES
+   ========================================================================== */
+
+.planner-chip-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 5px;
+
+    margin-top: 7px;
+}
+
+
+.planner-chip {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    max-width: 100%;
+
+    padding: 5px 7px;
+
+    border-radius: 999px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #825238);
+
+    font-size: 0.54rem;
+    font-weight: 600;
+}
+
+
+.planner-chip span {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.planner-chip button {
+    width: 15px;
+    height: 15px;
+
+    flex: 0 0 15px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(130, 82, 56, 0.12);
+
+    color: inherit;
+
+    font-size: 0.7rem;
+
+    cursor: pointer;
+}
+
+
+/* ==========================================================================
+   FERIADO / CERRADO
+   ========================================================================== */
+
+#bloqueFeriado,
+#bloqueCerrado {
+    margin-bottom: 12px;
+}
+
+
+#bloqueFeriado label,
+#bloqueCerrado label {
+    display: block;
+
+    margin: 11px 0 5px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.57rem;
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   MOSTRAR / OCULTAR
+   ========================================================================== */
+
+.planner-hidden {
+    display: none !important;
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.planner-workspace-footer {
+    flex: 0 0 auto;
+
+    min-height: 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border-top:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #ffffff;
+}
+
+
+.planner-btn-cancel,
+.planner-btn-save,
+.planner-btn-publish {
+    min-height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 7px 12px;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.61rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        border-color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+.planner-btn-cancel {
+    border:
+        1px solid
+        var(--admin-border, #ddd7d2);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.planner-btn-cancel:hover {
+    background: #f6f3f1;
+}
+
+
+.planner-btn-save {
+    border: 0;
+
+    background:
+        var(--admin-accent, #9a6342);
+
+    color: #ffffff;
+}
+
+
+.planner-btn-save:hover {
+    background:
+        var(--admin-accent-hover, #825238);
+
+    transform:
+        translateY(-1px);
+}
+
+
+.planner-btn-publish {
+    border:
+        1px solid
+        #b8d7c1;
+
+    background: #edf7f0;
+
+    color: #39794b;
+}
+
+
+.planner-btn-publish:hover {
+    border-color: #86bb96;
+
+    background: #dff0e4;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ==========================================================================
+   SCROLLBAR DEL EDITOR
+   ========================================================================== */
+
+.planner-editor::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.planner-editor::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.planner-editor::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d7d0ca;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .planner-workspace-backdrop {
+        padding: 10px;
+    }
+
+
+    .planner-workspace {
+        height:
+            calc(100vh - 20px);
+
+        border-radius: 14px;
+    }
+
+
+    .planner-workspace-content {
+        grid-template-columns: 1fr;
+
+        grid-template-rows:
+            auto minmax(0, 1fr);
+    }
+
+
+    .planner-workspace .planner-sidebar {
+        max-height: 280px;
+    }
+
+
+    .planner-editor {
+        padding: 15px;
+    }
+
+}
+
+
+@media (max-width: 620px) {
+
+    .planner-workspace-backdrop {
+        padding: 0;
+    }
+
+
+    .planner-workspace {
+        width: 100%;
+        height: 100vh;
+
+        border: 0;
+        border-radius: 0;
+    }
+
+
+    .planner-workspace-header {
+        min-height: 66px;
+
+        padding: 11px 13px;
+    }
+
+
+    .planner-header-left p {
+        display: none;
+    }
+
+
+    .planner-state-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .planner-custom-fields {
+        grid-template-columns: 1fr;
+    }
+
+
+    .planner-preview-card {
+        align-items: flex-start;
+    }
+
+
+    .planner-preview-image {
+        width: 64px;
+        height: 64px;
+
+        flex-basis: 64px;
+    }
+
+
+    .planner-section-header {
+        flex-direction: column;
+    }
+
+
+    .planner-workspace-footer {
+        flex-wrap: wrap;
+
+        padding: 9px 12px;
+    }
+
+}

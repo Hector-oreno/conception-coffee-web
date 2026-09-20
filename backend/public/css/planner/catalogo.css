@@ -1,318 +1,874 @@
-/* ====================================================== */
-/* MÓDULO CATÁLOGO MAESTRO */
-/* ====================================================== */
-
-.catalogo-body{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:18px;
-
-    padding:20px;
-
-}
-
-.catalogo-search{
-
-    width:100%;
-
-    padding:12px 16px;
-
-    border-radius:12px;
-
-    border:1px solid #ddd;
-
-    outline:none;
-
-    transition:.30s;
-
-}
-
-.catalogo-search:focus{
-
-    border-color:#8b5e3c;
-
-    box-shadow:0 0 0 4px rgba(139,94,60,.12);
-
-}
-
-.catalogo-btn-new{
-
-    background:#5c3d2e;
-
-    color:#fff;
-
-    border:none;
-
-    border-radius:12px;
-
-    padding:12px 18px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.30s;
-
-}
-
-.catalogo-btn-new:hover{
-
-    background:#8b5e3c;
-
-    transform:translateY(-2px);
-
-}
-
-.catalogo-listado{
-
-    border:1px solid #e5e5e5;
-
-    border-radius:12px;
-
-    background:#fff;
-
-    min-height:250px;
-
-    max-height:320px;
-
-    overflow-y:auto;
-
-    padding:12px;
-
-}
+/* ==========================================================================
+   CONCEPTION COFFEE
+   PLANNER · CATÁLOGO MAESTRO
+   ========================================================================== */
 
 
-.modal-backdrop{
+/* ==========================================================================
+   MODAL CATÁLOGO
+   ========================================================================== */
+
+#modalCatalogo {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.55);
+
+    z-index: 9500;
+
     display: none;
-    justify-content: center;
     align-items: center;
-    z-index: 9999;
-}
+    justify-content: center;
 
-.modal-content{
-    background:#fff;
-    border-radius:16px;
-    width:520px;
-    max-width:95%;
-}
+    padding: 18px;
 
-/* ======================================================
-   MODAL NUEVO PLATILLO
-====================================================== */
+    background: rgba(31, 25, 21, 0.50);
 
-#modalNuevoPlatillo{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:3000;
-
-}
-
-.modal-nuevo-platillo{
-
-    padding-bottom:20px;
-
-    width:580px;
-
-    max-width:92%;
-
-    background:#fff;
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    box-shadow:0 20px 40px rgba(0,0,0,.25);
-
-}
-
-.modal-header{
-
-    background:#5c3d2e;
-
-    color:#fff;
-
-    padding:18px 22px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-}
-
-.close-modal-btn{
-
-    background:none;
-
-    border:none;
-
-    color:#fff;
-
-    font-size:26px;
-
-    cursor:pointer;
-
-}
-
-.modal-nuevo-platillo input{
-
-    width: 92%;
-
-    margin:0 auto 14px;
-
-    display:block;
-
-    margin-bottom:14px;
-
-    padding:12px;
-
-    border-radius:10px;
-
-    border:1px solid #ddd;
-
+    backdrop-filter: blur(4px);
 }
 
 
+#modalCatalogo .modal-content {
+    width: min(640px, 100%);
+    max-height: min(720px, calc(100vh - 36px));
 
-.catalogo-btn-save:hover{
+    display: flex;
+    flex-direction: column;
 
-    background:#8b5e3c;
+    overflow: hidden;
 
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 24px 65px
+        rgba(31, 25, 21, 0.20);
 }
 
 
-.catalogo-btn-save{
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
 
-    width:92%;
+#modalCatalogo .modal-header {
+    flex: 0 0 auto;
 
-    margin:15px auto 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    display:block;
+    gap: 16px;
 
-    background:#5c3d2e;
+    padding: 17px 20px;
 
-    color:white;
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
 
-    border:none;
-
-    padding:14px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
+    background: #ffffff;
 }
 
 
-.catalogo-imagen-preview{
+#modalCatalogo .modal-header h3 {
+    margin: 0;
 
-    display:flex;
+    color:
+        var(--admin-text, #282421);
 
-    justify-content:center;
+    font-family:
+        "Playfair Display",
+        serif;
 
-    align-items:center;
-
-    padding:25px 0 15px;
-
-}
-
-.cambiar-imagen{
-
-    text-align:center;
-
-    color:#8b5e3c;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    margin-bottom:20px;
-
-}
-
-.catalogo-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-}
-
-.catalogo-card-imagen img{
-
-    width:75px;
-
-    height:75px;
-
-    object-fit:cover;
-
-    border-radius:12px;
-
-}
-
-.catalogo-card-info{
-
-    flex:1;
-
-}
-
-.catalogo-card-actions{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:8px;
-
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 
+#modalCatalogo .close-modal-btn {
+    width: 32px;
+    height: 32px;
 
-.catalogo-imagen-preview img{
+    display: grid;
+    place-items: center;
 
-    width:170px;
+    flex: 0 0 32px;
 
-    height:170px;
+    padding: 0;
 
-    object-fit:cover;
+    border: 0;
+    border-radius: 8px;
 
-    border-radius:18px;
+    background: #f6f3f1;
 
-    border:2px dashed #d8d8d8;
+    color:
+        var(--admin-text-muted, #756d67);
 
-    cursor:pointer;
+    font-size: 1rem;
 
-    transition:.30s;
+    cursor: pointer;
 
+    transition:
+        background 0.17s ease,
+        color 0.17s ease;
 }
 
-.catalogo-imagen-preview img:hover{
 
-    transform:scale(1.03);
+#modalCatalogo .close-modal-btn:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
 
-    border-color:#8b5e3c;
-
+    color:
+        var(--admin-accent, #9a6342);
 }
 
+
+/* ==========================================================================
+   BODY
+   ========================================================================== */
+
+#modalCatalogo .catalogo-body {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 16px 20px 20px;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   BUSCADOR
+   ========================================================================== */
+
+#modalCatalogo .catalogo-search {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 13px;
+
+    border: 1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 10px;
+
+    outline: 0;
+
+    background: #faf9f7;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.67rem;
+
+    transition:
+        border-color 0.17s ease,
+        box-shadow 0.17s ease,
+        background 0.17s ease;
+}
+
+
+#modalCatalogo .catalogo-search::placeholder {
+    color: #aaa19b;
+}
+
+
+#modalCatalogo .catalogo-search:focus {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(154, 99, 66, 0.08);
+}
+
+
+/* ==========================================================================
+   ACCIONES SUPERIORES
+   ========================================================================== */
+
+#modalCatalogo .catalogo-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+#modalCatalogo .catalogo-btn-new,
+#modalCatalogo #btnPlatillosInactivos {
+    min-height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.61rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        border-color 0.17s ease,
+        color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalCatalogo .catalogo-btn-new {
+    border: 0;
+
+    background:
+        var(--admin-accent, #9a6342);
+
+    color: #ffffff;
+}
+
+
+#modalCatalogo .catalogo-btn-new:hover {
+    background:
+        var(--admin-accent-hover, #825238);
+
+    transform: translateY(-1px);
+}
+
+
+#modalCatalogo #btnPlatillosInactivos {
+    border: 1px solid
+        var(--admin-border, #ddd7d2);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+#modalCatalogo #btnPlatillosInactivos:hover {
+    border-color: #d2bcad;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #825238);
+}
+
+
+/* ==========================================================================
+   LISTADO
+   ========================================================================== */
+
+#modalCatalogo .catalogo-listado {
+    flex: 1 1 auto;
+
+    min-height: 260px;
+    max-height: 430px;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding: 7px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #faf9f7;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7d0ca transparent;
+}
+
+
+#modalCatalogo .catalogo-listado::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+#modalCatalogo .catalogo-listado::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+#modalCatalogo .catalogo-listado::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d7d0ca;
+}
+
+
+/* ==========================================================================
+   TARJETA
+   ========================================================================== */
+
+#modalCatalogo .catalogo-card {
+    min-width: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        64px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 10px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    transition:
+        border-color 0.17s ease,
+        box-shadow 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalCatalogo .catalogo-card:hover {
+    border-color: #d8c8bd;
+
+    box-shadow:
+        0 5px 14px
+        rgba(45, 35, 29, 0.05);
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   IMAGEN
+   ========================================================================== */
+
+#modalCatalogo .catalogo-card-imagen {
+    width: 64px;
+    height: 64px;
+
+    overflow: hidden;
+
+    border: 1px solid #eee8e4;
+
+    border-radius: 9px;
+
+    background: #f7f4f2;
+}
+
+
+#modalCatalogo .catalogo-card-imagen img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+#modalCatalogo .catalogo-card-info {
+    min-width: 0;
+}
+
+
+#modalCatalogo .catalogo-card-info h4 {
+    margin: 0 0 3px;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.69rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+#modalCatalogo .catalogo-precio,
+#modalCatalogo .catalogo-card-info > span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.66rem;
+    font-weight: 700;
+}
+
+
+#modalCatalogo .catalogo-card-info p {
+    margin: 0;
+
+    display: -webkit-box;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.56rem;
+
+    line-height: 1.4;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+/* ==========================================================================
+   ACCIONES DE TARJETA
+   ========================================================================== */
+
+#modalCatalogo .catalogo-card-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+#modalCatalogo .btn-editar,
+#modalCatalogo .btn-eliminar,
+#modalCatalogo .btn-reactivar {
+    width: 31px;
+    height: 31px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 0.62rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        border-color 0.17s ease,
+        color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalCatalogo .btn-editar {
+    border: 1px solid #e3d4ca;
+
+    color:
+        var(--admin-accent, #9a6342);
+}
+
+
+#modalCatalogo .btn-editar:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    border-color: #d2b6a4;
+
+    transform: translateY(-1px);
+}
+
+
+#modalCatalogo .btn-eliminar {
+    border: 1px solid #efd4d1;
+
+    color: #b8544d;
+}
+
+
+#modalCatalogo .btn-eliminar:hover {
+    border-color: #e5b7b2;
+
+    background: #fbefee;
+
+    transform: translateY(-1px);
+}
+
+
+#modalCatalogo .btn-reactivar {
+    border: 1px solid #c9e1d0;
+
+    color: #438056;
+}
+
+
+#modalCatalogo .btn-reactivar:hover {
+    border-color: #9ec9aa;
+
+    background: #edf7f0;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   ESTADO VACÍO
+   ========================================================================== */
+
+#modalCatalogo .catalogo-empty {
+    min-height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding: 20px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    text-align: center;
+}
+
+
+#modalCatalogo .catalogo-empty i {
+    color: #c0b5ae;
+
+    font-size: 1.2rem;
+}
+
+
+#modalCatalogo .catalogo-empty p {
+    margin: 0;
+
+    font-size: 0.61rem;
+}
+
+
+/* ==========================================================================
+   MODAL NUEVO / EDITAR PLATILLO
+   ========================================================================== */
+
+#modalNuevoPlatillo {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9600;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background: rgba(31, 25, 21, 0.52);
+
+    backdrop-filter: blur(4px);
+}
+
+
+#modalNuevoPlatillo .modal-nuevo-platillo {
+    width: min(560px, 100%);
+    max-height: calc(100vh - 36px);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 24px 65px
+        rgba(31, 25, 21, 0.22);
+}
+
+
+/* ==========================================================================
+   HEADER NUEVO PLATILLO
+   ========================================================================== */
+
+#modalNuevoPlatillo .modal-header {
+    position: sticky;
+    top: 0;
+
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding: 16px 19px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #ffffff;
+}
+
+
+#modalNuevoPlatillo .modal-header h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 0.95rem;
+}
+
+
+#modalNuevoPlatillo .close-modal-btn {
+    width: 31px;
+    height: 31px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f6f3f1;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+
+/* ==========================================================================
+   FORMULARIO
+   ========================================================================== */
+
+#modalNuevoPlatillo .modal-nuevo-platillo input {
+    width: calc(100% - 38px);
+
+    min-height: 40px;
+
+    display: block;
+
+    margin: 0 19px 10px;
+
+    padding: 8px 11px;
+
+    border: 1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 9px;
+
+    outline: 0;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.64rem;
+}
+
+
+#modalNuevoPlatillo .modal-nuevo-platillo input:focus {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(154, 99, 66, 0.08);
+}
+
+
+/* ==========================================================================
+   PREVIEW DE IMAGEN
+   ========================================================================== */
+
+#modalNuevoPlatillo .catalogo-imagen-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 19px 12px;
+}
+
+
+#modalNuevoPlatillo .catalogo-imagen-preview img {
+    width: 125px;
+    height: 125px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border: 1px dashed #d5c8c0;
+
+    border-radius: 12px;
+
+    background: #faf9f7;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalNuevoPlatillo .catalogo-imagen-preview img:hover {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    transform: scale(1.02);
+}
+
+
+#modalNuevoPlatillo .cambiar-imagen {
+    margin: 0 19px 12px;
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.58rem;
+    font-weight: 650;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+
+/* ==========================================================================
+   GUARDAR
+   ========================================================================== */
+
+#modalNuevoPlatillo .catalogo-btn-save {
+    width: calc(100% - 38px);
+
+    min-height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 6px 19px 19px;
+
+    padding: 8px 12px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background:
+        var(--admin-accent, #9a6342);
+
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 0.64rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalNuevoPlatillo .catalogo-btn-save:hover {
+    background:
+        var(--admin-accent-hover, #825238);
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 560px) {
+
+    #modalCatalogo,
+    #modalNuevoPlatillo {
+        padding: 10px;
+    }
+
+
+    #modalCatalogo .catalogo-card {
+        grid-template-columns:
+            54px minmax(0, 1fr);
+
+        gap: 9px;
+    }
+
+
+    #modalCatalogo .catalogo-card-imagen {
+        width: 54px;
+        height: 54px;
+    }
+
+
+    #modalCatalogo .catalogo-card-actions {
+        grid-column: 1 / -1;
+
+        justify-content: flex-end;
+    }
+
+
+    #modalCatalogo .catalogo-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    #modalCatalogo .catalogo-btn-new,
+    #modalCatalogo #btnPlatillosInactivos {
+        width: 100%;
+    }
+
+}

@@ -296,24 +296,70 @@ const PlannerEditor = {
             `;
 
             chip.querySelector("button").onclick = () => {
-                dia.guarnicionesPersonalizadas.splice(index, 1);
 
-                this.renderizarGuarniciones(ctx);
+                dia.guarnicionesPersonalizadas.splice(
+                    index,
+                    1
+                );
 
-                if (typeof PlannerArtwork !== "undefined") {
-                    PlannerArtwork.render(ctx);
+
+                dia.personalizado =
+                    dia.precioPersonalizado !== null ||
+                    dia.guarnicionesPersonalizadas.length > 0;
+
+
+                ctx.cambiosPendientes =
+                    true;
+
+
+                this.renderizarGuarniciones(
+                    ctx
+                );
+
+
+                if (
+                    typeof PlannerArtwork !== "undefined"
+                ) {
+
+                    PlannerArtwork.render(
+                        ctx
+                    );
+
                 }
+
 
                 if (dia.producto) {
-                    const prodData = ctx.obtenerProducto(dia.producto);
-                    if (typeof PlannerUI !== "undefined") {
-                        PlannerUI.actualizarVistaPrevia(ctx, prodData);
-                    }
+
+                    const prodData =
+                        ctx.obtenerProducto(
+                            dia.producto
+                        );
+
+
+                    if (
+                        typeof PlannerUI !== "undefined"
+                    ) {
+
+                        PlannerUI.actualizarVistaPrevia(
+                            ctx,
+                            prodData
+                        );
+
+                    }   
+
                 }
 
-                if (typeof PlannerUI !== "undefined") {
-                    PlannerUI.actualizarBadge(ctx);
+
+                if (
+                    typeof PlannerUI !== "undefined"
+                ) {
+
+                    PlannerUI.actualizarBadge(
+                        ctx
+                    );
+
                 }
+
             };
 
             contenedor.appendChild(chip);
@@ -360,9 +406,7 @@ const PlannerEditor = {
 
         dia.personalizado = true;
 
-        ctx.cambiosPendientes = true;
-
-
+        
         // ==========================================
         // ACTUALIZAR INTERFAZ
         // ==========================================
@@ -700,22 +744,17 @@ const PlannerEditor = {
                 "plannerArtworkStatus"
             );
 
-        if (!estado) return;
+
+        if (!estado) {
+            return;
+        }
 
 
         const dia =
             ctx.obtenerDiaActual();
 
-        const plantilla =
-            (ctx.plantillas || [])
-                .find(
-                    item =>
-                        Number(item.id) ===
-                        Number(dia.plantillaId)
-                );
 
-
-        if (!plantilla) {
+        if (!dia) {
 
             estado.textContent =
                 "Sin plantilla";
@@ -725,8 +764,33 @@ const PlannerEditor = {
         }
 
 
+        const plantillaActiva =
+            (ctx.plantillas || [])
+                .find(
+                    item =>
+                        Number(item.id) ===
+                        Number(dia.plantillaId)
+                );
+
+
+        const plantillaHistorica =
+            (ctx.plantillasHistoricas || [])
+                .find(
+                    item =>
+                        Number(item.id) ===
+                        Number(dia.plantillaId)
+                );
+
+
+        const plantilla =
+            plantillaActiva ||
+            plantillaHistorica;
+
+
         estado.textContent =
-            plantilla.nombre;
+            plantilla
+                ? plantilla.nombre
+                : "Sin plantilla";
 
     },
 

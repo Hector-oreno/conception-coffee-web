@@ -31,17 +31,23 @@
     <!-- Estilos por módulo de productos -->    
     <link rel="stylesheet" href="css/productos/productos.css">
 
-    <!-- Estilos por módulo planner-->
+    <!-- ========================================================= -->
+    <!-- PLANNER -->
+    <!-- ========================================================= -->
+
     <link rel="stylesheet" href="css/planner/planner.css">
+    <link rel="stylesheet" href="css/planner/planner-sidebar.css">
+    <link rel="stylesheet" href="css/planner/planner-workspace.css">
+    <link rel="stylesheet" href="css/planner/planner-artwork.css">
+
+    <!-- Submódulos -->
     <link rel="stylesheet" href="css/planner/catalogo.css">
     <link rel="stylesheet" href="css/planner/emojis.css">
-    <link rel="stylesheet" href="css/sucursales/sucursales.css">
+
+    <!-- Plantillas visuales -->
     <link rel="stylesheet" href="css/planner/clasica.css">
     <link rel="stylesheet" href="css/planner/moderna.css">
     <link rel="stylesheet" href="css/planner/premium.css">
-    <link rel="stylesheet" href="css/plantillas/plantillas-admin.css">
-    <link rel="stylesheet" href="css/usuarios/usuarios.css">
-    <link rel="stylesheet" href="css/usuarios/auditoria.css">
 
 
 </head>
@@ -555,7 +561,7 @@
         <!-- INICIO MÓDULO MENÚ DE LA SEMANA (PLANNER) -->
         <!-- ====================================================================== -->
 
-        <section id="seccion-ejecutivo" style="display:none;" class="admin-module">
+        <section id="seccion-ejecutivo" class="admin-module">
 
                         <!-- ====================================================== -->
                         <!-- CENTRO DE OPERACIONES DEL PLANNER -->
@@ -698,7 +704,7 @@
         <!-- INICIO MÓDULO HERO (SLIDERS DE INICIO) -->
         <!-- ====================================================================== -->
 
-        <section id="seccion-hero" class="modulo-admin admin-module" style="display: none;">
+        <section id="seccion-hero" class="modulo-admin admin-module">
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
@@ -1565,58 +1571,7 @@
     <!-- INICIO MODALES · MENÚ DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
 
-    <!-- inicio modalGrillaSemanal -->
-    <div class="modal fade" id="modalGrillaSemanal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalGrillaLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-fullscreen-lg-down modal-xl modal-dialog-scrollable">
-                            <div class="modal-content border-0 shadow">
-                                <div class="modal-header bg-dark text-white border-0 py-3">
-                                    <h5 class="modal-title fw-bold" id="modalGrillaLabel">
-                                        <i class="fas fa-calendar-alt me-2 text-warning"></i> Matriz de Planificación Operativa por
-                                        Sucursal
-                                    </h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="cerrarModalGrilla()"></button>
-                                </div>
-
-                                <div class="modal-body p-4 bg-light">
-                                    <div class="card border-0 shadow-sm p-3 mb-4 bg-white border-start border-4 border-warning">
-                                        <label class="form-label fw-bold small text-muted text-uppercase mb-1">Nota global para la Web y
-                                            WhatsApp</label>
-                                        <input type="text" id="txt-nota-global-semana" class="form-control" value="(todos nuestros platillos incluyen refresco, tortillas y fruta de temporada)">
-                                    </div>
-
-                                    <div class="d-none d-lg-flex row fw-bold text-muted px-3 mb-2 small text-uppercase tracking-wider">
-                                        <div class="col-lg-2">Día / Fecha</div>
-                                        <div class="col-lg-2">Estado del Día</div>
-                                        <div class="col-lg-1 text-center">Web</div>
-                                        <div class="col-lg-3">Platillo del Catálogo</div>
-                                        <div class="col-lg-1">Precio (Q)</div>
-                                        <div class="col-lg-3">Sobrescribir Acompañamientos / Texto Alternativo</div>
-                                    </div>
-
-                                    <form id="form-grilla-semanal" onsubmit="event.preventDefault();">
-                                        <div id="contenedor-filas-dias" class="d-flex flex-column gap-3">
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="modal-footer bg-white border-0 py-3 shadow-sm d-flex justify-content-between">
-                                    <div>
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="cerrarModalGrilla()">Cancelar</button>
-                                    </div>
-                                    <div class="d-flex gap-2">
-                                        <button type="button" class="btn btn-outline-success" id="btn-modal-publicar" onclick="cambiarEstadoSemanaAListo()">
-                                            <i class="fas fa-check-circle me-1"></i> Publicar
-                                        </button>
-                                        <button type="button" class="btn btn-primary px-4" onclick="PlannerActions.guardarPlanificacion()">
-                                            <i class="fas fa-save me-1"></i> Guardar Cambios
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    <!-- fin modalGrillaSemanal -->
-
+    
     <!-- inicio plannerWorkspace -->
     <div class="planner-workspace-backdrop" id="plannerWorkspace">
             <div class="planner-workspace">
@@ -1651,7 +1606,7 @@
                             <span>Progreso</span>
                             <strong id="plannerProgresoTexto">0 / 7 días</strong>
                             <div class="planner-progress-bar">
-                                <div class="planner-progress-fill" id="plannerProgresoBarra" style="width: 0%;"></div>
+                                <div class="planner-progress-fill" id="plannerProgresoBarra"></div>
                             </div>
                         </div>
 
@@ -1893,25 +1848,50 @@
                     <!-- FIN: ARTE PROMOCIONAL -->
                     <!-- ========================================================= -->
 
-                            <!-- PANEL FERIADO -->
-                            <div class="planner-section planner-hidden" id="bloqueFeriado">
-                                <h4>Información del Feriado</h4>
-                                <p>Configura el mensaje que se mostrará durante este día.</p>
-                                <label>Nombre del evento</label>
-                                <input type="text" id="plannerFeriadoNombre" value="">
+                        <!-- PANEL FERIADO -->
+                        <div
+                            class="planner-section planner-hidden"
+                            id="bloqueFeriado"
+                        >
+                            <div class="planner-state-message">
 
-                                <label style="margin-top:20px;">Mensaje</label>
-                                <textarea id="plannerFeriadoMensaje" rows="4"></textarea>
+                                <i class="fas fa-umbrella-beach"></i>
+
+                                <div>
+                                    <h4>Día Feriado</h4>
+
+                                    <p>
+                                        Este día se guardará como feriado
+                                        y no tendrá platillo asignado.
+                                    </p>
+                                </div>
+
                             </div>
-
-                            <!-- PANEL CERRADO -->
-                            <div class="planner-section planner-hidden" id="bloqueCerrado">
-                                <h4>Local Cerrado</h4>
-                                <p>Agrega una observación para este día.</p>
-                                <textarea id="plannerCerradoObservacion" rows="4"></textarea>
-                            </div>
-
                         </div>
+
+
+                        <!-- PANEL CERRADO -->
+                        <div
+                            class="planner-section planner-hidden"
+                            id="bloqueCerrado"
+                        >
+                            <div class="planner-state-message">
+
+                                <i class="fas fa-store-slash"></i>
+
+                                <div>
+                                    <h4>Local Cerrado</h4>
+
+                                    <p>
+                                        Este día se guardará como cerrado
+                                        y no tendrá servicio de menú.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        
                     </section>
 
                 </div>
@@ -1950,73 +1930,26 @@
         </div>
     <!-- fin plannerWorkspace -->
 
-    <!-- inicio modalGestionDia -->
-    <div id="modalGestionDia" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1050;">
-            <div class="modal-content" style="background: white; border-radius: 12px; width: 100%; max-width: 500px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-
-                <div style="background: #5c3d2e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; color: white;">
-                    <span style="font-weight: 600; font-size: 1rem;"><i class="fas fa-calendar-day mr-2"></i>Configurar Día:
-                        Lunes (29/06)</span>
-                    <button type="button" onclick="ocultarModalEstatico('modalGestionDia')" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">×</button>
-                </div>
-
-                <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
-
-                    <div>
-                        <label style="font-size: 0.8rem; font-weight: 600; color: #5c3d2e; display: block; margin-bottom: 5px;">ESTADO
-                            DEL SERVICIO</label>
-                        <select style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 6px; font-size: 0.9rem; background: white;">
-                            <option value="ACTIVO" selected>🍽️ Servicio Activo</option>
-                            <option value="FERIADO">🏖️ Feriado / Descanso</option>
-                            <option value="CERRADO">🔒 Local Cerrado</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.8rem; font-weight: 600; color: #5c3d2e; display: block; margin-bottom: 5px;">PLATILLO
-                            DEL CATÁLOGO</label>
-                        <select style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 6px; font-size: 0.9rem; background: white;">
-                            <option value="1">Caldo de res</option>
-                            <option value="2">Tacos de asada</option>
-                            <option value="3">Churrasquito</option>
-                            <option value="4">Pechuga de Pollo Empanizada</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.8rem; font-weight: 600; color: #5c3d2e; display: block; margin-bottom: 5px;">PRECIO
-                            DEL MENÚ (Q)</label>
-                        <input type="number" value="32.00" step="0.01" style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 6px; font-size: 0.9rem;">
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.8rem; font-weight: 600; color: #5c3d2e; display: block; margin-bottom: 5px;">
-                            GUARNICIÓN ESPECÍFICA <span style="color: #6c757d; font-weight: 400;">(Opcional)</span>
-                        </label>
-                        <input type="text" placeholder="Ej: arroz, aguacate (Dejar vacío para usar por defecto)" style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 6px; font-size: 0.9rem;">
-                    </div>
-
-                    <div>
-                        <label style="font-size: 0.8rem; font-weight: 600; color: #5c3d2e; display: block; margin-bottom: 5px;">TEXTO
-                            ALTERNATIVO / INFORMATIVO</label>
-                        <input type="text" placeholder="Ej: Semana Santa ¡Renovamos energías!" style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 6px; font-size: 0.9rem;">
-                    </div>
-
-                    <button type="button" style="width: 100%; background: #5c3d2e; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; margin-top: 5px;">
-                        Aplicar Cambios al Día
-                    </button>
-                </div>
-            </div>
-        </div>
-    <!-- fin modalGestionDia -->
-
+    
     <!-- inicio modalCatalogo -->
-    <div id="modalCatalogo" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1050;">
-            <div class="modal-content" style="background: white; border-radius: 12px; width: 100%; max-width: 500px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                <div style="background: #5c3d2e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; color: white;">
-                    <span style="font-weight: 600; font-size: 1rem;"><i class="fas fa-book-open mr-2"></i>Catálogo Maestro de
-                        Platos</span>
-                    <button type="button" onclick="ocultarModalEstatico('modalCatalogo')" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">×</button>
+    <div id="modalCatalogo" class="modal-backdrop">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h3>
+                        <i class="fas fa-book-open"></i>
+                        Catálogo Maestro de Platos
+                    </h3>
+
+                    <button
+                        type="button"
+                        class="close-modal-btn"
+                        onclick="ocultarModalEstatico('modalCatalogo')"
+                        aria-label="Cerrar catálogo"
+                    >
+                        ×
+                    </button>
+
                 </div>
                 <div class="catalogo-body">
 
@@ -2115,7 +2048,7 @@
     <!-- fin modalNuevoPlatillo -->
 
     <!-- inicio modalEmojis -->
-    <div id="modalEmojis" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1050;">
+    <div id="modalEmojis" class="modal-backdrop">
           <div class="modal-content">  
 
             <div class="modal-header">
@@ -2171,41 +2104,14 @@
         </div>
     <!-- fin modalEmojis -->
 
-    <!-- inicio modalEmojiPicker -->
-    <div id="modalEmojiPicker" class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h3>Seleccionar Emoji</h3>
-
-                    <button onclick="ocultarModalEstatico('modalEmojiPicker')">
-
-                        ×
-
-                    </button>
-
-                </div>
-
-                <div id="emojiPickerGrid">
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
+    
     <!-- ========================================================= -->
     <!-- INICIO MODAL: SELECCIONAR SEMANA -->
     <!-- ========================================================= -->
 
     <div
         id="modalSeleccionSemana"
-        class="modal-overlay"
-        style="display: none;">
+        class="modal-overlay">
 
         <div class="modal-card">
 
@@ -2271,8 +2177,7 @@
 <!-- ========================================================= -->
 
     
-    <!-- fin modalEmojiPicker -->
-
+   
     <!-- ====================================================================== -->
     <!-- FIN MODALES · MENÚ DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
@@ -2300,7 +2205,7 @@
                         </div>
 
                         <div class="mb-3 text-center d-none" id="contenedor-preview">
-                            <img src="" id="slider-preview" class="img-thumbnail" style="max-height: 150px;">
+                            <img src="" id="slider-preview" class="img-thumbnail">
                         </div>
 
                         <div class="mb-3">
@@ -2624,7 +2529,7 @@
                 <div class="form-group">
                     <label for="usr-password">Contraseña Segura:</label>
                     <input type="password" id="usr-password" class="form-control" required placeholder="Ej. Pass#2026Secure">
-                    <small style="color: #6c757d; font-size: 0.75rem; margin-top: 0.25rem;">
+                    <small>
                         Mínimo 10 caracteres con mayúscula, minúscula, número y símbolo.
                     </small>
                 </div>
@@ -2654,7 +2559,7 @@
                     </select>
                 </div>
 
-                <div class="modal-footer" style="margin-top: 1.5rem; text-align: right;">
+                <div class="modal-footer">
                     <button type="button" class="btn-secondary" onclick="cerrarModalUsuario()">Cancelar</button>
                     <button type="submit" class="btn-success"><i class="fas fa-save"></i> Guardar Usuario</button>
                 </div>
@@ -2722,13 +2627,13 @@
 <script src="js/planner/planner-ui.js"></script>
 <script src="js/planner/catalogo.js"></script>
 <script src="js/planner/emojis.js"></script>
-<script src="js/planner/emoji-picker.js"></script>
+
 
 <script src="js/planner/planner-templates/planner-branding.js"></script>
 
 <script src="js/planner/planner-templates/planner-template-clasica.js"></script>
 
-<script src="Js/planner/planner-templates/planner-template-moderna.js"></script>
+<script src="js/planner/planner-templates/planner-template-moderna.js"></script>
 
 <script src="js/planner/planner-templates/planner-template-premium.js"></script>
 

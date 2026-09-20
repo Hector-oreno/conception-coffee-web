@@ -6,10 +6,14 @@ const PlannerActions = {
 
         if (!Planner.semanaActualId) {
 
-            alert("No hay una semana seleccionada.");
+            alert(
+                "No hay una semana seleccionada."
+            );
 
             return;
+
         }
+
 
         // ==========================================
         // CONSTRUIR PLANIFICACIÓN DE LOS 7 DÍAS
@@ -17,55 +21,66 @@ const PlannerActions = {
 
         const dias = [];
 
-        Object.values(Planner.semana).forEach(dia => {
+        Object
+            .values(Planner.semana)
+            .forEach(dia => {
 
-            dias.push({
+                dias.push({
 
-                dia_semana:
-                    dia.dia_semana,
+                    dia_semana:
+                        dia.dia_semana,
 
-                fecha_especifica:
-                    dia.fecha_especifica
-                        ? String(dia.fecha_especifica).substring(0, 10)
-                        : null,
+                    fecha_especifica:
+                        dia.fecha_especifica
+                            ? String(
+                                dia.fecha_especifica
+                            ).substring(0, 10)
+                            : null,
 
-                estado_dia:
-                    dia.estado,
+                    estado_dia:
+                        dia.estado,
 
-                disponible_web:
-                    dia.disponible_web ? 1 : 0,
+                    disponible_web:
+                        dia.disponible_web
+                            ? 1
+                            : 0,
 
-                plato_catalogo_id:
-                    dia.producto,
+                    plato_catalogo_id:
+                        dia.producto,
 
-                precio_real:
-                    dia.precioPersonalizado,
+                    precio_real:
+                        dia.precioPersonalizado,
 
-                acompanamientos_especificos:
-                    Array.isArray(dia.guarnicionesPersonalizadas)
-                        ? dia.guarnicionesPersonalizadas.join(",")
-                        : null,
+                    acompanamientos_especificos:
+                        Array.isArray(
+                            dia.guarnicionesPersonalizadas
+                        )
+                            ? dia.guarnicionesPersonalizadas
+                                .join(",")
+                            : null,
 
-                texto_alternativo:
-                    dia.observaciones,
+                    texto_alternativo:
+                        dia.observaciones,
 
+                    plantilla_id:
+                        dia.plantillaId
+                            ? Number(
+                                dia.plantillaId
+                            )
+                            : null
 
-                plantilla_id:
-                    dia.plantillaId
-                        ? Number(dia.plantillaId)
-                        : null
+                });
 
             });
 
-        });
-
 
         // ==========================================
-        // VALIDAR SUCURSALES SELECCIONADAS
+        // VALIDAR SUCURSALES
         // ==========================================
 
         const sucursales =
             Planner.sucursalesSeleccionadas;
+
 
         if (
             !Array.isArray(sucursales) ||
@@ -77,16 +92,20 @@ const PlannerActions = {
             );
 
             return;
+
         }
 
 
         // ==========================================
-        // GUARDAR PLANIFICACIÓN POR SUCURSAL
+        // GUARDAR PLANIFICACIÓN
         // ==========================================
 
         try {
 
-            for (const sucursalId of sucursales) {
+            for (
+                const sucursalId
+                of sucursales
+            ) {
 
                 const payload = {
 
@@ -100,10 +119,12 @@ const PlannerActions = {
 
                 };
 
+
                 const resultado =
                     await PlannerAPI.guardarSemana(
                         payload
                     );
+
 
                 if (!resultado.success) {
 
@@ -115,6 +136,14 @@ const PlannerActions = {
                 }
 
             }
+
+
+            // ==========================================
+            // ESTADO LOCAL SIN CAMBIOS PENDIENTES
+            // ==========================================
+
+            Planner.cambiosPendientes =
+                false;
 
 
             // ==========================================
@@ -134,6 +163,7 @@ const PlannerActions = {
                 "Error al guardar planificación:",
                 error
             );
+
 
             alert(
                 "No fue posible guardar toda la planificación."
@@ -256,56 +286,6 @@ const PlannerActions = {
 
 
     
-
-    async crearNuevaSemanaEstrategica() {
-
-        try {
-
-            const resultado = await PlannerAPI.crearSemana();
-
-            if (!resultado.success || !resultado.data) {
-
-                throw new Error(
-                    resultado.message ||
-                    "No fue posible crear la nueva semana."
-                );
-
-            }
-
-            // ==========================================
-            // 1. REFRESCAR DASHBOARD DESDE LA BD
-            // ==========================================
-
-            if (
-                typeof PlannerDashboard !== "undefined" &&
-                typeof PlannerDashboard.cargarHistorialSemanas === "function"
-            ) {
-
-                await PlannerDashboard.cargarHistorialSemanas();
-
-            }
-
-            // ==========================================
-            // 2. ABRIR LA SEMANA RECIÉN CREADA
-            // ==========================================
-
-            Planner.abrirPlanner(resultado.data);
-
-        } catch (error) {
-
-            console.error(
-                "Error al crear la semana:",
-                error
-            );
-
-            alert(
-                "No fue posible crear la nueva semana."
-            );
-
-        }
-
-    },
-
 
     iniciar() {
 

@@ -1,196 +1,906 @@
-/* ======================================================
-   DICCIONARIO INTELIGENTE
-====================================================== */
+/* ==========================================================================
+   CONCEPTION COFFEE
+   PLANNER · DICCIONARIO INTELIGENTE DE EMOJIS
+   ========================================================================== */
 
-.emoji-body{
 
-    display:flex;
+/* ==========================================================================
+   MODAL PRINCIPAL
+   ========================================================================== */
 
-    flex-direction:column;
+#modalEmojis {
+    position: fixed;
+    inset: 0;
 
-    gap:18px;
+    z-index: 9500;
 
-    padding:20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
 
-}
+    padding: 18px;
 
-.emoji-search{
+    background: rgba(31, 25, 21, 0.50);
 
-    width:100%;
-
-    padding:12px 16px;
-
-    border-radius:12px;
-
-    border:1px solid #ddd;
-
-    outline:none;
-
-}
-
-.emoji-search:focus{
-
-    border-color:#8b5e3c;
-
-    box-shadow:0 0 0 4px rgba(139,94,60,.12);
-
-}
-
-.emoji-actions{
-
-    display:flex;
-
-    gap:12px;
-
-}
-
-.emoji-btn-inactivos{
-
-    background:#5c3d2e;
-
-    color:#fff;
-
-    border:none;
-
-    border-radius:12px;
-
-    padding:12px 18px;
-
-    cursor:pointer;
-
-    font-weight:600;
-
-}
-
-.emoji-listado{
-
-    border:1px solid #e5e5e5;
-
-    border-radius:12px;
-
-    min-height:260px;
-
-    max-height:340px;
-
-    overflow-y:auto;
-
-    padding:12px;
-
-}
-
-.emoji-card{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    padding:12px;
-
-    margin-bottom:12px;
-
-    border:1px solid #ececec;
-
-    border-radius:12px;
-
-}
-
-.emoji-icon{
-
-    font-size:34px;
-
-    width:55px;
-
-    text-align:center;
-
-}
-
-.emoji-info{
-
-    flex:1;
-
-    font-weight:600;
-
-}
-
-.emoji-card-actions{
-
-    display:flex;
-
-    gap:8px;
-
-}
-
-.emoji-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(8,1fr);
-
-    gap:12px;
-
-    margin-top:20px;
-
-}
-
-.emoji-option{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    width:60px;
-
-    height:60px;
-
-    font-size:34px;
-
-    cursor:pointer;
-
-    border-radius:12px;
-
-    transition:.2s;
-
-}
-
-.emoji-option:hover{
-
-    background:#f3ece6;
-
-    transform:scale(1.15);
-
+    backdrop-filter: blur(4px);
 }
 
 
-#modalEmojiPicker{
+#modalEmojis .modal-content {
+    width: min(620px, 100%);
+    max-height: min(720px, calc(100vh - 36px));
 
-    z-index:9999;
+    display: flex;
+    flex-direction: column;
 
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 24px 65px
+        rgba(31, 25, 21, 0.20);
 }
 
-#emojiPickerGrid{
 
-    display:grid;
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
 
-    grid-template-columns:repeat(6,70px);
+#modalEmojis .modal-header {
+    flex: 0 0 auto;
 
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    gap:18px;
+    gap: 16px;
 
-    padding:25px;
+    padding: 17px 20px;
 
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #ffffff;
 }
 
-.modal-content {
 
-    max-width:600px;
+#modalEmojis .modal-header h3 {
+    margin: 0;
 
-    margin:auto;
+    display: flex;
+    align-items: center;
 
-    margin-left:200px;
+    gap: 7px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+#modalEmojis .modal-header h3 i {
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.85rem;
+}
+
+
+#modalEmojis .close-modal-btn {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f6f3f1;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.17s ease,
+        color 0.17s ease;
+}
+
+
+#modalEmojis .close-modal-btn:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   BODY
+   ========================================================================== */
+
+#modalEmojis .emoji-body {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 16px 20px 20px;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   BUSCADOR
+   ========================================================================== */
+
+#modalEmojis .emoji-search-box {
+    width: 100%;
+}
+
+
+#modalEmojis .emoji-search {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 13px;
+
+    border: 1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 10px;
+
+    outline: 0;
+
+    background: #faf9f7;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.67rem;
+
+    transition:
+        border-color 0.17s ease,
+        box-shadow 0.17s ease,
+        background 0.17s ease;
+}
+
+
+#modalEmojis .emoji-search::placeholder {
+    color: #aaa19b;
+}
+
+
+#modalEmojis .emoji-search:focus {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(154, 99, 66, 0.08);
+}
+
+
+/* ==========================================================================
+   ACCIONES
+   ========================================================================== */
+
+#modalEmojis .emoji-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+
+#modalEmojis .emoji-btn-inactivos {
+    min-height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 7px 11px;
+
+    border: 1px solid
+        var(--admin-border, #ddd7d2);
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font: inherit;
+    font-size: 0.61rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.17s ease,
+        background 0.17s ease,
+        color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalEmojis .emoji-btn-inactivos:hover {
+    border-color: #d2bcad;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #825238);
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   LISTADO
+   ========================================================================== */
+
+#modalEmojis .emoji-listado {
+    flex: 1 1 auto;
+
+    min-height: 260px;
+    max-height: 430px;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding: 7px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #faf9f7;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7d0ca transparent;
+}
+
+
+#modalEmojis .emoji-listado::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+#modalEmojis .emoji-listado::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+#modalEmojis .emoji-listado::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d7d0ca;
+}
+
+
+/* ==========================================================================
+   TARJETA
+   ========================================================================== */
+
+#modalEmojis .emoji-card {
+    min-width: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        48px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 9px 10px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    transition:
+        border-color 0.17s ease,
+        box-shadow 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalEmojis .emoji-card:hover {
+    border-color: #d8c8bd;
+
+    box-shadow:
+        0 5px 14px
+        rgba(45, 35, 29, 0.05);
+}
+
+
+/* ==========================================================================
+   TARJETA SELECCIONABLE
+   ========================================================================== */
+
+#modalEmojis .emoji-card-selectable {
+    cursor: pointer;
+}
+
+
+#modalEmojis .emoji-card-selectable:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   EMOJI
+   ========================================================================== */
+
+#modalEmojis .emoji-icon {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    background: #f7f4f2;
+
+    font-size: 1.45rem;
+
+    line-height: 1;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+#modalEmojis .emoji-info {
+    min-width: 0;
+}
+
+
+#modalEmojis .emoji-info h4 {
+    margin: 0;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.67rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+#modalEmojis .emoji-info small {
+    display: block;
+
+    margin-top: 2px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.51rem;
+}
+
+
+/* ==========================================================================
+   ACCIONES DE TARJETA
+   ========================================================================== */
+
+#modalEmojis .emoji-card-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+#modalEmojis .btn-editar-emoji,
+#modalEmojis .btn-desactivar-emoji,
+#modalEmojis .btn-reactivar-emoji {
+    width: 31px;
+    height: 31px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 0.62rem;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.17s ease,
+        background 0.17s ease,
+        color 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+#modalEmojis .btn-editar-emoji {
+    border: 1px solid #e3d4ca;
+
+    color:
+        var(--admin-accent, #9a6342);
+}
+
+
+#modalEmojis .btn-editar-emoji:hover {
+    border-color: #d2b6a4;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    transform: translateY(-1px);
+}
+
+
+#modalEmojis .btn-desactivar-emoji {
+    border: 1px solid #efd4d1;
+
+    color: #b8544d;
+}
+
+
+#modalEmojis .btn-desactivar-emoji:hover {
+    border-color: #e5b7b2;
+
+    background: #fbefee;
+
+    transform: translateY(-1px);
+}
+
+
+#modalEmojis .btn-reactivar-emoji {
+    border: 1px solid #c9e1d0;
+
+    color: #438056;
+}
+
+
+#modalEmojis .btn-reactivar-emoji:hover {
+    border-color: #9ec9aa;
+
+    background: #edf7f0;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   INACTIVOS
+   ========================================================================== */
+
+#modalEmojis .emoji-card-inactive {
+    background: #fbfaf9;
+
+    opacity: 0.82;
+}
+
+
+#modalEmojis .emoji-card-inactive .emoji-icon {
+    filter: grayscale(0.35);
+}
+
+
+/* ==========================================================================
+   ESTADO VACÍO
+   ========================================================================== */
+
+#modalEmojis .catalogo-empty {
+    min-height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 20px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    text-align: center;
+}
+
+
+#modalEmojis .catalogo-empty p {
+    margin: 0;
+
+    font-size: 0.61rem;
+
+    line-height: 1.5;
+}
+
+
+#modalEmojis .catalogo-empty strong {
+    color:
+        var(--admin-text, #282421);
+}
+
+
+/* ==========================================================================
+   BOTONES GENÉRICOS INTERNOS
+   ========================================================================== */
+
+#modalEmojis .btn-primary,
+#modalEmojis .btn-secondary {
+    min-height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 7px 11px;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.6rem;
+    font-weight: 650;
+
+    cursor: pointer;
+}
+
+
+#modalEmojis .btn-primary {
+    border: 0;
+
+    background:
+        var(--admin-accent, #9a6342);
+
+    color: #ffffff;
+}
+
+
+#modalEmojis .btn-primary:hover {
+    background:
+        var(--admin-accent-hover, #825238);
+}
+
+
+#modalEmojis .btn-secondary {
+    border: 1px solid
+        var(--admin-border, #ddd7d2);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+/* ==========================================================================
+   REGISTRO / EDICIÓN
+   ========================================================================== */
+
+#modalEmojis .emoji-register {
+    padding: 12px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+
+#modalEmojis .emoji-register > h4 {
+    margin: 0 0 12px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.69rem;
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   CABECERA DE EDICIÓN
+   ========================================================================== */
+
+#modalEmojis .emoji-edit-header {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    margin-bottom: 14px;
+}
+
+
+#modalEmojis .emoji-edit-current {
+    width: 50px;
+    height: 50px;
+
+    flex: 0 0 50px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    font-size: 1.5rem;
+}
+
+
+#modalEmojis .emoji-edit-header h4 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+
+#modalEmojis .emoji-edit-header p {
+    margin: 2px 0 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.54rem;
+}
+
+
+/* ==========================================================================
+   CAMPOS DE EDICIÓN
+   ========================================================================== */
+
+#modalEmojis .emoji-edit-field {
+    margin-bottom: 13px;
+}
+
+
+#modalEmojis .emoji-edit-field > label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.56rem;
+    font-weight: 700;
+}
+
+
+#modalEmojis .emoji-edit-field input[type="text"] {
+    width: 100%;
+    height: 39px;
+
+    padding: 0 10px;
+
+    border: 1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 8px;
+
+    outline: 0;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.62rem;
+}
+
+
+#modalEmojis .emoji-edit-field input[type="text"]:focus {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(154, 99, 66, 0.08);
+}
+
+
+/* ==========================================================================
+   PALETA
+   ========================================================================== */
+
+#modalEmojis .emoji-palette {
+    display: grid;
+
+    grid-template-columns:
+        repeat(8, minmax(0, 1fr));
+
+    gap: 6px;
+
+    max-height: 230px;
+
+    overflow-y: auto;
+
+    padding: 8px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 10px;
+
+    background: #faf9f7;
+}
+
+
+#modalEmojis .emoji-palette-option {
+    aspect-ratio: 1;
+
+    min-width: 0;
+
+    display: grid;
+    place-items: center;
+
+    padding: 4px;
+
+    border: 1px solid transparent;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 1.15rem;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.15s ease,
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+#modalEmojis .emoji-palette-option:hover {
+    border-color: #d8c8bd;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    transform: translateY(-1px);
+}
+
+
+#modalEmojis .emoji-palette-option.selected {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    box-shadow:
+        inset 0 0 0 1px
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   ACCIONES DE EDICIÓN
+   ========================================================================== */
+
+#modalEmojis .emoji-edit-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 7px;
+
+    margin-top: 14px;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 560px) {
+
+    #modalEmojis {
+        padding: 10px;
+    }
+
+
+    #modalEmojis .emoji-palette {
+        grid-template-columns:
+            repeat(6, minmax(0, 1fr));
+    }
+
+
+    #modalEmojis .emoji-card {
+        grid-template-columns:
+            44px minmax(0, 1fr);
+    }
+
+
+    #modalEmojis .emoji-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+
+    #modalEmojis .emoji-card-actions {
+        grid-column: 1 / -1;
+
+        justify-content: flex-end;
+    }
+
+
+    #modalEmojis .emoji-edit-actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
+
+
+    #modalEmojis .emoji-edit-actions button {
+        width: 100%;
+    }
 
 }

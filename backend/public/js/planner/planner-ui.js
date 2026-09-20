@@ -17,7 +17,7 @@ const PlannerUI = {
 
             badge.classList.remove("publicado", "borrador");
 
-            if (ctx.estadoSemana === "PUBLICADO") {
+            if (ctx.estadoSemana === "PUBLICADA") {
 
                 badge.classList.add("publicado");
 
@@ -179,11 +179,21 @@ const PlannerUI = {
         }
 
 
-        // Refrescar sub-paneles vinculados
-        if (typeof PlannerForm !== 'undefined') PlannerForm.actualizarPanelPersonalizacion(ctx);
-        if (typeof PlannerSidebar !== 'undefined') PlannerSidebar.actualizarSidebar(ctx);
+        // ======================================================
+        // REFRESCAR SUBPANELES VINCULADOS
+        // ======================================================
+
+        if (
+            typeof PlannerForm !== "undefined"
+        ) {
+
+            PlannerForm.actualizarPanelPersonalizacion(
+                ctx
+            );
+
+        }
         
-        this.actualizarProgreso(ctx);
+        
     },
 
     actualizarVistaPrevia(ctx, producto) {
@@ -242,17 +252,9 @@ const PlannerUI = {
 
         }
 
-        },
-
-        actualizarProgreso(ctx) {
-            let completos = 0;
-            Object.values(ctx.semana).forEach(dia => {
-                if (dia.producto && dia.estado) completos++;
-            });
-
-        const progreso = document.getElementById("plannerProgresoTexto");
-        if (progreso) progreso.textContent = `${completos} de 7 días`;
     },
+
+        
 
     actualizarBadge(ctx) {
 
@@ -313,11 +315,5 @@ const PlannerUI = {
 
     },
 
-    obtenerEmojiGuarnicion(nombre) {
-        const diccionario = {
-            arroz: "🍚", aguacate: "🥑", ensalada: "🥗", papa: "🥔", papas: "🥔",
-            frijoles: "🫘", tortilla: "🫓", pasta: "🍝", verduras: "🥬", elote: "🌽"
-        };
-        return diccionario[nombre.toLowerCase()] ?? "🍽";
-    }
+    
 };

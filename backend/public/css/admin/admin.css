@@ -562,6 +562,29 @@ textarea {
     background: #fff;
 }
 
+/* ==========================================================================
+   MODALES COMPARTIDOS DEL PANEL ADMINISTRATIVO
+   ========================================================================== */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+
+    z-index: 9000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background:
+        rgba(31, 25, 21, 0.50);
+
+    backdrop-filter:
+        blur(4px);
+}
+
 
 /* ==========================================================
    UTILIDADES

@@ -1,265 +1,527 @@
-const express = require('express');
-const router = express.Router();
-const menuSemanaController = require('../controllers/menuSemanaController');
-const upload = require('../config/fileUpload');
+const express = require(
+    "express"
+);
+
+const router =
+    express.Router();
+
+const menuSemanaController =
+    require(
+        "../controllers/menuSemanaController"
+    );
+
+const upload =
+    require(
+        "../config/fileUpload"
+    );
 
 const {
     verificarToken,
     verificarRoles
-} = require('../middlewares/authMiddleware');
-
-// =========================================================================
-// RUTAS DEL MÓDULO: MENÚ DE LA SEMANA (CONTROLADO Y AUTOMÁTICO)
-// =========================================================================
+} = require(
+    "../middlewares/authMiddleware"
+);
 
 
-// RUTA 1: Obtener el catálogo maestro de platos
+// ==========================================================================
+// MENÚ DE LA SEMANA · ROUTER
+// ==========================================================================
+
+
+// ==========================================================================
+// CATÁLOGO MAESTRO
+// ==========================================================================
+
+// Obtener platillos activos
 router.get(
-    '/catalogo',
+    "/catalogo",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.obtenerCatalogo
-);
 
-router.post(
-    '/catalogo',
-    verificarToken,
-    verificarRoles('admin'),
-    upload.single('imagen'),
-    menuSemanaController.crearPlatillo
+    menuSemanaController
+        .obtenerCatalogo
 );
 
 
-router.put(
-    '/catalogo/:id',
-    verificarToken,
-    verificarRoles('admin'),
-    upload.single('imagen'),
-    menuSemanaController.actualizarPlatillo
-);
-
-
-router.delete(
-    '/catalogo/:id',
-    verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.desactivarPlatillo
-);
-
-
+// Obtener platillos inactivos
 router.get(
-    '/catalogo/inactivos',
+    "/catalogo/inactivos",
+
     verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.obtenerPlatillosInactivos
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .obtenerPlatillosInactivos
 );
 
 
+// Crear platillo
+router.post(
+    "/catalogo",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin"
+    ),
+
+    upload.single(
+        "imagen"
+    ),
+
+    menuSemanaController
+        .crearPlatillo
+);
+
+
+// Actualizar platillo
+router.put(
+    "/catalogo/:id",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin"
+    ),
+
+    upload.single(
+        "imagen"
+    ),
+
+    menuSemanaController
+        .actualizarPlatillo
+);
+
+
+// Desactivar platillo
+router.delete(
+    "/catalogo/:id",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .desactivarPlatillo
+);
+
+
+// Reactivar platillo
 router.patch(
-    '/catalogo/:id/reactivar',
+    "/catalogo/:id/reactivar",
+
     verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.reactivarPlatillo
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .reactivarPlatillo
 );
 
 
+// ==========================================================================
+// GUARNICIONES
+// ==========================================================================
+
+// Obtener catálogo de guarniciones
+router.get(
+    "/guarniciones",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    menuSemanaController
+        .obtenerGuarniciones
+);
+
+
+// Crear guarnición
+router.post(
+    "/guarniciones",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    menuSemanaController
+        .crearGuarnicion
+);
+
+
+// ==========================================================================
+// DICCIONARIO DE EMOJIS
+// ==========================================================================
+
+// Obtener activos
 router.get(
     "/emojis",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.obtenerDiccionarioEmojis
+
+    menuSemanaController
+        .obtenerDiccionarioEmojis
 );
 
 
+// Obtener inactivos
+router.get(
+    "/emojis/inactivos",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    menuSemanaController
+        .obtenerEmojisInactivos
+);
+
+
+// Buscar asociación
 router.get(
     "/emojis/buscar/:palabra",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.buscarEmojiPorPalabra
+
+    menuSemanaController
+        .buscarEmojiPorPalabra
 );
 
 
-router.get(
-    "/guarniciones",
-    verificarToken,
-    verificarRoles(
-        'admin',
-        'gerente'
-    ),
-    menuSemanaController.obtenerGuarniciones
-);
-
-
+// Crear / recuperar / reactivar
 router.post(
     "/emojis",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.crearEmoji
+
+    menuSemanaController
+        .crearEmoji
 );
 
 
-router.post(
-    "/guarniciones",
+// Actualizar
+router.put(
+    "/emojis/:id",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.crearGuarnicion
+
+    menuSemanaController
+        .actualizarEmoji
 );
 
 
+// Desactivar
+router.patch(
+    "/emojis/:id/desactivar",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    menuSemanaController
+        .desactivarEmoji
+);
 
 
+// Reactivar
+router.patch(
+    "/emojis/:id/reactivar",
 
-router.get("/menu-semana", menuSemanaController.obtenerMenuPublicado);
+    verificarToken,
 
-// [NUEVA] RUTA: Obtener métricas / contadores superiores del dashboard
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
 
+    menuSemanaController
+        .reactivarEmoji
+);
+
+
+// ==========================================================================
+// MENÚ PÚBLICO
+// ==========================================================================
+
+// Menú publicado para el sitio web
 router.get(
-    '/metricas',
-    verificarToken,
-    verificarRoles(
-        'admin',
-        'gerente'
-    ),
-    menuSemanaController.obtenerMetricas
+    "/menu-semana",
+
+    menuSemanaController
+        .obtenerMenuPublicado
 );
 
 
+// ==========================================================================
+// DASHBOARD
+// ==========================================================================
+
+// Métricas
 router.get(
-    '/historial',
+    "/metricas",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.obtenerHistorial
+
+    menuSemanaController
+        .obtenerMetricas
 );
 
 
+// Historial
+router.get(
+    "/historial",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    menuSemanaController
+        .obtenerHistorial
+);
+
+
+// ==========================================================================
+// PLANIFICACIÓN DE SEMANAS
+// ==========================================================================
+
+// Calendario de semanas disponibles
 router.get(
     "/semanas-disponibles",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.obtenerSemanasDisponibles
+
+    menuSemanaController
+        .obtenerSemanasDisponibles
 );
 
 
-// [NUEVA] RUTA: Obtener el historial maestro de semanas para la tabla inicial
+// Crear semana
+router.post(
+    "/crear-semana",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .crearNuevaSemana
+);
 
 
+// Eliminar semana
 router.delete(
     "/semana/:id",
+
     verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.eliminarSemana
-);
 
-
-
-
-
-router.get(
-    "/plantillas",
-    verificarToken,
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin"
     ),
-    menuSemanaController.obtenerPlantillas
-);
 
-router.get(
-    "/plantillas/admin",
-    verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.obtenerTodasPlantillas
-);
-
-router.put(
-    "/plantillas/:id/configuracion",
-    verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.actualizarConfiguracionPlantilla
+    menuSemanaController
+        .eliminarSemana
 );
 
 
-// RUTA 2: Obtener la grilla operativa diaria de una semana y sucursal específica
-
-
-// RUTA 3: Guardar o Actualizar de forma masiva/individual la grilla
+// Sucursales planificadas
 router.get(
     "/semana/:id/sucursales",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.obtenerSucursalesPlanificadas
+
+    menuSemanaController
+        .obtenerSucursalesPlanificadas
 );
 
 
+// ==========================================================================
+// GRILLA OPERATIVA
+// ==========================================================================
+
+// Obtener grilla de semana + sucursal
 router.get(
-    '/grilla',
+    "/grilla",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.obtenerMenu
+
+    menuSemanaController
+        .obtenerMenu
 );
 
 
+// Guardar planificación
 router.post(
-    '/guardar',
+    "/guardar",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.guardarMenuMasivo
+
+    menuSemanaController
+        .guardarMenuMasivo
 );
 
-// RUTA 4: Crear automáticamente una nueva semana operativa
+
+// ==========================================================================
+// PUBLICACIÓN Y WHATSAPP
+// ==========================================================================
+
+// Publicar semana
 router.post(
-    '/crear-semana',
+    "/publicar",
+
     verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.crearNuevaSemana
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .publicarSemana
 );
 
-router.post(
-    '/publicar',
-    verificarToken,
-    verificarRoles('admin'),
-    menuSemanaController.publicarSemana
-);
 
-// RUTA 4: Obtener el bloque de texto traducido con emojis listo para WhatsApp
+// Generar texto para WhatsApp
 router.get(
-    '/generar-whatsapp',
+    "/generar-whatsapp",
+
     verificarToken,
+
     verificarRoles(
-        'admin',
-        'gerente'
+        "admin",
+        "gerente"
     ),
-    menuSemanaController.generarTextoWhatsApp
+
+    menuSemanaController
+        .generarTextoWhatsApp
 );
 
-module.exports = router;
+
+// ==========================================================================
+// PLANTILLAS PROMOCIONALES
+// ==========================================================================
+
+// Plantillas activas para Workspace
+router.get(
+    "/plantillas",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    menuSemanaController
+        .obtenerPlantillas
+);
+
+
+// Todas las plantillas para administración
+router.get(
+    "/plantillas/admin",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .obtenerTodasPlantillas
+);
+
+
+// Actualizar configuración
+router.put(
+    "/plantillas/:id/configuracion",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin"
+    ),
+
+    menuSemanaController
+        .actualizarConfiguracionPlantilla
+);
+
+
+// ==========================================================================
+// EXPORTAR ROUTER
+// ==========================================================================
+
+module.exports =
+    router;

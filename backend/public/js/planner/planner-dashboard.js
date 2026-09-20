@@ -6,6 +6,8 @@ const PlannerDashboard = {
 
         await this.cargarHistorialSemanas();
 
+        this.inicializarFiltros();
+
         // ==========================================
         // PERMISOS VISUALES DEL DASHBOARD
         // ==========================================
@@ -89,56 +91,47 @@ const PlannerDashboard = {
         });
 
 
-        document
-            .getElementById("cerrarSeleccionEmoji")
-            ?.addEventListener("click", () => {
-
-                ocultarModalEstatico("modalSeleccionEmoji");
-
-        });
-
-
-
+        
 
     },
 
     async cargarMetricasDashboard() {
 
-    try {
+        try {
 
-        // Usamos PlannerAPI porque ya envía
-        // el token de autenticación
-        const result =
-            await PlannerAPI.obtenerMetricas();
-
-
-        if (result.success) {
-
-            // Total de platillos
-            document
-                .getElementById('lbl-total-platillos')
-                .textContent =
-                    result.data.totalPlatillos;
+            // Usamos PlannerAPI porque ya envía
+            // el token de autenticación
+            const result =
+                await PlannerAPI.obtenerMetricas();
 
 
-            // Total de emojis
-            document
-                .getElementById('lbl-total-emojis')
-                .textContent =
-                    result.data.totalEmojis;
+            if (result.success) {
+
+                // Total de platillos
+                document
+                    .getElementById('lbl-total-platillos')
+                    .textContent =
+                        result.data.totalPlatillos;
+
+
+                // Total de emojis
+                document
+                    .getElementById('lbl-total-emojis')
+                    .textContent =
+                        result.data.totalEmojis;
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                'Error al cargar métricas:',
+                error
+            );
 
         }
 
-    } catch (error) {
-
-        console.error(
-            'Error al cargar métricas:',
-            error
-        );
-
-    }
-
-},
+    },
 
     async cargarHistorialSemanas() {
 
@@ -164,6 +157,68 @@ const PlannerDashboard = {
                 return;
             }
         
+            const filtroAnio =
+                document.getElementById(
+                    "plannerFiltroAnio"
+                );
+
+
+            if (filtroAnio) {
+
+                const valorActual =
+                    filtroAnio.value;
+
+
+                const anios =
+                    [
+                        ...new Set(
+                            result.data.map(
+                                semana =>
+                                    String(
+                                        semana.fecha_inicio
+                                    ).substring(0, 4)
+                            )
+                        )
+                    ]
+                    .sort();
+
+
+                filtroAnio.innerHTML = `
+                    <option value="">
+                        Todos los años
+                    </option>
+                `;
+
+
+                anios.forEach(anio => {
+
+                    filtroAnio.insertAdjacentHTML(
+                        "beforeend",
+                        `
+                        <option value="${anio}">
+                            ${anio}
+                        </option>
+                        `
+                    );
+
+                });
+
+
+                if (
+                    anios.includes(
+                        valorActual
+                    )
+                ) {
+
+                    filtroAnio.value =
+                        valorActual;
+
+                }
+
+            }
+
+
+
             result.data.forEach(semana => {
                  // Formateamos las fechas de forma legible local (DD/MM/AAAA)
                 const fechaInicio = new Date(semana.fecha_inicio).toLocaleDateString('es-GT', { timeZone: 'UTC' });
@@ -217,7 +272,12 @@ const PlannerDashboard = {
                 const badgeClass = semana.estado === 'PUBLICADA' ? 'bg-success' : 'bg-warning text-dark';
             
                 const fila = `
-                    <tr>
+                    <tr
+                        data-semana="${semana.numero_semana}"
+                        data-rango="${fechaInicio} al ${fechaFin}"
+                        data-anio="${String(semana.fecha_inicio).substring(0, 4)}"
+                        data-estado="${semana.estado}"
+                    >
                         <td><strong>Semana N° ${semana.numero_semana}</strong></td>
                         <td>${fechaInicio} al ${fechaFin}</td>
                         <td>
@@ -274,7 +334,114 @@ const PlannerDashboard = {
 
 
 
-    }
+    },
+
+    inicializarFiltros() {
+
+        const buscar =
+            document.getElementById(
+                "plannerBuscarSemana"
+            );
+
+        const filtroAnio =
+            document.getElementById(
+                "plannerFiltroAnio"
+            );
+
+        const filtroEstado =
+            document.getElementById(
+                "plannerFiltroEstado"
+            );
+
+
+        const aplicarFiltros = () => {
+
+            const texto =
+                buscar?.value
+                    .trim()
+                    .toLowerCase() || "";
+
+
+            const anio =
+                filtroAnio?.value || "";
+
+
+            const estado =
+                filtroEstado?.value || "";
+
+
+            const filas =
+                document.querySelectorAll(
+                    "#tabla-historial-semanas tr[data-semana]"
+                );
+
+
+            filas.forEach(fila => {
+
+                const numeroSemana =
+                    fila.dataset.semana || "";
+
+                const rango =
+                    fila.dataset.rango
+                        ?.toLowerCase() || "";
+
+                const filaAnio =
+                    fila.dataset.anio || "";
+
+                const filaEstado =
+                    fila.dataset.estado || "";
+
+
+                const coincideTexto =
+                    !texto ||
+                    numeroSemana.includes(texto) ||
+                    `semana ${numeroSemana}`.includes(texto) ||
+                    rango.includes(texto);
+
+
+                const coincideAnio =
+                    !anio ||
+                    filaAnio === anio;
+
+
+                const coincideEstado =
+                    !estado ||
+                    filaEstado === estado;
+
+
+                fila.style.display =
+                    coincideTexto &&
+                    coincideAnio &&
+                    coincideEstado
+                        ? ""
+                        : "none";
+
+            });
+
+        };
+
+
+        if (buscar) {
+            buscar.oninput =
+                aplicarFiltros;
+        }
+
+
+        if (filtroAnio) {
+            filtroAnio.onchange =
+                aplicarFiltros;
+        }
+
+
+        if (filtroEstado) {
+            filtroEstado.onchange =
+                aplicarFiltros;
+        }
+
+    },
+
+
+
 
 };
 

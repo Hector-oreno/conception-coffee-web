@@ -1,0 +1,585 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   PLANNER · ARTE PROMOCIONAL
+   ========================================================================== */
+
+
+/* ==========================================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================================== */
+
+.planner-artwork-card {
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    padding: 16px;
+
+    border:
+        1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 3px 12px
+        rgba(45, 35, 29, 0.025);
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.planner-artwork-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    margin-bottom: 14px;
+}
+
+
+.planner-artwork-header > div {
+    min-width: 0;
+}
+
+
+.planner-artwork-eyebrow {
+    display: block;
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.53rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+
+.planner-artwork-header h3 {
+    margin: 3px 0 2px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+
+.planner-artwork-header p {
+    margin: 0;
+
+    max-width: 480px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.58rem;
+
+    line-height: 1.45;
+}
+
+
+.planner-artwork-status {
+    flex: 0 0 auto;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #825238);
+
+    font-size: 0.51rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   SECCIÓN DE PLANTILLAS
+   ========================================================================== */
+
+.planner-template-section {
+    min-width: 0;
+}
+
+
+.planner-template-label {
+    display: block;
+
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.57rem;
+    font-weight: 700;
+}
+
+
+.planner-template-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-top: 8px;
+}
+
+
+/* ==========================================================================
+   OPCIÓN DE PLANTILLA
+   ========================================================================== */
+
+.planner-template-option {
+    position: relative;
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px;
+
+    border:
+        1px solid
+        var(--admin-border, #e7e1dc);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.17s ease,
+        background 0.17s ease,
+        transform 0.17s ease;
+}
+
+
+.planner-template-option:hover {
+    border-color: #d2bcad;
+
+    background: #fdfaf8;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.planner-template-option.selected {
+    border-color:
+        var(--admin-accent, #9a6342);
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    box-shadow:
+        inset 0 0 0 1px
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   MINIATURA
+   ========================================================================== */
+
+.planner-template-thumbnail {
+    width: 42px;
+    height: 50px;
+
+    flex: 0 0 42px;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+
+    border-radius: 8px;
+
+    background: #f3eeea;
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+.planner-template-option.selected
+.planner-template-thumbnail {
+    background: #ffffff;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+.planner-template-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.planner-template-info strong {
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.61rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.planner-template-info small {
+    display: -webkit-box;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.5rem;
+
+    line-height: 1.35;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+/* ==========================================================================
+   CHECK DE SELECCIÓN
+   ========================================================================== */
+
+.planner-template-check {
+    position: absolute;
+
+    top: 5px;
+    right: 6px;
+
+    width: 16px;
+    height: 16px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    color:
+        var(--admin-accent, #9a6342);
+
+    font-size: 0.58rem;
+    font-weight: 800;
+}
+
+
+/* ==========================================================================
+   PLANTILLA HISTÓRICA
+   ========================================================================== */
+
+.planner-template-historical {
+    grid-column: 1 / -1;
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 9px 10px;
+
+    border:
+        1px dashed
+        #cdbeb4;
+
+    border-radius: 9px;
+
+    background: #faf7f5;
+
+    color:
+        var(--admin-text, #282421);
+}
+
+
+.planner-template-historical > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.planner-template-historical strong {
+    font-size: 0.58rem;
+}
+
+
+.planner-template-historical small {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.49rem;
+}
+
+
+.planner-template-historical > span {
+    flex: 0 0 auto;
+
+    padding: 4px 7px;
+
+    border-radius: 999px;
+
+    background: #eee8e4;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.48rem;
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   APLICAR A TODA LA SEMANA
+   ========================================================================== */
+
+.planner-template-apply-all {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin: 11px 0 14px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.57rem;
+    font-weight: 550;
+
+    cursor: pointer;
+}
+
+
+.planner-template-apply-all input {
+    width: 15px;
+    height: 15px;
+
+    margin: 0;
+
+    accent-color:
+        var(--admin-accent, #9a6342);
+}
+
+
+/* ==========================================================================
+   VISTA PREVIA
+   ========================================================================== */
+
+.planner-artwork-preview-section {
+    min-width: 0;
+}
+
+
+.planner-artwork-preview-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 7px;
+}
+
+
+.planner-artwork-preview-title > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1px;
+}
+
+
+.planner-artwork-preview-title strong {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.61rem;
+}
+
+
+.planner-artwork-preview-title small {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.5rem;
+}
+
+
+.planner-artwork-preview-container {
+    width: 100%;
+    min-height: 260px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: auto;
+
+    padding: 14px;
+
+    border:
+        1px dashed
+        #d8cec7;
+
+    border-radius: 11px;
+
+    background: #faf9f7;
+}
+
+
+/* ==========================================================================
+   ESTADO VACÍO
+   ========================================================================== */
+
+.planner-artwork-empty {
+    max-width: 260px;
+
+    margin: auto;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    text-align: center;
+}
+
+
+.planner-artwork-empty > span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 1.4rem;
+}
+
+
+.planner-artwork-empty strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.65rem;
+}
+
+
+.planner-artwork-empty p {
+    margin: 0;
+
+    font-size: 0.54rem;
+
+    line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   BASE COMÚN DEL ARTE GENERADO
+   Las particularidades permanecen en:
+   clasica.css / moderna.css / premium.css
+   ========================================================================== */
+
+.promo-art {
+    width: min(330px, 100%);
+
+    flex: 0 0 auto;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 32px
+        rgba(31, 25, 21, 0.13);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 760px) {
+
+    .planner-template-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .planner-artwork-preview-container {
+        min-height: 220px;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .planner-artwork-header {
+        flex-direction: column;
+    }
+
+
+    .planner-artwork-status {
+        align-self: flex-start;
+    }
+
+
+    .planner-artwork-card {
+        padding: 13px;
+    }
+
+}

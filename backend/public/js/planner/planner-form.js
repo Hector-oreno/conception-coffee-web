@@ -231,9 +231,7 @@ const PlannerForm = {
         }
 
 
-        if (typeof PlannerArtwork !== "undefined") {
-            PlannerArtwork.render(ctx);
-        }
+        
 
 
     },

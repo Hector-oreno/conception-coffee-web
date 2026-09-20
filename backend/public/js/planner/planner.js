@@ -4,7 +4,7 @@ const Planner = {
     // --------------------------------------------------
     diaActual: "LUNES",
 
-    estadoActual: "ACTIVO",
+    
 
     cambiosPendientes: false,
 
@@ -12,8 +12,7 @@ const Planner = {
 
     semanaActual: null,
 
-    catalogoActual: [],
-
+    
 
     semanaActualId: null,
 
@@ -44,10 +43,6 @@ const Planner = {
         DOMINGO: {}
     },
 
-    // Copia de la semana cargada desde la base de datos.
-    // Nunca se modifica directamente; sirve para restaurar
-    // los cambios cuando el usuario pulsa "Cancelar".
-    semanaOriginal: {},
 
     plantillas: [],
 
@@ -56,7 +51,7 @@ const Planner = {
     // --------------------------------------------------
     // Inicializador Maestro
     // --------------------------------------------------
-    iniciar() {
+    async iniciar() {
 
         if (!this.semanaInicializada) {
 
@@ -67,7 +62,9 @@ const Planner = {
         }
 
         if (this.catalogo.length === 0) {
-            this.cargarCatalogo();
+
+            await this.cargarCatalogo();
+
         }
 
         if (typeof PlannerDashboard !== 'undefined' &&
@@ -187,16 +184,7 @@ const Planner = {
         return this.semana[this.diaActual];
     },
 
-    // Catálogo mock temporal (Luego se consumirá de PlannerActions / PlannerApi)
-    obtenerCatalogoDemo() {
-        return {
-            1: { id: 1, nombre: "Caldo de Res", precio: 32, imagen: "images/uploads/Logo_carta.png", guarniciones: ["Arroz", "Aguacate"] },
-            2: { id: 2, nombre: "Hilachas", precio: 35, imagen: "images/uploads/Logo_carta.png", guarniciones: ["Arroz", "Papa"] },
-            3: { id: 3, nombre: "Pepián", precio: 38, imagen: "images/uploads/Logo_carta.png", guarniciones: ["Arroz", "Elote"] },
-            4: { id: 4, nombre: "Lomito", precio: 58, imagen: "images/uploads/Logo_carta.png", guarniciones: ["Ensalada", "Papas"] }
-        };
-    },
-
+    
     obtenerProducto(id) {
 
         return this.catalogo.find(
@@ -208,17 +196,24 @@ const Planner = {
     // Disparador de refresco visual global
     renderEditor() {
 
-        if (typeof PlannerUI !== 'undefined') {
+        if (
+            typeof PlannerUI !== "undefined"
+        ) {
 
-            PlannerUI.renderEditor(this);
+            PlannerUI.renderEditor(
+                this
+            );
 
         }
 
-        if (typeof PlannerSidebar !== 'undefined') {
 
-            PlannerSidebar.render(this);
+        if (
+            typeof PlannerSidebar !== "undefined"
+        ) {
 
-            PlannerSidebar.actualizarSidebar(this);
+            PlannerSidebar.render(
+                this
+            );
 
         }
 
@@ -250,10 +245,7 @@ const Planner = {
             this.semanaActualId =
                 datosSemana[0].semana_id;
 
-            // Compatibilidad temporal
-            window.semanaSeleccionadaId =
-                this.semanaActualId;
-
+           
             this.numeroSemana =
                 datosSemana[0].numero_semana;
 
@@ -288,10 +280,7 @@ const Planner = {
             this.semanaActualId =
                 datosSemana.id;
 
-            // Compatibilidad temporal
-            window.semanaSeleccionadaId =
-                this.semanaActualId;
-
+        
             this.numeroSemana =
                 datosSemana.numero_semana;
 
@@ -369,24 +358,7 @@ const Planner = {
         this.renderEditor();
 
 
-        // ==========================================
-        // 8. RENDER DE PLANTILLAS
-        // ==========================================
-
-        if (
-            typeof PlannerEditor !== "undefined"
-        ) {
-
-            PlannerEditor.renderizarPlantillas(
-                this
-            );
-
-            PlannerEditor.actualizarEstadoPlantilla(
-                this
-            );
-
-        }
-
+        
     },
 
     cargarSemana() {
@@ -447,36 +419,79 @@ const Planner = {
 
         try {
 
-            const result = await PlannerAPI.obtenerCatalogo();
-
-            if (result.success) {
-
-                
-                this.catalogo = result.data.map(producto => ({
-                    
-
-                    id: producto.id,
-
-                    nombre: producto.nombre_plato,
-
-                    precio: Number(producto.precio_base ?? 0),
-
-                    imagen: producto.imagen_defecto || "images/uploads/Logo_carta.png",
-
-                    guarniciones: producto.acompanamientos_defecto
-                        ? producto.acompanamientos_defecto.split(",").map(g => g.trim())
-                        : []
-
-                }));
+            const result =
+                await PlannerAPI
+                    .obtenerCatalogo();
 
 
-                if (typeof PlannerForm !== 'undefined') {
-                    PlannerForm.cargarCatalogo(this);
-                }
-                
-                
+            if (!result.success) {
+                return;
+            }
+
+
+            // ==========================================
+            // CATÁLOGO CRUDO PARA ADMINISTRACIÓN
+            // ==========================================
+
+            if (
+                typeof PlannerCatalogo !== "undefined"
+            ) {
+
+                PlannerCatalogo.catalogo =
+                    result.data;
+
+                PlannerCatalogo.renderCatalogo();
 
             }
+
+
+            // ==========================================
+            // CATÁLOGO NORMALIZADO PARA WORKSPACE
+            // ==========================================
+
+            this.catalogo =
+                result.data.map(
+                    producto => ({
+
+                        id:
+                            producto.id,
+
+                        nombre:
+                            producto.nombre_plato,
+
+                        precio:
+                            Number(
+                                producto.precio_base ?? 0
+                            ),
+
+                        imagen:
+                            producto.imagen_defecto ||
+                            "images/uploads/Logo_carta.png",
+
+                        guarniciones:
+                            producto.acompanamientos_defecto
+                                ? producto
+                                    .acompanamientos_defecto
+                                    .split(",")
+                                    .map(
+                                        g => g.trim()
+                                    )
+                                : []
+
+                    })
+                );
+
+
+            if (
+                typeof PlannerForm !== "undefined"
+            ) {
+
+                PlannerForm.cargarCatalogo(
+                    this
+                );
+
+            }
+
 
         } catch (error) {
 
@@ -484,8 +499,6 @@ const Planner = {
                 "Error al cargar el catálogo:",
                 error
             );
-
-            
 
         }
 
@@ -843,7 +856,7 @@ const Planner = {
 
             if (chkTodas) {
 
-                chkTodas.checked = false;
+                
 
                 chkTodas.onchange = () => {
 
@@ -1128,7 +1141,5 @@ const Planner = {
 
 };
 
-
-window.semanaSeleccionadaId = null;
 
 window.Planner = Planner;

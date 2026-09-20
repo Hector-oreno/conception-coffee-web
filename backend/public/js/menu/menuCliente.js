@@ -748,7 +748,7 @@ function renderEspecialSinPlanificacion(
 
 
     titulo.textContent =
-        "Estamos preparando el próximo especial";
+        "Nuestro equipo está finalizando los últimos detalles.";
 
 
     const texto =

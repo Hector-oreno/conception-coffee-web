@@ -3,20 +3,61 @@
 const PlannerSidebar = {
     // Escucha los clics de los días en la barra lateral
     init(ctx) {
-        const dias = document.querySelectorAll(".planner-day-item");
-        
-        dias.forEach(dia => {
-            dia.onclick = () => {
-                dias.forEach(d => d.classList.remove("active"));
-                dia.classList.add("active");
 
-                // Actualizamos el estado global de la aplicación
-                ctx.diaActual = dia.dataset.dia;
-                
-                // Forzamos el repintado del editor con la data del nuevo día
-                ctx.renderEditor();
+        const dias =
+            document.querySelectorAll(
+                ".planner-day-item"
+            );
+
+
+        dias.forEach(dia => {
+
+            dia.onclick = () => {
+
+                const nuevoDia =
+                    dia.dataset.dia;
+
+
+                if (!nuevoDia) {
+                    return;
+                }
+
+
+                // ==========================================
+                // ACTUALIZAR ESTADO CENTRAL
+                // ==========================================
+
+                ctx.diaActual =
+                    nuevoDia;
+
+
+                // ==========================================
+                // RENDERIZAR EDITOR DEL DÍA
+                // ==========================================
+
+                if (
+                    typeof PlannerUI !== "undefined"
+                ) {
+
+                    PlannerUI.renderEditor(
+                        ctx
+                    );
+
+                }
+
+
+                // ==========================================
+                // RECONSTRUIR SIDEBAR
+                // ==========================================
+
+                this.render(
+                    ctx
+                );
+
             };
+
         });
+
     },
 
 
@@ -105,9 +146,17 @@ const PlannerSidebar = {
 
                         <small>
                             ${
-                                ctx.semana[nombreDia].producto
-                                    ? "✔ Planificado"
-                                    : "Pendiente"
+                                ctx.semana[nombreDia].estado === "ACTIVO"
+                                    ? (
+                                        ctx.semana[nombreDia].producto
+                                            ? "✔ Planificado"
+                                            : "Pendiente"
+                                    )
+                                    : ctx.semana[nombreDia].estado === "FERIADO"
+                                        ? "✔ Feriado"
+                                        : ctx.semana[nombreDia].estado === "CERRADO"
+                                            ? "✔ Cerrado"
+                                            : "Pendiente"
                             }
                         </small>
 
@@ -128,10 +177,14 @@ const PlannerSidebar = {
 
         Object.values(ctx.semana).forEach(dia => {
 
-            if (dia.producto) {
+            const completo =
+                dia.estado === "ACTIVO"
+                    ? Boolean(dia.producto)
+                    : dia.estado === "FERIADO" ||
+                    dia.estado === "CERRADO";
 
+            if (completo) {
                 completados++;
-
             }
 
         });
@@ -164,39 +217,4 @@ const PlannerSidebar = {
 
 
 
-    // Actualiza los pequeños indicadores (badge de estado y nombre del plato) en la barra lateral
-    actualizarSidebar(ctx) {
-        Object.keys(ctx.semana).forEach(nombreDia => {
-            const dia = ctx.semana[nombreDia];
-            const elementoProducto = document.getElementById(`plannerProducto${nombreDia}`);
-            const elementoEstado = document.getElementById(`plannerEstado${nombreDia}`);
-
-            // 1. Sincronizar nombre del platillo en la lista lateral
-            if (elementoProducto) {
-                if (dia.producto) {
-                    const datosProd = ctx.obtenerProducto(dia.producto);
-                    elementoProducto.textContent = datosProd ? datosProd.nombre : "Sin producto";
-                } else {
-                    elementoProducto.textContent = "Sin producto";
-                }
-            }
-
-            // 2. Sincronizar emojis e indicadores de estado
-            if (elementoEstado) {
-                switch (dia.estado) {
-                    case "ACTIVO":
-                        elementoEstado.textContent = "🟢 Activo";
-                        break;
-                    case "FERIADO":
-                        elementoEstado.textContent = "🟡 Feriado";
-                        break;
-                    case "CERRADO":
-                        elementoEstado.textContent = "⚫ Cerrado";
-                        break;
-                    default:
-                        elementoEstado.textContent = "🟢 Activo";
-                }
-            }
-        });
-    }
 };

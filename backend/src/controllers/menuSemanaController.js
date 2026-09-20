@@ -349,98 +349,31 @@ const menuSemanaController = {
 
 
             // ======================================================
-            // GUARDAR DÍAS
+            // GUARDAR LOS 7 DÍAS EN UNA SOLA OPERACIÓN
             // ======================================================
 
-            let errores = 0;
+            const exito =
+                await menuSemanaModel
+                    .guardarDiasSucursal(
+                        semanaId,
+                        sucursalAutorizada,
+                        dias
+                    );
 
 
-            for (const dia of dias) {
+            if (!exito) {
 
-                const exito =
-                    await menuSemanaModel
-                        .guardarDiaSucursal({
-
-                            semana_id:
-                                semanaId,
-
-                            // MUY IMPORTANTE:
-                            // jamás usamos directamente
-                            // req.body.sucursal_id
-                            sucursal_id:
-                                sucursalAutorizada,
-
-                            dia_semana:
-                                dia.dia_semana,
-
-                            fecha_especifica:
-                                dia.fecha_especifica,
-
-                            estado_dia:
-                                dia.estado_dia ||
-                                'ACTIVO',
-
-                            disponible_web:
-                                dia.disponible_web !== undefined
-                                    ? dia.disponible_web
-                                    : 1,
-
-                            plato_catalogo_id:
-                                dia.plato_catalogo_id ||
-                                null,
-
-                            precio_real:
-                                dia.precio_real !== null &&
-                                dia.precio_real !== undefined &&
-                                dia.precio_real !== ''
-                                    ? Number(
-                                        dia.precio_real
-                                    )
-                                    : null,
-
-                            acompanamientos_especificos:
-                                dia.acompanamientos_especificos ||
-                                null,
-
-                            texto_alternativo:
-                                dia.texto_alternativo ||
-                                null,
-
-                            plantilla_id:
-                                dia.plantilla_id
-                                    ? Number(
-                                        dia.plantilla_id
-                                    )
-                                    : null
-
-                        });
-
-
-                if (!exito) {
-
-                    errores++;
-
-                }
-
-            }
-
-
-            // ======================================================
-            // RESULTADO
-            // ======================================================
-
-            if (errores > 0) {
-
-                return res.status(207).json({
+                return res.status(500).json({
 
                     success: false,
 
                     message:
-                        `El menú se procesó con errores. ${errores} días no pudieron guardarse.`
+                        "No fue posible guardar la planificación."
 
                 });
 
             }
+            
 
 
             return res.json({
@@ -700,17 +633,21 @@ const menuSemanaController = {
             // OBTENER MENÚ DE LA SUCURSAL AUTORIZADA
             // ======================================================
 
-            const infoMenu =
-                await menuSemanaModel
+            const [
+                infoMenu,
+                diccionario
+            ] = await Promise.all([
+
+                menuSemanaModel
                     .obtenerMenuSemanaPorSucursal(
                         semanaIdFinal,
                         sucursalAutorizada
-                    );
+                    ),
 
+                menuSemanaModel
+                    .obtenerDiccionarioEmojis()
 
-            const diccionario =
-                await menuSemanaModel
-                    .obtenerDiccionarioEmojis();
+            ]);
 
 
             if (
@@ -1212,39 +1149,464 @@ const menuSemanaController = {
 
         try {
 
-            const { palabra_clave, emoji } = req.body;
+            const {
+                palabra_clave,
+                emoji
+            } = req.body;
 
-            if (!palabra_clave || !emoji) {
+
+            const palabraNormalizada =
+                String(
+                    palabra_clave || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            const emojiNormalizado =
+                String(
+                    emoji || ""
+                )
+                .trim();
+
+
+            if (
+                !palabraNormalizada ||
+                !emojiNormalizado
+            ) {
 
                 return res.status(400).json({
+
                     success: false,
-                    message: "Palabra y emoji son obligatorios."
+
+                    message:
+                        "Palabra y emoji son obligatorios."
+
                 });
 
             }
 
-            const id = await menuSemanaModel.crearEmoji(
-                palabra_clave,
-                emoji
-            );
 
-            res.json({
+            const resultado =
+                await menuSemanaModel.crearEmoji(
+                    palabraNormalizada,
+                    emojiNormalizado
+                );
+
+
+            // ==================================================
+            // YA EXISTÍA ACTIVO
+            // ==================================================
+
+            if (resultado.existente) {
+
+                return res.status(200).json({
+
+                    success: true,
+
+                    data: {
+                        id:
+                            resultado.id,
+
+                        palabra_clave:
+                            palabraNormalizada
+                    },
+
+                    existente: true,
+
+                    message:
+                        "La palabra ya existe en el diccionario."
+
+                });
+
+            }
+
+
+            // ==================================================
+            // REACTIVADO
+            // ==================================================
+
+            if (resultado.reactivado) {
+
+                return res.status(200).json({
+
+                    success: true,
+
+                    data: {
+                        id:
+                            resultado.id,
+
+                        palabra_clave:
+                            palabraNormalizada,
+
+                        emoji:
+                            emojiNormalizado
+                    },
+
+                    reactivado: true,
+
+                    message:
+                        "La palabra existía como inactiva y fue reactivada."
+
+                });
+
+            }
+
+
+            // ==================================================
+            // NUEVO
+            // ==================================================
+
+            return res.status(201).json({
+
                 success: true,
-                id
+
+                data: {
+                    id:
+                        resultado.id,
+
+                    palabra_clave:
+                        palabraNormalizada,
+
+                    emoji:
+                        emojiNormalizado
+                },
+
+                creado: true,
+
+                message:
+                    "Emoji registrado correctamente."
+
             });
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Error creando emoji:",
+                error
+            );
 
-            res.status(500).json({
+
+            return res.status(500).json({
+
                 success: false,
-                message: error.message
+
+                message:
+                    "No fue posible registrar el emoji."
+
             });
 
         }
 
     },
+
+
+    // ======================================================
+    // Actualizar asociación del diccionario de emojis
+    // ======================================================
+
+    async actualizarEmoji(req, res) {
+
+        try {
+
+            const id =
+                Number(req.params.id);
+
+            const {
+                palabra_clave,
+                emoji
+            } = req.body;
+
+
+            if (
+                !Number.isInteger(id) ||
+                id <= 0
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "El identificador del emoji no es válido."
+
+                });
+
+            }
+
+
+            if (
+                !String(palabra_clave || "").trim() ||
+                !String(emoji || "").trim()
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Palabra y emoji son obligatorios."
+
+                });
+
+            }
+
+
+            const actualizado =
+                await menuSemanaModel.actualizarEmoji(
+                    id,
+                    palabra_clave,
+                    emoji
+                );
+
+
+            if (!actualizado) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "No se encontró la asociación de emoji."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Emoji actualizado correctamente."
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Error actualizando emoji:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "No fue posible actualizar el emoji."
+
+            });
+
+        }
+
+    },
+
+
+    // ======================================================
+    // Desactivar asociación
+    // ======================================================
+
+    async desactivarEmoji(req, res) {
+
+        try {
+
+            const id =
+                Number(req.params.id);
+
+
+            if (
+                !Number.isInteger(id) ||
+                id <= 0
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "El identificador del emoji no es válido."
+
+                });
+
+            }
+
+
+            const desactivado =
+                await menuSemanaModel.desactivarEmoji(
+                    id
+                );
+
+
+            if (!desactivado) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "El emoji no existe o ya está inactivo."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Emoji desactivado correctamente."
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Error desactivando emoji:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "No fue posible desactivar el emoji."
+
+            });
+
+        }
+
+    },
+
+
+    // ======================================================
+    // Obtener diccionario inactivo
+    // ======================================================
+
+    async obtenerEmojisInactivos(req, res) {
+
+        try {
+
+            const data =
+                await menuSemanaModel
+                    .obtenerEmojisInactivos();
+
+
+            return res.json({
+
+                success: true,
+
+                data
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Error obteniendo emojis inactivos:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "No fue posible obtener los emojis inactivos."
+
+            });
+
+        }
+
+    },
+
+
+    // ======================================================
+    // Reactivar asociación
+    // ======================================================
+
+    async reactivarEmoji(req, res) {
+
+        try {
+
+            const id =
+                Number(req.params.id);
+
+
+            if (
+                !Number.isInteger(id) ||
+                id <= 0
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "El identificador del emoji no es válido."
+
+                });
+
+            }
+
+
+            const reactivado =
+                await menuSemanaModel.reactivarEmoji(
+                    id
+                );
+
+
+            if (!reactivado) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "El emoji no existe o ya está activo."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Emoji reactivado correctamente."
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Error reactivando emoji:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "No fue posible reactivar el emoji."
+
+            });
+
+        }
+
+    },
+
 
 
 

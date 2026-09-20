@@ -23,13 +23,7 @@ const DIAS_SEMANA = [
 
 const menuSemanaModel = {
     
-    // 1. Obtener el Diccionario de Emojis para el generador de WhatsApp
-    obtenerDiccionarioEmojis: async () => {
-        const query = `SELECT palabra_clave, emoji FROM menu_emoji_diccionario`;
-        const [rows] = await pool.query(query);
-        return rows;
-    },
-
+   
     // 2. Obtener los platos del Catálogo Maestro para el buscador predictivo del Admin
     obtenerCatalogoPlatos: async () => {
 
@@ -89,47 +83,38 @@ const menuSemanaModel = {
 
  
 
-    // 4. Obtener la grilla completa de Lunes a Domingo para una Sucursal y Semana específica
-    obtenerMenuSemanaPorSucursal: async (semanaId, sucursalId) => {
+    // ======================================================
+    // Obtener grilla completa de Lunes a Domingo
+    // para una Sucursal y Semana específica
+    // ======================================================
+
+    obtenerMenuSemanaPorSucursal: async (
+        semanaId,
+        sucursalId
+    ) => {
+
         const query = `
             SELECT
-
                 ms.id AS menu_sucursal_id,
-
                 ms.semana_id,
-                
                 ms.sucursal_id,
-
                 ms.dia_semana,
-
                 ms.fecha_especifica,
-
                 ms.estado_dia,
-
                 ms.disponible_web,
-
                 ms.precio_real,
-
                 ms.texto_alternativo,
-
                 ms.plato_catalogo_id,
-
                 ms.plantilla_id,
 
                 p.nombre AS plantilla_nombre,
-
                 p.slug AS plantilla_slug,
-
                 p.configuracion AS plantilla_configuracion,
-
                 p.activa AS plantilla_activa,
 
                 m.numero_semana,
-
                 m.fecha_inicio,
-
                 m.fecha_fin,
-
                 m.estado,
 
                 c.nombre_plato AS plato_base_nombre,
@@ -147,164 +132,257 @@ const menuSemanaModel = {
             FROM menu_ejecutivo_sucursal ms
 
             INNER JOIN menu_semana_maestro m
-            ON ms.semana_id = m.id
+                ON ms.semana_id = m.id
 
             LEFT JOIN menu_ejecutivo_catalogo c
-            ON ms.plato_catalogo_id = c.id
+                ON ms.plato_catalogo_id = c.id
 
             LEFT JOIN planner_plantillas p
-            ON ms.plantilla_id = p.id
+                ON ms.plantilla_id = p.id
 
             WHERE
-
                 ms.semana_id = ?
-
             AND
-
                 ms.sucursal_id = ?
 
             ORDER BY FIELD(
-
                 ms.dia_semana,
-
                 'Lunes',
-
                 'Martes',
-
                 'Miércoles',
-
                 'Jueves',
-
                 'Viernes',
-
                 'Sábado',
-
                 'Domingo'
-
             )
         `;
-        
-        const [rows] = await pool.query(query, [semanaId, sucursalId]);
 
-        // Si ya existe planificación simplemente la devolvemos
+
+        // ==================================================
+        // 1. BUSCAR PLANIFICACIÓN EXISTENTE
+        // ==================================================
+
+        const [rows] =
+            await pool.query(
+                query,
+                [
+                    semanaId,
+                    sucursalId
+                ]
+            );
+
+
         if (rows.length > 0) {
 
             return rows;
 
         }
 
-        console.log("No existe planificación. Se generará automáticamente...");
 
-        // Obtener la información de la semana
-        const [semana] = await pool.query(
+        // ==================================================
+        // 2. OBTENER SEMANA
+        // ==================================================
 
-            `
-            SELECT fecha_inicio
-            FROM menu_semana_maestro
-            WHERE id = ?
-            `,
-            [semanaId]
+        const [semanas] =
+            await pool.query(
+                `
+                SELECT
+                    DATE_FORMAT(
+                        fecha_inicio,
+                        '%Y-%m-%d'
+                    ) AS fecha_inicio
+                FROM menu_semana_maestro
+                WHERE id = ?
+                LIMIT 1
+                `,
+                [semanaId]
+            );
 
-        );
 
-        if (semana.length === 0) {
+        if (semanas.length === 0) {
 
             return [];
 
         }
 
-        const fecha = new Date(semana[0].fecha_inicio);
 
-        // Crear automáticamente los 7 días
-        for (let i = 0; i < DIAS_SEMANA.length; i++) {
+        // ==================================================
+        // 3. GENERAR LOS 7 DÍAS EN MEMORIA
+        // ==================================================
 
-            const fechaActual = new Date(fecha);
+        const [
+            anio,
+            mes,
+            dia
+        ] =
+            semanas[0]
+                .fecha_inicio
+                .split("-")
+                .map(Number);
 
-            fechaActual.setDate(fecha.getDate() + i);
 
-            await pool.query(
-
-                `
-                INSERT INTO menu_ejecutivo_sucursal
-                (
-                    semana_id,
-                    sucursal_id,
-                    dia_semana,
-                    fecha_especifica,
-                    estado_dia,
-                    disponible_web
-                )
-                VALUES
-                (
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    'ACTIVO',
-                    1
-                )
-                `,
-                [
-
-                    semanaId,
-
-                    sucursalId,
-
-                    [
-                        "Domingo",
-                        "Lunes",
-                        "Martes",
-                        "Miércoles",
-                        "Jueves",
-                        "Viernes",
-                        "Sábado"
-                    ][fechaActual.getDay()],
-                    
-                    fechaActual.toISOString().substring(0,10)
-
-                ]
-
+        // Mediodía evita desplazamientos accidentales
+        // de fecha por zona horaria.
+        const fechaInicio =
+            new Date(
+                anio,
+                mes - 1,
+                dia,
+                12,
+                0,
+                0
             );
 
-            
-            
+
+        const nombresDias = [
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
+            "Sábado"
+        ];
+
+
+        const valores = [];
+
+
+        for (
+            let i = 0;
+            i < 7;
+            i++
+        ) {
+
+            const fechaActual =
+                new Date(fechaInicio);
+
+
+            fechaActual.setDate(
+                fechaInicio.getDate() + i
+            );
+
+
+            const fechaTexto =
+                fechaActual.getFullYear() +
+                "-" +
+                String(
+                    fechaActual.getMonth() + 1
+                ).padStart(2, "0") +
+                "-" +
+                String(
+                    fechaActual.getDate()
+                ).padStart(2, "0");
+
+
+            valores.push([
+                semanaId,
+                sucursalId,
+                nombresDias[
+                    fechaActual.getDay()
+                ],
+                fechaTexto,
+                "ACTIVO",
+                1
+            ]);
+
         }
 
 
-        // Consultar nuevamente la planificación recién creada
-            const [nuevaGrilla] = await pool.query(
+        // ==================================================
+        // 4. INSERTAR LOS 7 DÍAS EN UNA SOLA CONSULTA
+        // ==================================================
+
+        await pool.query(
+            `
+            INSERT INTO menu_ejecutivo_sucursal
+            (
+                semana_id,
+                sucursal_id,
+                dia_semana,
+                fecha_especifica,
+                estado_dia,
+                disponible_web
+            )
+            VALUES ?
+            `,
+            [valores]
+        );
+
+
+        // ==================================================
+        // 5. DEVOLVER GRILLA RECIÉN CREADA
+        // ==================================================
+
+        const [nuevaGrilla] =
+            await pool.query(
                 query,
-                [semanaId, sucursalId]
+                [
+                    semanaId,
+                    sucursalId
+                ]
             );
 
-            return nuevaGrilla;
 
-        
+        return nuevaGrilla;
+
     },
 
-
     
+  
 
-    // ======================================================
-    // 5. Guardar o Actualizar un día específico
-    //    Upsert Operativo
-    // ======================================================
+    guardarDiasSucursal: async (
+        semanaId,
+        sucursalId,
+        dias
+    ) => {
 
-    guardarDiaSucursal: async (datos) => {
+        if (
+            !Array.isArray(dias) ||
+            dias.length === 0
+        ) {
 
-        const {
-            semana_id,
-            sucursal_id,
-            dia_semana,
-            fecha_especifica,
-            estado_dia,
-            disponible_web,
-            plato_catalogo_id,
-            precio_real,
-            acompanamientos_especificos,
-            texto_alternativo,
-            plantilla_id
-        } = datos;
+            return false;
+
+        }
+
+
+        const valores =
+            dias.map(dia => [
+
+                semanaId,
+
+                sucursalId,
+
+                dia.dia_semana,
+
+                dia.fecha_especifica,
+
+                dia.estado_dia || "ACTIVO",
+
+                dia.disponible_web !== undefined
+                    ? dia.disponible_web
+                    : 1,
+
+                dia.plato_catalogo_id || null,
+
+                dia.precio_real !== null &&
+                dia.precio_real !== undefined &&
+                dia.precio_real !== ""
+                    ? Number(dia.precio_real)
+                    : null,
+
+                dia.acompanamientos_especificos ||
+                    null,
+
+                dia.texto_alternativo ||
+                    null,
+
+                dia.plantilla_id
+                    ? Number(dia.plantilla_id)
+                    : null
+
+            ]);
 
 
         const query = `
@@ -324,10 +402,7 @@ const menuSemanaModel = {
                 plantilla_id
             )
 
-            VALUES
-            (
-                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-            )
+            VALUES ?
 
             ON DUPLICATE KEY UPDATE
 
@@ -358,56 +433,11 @@ const menuSemanaModel = {
         const [resultado] =
             await pool.query(
                 query,
-                [
-                    semana_id,
-                    sucursal_id,
-                    dia_semana,
-                    fecha_especifica,
-                    estado_dia,
-                    disponible_web,
-                    plato_catalogo_id,
-                    precio_real,
-                    acompanamientos_especificos,
-                    texto_alternativo,
-                    plantilla_id
-                ]
+                [valores]
             );
 
 
         return resultado.affectedRows > 0;
-
-    },
-
-    // 6. Obtener la última semana registrada para calcular la siguiente línea de tiempo
-    obtenerUltimaSemanaRegistrada: async () => {
-        const query = `
-            SELECT numero_semana, fecha_fin 
-            FROM menu_semana_maestro 
-            ORDER BY fecha_fin DESC LIMIT 1
-        `;
-        const [rows] = await pool.query(query);
-        return rows.length > 0 ? rows[0] : null;
-    },
-
-
-    // 7. Obtener la semana actualmente publicada
-    obtenerSemanaPublicada: async () => {
-
-        const query = `
-            SELECT
-                id,
-                numero_semana
-            FROM menu_semana_maestro
-            WHERE estado = 'PUBLICADO'
-            ORDER BY fecha_inicio DESC
-            LIMIT 1
-        `;
-
-        const [rows] = await pool.query(query);
-
-        return rows.length > 0
-            ? rows[0]
-            : null;
 
     },
 
@@ -698,8 +728,8 @@ const menuSemanaModel = {
 
     // ======================================================
     // Obtener semanas disponibles para planificación
-    // Genera lunes-domingo para los próximos meses
-    // e indica cuáles ya existen en la BD.
+    // Genera semanas lunes-domingo para los próximos meses
+    // e identifica las que ya existen en la BD.
     // ======================================================
 
     obtenerSemanasDisponibles: async (meses = 3) => {
@@ -709,128 +739,236 @@ const menuSemanaModel = {
             12
         );
 
-        // Traemos las semanas ya creadas dentro del período.
-        const [existentes] = await pool.query(`
-            SELECT
-                id,
-                numero_semana,
-                fecha_inicio,
-                fecha_fin,
-                estado
-            FROM menu_semana_maestro
-            WHERE fecha_inicio >= CURDATE()
-            AND fecha_inicio <= DATE_ADD(CURDATE(), INTERVAL ? MONTH)
-            ORDER BY fecha_inicio ASC
-        `, [mesesPermitidos]);
 
-        const mapaExistentes = new Map();
-
-        existentes.forEach(semana => {
-
-            const fecha = new Date(
-                semana.fecha_inicio
-            );
-
-            const fechaInicio =
-                fecha.getFullYear() +
-                "-" +
-                String(
-                    fecha.getMonth() + 1
-                ).padStart(2, "0") +
-                "-" +
-                String(
-                    fecha.getDate()
-                ).padStart(2, "0");
-
-            mapaExistentes.set(
-                fechaInicio,
-                semana
-            );
-
-        });
-
-        // ==========================================
-        // Encontrar el lunes de la semana actual
-        // ==========================================
-
-        const hoy = new Date();
-
-        const dia = hoy.getDay();
-
-        const diferencia =
-            dia === 0
-                ? -6
-                : 1 - dia;
-
-        const primerLunes = new Date(hoy);
-
-        primerLunes.setDate(
-            hoy.getDate() + diferencia
-        );
-
-        primerLunes.setHours(0, 0, 0, 0);
-
-        // Fecha límite
-        const limite = new Date(primerLunes);
-
-        limite.setMonth(
-            limite.getMonth() + mesesPermitidos
-        );
+        // ==================================================
+        // UTILIDAD DE FECHA LOCAL YYYY-MM-DD
+        // ==================================================
 
         const formatoFecha = fecha =>
             fecha.getFullYear() +
             "-" +
-            String(fecha.getMonth() + 1).padStart(2, "0") +
+            String(
+                fecha.getMonth() + 1
+            ).padStart(2, "0") +
             "-" +
-            String(fecha.getDate()).padStart(2, "0");
+            String(
+                fecha.getDate()
+            ).padStart(2, "0");
+
+
+        // ==================================================
+        // ENCONTRAR LUNES DE LA SEMANA ACTUAL
+        // ==================================================
+
+        const hoy = new Date();
+
+        hoy.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        const diaSemana =
+            hoy.getDay();
+
+
+        const diferencia =
+            diaSemana === 0
+                ? -6
+                : 1 - diaSemana;
+
+
+        const primerLunes =
+            new Date(hoy);
+
+
+        primerLunes.setDate(
+            hoy.getDate() +
+            diferencia
+        );
+
+
+        primerLunes.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        // ==================================================
+        // FECHA LÍMITE DEL CALENDARIO
+        // ==================================================
+
+        const limite =
+            new Date(primerLunes);
+
+
+        limite.setMonth(
+            limite.getMonth() +
+            mesesPermitidos
+        );
+
+
+        // Incluimos la semana completa correspondiente
+        // al último lunes generado.
+        const limiteConsulta =
+            new Date(limite);
+
+
+        limiteConsulta.setDate(
+            limiteConsulta.getDate() + 6
+        );
+
+
+        const primerLunesTexto =
+            formatoFecha(
+                primerLunes
+            );
+
+
+        const limiteTexto =
+            formatoFecha(
+                limiteConsulta
+            );
+
+
+        // ==================================================
+        // CONSULTAR SEMANAS YA EXISTENTES
+        // ==================================================
+        //
+        // IMPORTANTE:
+        // La consulta comienza en el lunes de la semana
+        // actual, NO en CURDATE().
+        //
+        // DATE_FORMAT evita conversiones innecesarias
+        // de zona horaria en JavaScript.
+        // ==================================================
+
+        const [existentes] =
+            await pool.query(
+                `
+                SELECT
+                    id,
+                    numero_semana,
+                    DATE_FORMAT(
+                        fecha_inicio,
+                        '%Y-%m-%d'
+                    ) AS fecha_inicio,
+                    DATE_FORMAT(
+                        fecha_fin,
+                        '%Y-%m-%d'
+                    ) AS fecha_fin,
+                    estado
+                FROM menu_semana_maestro
+                WHERE fecha_inicio >= ?
+                AND fecha_inicio <= ?
+                ORDER BY fecha_inicio ASC
+                `,
+                [
+                    primerLunesTexto,
+                    limiteTexto
+                ]
+            );
+
+
+        // ==================================================
+        // MAPA DE SEMANAS EXISTENTES
+        // ==================================================
+
+        const mapaExistentes =
+            new Map();
+
+
+        existentes.forEach(
+            semana => {
+
+                mapaExistentes.set(
+                    String(
+                        semana.fecha_inicio
+                    ),
+                    semana
+                );
+
+            }
+        );
+
+
+        // ==================================================
+        // GENERAR CALENDARIO
+        // ==================================================
 
         const semanas = [];
 
-        let cursor = new Date(primerLunes);
+        const cursor =
+            new Date(primerLunes);
 
-        while (cursor <= limite) {
 
-            const inicio = new Date(cursor);
+        while (
+            cursor <= limite
+        ) {
 
-            const fin = new Date(inicio);
+            const inicio =
+                new Date(cursor);
+
+
+            const fin =
+                new Date(inicio);
+
 
             fin.setDate(
                 inicio.getDate() + 6
             );
 
+
             const inicioTexto =
                 formatoFecha(inicio);
+
 
             const finTexto =
                 formatoFecha(fin);
 
+
             const existente =
-                mapaExistentes.get(inicioTexto);
+                mapaExistentes.get(
+                    inicioTexto
+                );
+
 
             semanas.push({
 
-                fecha_inicio: inicioTexto,
+                fecha_inicio:
+                    inicioTexto,
 
-                fecha_fin: finTexto,
+                fecha_fin:
+                    finTexto,
 
-                disponible: !existente,
+                disponible:
+                    !existente,
 
                 semana_id:
-                    existente?.id ?? null,
+                    existente?.id ??
+                    null,
 
                 numero_semana:
-                    existente?.numero_semana ?? null,
+                    existente?.numero_semana ??
+                    null,
 
                 estado:
-                    existente?.estado ?? null
+                    existente?.estado ??
+                    null
 
             });
+
 
             cursor.setDate(
                 cursor.getDate() + 7
             );
 
         }
+
 
         return semanas;
 
@@ -893,8 +1031,14 @@ const menuSemanaModel = {
 
     // [NUEVO] 8. Obtener contadores para los KPIs superiores
     obtenerMetricasContadores: async () => {
-        const queryPlatillos = `SELECT COUNT(*) AS total FROM menu_ejecutivo_catalogo`;
-        const queryEmojis = `SELECT COUNT(*) AS total FROM menu_emoji_diccionario`;
+        const queryPlatillos = `SELECT COUNT(*) AS total
+                                FROM menu_ejecutivo_catalogo
+                                WHERE estado = 'ACTIVO'`;
+        const queryEmojis = `
+            SELECT COUNT(*) AS total
+            FROM menu_emoji_diccionario
+            WHERE estado = 'ACTIVO'
+        `;
         
         const [[resPlatillos], [resEmojis]] = await Promise.all([
             pool.query(queryPlatillos),
@@ -1035,27 +1179,283 @@ const menuSemanaModel = {
 
     async crearEmoji(palabra, emoji) {
 
+        const palabraNormalizada =
+            String(palabra || "")
+                .trim()
+                .toLowerCase();
+
+
+        // ==================================================
+        // BUSCAR LA PALABRA INDEPENDIENTEMENTE DEL ESTADO
+        // ==================================================
+
+        const [existentes] =
+            await pool.execute(
+                `
+                SELECT
+                    id,
+                    palabra_clave,
+                    emoji,
+                    estado
+
+                FROM menu_emoji_diccionario
+
+                WHERE palabra_clave = ?
+
+                LIMIT 1
+                `,
+                [palabraNormalizada]
+            );
+
+
+        // ==================================================
+        // YA EXISTE
+        // ==================================================
+
+        if (existentes.length > 0) {
+
+            const existente =
+                existentes[0];
+
+
+            // ----------------------------------------------
+            // ESTABA INACTIVO → REACTIVAR Y ACTUALIZAR EMOJI
+            // ----------------------------------------------
+
+            if (existente.estado === "INACTIVO") {
+
+                await pool.execute(
+                    `
+                    UPDATE menu_emoji_diccionario
+
+                    SET
+                        emoji = ?,
+                        estado = 'ACTIVO'
+
+                    WHERE id = ?
+                    `,
+                    [
+                        emoji,
+                        existente.id
+                    ]
+                );
+
+
+                return {
+
+                    id:
+                        existente.id,
+
+                    creado:
+                        false,
+
+                    reactivado:
+                        true,
+
+                    existente:
+                        false
+
+                };
+
+            }
+
+
+            // ----------------------------------------------
+            // YA ESTÁ ACTIVO → NO DUPLICAR
+            // ----------------------------------------------
+
+            return {
+
+                id:
+                    existente.id,
+
+                creado:
+                    false,
+
+                reactivado:
+                    false,
+
+                existente:
+                    true
+
+            };
+
+        }
+
+
+        // ==================================================
+        // NO EXISTE → CREAR
+        // ==================================================
+
+        const [result] =
+            await pool.execute(
+                `
+                INSERT INTO menu_emoji_diccionario
+                (
+                    palabra_clave,
+                    emoji,
+                    estado
+                )
+                VALUES
+                (
+                    ?,
+                    ?,
+                    'ACTIVO'
+                )
+                `,
+                [
+                    palabraNormalizada,
+                    emoji
+                ]
+            );
+
+
+        return {
+
+            id:
+                result.insertId,
+
+            creado:
+                true,
+
+            reactivado:
+                false,
+
+            existente:
+                false
+
+        };
+
+    },
+
+
+    // ======================================================
+    // Actualizar asociación de emoji
+    // ======================================================
+
+    actualizarEmoji: async (
+        id,
+        palabra,
+        emoji
+    ) => {
+
         const sql = `
-            INSERT INTO menu_emoji_diccionario
-            (
+            UPDATE menu_emoji_diccionario
+
+            SET
+                palabra_clave = ?,
+                emoji = ?
+
+            WHERE id = ?
+        `;
+
+
+        const [result] =
+            await pool.execute(
+                sql,
+                [
+                    String(palabra)
+                        .trim()
+                        .toLowerCase(),
+
+                    emoji,
+
+                    id
+                ]
+            );
+
+
+        return result.affectedRows > 0;
+
+    },
+
+
+    // ======================================================
+    // Desactivar emoji
+    // ======================================================
+
+    desactivarEmoji: async (id) => {
+
+        const sql = `
+            UPDATE menu_emoji_diccionario
+
+            SET estado = 'INACTIVO'
+
+            WHERE id = ?
+            AND estado = 'ACTIVO'
+        `;
+
+
+        const [result] =
+            await pool.execute(
+                sql,
+                [id]
+            );
+
+
+        return result.affectedRows > 0;
+
+    },
+
+
+    // ======================================================
+    // Obtener emojis inactivos
+    // ======================================================
+
+    obtenerEmojisInactivos: async () => {
+
+        const sql = `
+            SELECT
+                id,
                 palabra_clave,
                 emoji,
                 estado
-            )
-            VALUES
-            (
-                ?, ?, 'ACTIVO'
-            )
+
+            FROM menu_emoji_diccionario
+
+            WHERE estado = 'INACTIVO'
+
+            ORDER BY palabra_clave ASC
         `;
 
-        const [result] = await pool.execute(sql, [
-            palabra.toLowerCase(),
-            emoji
-        ]);
 
-        return result.insertId;
+        const [rows] =
+            await pool.query(sql);
+
+
+        return rows;
 
     },
+
+
+    // ======================================================
+    // Reactivar emoji
+    // ======================================================
+
+    reactivarEmoji: async (id) => {
+
+        const sql = `
+            UPDATE menu_emoji_diccionario
+
+            SET estado = 'ACTIVO'
+
+            WHERE id = ?
+            AND estado = 'INACTIVO'
+        `;
+
+
+        const [result] =
+            await pool.execute(
+                sql,
+                [id]
+            );
+
+
+        return result.affectedRows > 0;
+
+    },
+
+
 
 
     // ======================================================

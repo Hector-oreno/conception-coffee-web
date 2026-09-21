@@ -60,6 +60,113 @@ const actualizarSlider = async (req, res) => {
     }
 };
 
+const reordenarSlider =
+    async (req, res) => {
+
+        try {
+
+            const { id } =
+                req.params;
+
+            const { direccion } =
+                req.body;
+
+
+            if (
+                direccion !== "arriba" &&
+                direccion !== "abajo"
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Dirección de movimiento inválida."
+
+                });
+
+            }
+
+
+            const resultado =
+                await HeroModel.reordenar(
+                    Number(id),
+                    direccion
+                );
+
+
+            if (!resultado.success) {
+
+                if (
+                    resultado.reason ===
+                    "NO_EXISTE"
+                ) {
+
+                    return res.status(404).json({
+
+                        success: false,
+
+                        message:
+                            "Slider no encontrado."
+
+                    });
+
+                }
+
+
+                if (
+                    resultado.reason ===
+                    "LIMITE"
+                ) {
+
+                    return res.status(400).json({
+
+                        success: false,
+
+                        message:
+                            "El slider ya se encuentra en el límite."
+
+                    });
+
+                }
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Orden actualizado correctamente."
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Error en reordenarSlider:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Error al reordenar el slider."
+
+            });
+
+        }
+
+};
+
+
+
 const publicarCambios = async (req, res) => {
     try {
         await HeroModel.publicarTodos();
@@ -102,6 +209,7 @@ module.exports = {
     obtenerSlidersAdmin,
     obtenerSlidersCliente,
     crearSlider,
+    reordenarSlider,
     actualizarSlider,
     publicarCambios,
     eliminarSlider

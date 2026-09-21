@@ -47,17 +47,322 @@ const HeroModel = {
         return result.affectedRows > 0;
     },
 
+
+    // Reordenar dos sliders de forma atómica
+    reordenar: async (
+        sliderId,
+        direccion
+    ) => {
+
+        const connection =
+            await pool.getConnection();
+
+        try {
+
+            await connection.beginTransaction();
+
+
+            // ==========================================
+            // OBTENER SLIDER ACTUAL
+            // ==========================================
+
+            const [actualRows] =
+                await connection.query(
+                    `
+                    SELECT
+                        id,
+                        orden
+                    FROM sliders_inicio
+                    WHERE id = ?
+                    FOR UPDATE
+                    `,
+                    [sliderId]
+                );
+
+
+            if (actualRows.length === 0) {
+
+                await connection.rollback();
+
+                return {
+                    success: false,
+                    reason: "NO_EXISTE"
+                };
+
+            }
+
+
+            const actual =
+                actualRows[0];
+
+
+            // ==========================================
+            // BUSCAR VECINO
+            // ==========================================
+
+            const operador =
+                direccion === "arriba"
+                    ? "<"
+                    : ">";
+
+            const ordenamiento =
+                direccion === "arriba"
+                    ? "DESC"
+                    : "ASC";
+
+
+            const [vecinoRows] =
+                await connection.query(
+                    `
+                    SELECT
+                        id,
+                        orden
+                    FROM sliders_inicio
+                    WHERE orden ${operador} ?
+                    ORDER BY orden ${ordenamiento}
+                    LIMIT 1
+                    FOR UPDATE
+                    `,
+                    [actual.orden]
+                );
+
+
+            if (vecinoRows.length === 0) {
+
+                await connection.rollback();
+
+                return {
+                    success: false,
+                    reason: "LIMITE"
+                };
+
+            }
+
+
+            const vecino =
+                vecinoRows[0];
+
+
+            // ==========================================
+            // INTERCAMBIAR ORDEN
+            // ==========================================
+
+            await connection.query(
+                `
+                UPDATE sliders_inicio
+                SET
+                    orden = ?,
+                    estado_publicacion = 'borrador'
+                WHERE id = ?
+                `,
+                [
+                    vecino.orden,
+                    actual.id
+                ]
+            );
+
+
+            await connection.query(
+                `
+                UPDATE sliders_inicio
+                SET
+                    orden = ?,
+                    estado_publicacion = 'borrador'
+                WHERE id = ?
+                `,
+                [
+                    actual.orden,
+                    vecino.id
+                ]
+            );
+
+
+            await connection.commit();
+
+
+            return {
+                success: true
+            };
+
+
+        } catch (error) {
+
+            await connection.rollback();
+
+            throw error;
+
+
+        } finally {
+
+            connection.release();
+
+        }
+
+    },
+
+
+
     // Publicar todo de golpe
     publicarTodos: async () => {
         const [result] = await pool.query("UPDATE sliders_inicio SET estado_publicacion = 'publicado'");
         return result.affectedRows;
     },
 
-    // Eliminar de la base de datos
+    // Eliminar slider y compactar automáticamente el orden
     eliminar: async (id) => {
-        const [result] = await pool.query('DELETE FROM sliders_inicio WHERE id = ?', [id]);
-        return result.affectedRows > 0;
-    }
+
+        const connection =
+            await pool.getConnection();
+
+        try {
+
+            await connection.beginTransaction();
+
+
+            // ==========================================
+            // OBTENER EL SLIDER ANTES DE ELIMINAR
+            // ==========================================
+
+            const [rows] =
+                await connection.query(
+                    `
+                    SELECT
+                        id,
+                        orden
+                    FROM sliders_inicio
+                    WHERE id = ?
+                    FOR UPDATE
+                    `,
+                    [id]
+                );
+
+
+            if (rows.length === 0) {
+
+                await connection.rollback();
+
+                return false;
+
+            }
+
+
+            const ordenEliminado =
+                Number(rows[0].orden);
+
+
+            // ==========================================
+            // ELIMINAR
+            // ==========================================
+
+            await connection.query(
+                `
+                DELETE FROM sliders_inicio
+                WHERE id = ?
+                `,
+                [id]
+            );
+
+
+            // ==========================================
+            // COMPACTAR LOS SIGUIENTES
+            // ==========================================
+
+            await connection.query(
+                `
+                UPDATE sliders_inicio
+                SET
+                    orden = orden - 1,
+                    estado_publicacion = 'borrador'
+                WHERE orden > ?
+                `,
+                [ordenEliminado]
+            );
+
+
+            await connection.commit();
+
+            return true;
+
+
+        } catch (error) {
+
+            await connection.rollback();
+
+            throw error;
+
+
+        } finally {
+
+            connection.release();
+
+        }
+
+    },
+
+
+    normalizarOrdenes: async () => {
+
+        const connection =
+            await pool.getConnection();
+
+        try {
+
+            await connection.beginTransaction();
+
+
+            const [sliders] =
+                await connection.query(
+                    `
+                    SELECT id
+                    FROM sliders_inicio
+                    ORDER BY orden ASC, id ASC
+                    FOR UPDATE
+                    `
+                );
+
+
+            for (
+                let index = 0;
+                index < sliders.length;
+                index++
+            ) {
+
+                await connection.query(
+                    `
+                    UPDATE sliders_inicio
+                    SET orden = ?
+                    WHERE id = ?
+                    `,
+                    [
+                        index + 1,
+                        sliders[index].id
+                    ]
+                );
+
+            }
+
+
+            await connection.commit();
+
+            return true;
+
+
+        } catch (error) {
+
+            await connection.rollback();
+
+            throw error;
+
+
+        } finally {
+
+            connection.release();
+
+        }
+
+    },
+
+
 };
 
 module.exports = HeroModel;

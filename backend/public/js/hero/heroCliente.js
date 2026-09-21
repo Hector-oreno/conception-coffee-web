@@ -42,8 +42,7 @@ async function cargarSlidersCliente() {
             const divSlide = document.createElement('div');
             divSlide.className = `slide ${claseActive}`;
             divSlide.style.backgroundImage = `url('${slider.imagen_url}')`;
-            divSlide.style.backgroundSize = 'cover';
-            divSlide.style.backgroundPosition = 'center';
+            
             track.appendChild(divSlide);
 
             if (dotsContainer) {

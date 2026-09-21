@@ -43,6 +43,9 @@
     <!-- Submódulos -->
     <link rel="stylesheet" href="css/planner/catalogo.css">
     <link rel="stylesheet" href="css/planner/emojis.css">
+     
+    <!-- Hero de inicio -->
+    <link rel="stylesheet" href="css/hero/hero-admin.css">
 
     <!-- Plantillas visuales -->
     <link rel="stylesheet" href="css/planner/clasica.css">
@@ -701,50 +704,188 @@
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÓDULO HERO (SLIDERS DE INICIO) -->
+        <!-- INICIO MÓDULO HERO · SLIDERS DE INICIO -->
         <!-- ====================================================================== -->
 
-        <section id="seccion-hero" class="modulo-admin admin-module">
+        <section
+            id="seccion-hero"
+            class="admin-module hero-admin"
+        >
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <button class="btn btn-success shadow-sm me-2" onclick="abrirModalSlider()">
-                        <i class="fas fa-plus-circle me-1"></i> Agregar Nuevo Slider
-                    </button>
+            <!-- ================================================================ -->
+            <!-- BARRA DE ACCIONES -->
+            <!-- ================================================================ -->
+
+            <div class="hero-admin-toolbar">
+
+                <div class="hero-admin-toolbar-info">
+
+                    <span class="hero-admin-eyebrow">
+                        Vitrina principal
+                    </span>
+
+                    <p>
+                        Administra las imágenes que se muestran
+                        en la portada del sitio web.
+                    </p>
+
                 </div>
-                <div>
-                    <button class="btn btn-primary shadow-sm" onclick="publicarSlidersAlCliente()">
-                        <i class="fas fa-cloud-upload-alt me-1"></i> Publicar Cambios en Web
+
+
+                <div class="hero-admin-toolbar-actions">
+
+                    <button
+                        type="button"
+                        class="hero-admin-btn hero-admin-btn-secondary"
+                        onclick="abrirModalSlider()"
+                    >
+                        <i class="fas fa-plus"></i>
+
+                        Nuevo Slider
                     </button>
+
+
+                    <button
+                        type="button"
+                        class="hero-admin-btn hero-admin-btn-publish"
+                        onclick="publicarSlidersAlCliente()"
+                    >
+                        <i class="fas fa-cloud-arrow-up"></i>
+
+                        Publicar Cambios
+                    </button>
+
                 </div>
+
             </div>
 
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0" id="tabla-sliders">
-                            <thead class="table-light">
-                                <tr>
-                                    <th style="width: 80px;" class="text-center">Orden</th>
-                                    <th style="width: 180px;">Miniatura</th>
-                                    <th>Ruta del Archivo</th>
-                                    <th style="width: 150px;" class="text-center">Disponibilidad</th>
-                                    <th style="width: 150px;" class="text-center">Estado Sincro</th>
-                                    <th style="width: 150px;" class="text-center">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-sliders">
-                                <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">
-                                        <i class="fas fa-spinner fa-spin me-2"></i> Cargando los banners de inicio...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+            <!-- ================================================================ -->
+            <!-- INFORMACIÓN DE SINCRONIZACIÓN -->
+            <!-- ================================================================ -->
+
+            <div class="hero-admin-notice">
+
+                <div class="hero-admin-notice-icon">
+
+                    <i class="fas fa-circle-info"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Flujo de publicación
+                    </strong>
+
+                    <p>
+                        Puedes preparar imágenes, cambiar su
+                        disponibilidad y revisar el resultado antes
+                        de publicar los cambios en el sitio web.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================================ -->
+            <!-- TABLA -->
+            <!-- ================================================================ -->
+
+            <div class="hero-admin-table-card">
+
+                <div class="hero-admin-table-header">
+
+                    <div>
+
+                        <span class="hero-admin-eyebrow">
+                            Contenido
+                        </span>
+
+                        <h3>
+                            Sliders registrados
+                        </h3>
+
                     </div>
+
+                    <span
+                        class="hero-admin-count"
+                        id="heroSliderCount"
+                    >
+                        —
+                    </span>
+
                 </div>
+
+
+                <div class="hero-admin-table-scroll">
+
+                    <table
+                        class="hero-admin-table"
+                        id="tabla-sliders"
+                    >
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="hero-col-order">
+                                    Orden
+                                </th>
+
+                                <th class="hero-col-preview">
+                                    Vista previa
+                                </th>
+
+                                <th>
+                                    Archivo
+                                </th>
+
+                                <th class="hero-col-status">
+                                    Disponibilidad
+                                </th>
+
+                                <th class="hero-col-status">
+                                    Publicación
+                                </th>
+
+                                <th class="hero-col-actions">
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tbody-sliders">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    class="hero-admin-loading"
+                                >
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                    Cargando sliders...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
             </div>
+
         </section>
+
 
         <!-- ====================================================================== -->
         <!-- FIN MÓDULO HERO (SLIDERS DE INICIO) -->
@@ -2182,46 +2323,241 @@
     <!-- FIN MODALES · MENÚ DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
 
+    
     <!-- ====================================================================== -->
-    <!-- INICIO MODALES · HERO (SLIDERS DE INICIO) -->
+    <!-- INICIO MODAL · NUEVO SLIDER -->
     <!-- ====================================================================== -->
 
-    <!-- inicio modalSlider -->
-    <div class="modal fade" id="modalSlider" tabindex="-1" aria-labelledby="modalSliderLabel">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title" id="modalSliderLabel">Nuevo Slider de Inicio</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+        class="modal fade hero-slider-modal"
+        id="modalSlider"
+        tabindex="-1"
+        aria-labelledby="modalSliderLabel"
+        aria-hidden="true"
+    >
+
+        <div
+            class="modal-dialog
+               modal-dialog-centered"
+        >
+
+            <div class="modal-content hero-slider-modal-content">
+
+                <!-- ========================================================== -->
+                <!-- HEADER -->
+                <!-- ========================================================== -->
+
+                <div class="hero-slider-modal-header">
+
+                    <div class="hero-slider-modal-heading">
+
+                        <div class="hero-slider-modal-icon">
+
+                            <i class="far fa-image"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span class="hero-admin-eyebrow">
+                                Vitrina principal
+                            </span>
+
+                            <h3 id="modalSliderLabel">
+                                Nuevo Slider
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="hero-slider-modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                    >
+                        <i class="fas fa-xmark"></i>
+                    </button>
+
                 </div>
-                <form id="form-slider" onsubmit="guardarSlider(event)">
-                    <div class="modal-body">
-                        <input type="hidden" id="slider-id">
 
-                        <div class="mb-3">
-                            <label for="slider-imagen" class="form-label fw-bold">Seleccionar Imagen (Limpia sin textos)</label>
-                            <input type="file" class="form-control" id="slider-imagen" accept="image/*" required>
-                            <div class="form-text">Se recomienda usar imágenes panorámicas optimizadas.</div>
+
+                <!-- ========================================================== -->
+                <!-- FORMULARIO -->
+                <!-- ========================================================== -->
+
+                <form
+                    id="form-slider"
+                    onsubmit="guardarSlider(event)"
+                >
+
+                    <div class="hero-slider-modal-body">
+
+
+                        <!-- ================================================== -->
+                        <!-- IMAGEN -->
+                        <!-- ================================================== -->
+
+                        <div class="hero-slider-field">
+
+                            <label for="slider-imagen">
+
+                                Imagen del slider
+
+                                <span>
+                                    *
+                                </span>
+
+                            </label>
+
+                            <p class="hero-slider-field-help">
+                                Selecciona una fotografía limpia,
+                                sin textos ni botones incorporados.
+                            </p>
+
+
+                            <label
+                                for="slider-imagen"
+                                class="hero-slider-upload"
+                                id="heroSliderUpload"
+                            >
+
+                                <div
+                                    class="hero-slider-upload-icon"
+                                >
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                </div>
+
+
+                                <strong>
+                                    Seleccionar imagen
+                                </strong>
+
+
+                                <span>
+                                    JPG, JPEG, PNG o WEBP
+                                </span>
+
+
+                                <small>
+                                    Se recomiendan fotografías
+                                    panorámicas de alta calidad.
+                                </small>
+
+                            </label>
+
+
+                            <input
+                                type="file"
+                                id="slider-imagen"
+                                class="hero-slider-file-input"
+                                accept="image/jpeg,image/png,image/webp"
+                                required
+                            >
+
                         </div>
 
-                        <div class="mb-3 text-center d-none" id="contenedor-preview">
-                            <img src="" id="slider-preview" class="img-thumbnail">
+
+                        <!-- ================================================== -->
+                        <!-- PREVIEW -->
+                        <!-- ================================================== -->
+
+                        <div
+                            class="hero-slider-preview-modal
+                               hero-slider-preview-hidden"
+                            id="contenedor-preview"
+                        >
+
+                            <div class="hero-slider-preview-header">
+
+                                <span>
+                                    Vista previa
+                                </span>
+
+                                <small id="heroSliderFileName">
+                                </small>
+
+                            </div>
+
+
+                            <div class="hero-slider-preview-frame">
+
+                                <img
+                                    src=""
+                                    id="slider-preview"
+                                    alt="Vista previa del nuevo slider"
+                                >
+
+                                <div class="hero-slider-preview-overlay">
+
+                                    <span>
+                                        CONCEPTION COFFEE
+                                    </span>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <div class="mb-3">
-                            <label for="slider-orden" class="form-label fw-bold">Orden de visualización</label>
-                            <input type="number" class="form-control" id="slider-orden" min="1" value="1">
+
+                        <!-- ================================================== -->
+                        <!-- INFORMACIÓN -->
+                        <!-- ================================================== -->
+
+                        <div class="hero-slider-modal-info">
+
+                            <i class="fas fa-circle-info"></i>
+
+                            <p>
+                                El nuevo slider se agregará al final
+                                de la secuencia y quedará como
+                                <strong>borrador</strong> hasta que
+                                publiques los cambios.
+                            </p>
+
                         </div>
+
                     </div>
-                    <div class="modal-footer bg-light border-top-0">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar como Borrador</button>
+
+
+                    <!-- ====================================================== -->
+                    <!-- FOOTER -->
+                    <!-- ====================================================== -->
+
+                    <div class="hero-slider-modal-footer">
+
+                        <button
+                            type="button"
+                            class="hero-slider-modal-cancel"
+                            data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="hero-slider-modal-save"
+                        >
+
+                            <i class="fas fa-plus"></i>
+
+                            Agregar Slider
+
+                        </button>
+
                     </div>
+
                 </form>
+
             </div>
+
         </div>
+
     </div>
-    <!-- fin modalSlider -->
 
     <!-- ====================================================================== -->
     <!-- FIN MODALES · HERO (SLIDERS DE INICIO) -->

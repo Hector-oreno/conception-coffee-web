@@ -57,6 +57,21 @@ router.put(
 );
 
 
+// Reordenar slider
+router.patch(
+    "/:id/reordenar",
+
+    verificarToken,
+
+    verificarRoles(
+        "admin",
+        "gerente"
+    ),
+
+    heroController.reordenarSlider
+);
+
+
 // Actualizar slider
 router.put(
     '/:id',

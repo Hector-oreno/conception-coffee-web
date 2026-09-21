@@ -190,30 +190,126 @@
 
 <body>
 
+  <!-- ====================================================================== -->
   <!-- NAVEGACIÓN PRINCIPAL -->
-  <header>
-    <nav id="navbar">
-      <a href="#inicio" class="nav-logo">
-        <img src="images/uploads/logo-navbar.png" alt="Conception Coffee Logo" class="nav-logo-img">
-        <span class="nav-logo-text">CONCEPTION COFFEE</span>
-      </a>
+  <!-- ====================================================================== -->
 
-      <ul class="nav-links" id="navLinks">
-        <li class="nav-close-item">
-          <button class="nav-close" id="navClose" aria-label="Cerrar menú">✕</button>
-        </li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#ejecutivo">Menú Ejecutivo</a></li>
-        <li><a href="#sucursales">Ubicación</a></li>
-      </ul>
+  <header class="site-header">
 
-      <a href="#contacto" class="nav-cta" id="navCta">Contáctanos</a>
+    <nav
+        id="navbar"
+        class="navbar"
+        aria-label="Navegación principal"
+    >
 
-      <button class="nav-toggle" id="navToggle" aria-label="Abrir Menú">
-        ☰
-      </button>
+        <!-- MARCA -->
+        <a
+            href="#inicio"
+            class="nav-logo"
+            aria-label="Conception Coffee - Inicio"
+        >
+
+            <img
+                src="images/uploads/logo-navbar.png"
+                alt=""
+                class="nav-logo-img"
+            >
+
+            <span class="nav-logo-text">
+                CONCEPTION COFFEE
+            </span>
+
+        </a>
+
+
+        <!-- NAVEGACIÓN -->
+        <ul
+            class="nav-links"
+            id="navLinks"
+        >
+
+            <li class="nav-close-item">
+
+                <button
+                    type="button"
+                    class="nav-close"
+                    id="navClose"
+                    aria-label="Cerrar menú"
+                >
+                    ✕
+                </button>
+
+            </li>
+
+
+            <li>
+                <a href="#inicio">
+                    Inicio
+                </a>
+            </li>
+
+            <li>
+                <a href="#nosotros">
+                    Nosotros
+                </a>
+            </li>
+
+            <li>
+                <a href="#ejecutivo">
+                    Menú
+                </a>
+            </li>
+
+            <li>
+                <a href="#experiencias">
+                    Experiencias
+                </a>
+            </li>
+
+            <li>
+                <a href="#sucursales">
+                    Sucursales
+                </a>
+            </li>
+
+        </ul>
+
+
+        <!-- CTA -->
+        <a
+          href="https://wa.me/50259878068"
+          class="nav-cta"
+          id="navCta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contáctanos
+        </a>
+
+
+        <!-- MENÚ MÓVIL -->
+        <button
+            type="button"
+            class="nav-toggle"
+            id="navToggle"
+            aria-label="Abrir menú"
+            aria-controls="navLinks"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
     </nav>
-    <div class="nav-overlay" id="navOverlay"></div>
+
+
+    <div
+        class="nav-overlay"
+        id="navOverlay"
+        aria-hidden="true"
+    ></div>
+
   </header>
 
   <!-- CONTENIDO PRINCIPAL -->
@@ -231,11 +327,12 @@
       <div class="hero-content">
 
         <p class="hero-tag">
-          Restaurante
+          Café · Cocina · Experiencias
         </p>
 
         <h1 class="hero-title">
-          Conception Coffee
+          Conception
+          <span>Coffee</span>
         </h1>
 
         <p class="hero-sub">
@@ -245,17 +342,19 @@
 
         <div class="hero-btns">
 
-            <a
-                href="#ejecutivo"
-                class="btn-primary">
-                Ver menú ejecutivo
-            </a>
+          <a
+            href="#ejecutivo"
+            class="btn-primary"
+          >
+            Explorar el menú
+          </a>
 
-            <a
-                href="#sucursales"
-                class="btn-outline">
-                Visítanos
-            </a>
+          <a
+            href="#sucursales"
+            class="btn-outline"
+          >
+            Conoce nuestras sedes
+          </a>
 
         </div>
 
@@ -271,24 +370,162 @@
     </section>
 
     <!-- TARJETAS RÁPIDAS -->
-    <section class="quick-links">
+    <!-- ====================================================================== -->
+    <!-- ACCESOS DESTACADOS -->
+    <!-- ====================================================================== -->
+
+    <section
+      class="quick-links"
+      aria-label="Explora Conception Coffee"
+    >
+
+      <!-- MENÚ -->
       <article class="quick-card reveal">
-        <h3>Especialidades</h3>
-        <p>Lo mejor de nuestra cocina esta semana.</p>
-        <a href="#ejecutivo">Descubrir</a>
+
+        <div class="quick-card-top">
+
+            <span class="quick-number">
+                01
+            </span>
+
+            <i
+                class="fas fa-utensils"
+                aria-hidden="true"
+            ></i>
+
+        </div>
+
+        <div class="quick-card-content">
+
+            <span class="quick-eyebrow">
+                Nuestra cocina
+            </span>
+
+            <h3>
+                Menú Ejecutivo
+            </h3>
+
+            <p>
+                Descubre la propuesta que
+                preparamos para esta semana.
+            </p>
+
+        </div>
+
+        <a
+            href="#ejecutivo"
+            class="quick-link"
+        >
+            Explorar menú
+
+            <i
+                class="fas fa-arrow-right"
+                aria-hidden="true"
+            ></i>
+        </a>
+
       </article>
 
-      <article class="quick-card reveal reveal-delay">
-        <h3>Visítanos</h3>
-        <p>Conoce nuestras instalaciones y ubicaciones.</p>
-        <a href="#sucursales">Ver Sedes</a>
+
+      <!-- SUCURSALES -->
+      <article
+        class="quick-card reveal reveal-delay"
+      >
+
+        <div class="quick-card-top">
+
+            <span class="quick-number">
+                02
+            </span>
+
+            <i
+                class="fas fa-location-dot"
+                aria-hidden="true"
+            ></i>
+
+        </div>
+
+        <div class="quick-card-content">
+
+            <span class="quick-eyebrow">
+                Encuéntranos
+            </span>
+
+            <h3>
+                Nuestras Sucursales
+            </h3>
+
+            <p>
+                Conoce nuestras ubicaciones,
+                horarios y espacios.
+            </p>
+
+        </div>
+
+        <a
+            href="#sucursales"
+            class="quick-link"
+        >
+            Ver sucursales
+
+            <i
+                class="fas fa-arrow-right"
+                aria-hidden="true"
+            ></i>
+        </a>
+
       </article>
 
-      <article class="quick-card reveal reveal-delay-2">
-        <h3>Eventos & Catering</h3>
-        <p>Haz de tu evento algo especial con Conception Coffee.</p>
-        <a href="#contacto">Cotizar</a>
+
+      <!-- EXPERIENCIAS -->
+      <article
+        class="quick-card reveal reveal-delay-2"
+      >
+
+        <div class="quick-card-top">
+
+            <span class="quick-number">
+                03
+            </span>
+
+            <i
+                class="fas fa-champagne-glasses"
+                aria-hidden="true"
+            ></i>
+
+        </div>
+
+        <div class="quick-card-content">
+
+            <span class="quick-eyebrow">
+                Más que café
+            </span>
+
+            <h3>
+                Experiencias
+            </h3>
+
+            <p>
+                Descubre momentos y propuestas
+                especiales de Conception Coffee.
+            </p>
+
+        </div>
+
+        <a
+            href="#experiencias"
+            class="quick-link"
+        >
+            Descubrir experiencias
+
+            <i
+                class="fas fa-arrow-right"
+                aria-hidden="true"
+            ></i>
+        </a>
+
       </article>
+
     </section>
 
     <!-- SOBRE NOSOTROS -->
@@ -625,7 +862,7 @@
      ====================================================== -->
     <section
       class="contact"
-      id="contacto"
+      id="experiencias"
       aria-labelledby="experienciaTitulo"
     >
 

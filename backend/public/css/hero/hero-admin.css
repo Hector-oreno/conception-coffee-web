@@ -1,0 +1,1520 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   ADMIN · SLIDERS DE INICIO
+   ========================================================================== */
+
+
+/* ==========================================================================
+   MÓDULO
+   ========================================================================== */
+
+.hero-admin {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   BARRA SUPERIOR
+   ========================================================================== */
+
+.hero-admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 18px;
+
+    padding: 20px 22px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 14px;
+
+    background:
+        var(--admin-surface, #ffffff);
+
+    box-shadow:
+        0 8px 24px
+        rgba(45, 35, 29, 0.04);
+}
+
+
+.hero-admin-toolbar-info {
+    min-width: 0;
+}
+
+
+.hero-admin-eyebrow {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+
+.hero-admin-toolbar-info p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.78rem;
+
+    line-height: 1.5;
+}
+
+
+.hero-admin-toolbar-actions {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+/* ==========================================================================
+   BOTONES SUPERIORES
+   ========================================================================== */
+
+.hero-admin-btn {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 9px;
+
+    font: inherit;
+    font-size: 0.67rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.hero-admin-btn i {
+    font-size: 0.68rem;
+}
+
+
+.hero-admin-btn-secondary {
+    border: 1px solid
+        var(--admin-border, #ded8d3);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+}
+
+
+.hero-admin-btn-secondary:hover {
+    border-color: #ccb4a4;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #70472f);
+
+    transform: translateY(-1px);
+}
+
+
+.hero-admin-btn-publish {
+    border: 1px solid
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent, #8a5a3b);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px
+        rgba(138, 90, 59, 0.14);
+}
+
+
+.hero-admin-btn-publish:hover {
+    border-color:
+        var(--admin-accent-hover, #70472f);
+
+    background:
+        var(--admin-accent-hover, #70472f);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 9px 22px
+        rgba(112, 71, 47, 0.18);
+}
+
+
+/* ==========================================================================
+   AVISO DE PUBLICACIÓN
+   ========================================================================== */
+
+.hero-admin-notice {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+    padding: 13px 16px;
+
+    border: 1px solid
+        rgba(138, 90, 59, 0.10);
+
+    border-radius: 11px;
+
+    background: #faf7f4;
+}
+
+
+.hero-admin-notice-icon {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.72rem;
+}
+
+
+.hero-admin-notice strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.hero-admin-notice p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.65rem;
+
+    line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   TARJETA DE TABLA
+   ========================================================================== */
+
+.hero-admin-table-card {
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 14px;
+
+    background:
+        var(--admin-surface, #ffffff);
+
+    box-shadow:
+        0 8px 25px
+        rgba(45, 35, 29, 0.045);
+}
+
+
+.hero-admin-table-header {
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 18px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+}
+
+
+.hero-admin-table-header h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+.hero-admin-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 30px;
+
+    padding: 0 10px;
+
+    border-radius: 999px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   SCROLL DE TABLA
+   ========================================================================== */
+
+.hero-admin-table-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d8d0ca transparent;
+}
+
+
+.hero-admin-table-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+
+.hero-admin-table-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.hero-admin-table-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d8d0ca;
+}
+
+
+/* ==========================================================================
+   TABLA
+   ========================================================================== */
+
+.hero-admin-table {
+    width: 100%;
+
+    min-width: 900px;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+
+.hero-admin-table thead {
+    background: #faf9f7;
+}
+
+
+.hero-admin-table th {
+    padding: 11px 14px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-align: left;
+    text-transform: uppercase;
+}
+
+
+.hero-admin-table td {
+    padding: 12px 14px;
+
+    border-bottom: 1px solid
+        #f0ece9;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.66rem;
+
+    vertical-align: middle;
+}
+
+
+.hero-admin-table tbody tr {
+    transition:
+        background 0.18s ease;
+}
+
+
+.hero-admin-table tbody tr:hover {
+    background: #fcfaf8;
+}
+
+
+.hero-admin-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* ==========================================================================
+   COLUMNAS
+   ========================================================================== */
+
+.hero-col-order {
+    width: 80px;
+
+    text-align: center !important;
+}
+
+
+.hero-col-preview {
+    width: 160px;
+}
+
+
+.hero-col-status {
+    width: 145px;
+
+    text-align: center !important;
+}
+
+
+.hero-col-actions {
+    width: 110px;
+
+    text-align: center !important;
+}
+
+
+/* ==========================================================================
+   ORDEN
+   ========================================================================== */
+
+.hero-slider-order {
+    text-align: center;
+}
+
+
+.hero-slider-order span {
+    width: 30px;
+    height: 30px;
+
+    display: inline-grid;
+    place-items: center;
+
+    border: 1px solid
+        var(--admin-border, #e4ded9);
+
+    border-radius: 8px;
+
+    background: #faf9f7;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   MINIATURA
+   ========================================================================== */
+
+.hero-slider-preview {
+    width: 118px;
+    height: 66px;
+
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #e5dfda);
+
+    border-radius: 9px;
+
+    background: #f4f1ef;
+
+    box-shadow:
+        0 4px 12px
+        rgba(45, 35, 29, 0.06);
+}
+
+
+.hero-slider-preview img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.3s ease;
+}
+
+
+.hero-admin-table tbody tr:hover
+.hero-slider-preview img {
+    transform: scale(1.04);
+}
+
+
+/* ==========================================================================
+   ARCHIVO
+   ========================================================================== */
+
+.hero-slider-file {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.hero-slider-file i {
+    flex: 0 0 auto;
+
+    color: #aa8a75;
+
+    font-size: 0.67rem;
+}
+
+
+.hero-slider-file span {
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   ESTADOS
+   ========================================================================== */
+
+.hero-admin-table td:nth-child(4),
+.hero-admin-table td:nth-child(5),
+.hero-admin-table td:nth-child(6) {
+    text-align: center;
+}
+
+
+.hero-status {
+    min-height: 27px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 0 9px;
+
+    border-radius: 999px;
+
+    font-size: 0.54rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.hero-status-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+.hero-status-active {
+    background: #eaf6ee;
+
+    color: #287744;
+}
+
+
+.hero-status-inactive {
+    background: #f8eded;
+
+    color: #a34b4b;
+}
+
+
+.hero-status-published {
+    background: #eaf4f6;
+
+    color: #397788;
+}
+
+
+.hero-status-draft {
+    background: #fff4dc;
+
+    color: #9b6b16;
+}
+
+
+/* ==========================================================================
+   ACCIONES
+   ========================================================================== */
+
+.hero-slider-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+}
+
+
+.hero-action-btn {
+    width: 31px;
+    height: 31px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 0.61rem;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.hero-action-visibility {
+    border: 1px solid #d8d0ca;
+
+    color: #766b64;
+}
+
+.hero-action-order {
+    border: 1px solid #ddd6d1;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+.hero-action-order:hover {
+    border-color: #cbb5a6;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #70472f);
+
+    transform:
+        translateY(-1px);
+}
+
+
+.hero-action-visibility:hover {
+    border-color: #cbb5a6;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    transform: translateY(-1px);
+}
+
+
+.hero-action-delete {
+    border: 1px solid #efd4d1;
+
+    color: #b8544d;
+}
+
+
+.hero-action-delete:hover {
+    border-color: #e4b8b4;
+
+    background: #fbefee;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   CARGANDO / VACÍO / ERROR
+   ========================================================================== */
+
+.hero-admin-loading {
+    height: 160px;
+
+    color:
+        var(--admin-text-muted, #756d67) !important;
+
+    text-align: center;
+
+    font-size: 0.66rem !important;
+}
+
+
+.hero-admin-loading i {
+    margin-right: 7px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+.hero-admin-empty {
+    height: 220px;
+
+    text-align: center;
+}
+
+
+.hero-admin-empty-icon {
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 10px;
+
+    border-radius: 11px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 1rem;
+}
+
+
+.hero-admin-empty strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.69rem;
+}
+
+
+.hero-admin-empty p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.61rem;
+}
+
+
+.hero-admin-error {
+    height: 170px;
+
+    color: #a34b4b !important;
+
+    text-align: center;
+}
+
+
+.hero-admin-error i,
+.hero-admin-error strong,
+.hero-admin-error span {
+    display: block;
+}
+
+
+.hero-admin-error i {
+    margin-bottom: 8px;
+
+    font-size: 1rem;
+}
+
+
+.hero-admin-error strong {
+    margin-bottom: 3px;
+
+    font-size: 0.68rem;
+}
+
+
+.hero-admin-error span {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.6rem;
+}
+
+
+/* ==========================================================================
+   MODAL · NUEVO SLIDER
+   ========================================================================== */
+
+.hero-slider-modal {
+    --bs-modal-width: 620px;
+}
+
+
+.hero-slider-modal .modal-dialog {
+    width: min(620px, calc(100% - 28px));
+    max-width: 620px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.hero-slider-modal-content {
+    width: 100%;
+
+    max-height: calc(100vh - 48px);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3) !important;
+
+    border-radius: 16px !important;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 28px 70px
+        rgba(36, 27, 22, 0.20) !important;
+}
+
+
+/* ==========================================================================
+   ESTRUCTURA INTERNA DEL FORMULARIO
+   ========================================================================== */
+
+.hero-slider-modal-content > form {
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.hero-slider-modal-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+}
+
+
+.hero-slider-modal-heading {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.hero-slider-modal-icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.8rem;
+}
+
+
+.hero-slider-modal-heading h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
+.hero-slider-modal-heading
+.hero-admin-eyebrow {
+    margin-bottom: 2px;
+}
+
+
+.hero-slider-modal-close {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f6f3f1;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.7rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+
+.hero-slider-modal-close:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+/* ==========================================================================
+   BODY
+   ========================================================================== */
+
+.hero-slider-modal-body {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7cec8 transparent;
+}
+
+
+.hero-slider-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.hero-slider-modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.hero-slider-modal-body::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d7cec8;
+}
+
+.hero-slider-field > label:first-child {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.hero-slider-field > label:first-child span {
+    color: #b8544d;
+}
+
+
+.hero-slider-field-help {
+    margin: 0 0 13px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.61rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   ÁREA DE SUBIDA
+   ========================================================================== */
+
+.hero-slider-upload {
+    min-height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 22px;
+
+    border: 1px dashed #cdbeb4;
+    border-radius: 12px;
+
+    background: #faf8f6;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.hero-slider-upload:hover {
+    border-color:
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+}
+
+
+.hero-slider-upload-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 3px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    box-shadow:
+        0 5px 15px
+        rgba(45, 35, 29, 0.06);
+}
+
+
+.hero-slider-upload strong {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.67rem;
+}
+
+
+.hero-slider-upload > span {
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.56rem;
+    font-weight: 700;
+}
+
+
+.hero-slider-upload small {
+    margin-top: 2px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.55rem;
+}
+
+
+.hero-slider-file-input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   PREVIEW
+   ========================================================================== */
+
+.hero-slider-preview-modal {
+    margin-top: 16px;
+}
+
+
+.hero-slider-preview-hidden {
+    display: none;
+}
+
+
+.hero-slider-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 7px;
+}
+
+
+.hero-slider-preview-header > span {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+.hero-slider-preview-header small {
+    min-width: 0;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.53rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.hero-slider-preview-frame {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 16 / 7;
+
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #eee9e5;
+}
+
+
+.hero-slider-preview-frame img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.hero-slider-preview-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 13px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(34, 19, 11, 0.38),
+            transparent 55%
+        );
+
+    pointer-events: none;
+}
+
+
+.hero-slider-preview-overlay span {
+    color:
+        rgba(255, 255, 255, 0.88);
+
+    font-size: 0.48rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+.hero-slider-modal-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-top: 16px;
+
+    padding: 10px 12px;
+
+    border-radius: 9px;
+
+    background: #faf7f4;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.hero-slider-modal-info > i {
+    margin-top: 2px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.62rem;
+}
+
+
+.hero-slider-modal-info p {
+    margin: 0;
+
+    font-size: 0.57rem;
+
+    line-height: 1.5;
+}
+
+
+.hero-slider-modal-info strong {
+    color:
+        var(--admin-text, #282421);
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.hero-slider-modal-footer {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding: 14px 20px;
+
+    border-top: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #fcfbfa;
+}
+
+
+.hero-slider-modal-cancel,
+.hero-slider-modal-save {
+    min-height: 39px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.hero-slider-modal-cancel {
+    border: 1px solid
+        var(--admin-border, #ddd7d2);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.hero-slider-modal-cancel:hover {
+    background: #f7f4f2;
+
+    color:
+        var(--admin-text, #282421);
+}
+
+
+.hero-slider-modal-save {
+    border: 1px solid
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent, #8a5a3b);
+
+    color: #ffffff;
+}
+
+
+.hero-slider-modal-save:hover {
+    border-color:
+        var(--admin-accent-hover, #70472f);
+
+    background:
+        var(--admin-accent-hover, #70472f);
+
+    transform: translateY(-1px);
+}
+
+
+.hero-slider-modal-save:disabled {
+    cursor: wait;
+
+    opacity: 0.65;
+
+    transform: none;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE MODAL
+   ========================================================================== */
+
+@media (max-width: 560px) {
+
+    .hero-slider-modal-body {
+        padding: 16px;
+    }
+
+
+    .hero-slider-modal-header {
+        padding: 15px 16px;
+    }
+
+
+    .hero-slider-modal-footer {
+        align-items: stretch;
+        flex-direction: column-reverse;
+
+        padding: 13px 16px;
+    }
+
+
+    .hero-slider-modal-cancel,
+    .hero-slider-modal-save {
+        width: 100%;
+    }
+
+}
+
+
+
+
+/* ==========================================================================
+   RESPONSIVE DEL MÓDULO ADMIN
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .hero-admin-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    .hero-admin-toolbar-actions {
+        width: 100%;
+    }
+
+
+    .hero-admin-btn {
+        flex: 1;
+    }
+
+}
+
+
+@media (max-width: 560px) {
+
+    .hero-admin-toolbar {
+        padding: 16px;
+    }
+
+
+    .hero-admin-toolbar-actions {
+        flex-direction: column;
+    }
+
+
+    .hero-admin-btn {
+        width: 100%;
+    }
+
+
+    .hero-admin-notice {
+        align-items: flex-start;
+    }
+
+
+    .hero-admin-table-header {
+        padding: 14px;
+    }
+
+}

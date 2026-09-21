@@ -36,136 +36,919 @@ function headersHero(
 
 
 
-// Cargar los sliders al inicializar el módulo
+// ==========================================================
+// CARGAR SLIDERS EN EL PANEL ADMINISTRATIVO
+// ==========================================================
+
 async function cargarSlidersAdmin() {
-    const tbody = document.getElementById('tbody-sliders');
-    if (!tbody) return;
+
+    const tbody =
+        document.getElementById(
+            "tbody-sliders"
+        );
+
+    const contador =
+        document.getElementById(
+            "heroSliderCount"
+        );
+
+
+    if (!tbody) {
+        return;
+    }
+
 
     try {
+
         const respuesta =
             await fetch(
-                '/api/hero/admin',
+                "/api/hero/admin",
                 {
                     headers:
                         headersHero()
                 }
             );
 
-        const resultado = await respuesta.json();
 
-        if (!resultado.success) throw new Error(resultado.message);
+        const resultado =
+            await respuesta.json();
 
-        tbody.innerHTML = '';
 
-        if (resultado.data.length === 0) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="6" class="text-center text-muted py-4">
-                        <i class="fas fa-image me-2"></i> No hay sliders registrados en este momento.
-                    </td>
-                </tr>`;
-            return;
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.message ||
+                `Error HTTP ${respuesta.status}`
+            );
+
         }
 
-        resultado.data.forEach(slider => {
-            // Estilos estéticos según disponibilidad (Activo/Inactivo)
-            const badgeActivo = slider.activo 
-                ? '<span class="badge bg-success-subtle text-success px-2 py-1"><i class="fas fa-check me-1"></i>Activo</span>'
-                : '<span class="badge bg-danger-subtle text-danger px-2 py-1"><i class="fas fa-times me-1"></i>Inactivo</span>';
 
-            // Estilos Premium según estado de publicación
-            const badgeSincro = slider.estado_publicacion === 'publicado'
-                ? '<span class="badge bg-info-subtle text-info px-2 py-1"><i class="fas fa-globe me-1"></i>Publicado</span>'
-                : '<span class="badge bg-warning-subtle text-warning px-2 py-1"><i class="fas fa-edit me-1"></i>Borrador</span>';
+        if (!resultado.success) {
 
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td class="text-center fw-bold">${slider.orden}</td>
-                <td>
-                    <img src="${slider.imagen_url}" class="img-thumbnail" style="width: 100px; height: 50px; object-fit: cover;">
-                </td>
-                <td class="text-muted text-break">${slider.imagen_url}</td>
-                <td class="text-center">${badgeActivo}</td>
-                <td class="text-center">${badgeSincro}</td>
-                <td class="text-center">
-                    <div class="btn-group btn-group-sm">
-                        <button class="btn btn-outline-secondary" onclick="alternarEstadoSlider(${slider.id}, ${slider.orden}, ${slider.activo})">
-                            <i class="fas ${slider.activo ? 'fa-eye-slash' : 'fa-eye'}"></i>
-                        </button>
-                        <button class="btn btn-outline-danger" onclick="eliminarSliderAdmin(${slider.id})">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </div>
-                </td>
+            throw new Error(
+                resultado.message ||
+                "No fue posible cargar los sliders."
+            );
+
+        }
+
+
+        const sliders =
+            Array.isArray(resultado.data)
+                ? resultado.data
+                : [];
+
+
+        // ==================================================
+        // ACTUALIZAR CONTADOR
+        // ==================================================
+
+        if (contador) {
+
+            contador.textContent =
+                sliders.length === 1
+                    ? "1 slider"
+                    : `${sliders.length} sliders`;
+
+        }
+
+
+        // ==================================================
+        // ESTADO VACÍO
+        // ==================================================
+
+        if (sliders.length === 0) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        class="hero-admin-empty"
+                    >
+
+                        <div class="hero-admin-empty-icon">
+
+                            <i class="far fa-images"></i>
+
+                        </div>
+
+                        <strong>
+                            No hay sliders registrados
+                        </strong>
+
+                        <p>
+                            Agrega una imagen para comenzar
+                            a preparar la portada del sitio.
+                        </p>
+
+                    </td>
+
+                </tr>
+
             `;
-            tbody.appendChild(fila);
-        });
+
+            return;
+
+        }
+
+
+        // ==================================================
+        // RENDERIZAR SLIDERS
+        // ==================================================
+
+        tbody.innerHTML =
+            sliders
+                .map((slider, index) => {
+
+                    const activo =
+                        Number(slider.activo) === 1;
+
+
+                    const publicado =
+                        slider.estado_publicacion ===
+                        "publicado";
+
+                    const esPrimero =
+                        index === 0;
+
+
+                    const esUltimo =
+                        index ===
+                        sliders.length - 1;
+                    
+
+
+                    const estadoDisponibilidad =
+                        activo
+                            ? `
+                                <span
+                                    class="hero-status
+                                    hero-status-active"
+                                >
+                                    <span
+                                        class="hero-status-dot"
+                                    ></span>
+
+                                    Activo
+                                </span>
+                            `
+                            : `
+                                <span
+                                    class="hero-status
+                                    hero-status-inactive"
+                                >
+                                    <span
+                                        class="hero-status-dot"
+                                    ></span>
+
+                                    Inactivo
+                                </span>
+                            `;
+
+
+                    const estadoPublicacion =
+                        publicado
+                            ? `
+                                <span
+                                    class="hero-status
+                                    hero-status-published"
+                                >
+                                    <i
+                                        class="fas fa-globe"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Publicado
+                                </span>
+                            `
+                            : `
+                                <span
+                                    class="hero-status
+                                    hero-status-draft"
+                                >
+                                    <i
+                                        class="far fa-clock"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Borrador
+                                </span>
+                            `;
+
+
+                    return `
+
+                        <tr>
+
+                            <!-- ORDEN -->
+                            <td
+                                class="hero-slider-order"
+                            >
+
+                                <span>
+                                    ${slider.orden}
+                                </span>
+
+                            </td>
+
+
+                            <!-- PREVIEW -->
+                            <td>
+
+                                <div
+                                    class="hero-slider-preview"
+                                >
+
+                                    <img
+                                        src="${slider.imagen_url}"
+                                        alt="Vista previa del slider ${slider.orden}"
+                                        loading="lazy"
+                                    >
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- ARCHIVO -->
+                            <td>
+
+                                <div
+                                    class="hero-slider-file"
+                                    title="${slider.imagen_url}"
+                                >
+
+                                    <i
+                                        class="far fa-image"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    <span>
+                                        ${slider.imagen_url}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- DISPONIBILIDAD -->
+                            <td>
+
+                                ${estadoDisponibilidad}
+
+                            </td>
+
+
+                            <!-- PUBLICACIÓN -->
+                            <td>
+
+                                ${estadoPublicacion}
+
+                            </td>
+
+
+                            <!-- ACCIONES -->
+                            <td>
+
+                                <div class="hero-slider-actions">
+
+
+                                    ${
+                                        !esPrimero
+                                            ? `
+                                                <button
+                                                type="button"
+                                                class="hero-action-btn
+                                                hero-action-order"
+                                                onclick="moverSlider(
+                                                    ${slider.id},
+                                                    'arriba'
+                                                )"
+                                                title="Mover hacia arriba"
+                                                aria-label="Mover slider hacia arriba"
+                                            >
+
+                                                <i
+                                                    class="fas fa-arrow-up"
+                                                    aria-hidden="true"
+                                                ></i>
+
+                                            </button>
+                                        `
+                                        : ""
+                                }
+
+
+                                ${
+                                    !esUltimo
+                                        ? `
+                                            <button
+                                                type="button"
+                                                class="hero-action-btn
+                                                hero-action-order"
+                                                onclick="moverSlider(
+                                                    ${slider.id},
+                                                    'abajo'
+                                                )"
+                                                title="Mover hacia abajo"
+                                                aria-label="Mover slider hacia abajo"
+                                            >
+
+                                                <i
+                                                    class="fas fa-arrow-down"
+                                                    aria-hidden="true"
+                                                ></i>
+
+                                            </button>
+                                        `
+                                        : ""
+                                }
+
+
+                                <button
+                                    type="button"
+                                    class="hero-action-btn
+                                    hero-action-visibility"
+                                    onclick="alternarEstadoSlider(
+                                        ${slider.id},
+                                        ${slider.orden},
+                                        ${slider.activo}
+                                    )"
+                                    title="${
+                                        activo
+                                            ? "Desactivar slider"
+                                            : "Activar slider"
+                                    }"
+                                    aria-label="${
+                                        activo
+                                            ? "Desactivar slider"
+                                            : "Activar slider"
+                                    }"
+                                >
+
+                                    <i
+                                        class="fas ${
+                                            activo
+                                                ? "fa-eye-slash"
+                                                : "fa-eye"
+                                        }"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="hero-action-btn
+                                    hero-action-delete"
+                                    onclick="eliminarSliderAdmin(
+                                        ${slider.id}
+                                    )"
+                                    title="Eliminar slider"
+                                    aria-label="Eliminar slider"
+                                >
+
+                                    <i
+                                        class="fas fa-trash-alt"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                        </tr>
+
+                    `;
+
+                })
+                .join("");
+
 
     } catch (error) {
-        console.error('Error al cargar sliders:', error);
+
+        console.error(
+            "Error al cargar sliders:",
+            error
+        );
+
+
+        if (contador) {
+
+            contador.textContent =
+                "—";
+
+        }
+
+
         tbody.innerHTML = `
+
             <tr>
-                <td colspan="6" class="text-center text-danger py-4">
-                    <i class="fas fa-exclamation-triangle me-2"></i> Error al conectar con el servidor.
+
+                <td
+                    colspan="6"
+                    class="hero-admin-error"
+                >
+
+                    <i
+                        class="fas fa-triangle-exclamation"
+                    ></i>
+
+                    <strong>
+                        No fue posible cargar los sliders.
+                    </strong>
+
+                    <span>
+                        Intenta nuevamente en unos momentos.
+                    </span>
+
                 </td>
-            </tr>`;
+
+            </tr>
+
+        `;
+
     }
+
 }
+
+
+// ==========================================================
+// PREVIEW DE IMAGEN DEL NUEVO SLIDER
+// ==========================================================
+
+function inicializarPreviewSlider() {
+
+    const input =
+        document.getElementById(
+            "slider-imagen"
+        );
+
+    const contenedor =
+        document.getElementById(
+            "contenedor-preview"
+        );
+
+    const preview =
+        document.getElementById(
+            "slider-preview"
+        );
+
+    const nombreArchivo =
+        document.getElementById(
+            "heroSliderFileName"
+        );
+
+
+    if (
+        !input ||
+        !contenedor ||
+        !preview
+    ) {
+
+        return;
+
+    }
+
+
+    input.onchange = () => {
+
+        const archivo =
+            input.files?.[0];
+
+
+        if (!archivo) {
+
+            preview.removeAttribute(
+                "src"
+            );
+
+            contenedor.classList.add(
+                "hero-slider-preview-hidden"
+            );
+
+            if (nombreArchivo) {
+
+                nombreArchivo.textContent =
+                    "";
+
+            }
+
+            return;
+
+        }
+
+
+        // ==============================================
+        // VALIDAR ARCHIVO
+        // ==============================================
+
+        if (
+            !archivo.type.startsWith(
+                "image/"
+            )
+        ) {
+
+            alert(
+                "Selecciona un archivo de imagen válido."
+            );
+
+            input.value = "";
+
+            return;
+
+        }
+
+
+        // ==============================================
+        // GENERAR PREVIEW LOCAL
+        // ==============================================
+
+        const lector =
+            new FileReader();
+
+
+        lector.onload = evento => {
+
+            preview.src =
+                evento.target.result;
+
+
+            contenedor.classList.remove(
+                "hero-slider-preview-hidden"
+            );
+
+
+            if (nombreArchivo) {
+
+                nombreArchivo.textContent =
+                    archivo.name;
+
+            }
+
+        };
+
+
+        lector.readAsDataURL(
+            archivo
+        );
+
+    };
+
+}
+
+
+
+// ==========================================================
+// ABRIR MODAL · NUEVO SLIDER
+// ==========================================================
 
 function abrirModalSlider() {
-    const formulario = document.getElementById('form-slider');
-    if (formulario) formulario.reset();
-    
-    const inputId = document.getElementById('slider-id');
-    if (inputId) inputId.value = '';
 
-    const modalElement = document.getElementById('modalSlider');
-    if (!modalElement) {
-        console.error("No se encontró el elemento HTML con id 'modalSlider'");
-        return;
+    const formulario =
+        document.getElementById(
+            "form-slider"
+        );
+
+
+    if (formulario) {
+
+        formulario.reset();
+
     }
-    
-    // Dejamos que Bootstrap manipule el estado de forma nativa y limpia
-    const modalBootstrap = bootstrap.Modal.getOrCreateInstance(modalElement);
+
+
+    const contenedorPreview =
+        document.getElementById(
+            "contenedor-preview"
+        );
+
+    const preview =
+        document.getElementById(
+            "slider-preview"
+        );
+
+    const nombreArchivo =
+        document.getElementById(
+            "heroSliderFileName"
+        );
+
+
+    if (contenedorPreview) {
+
+        contenedorPreview.classList.add(
+            "hero-slider-preview-hidden"
+        );
+
+    }
+
+
+    if (preview) {
+
+        preview.removeAttribute(
+            "src"
+        );
+
+    }
+
+
+    if (nombreArchivo) {
+
+        nombreArchivo.textContent =
+            "";
+
+    }
+
+
+    // Configurar selector de archivo
+    inicializarPreviewSlider();
+
+
+    const modalElement =
+        document.getElementById(
+            "modalSlider"
+        );
+
+
+    if (!modalElement) {
+
+        console.error(
+            "No se encontró el modal de sliders."
+        );
+
+        return;
+
+    }
+
+
+    const modalBootstrap =
+        bootstrap.Modal
+            .getOrCreateInstance(
+                modalElement
+            );
+
+
     modalBootstrap.show();
+
 }
 
-// Guardar nuevo registro (Envío con Multipart/Form-Data para Multer)
+// ==========================================================
+// CREAR NUEVO SLIDER
+// ==========================================================
+
 async function guardarSlider(event) {
+
     event.preventDefault();
 
-    const inputFile = document.getElementById('slider-imagen');
-    if (inputFile.files.length === 0) {
-        alert('Por favor, selecciona una imagen.');
+
+    const inputFile =
+        document.getElementById(
+            "slider-imagen"
+        );
+
+    const botonGuardar =
+        event.submitter;
+
+
+    if (
+        !inputFile ||
+        inputFile.files.length === 0
+    ) {
+
+        alert(
+            "Selecciona una imagen para el slider."
+        );
+
         return;
+
     }
 
-    const formData = new FormData();
-    formData.append('imagen', inputFile.files[0]);
+
+    const archivo =
+        inputFile.files[0];
+
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "imagen",
+        archivo
+    );
+
+
+    // ==============================================
+    // BLOQUEAR DOBLE ENVÍO
+    // ==============================================
+
+    if (botonGuardar) {
+
+        botonGuardar.disabled =
+            true;
+
+        botonGuardar.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Guardando...
+
+        `;
+
+    }
+
 
     try {
-        const respuesta = await fetch('/api/hero', {
-            method: 'POST',
-            headers: headersHero(),
-            body: formData
-        });
 
-        const resultado = await respuesta.json();
-        if (!resultado.success) throw new Error(resultado.message);
+        const respuesta =
+            await fetch(
+                "/api/hero",
+                {
+                    method: "POST",
 
-        // Ocultar modal e informar
-        const modalElement = document.getElementById('modalSlider');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        if (modal) modal.hide();
+                    headers:
+                        headersHero(),
 
-        alert('Slider agregado correctamente como borrador.');
-        cargarSlidersAdmin();
+                    body:
+                        formData
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.message ||
+                `Error HTTP ${respuesta.status}`
+            );
+
+        }
+
+
+        if (!resultado.success) {
+
+            throw new Error(
+                resultado.message ||
+                "No fue posible crear el slider."
+            );
+
+        }
+
+
+        // ==============================================
+        // CERRAR MODAL
+        // ==============================================
+
+        const modalElement =
+            document.getElementById(
+                "modalSlider"
+            );
+
+
+        const modal =
+            bootstrap.Modal
+                .getInstance(
+                    modalElement
+                );
+
+
+        if (modal) {
+
+            modal.hide();
+
+        }
+
+
+        alert(
+            "Slider agregado correctamente como borrador."
+        );
+
+
+        await cargarSlidersAdmin();
+
 
     } catch (error) {
-        console.error('Error al guardar slider:', error);
-        alert('Ocurrió un error al subir la imagen.');
+
+        console.error(
+            "Error al guardar slider:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "Ocurrió un error al subir la imagen."
+        );
+
+
+    } finally {
+
+        if (botonGuardar) {
+
+            botonGuardar.disabled =
+                false;
+
+            botonGuardar.innerHTML = `
+
+                <i class="fas fa-plus"></i>
+
+                Agregar Slider
+
+            `;
+
+        }
+
     }
+
 }
+
+
+// ==========================================================
+// REORDENAR SLIDER
+// ==========================================================
+
+async function moverSlider(
+    id,
+    direccion
+) {
+
+    try {
+
+        const respuesta =
+            await fetch(
+                `/api/hero/${id}/reordenar`,
+                {
+                    method: "PATCH",
+
+                    headers:
+                        headersHero({
+                            "Content-Type":
+                                "application/json"
+                        }),
+
+                    body:
+                        JSON.stringify({
+                            direccion
+                        })
+                }
+            );
+
+
+        const resultado =
+            await respuesta.json();
+
+
+        if (!respuesta.ok) {
+
+            throw new Error(
+                resultado.message ||
+                `Error HTTP ${respuesta.status}`
+            );
+
+        }
+
+
+        if (!resultado.success) {
+
+            throw new Error(
+                resultado.message ||
+                "No fue posible cambiar el orden."
+            );
+
+        }
+
+
+        await cargarSlidersAdmin();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error al reordenar slider:",
+            error
+        );
+
+
+        alert(
+            error.message ||
+            "No fue posible cambiar el orden."
+        );
+
+    }
+
+}
+
 
 // Activar/Desactivar temporalmente (Lo devuelve a modo borrador hasta publicar)
 async function alternarEstadoSlider(id, orden, estadoActual) {

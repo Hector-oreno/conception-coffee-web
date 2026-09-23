@@ -1,0 +1,1519 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   ADMIN · EXPERIENCIAS
+   ========================================================================== */
+
+
+/* ==========================================================================
+   MÓDULO
+   ========================================================================== */
+
+.experiencias-admin {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   BARRA SUPERIOR
+   ========================================================================== */
+
+.experiencias-admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 18px;
+
+    padding: 20px 22px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 14px;
+
+    background:
+        var(--admin-surface, #ffffff);
+
+    box-shadow:
+        0 8px 24px
+        rgba(45, 35, 29, 0.04);
+}
+
+
+.experiencias-admin-toolbar-info {
+    min-width: 0;
+}
+
+
+.experiencias-admin-eyebrow {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+
+.experiencias-admin-toolbar-info p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.78rem;
+
+    line-height: 1.5;
+}
+
+
+.experiencias-admin-toolbar-actions {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+/* ==========================================================================
+   BOTONES SUPERIORES
+   ========================================================================== */
+
+.experiencias-admin-btn {
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 9px;
+
+    font: inherit;
+    font-size: 0.67rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.experiencias-admin-btn i {
+    font-size: 0.68rem;
+}
+
+
+.experiencias-admin-btn-secondary {
+    border: 1px solid
+        var(--admin-border, #ded8d3);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+}
+
+
+.experiencias-admin-btn-secondary:hover {
+    border-color: #ccb4a4;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent-hover, #70472f);
+
+    transform: translateY(-1px);
+}
+
+
+.experiencias-admin-btn-publish {
+    border: 1px solid
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent, #8a5a3b);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 18px
+        rgba(138, 90, 59, 0.14);
+}
+
+
+.experiencias-admin-btn-publish:hover {
+    border-color:
+        var(--admin-accent-hover, #70472f);
+
+    background:
+        var(--admin-accent-hover, #70472f);
+
+    color: #ffffff;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 9px 22px
+        rgba(112, 71, 47, 0.18);
+}
+
+
+/* ==========================================================================
+   AVISO DE PUBLICACIÓN
+   ========================================================================== */
+
+.experiencias-admin-notice {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+
+    padding: 13px 16px;
+
+    border: 1px solid
+        rgba(138, 90, 59, 0.10);
+
+    border-radius: 11px;
+
+    background: #faf7f4;
+}
+
+
+.experiencias-admin-notice-icon {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.72rem;
+}
+
+
+.experiencias-admin-notice strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.experiencias-admin-notice p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.65rem;
+
+    line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   TARJETA DE TABLA
+   ========================================================================== */
+
+.experiencias-admin-table-card {
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 14px;
+
+    background:
+        var(--admin-surface, #ffffff);
+
+    box-shadow:
+        0 8px 25px
+        rgba(45, 35, 29, 0.045);
+}
+
+
+.experiencias-admin-table-header {
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 18px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+}
+
+
+.experiencias-admin-table-header h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+.experiencias-admin-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 30px;
+
+    padding: 0 10px;
+
+    border-radius: 999px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   SCROLL DE TABLA
+   ========================================================================== */
+
+.experiencias-admin-table-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d8d0ca transparent;
+}
+
+
+.experiencias-admin-table-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+
+.experiencias-admin-table-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.experiencias-admin-table-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d8d0ca;
+}
+
+
+/* ==========================================================================
+   TABLA
+   ========================================================================== */
+
+.experiencias-admin-table {
+    width: 100%;
+
+    min-width: 880px;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+
+.experiencias-admin-table thead {
+    background: #faf9f7;
+}
+
+
+.experiencias-admin-table th {
+    padding: 11px 14px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-align: left;
+    text-transform: uppercase;
+}
+
+
+.experiencias-admin-table td {
+    padding: 12px 14px;
+
+    border-bottom: 1px solid
+        #f0ece9;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.66rem;
+
+    vertical-align: middle;
+}
+
+
+.experiencias-admin-table tbody tr {
+    transition:
+        background 0.18s ease;
+}
+
+
+.experiencias-admin-table tbody tr:hover {
+    background: #fcfaf8;
+}
+
+
+.experiencias-admin-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* ==========================================================================
+   COLUMNAS
+   ========================================================================== */
+
+.experiencias-col-id {
+    width: 80px;
+
+    text-align: center !important;
+}
+
+
+.experiencias-col-preview {
+    width: 150px;
+}
+
+
+.experiencias-col-status {
+    width: 145px;
+
+    text-align: center !important;
+}
+
+
+.experiencias-col-actions {
+    width: 110px;
+
+    text-align: center !important;
+}
+
+
+/* ==========================================================================
+   ID
+   ========================================================================== */
+
+.experiencia-id {
+    text-align: center;
+}
+
+
+.experiencia-id span {
+    width: 30px;
+    height: 30px;
+
+    display: inline-grid;
+    place-items: center;
+
+    border: 1px solid
+        var(--admin-border, #e4ded9);
+
+    border-radius: 8px;
+
+    background: #faf9f7;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.61rem;
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   MINIATURA
+   ========================================================================== */
+
+.experiencia-preview {
+    width: 112px;
+    height: 70px;
+
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #e5dfda);
+
+    border-radius: 9px;
+
+    background: #f4f1ef;
+
+    box-shadow:
+        0 4px 12px
+        rgba(45, 35, 29, 0.06);
+}
+
+
+.experiencia-preview img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.3s ease;
+}
+
+
+.experiencias-admin-table tbody tr:hover
+.experiencia-preview img {
+    transform: scale(1.04);
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+.experiencia-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.experiencia-info strong {
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.69rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.experiencia-info span {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.57rem;
+}
+
+
+/* ==========================================================================
+   ESTADOS
+   ========================================================================== */
+
+.experiencia-status-cell {
+    text-align: center;
+}
+
+
+.experiencia-status {
+    min-height: 27px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 0 9px;
+
+    border-radius: 999px;
+
+    font-size: 0.54rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.experiencia-status-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+.experiencia-status-active {
+    background: #eaf6ee;
+
+    color: #287744;
+}
+
+
+.experiencia-status-inactive {
+    background: #f8eded;
+
+    color: #a34b4b;
+}
+
+
+.experiencia-status-published {
+    background: #eaf4f6;
+
+    color: #397788;
+}
+
+
+.experiencia-status-draft {
+    background: #fff4dc;
+
+    color: #9b6b16;
+}
+
+
+/* ==========================================================================
+   ACCIONES
+   ========================================================================== */
+
+.experiencia-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+}
+
+
+.experiencia-action-btn {
+    width: 31px;
+    height: 31px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font-size: 0.61rem;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.experiencia-action-visibility {
+    border: 1px solid #d8d0ca;
+
+    color: #766b64;
+}
+
+
+.experiencia-action-visibility:hover {
+    border-color: #cbb5a6;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    transform: translateY(-1px);
+}
+
+
+.experiencia-action-delete {
+    border: 1px solid #efd4d1;
+
+    color: #b8544d;
+}
+
+
+.experiencia-action-delete:hover {
+    border-color: #e4b8b4;
+
+    background: #fbefee;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   ESTADOS GENERALES
+   ========================================================================== */
+
+.experiencias-admin-loading {
+    height: 160px;
+
+    color:
+        var(--admin-text-muted, #756d67) !important;
+
+    text-align: center;
+
+    font-size: 0.66rem !important;
+}
+
+
+.experiencias-admin-loading i {
+    margin-right: 7px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+.experiencias-admin-empty {
+    height: 220px;
+
+    text-align: center;
+}
+
+
+.experiencias-admin-empty-icon {
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    margin: 0 auto 10px;
+
+    border-radius: 11px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 1rem;
+}
+
+
+.experiencias-admin-empty strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.69rem;
+}
+
+
+.experiencias-admin-empty p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.61rem;
+}
+
+
+.experiencias-admin-error {
+    height: 170px;
+
+    color: #a34b4b !important;
+
+    text-align: center;
+}
+
+
+.experiencias-admin-error i,
+.experiencias-admin-error strong,
+.experiencias-admin-error span {
+    display: block;
+}
+
+
+.experiencias-admin-error i {
+    margin-bottom: 8px;
+
+    font-size: 1rem;
+}
+
+
+.experiencias-admin-error strong {
+    margin-bottom: 3px;
+
+    font-size: 0.68rem;
+}
+
+
+.experiencias-admin-error span {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.6rem;
+}
+
+
+/* ==========================================================================
+   MODAL · NUEVA EXPERIENCIA
+   ========================================================================== */
+
+.experiencia-modal {
+    --bs-modal-width: 620px;
+}
+
+
+.experiencia-modal .modal-dialog {
+    width: min(620px, calc(100% - 28px));
+    max-width: 620px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.experiencia-modal-content {
+    width: 100%;
+
+    max-height: calc(100vh - 48px);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3) !important;
+
+    border-radius: 16px !important;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 28px 70px
+        rgba(36, 27, 22, 0.20) !important;
+}
+
+
+.experiencia-modal-content > form {
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.experiencia-modal-header {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+}
+
+
+.experiencia-modal-heading {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.experiencia-modal-icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.8rem;
+}
+
+
+.experiencia-modal-heading h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
+.experiencia-modal-heading
+.experiencias-admin-eyebrow {
+    margin-bottom: 2px;
+}
+
+
+.experiencia-modal-close {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f6f3f1;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.7rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+
+.experiencia-modal-close:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+/* ==========================================================================
+   BODY
+   ========================================================================== */
+
+.experiencia-modal-body {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7cec8 transparent;
+}
+
+
+.experiencia-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.experiencia-modal-body::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d7cec8;
+}
+
+
+/* ==========================================================================
+   CAMPOS
+   ========================================================================== */
+
+.experiencia-field {
+    margin-bottom: 18px;
+}
+
+
+.experiencia-field > label:first-child {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.experiencia-field > label:first-child span {
+    color: #b8544d;
+}
+
+
+.experiencia-field-help {
+    margin: 0 0 10px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.61rem;
+
+    line-height: 1.5;
+}
+
+
+.experiencia-input {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 0 13px;
+
+    border: 1px solid #ded8d3;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.68rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.experiencia-input:focus {
+    border-color:
+        var(--admin-accent, #8a5a3b);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(138, 90, 59, 0.10);
+}
+
+
+/* ==========================================================================
+   UPLOAD
+   ========================================================================== */
+
+.experiencia-upload {
+    min-height: 135px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 20px;
+
+    border: 1px dashed #cdbeb4;
+    border-radius: 12px;
+
+    background: #faf8f6;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.experiencia-upload:hover {
+    border-color:
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+}
+
+
+.experiencia-upload-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 3px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    box-shadow:
+        0 5px 15px
+        rgba(45, 35, 29, 0.06);
+}
+
+
+.experiencia-upload strong {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.67rem;
+}
+
+
+.experiencia-upload > span {
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.56rem;
+    font-weight: 700;
+}
+
+
+.experiencia-upload small {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.55rem;
+}
+
+
+.experiencia-file-input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   PREVIEW
+   ========================================================================== */
+
+.experiencia-preview-modal {
+    margin-top: 2px;
+    margin-bottom: 18px;
+}
+
+
+.experiencia-preview-hidden {
+    display: none;
+}
+
+
+.experiencia-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 7px;
+}
+
+
+.experiencia-preview-header span {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+.experiencia-preview-header small {
+    min-width: 0;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.53rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.experiencia-preview-frame {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #eee9e5;
+}
+
+
+.experiencia-preview-frame img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.experiencia-preview-caption {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 16px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(28, 16, 9, 0.65),
+            transparent 62%
+        );
+
+    pointer-events: none;
+}
+
+
+.experiencia-preview-caption span {
+    overflow: hidden;
+
+    color: #ffffff;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+.experiencia-modal-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    padding: 10px 12px;
+
+    border-radius: 9px;
+
+    background: #faf7f4;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.experiencia-modal-info > i {
+    margin-top: 2px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.62rem;
+}
+
+
+.experiencia-modal-info p {
+    margin: 0;
+
+    font-size: 0.57rem;
+
+    line-height: 1.5;
+}
+
+
+.experiencia-modal-info strong {
+    color:
+        var(--admin-text, #282421);
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.experiencia-modal-footer {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding: 14px 20px;
+
+    border-top: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #fcfbfa;
+}
+
+
+.experiencia-modal-cancel,
+.experiencia-modal-save {
+    min-height: 39px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.experiencia-modal-cancel {
+    border: 1px solid
+        var(--admin-border, #ddd7d2);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.experiencia-modal-save {
+    border: 1px solid
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent, #8a5a3b);
+
+    color: #ffffff;
+}
+
+
+.experiencia-modal-save:hover {
+    background:
+        var(--admin-accent-hover, #70472f);
+
+    border-color:
+        var(--admin-accent-hover, #70472f);
+
+    transform: translateY(-1px);
+}
+
+
+.experiencia-modal-save:disabled {
+    cursor: wait;
+
+    opacity: 0.65;
+
+    transform: none;
+}
+
+
+@media (max-width: 560px) {
+
+    .experiencia-modal-header,
+    .experiencia-modal-body {
+        padding: 16px;
+    }
+
+
+    .experiencia-modal-footer {
+        align-items: stretch;
+        flex-direction: column-reverse;
+
+        padding: 13px 16px;
+    }
+
+
+    .experiencia-modal-cancel,
+    .experiencia-modal-save {
+        width: 100%;
+    }
+
+}
+
+
+
+
+/* ==========================================================================
+   RESPONSIVE ADMIN
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .experiencias-admin-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    .experiencias-admin-toolbar-actions {
+        width: 100%;
+    }
+
+
+    .experiencias-admin-btn {
+        flex: 1;
+    }
+
+}
+
+
+@media (max-width: 560px) {
+
+    .experiencias-admin-toolbar {
+        padding: 16px;
+    }
+
+
+    .experiencias-admin-toolbar-actions {
+        flex-direction: column;
+    }
+
+
+    .experiencias-admin-btn {
+        width: 100%;
+    }
+
+
+    .experiencias-admin-notice {
+        align-items: flex-start;
+    }
+
+
+    .experiencias-admin-table-header {
+        padding: 14px;
+    }
+
+}

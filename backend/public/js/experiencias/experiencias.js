@@ -36,7 +36,7 @@ function headersExperiencias(
 
 
 // ==========================================================
-// CARGAR LISTADO
+// CARGAR EXPERIENCIAS EN EL PANEL ADMINISTRATIVO
 // ==========================================================
 
 async function cargarExperienciasAdmin() {
@@ -45,6 +45,12 @@ async function cargarExperienciasAdmin() {
         document.getElementById(
             "tbody-experiencias"
         );
+
+    const contador =
+        document.getElementById(
+            "experienciasCount"
+        );
+
 
     if (!tbody) {
         return;
@@ -87,29 +93,62 @@ async function cargarExperienciasAdmin() {
         }
 
 
-        tbody.innerHTML = "";
+        const experiencias =
+            Array.isArray(resultado.data)
+                ? resultado.data
+                : [];
 
 
-        if (
-            !Array.isArray(resultado.data) ||
-            resultado.data.length === 0
-        ) {
+        // ==============================================
+        // CONTADOR
+        // ==============================================
+
+        if (contador) {
+
+            contador.textContent =
+                experiencias.length === 1
+                    ? "1 experiencia"
+                    : `${experiencias.length} experiencias`;
+
+        }
+
+
+        // ==============================================
+        // ESTADO VACÍO
+        // ==============================================
+
+        if (experiencias.length === 0) {
 
             tbody.innerHTML = `
+
                 <tr>
+
                     <td
                         colspan="6"
-                        class="text-center text-muted py-4"
+                        class="experiencias-admin-empty"
                     >
-                        <i
-                            class="fas fa-images me-2"
-                            aria-hidden="true"
-                        ></i>
 
-                        No hay registros en la sección
-                        de experiencias.
+                        <div
+                            class="experiencias-admin-empty-icon"
+                        >
+
+                            <i class="far fa-images"></i>
+
+                        </div>
+
+                        <strong>
+                            No hay experiencias registradas
+                        </strong>
+
+                        <p>
+                            Agrega contenido para comenzar
+                            a mostrar experiencias en el sitio.
+                        </p>
+
                     </td>
+
                 </tr>
+
             `;
 
             return;
@@ -117,16 +156,20 @@ async function cargarExperienciasAdmin() {
         }
 
 
-        resultado.data.forEach(
+        // ==============================================
+        // RENDER
+        // ==============================================
+
+        tbody.innerHTML = "";
+
+
+        experiencias.forEach(
             experiencia => {
 
-                const fila =
+                tbody.appendChild(
                     crearFilaExperiencia(
                         experiencia
-                    );
-
-                tbody.appendChild(
-                    fila
+                    )
                 );
 
             }
@@ -141,20 +184,36 @@ async function cargarExperienciasAdmin() {
         );
 
 
+        if (contador) {
+            contador.textContent = "—";
+        }
+
+
         tbody.innerHTML = `
+
             <tr>
+
                 <td
                     colspan="6"
-                    class="text-center text-danger py-4"
+                    class="experiencias-admin-error"
                 >
+
                     <i
-                        class="fas fa-exclamation-triangle me-2"
-                        aria-hidden="true"
+                        class="fas fa-triangle-exclamation"
                     ></i>
 
-                    Error al conectar con el servidor.
+                    <strong>
+                        No fue posible cargar las experiencias.
+                    </strong>
+
+                    <span>
+                        Intenta nuevamente en unos momentos.
+                    </span>
+
                 </td>
+
             </tr>
+
         `;
 
     }
@@ -163,7 +222,7 @@ async function cargarExperienciasAdmin() {
 
 
 // ==========================================================
-// CREAR FILA
+// CREAR FILA DE EXPERIENCIA
 // ==========================================================
 
 function crearFilaExperiencia(
@@ -176,247 +235,346 @@ function crearFilaExperiencia(
         );
 
 
+    const activo =
+        Number(
+            experiencia.activo
+        ) === 1;
+
+
+    const publicado =
+        experiencia.estado_publicacion ===
+        "publicado";
+
+
+    // ======================================================
     // ID
+    // ======================================================
+
     const tdId =
         document.createElement(
             "td"
         );
 
+
     tdId.className =
-        "text-center fw-bold";
-
-    tdId.textContent =
-        experiencia.id;
+        "experiencia-id";
 
 
+    tdId.innerHTML = `
+
+        <span>
+            ${experiencia.id}
+        </span>
+
+    `;
+
+
+    // ======================================================
     // IMAGEN
+    // ======================================================
+
     const tdImagen =
         document.createElement(
             "td"
         );
 
-    const imagen =
-        document.createElement(
-            "img"
-        );
 
-    imagen.src =
-        experiencia.imagen_url;
+    tdImagen.innerHTML = `
 
-    imagen.alt =
-        experiencia.titulo
-            ? `Miniatura de ${experiencia.titulo}`
-            : "Miniatura de experiencia";
+        <div
+            class="experiencia-preview"
+        >
 
-    imagen.className =
-        "img-thumbnail";
+            <img
+                src="${experiencia.imagen_url}"
+                alt="${
+                    experiencia.titulo
+                        ? `Vista previa de ${experiencia.titulo}`
+                        : "Vista previa de experiencia"
+                }"
+                loading="lazy"
+            >
 
-    imagen.style.width =
-        "70px";
+        </div>
 
-    imagen.style.height =
-        "50px";
-
-    imagen.style.objectFit =
-        "cover";
-
-    tdImagen.appendChild(
-        imagen
-    );
+    `;
 
 
-    // TÍTULO
+    // ======================================================
+    // INFORMACIÓN
+    // ======================================================
+
     const tdTitulo =
         document.createElement(
             "td"
         );
 
-    tdTitulo.className =
-        "fw-semibold";
 
-    tdTitulo.textContent =
-        experiencia.titulo ||
-        "Sin título";
+    tdTitulo.innerHTML = `
+
+        <div
+            class="experiencia-info"
+        >
+
+            <strong>
+                ${
+                    experiencia.titulo ||
+                    "Sin título"
+                }
+            </strong>
+
+            <span>
+                Experiencia de Conception Coffee
+            </span>
+
+        </div>
+
+    `;
 
 
+    // ======================================================
     // DISPONIBILIDAD
+    // ======================================================
+
     const tdActivo =
         document.createElement(
             "td"
         );
 
+
     tdActivo.className =
-        "text-center";
+        "experiencia-status-cell";
+
 
     tdActivo.innerHTML =
-        experiencia.activo
+        activo
             ? `
+
                 <span
-                    class="badge bg-success-subtle text-success px-2 py-1"
+                    class="
+                        experiencia-status
+                        experiencia-status-active
+                    "
                 >
-                    <i
-                        class="fas fa-check me-1"
-                        aria-hidden="true"
-                    ></i>
+
+                    <span
+                        class="experiencia-status-dot"
+                    ></span>
+
                     Activo
+
                 </span>
+
             `
             : `
+
                 <span
-                    class="badge bg-danger-subtle text-danger px-2 py-1"
+                    class="
+                        experiencia-status
+                        experiencia-status-inactive
+                    "
                 >
-                    <i
-                        class="fas fa-times me-1"
-                        aria-hidden="true"
-                    ></i>
+
+                    <span
+                        class="experiencia-status-dot"
+                    ></span>
+
                     Inactivo
+
                 </span>
+
             `;
 
 
+    // ======================================================
     // PUBLICACIÓN
+    // ======================================================
+
     const tdPublicacion =
         document.createElement(
             "td"
         );
 
+
     tdPublicacion.className =
-        "text-center";
+        "experiencia-status-cell";
+
 
     tdPublicacion.innerHTML =
-        experiencia.estado_publicacion ===
-        "publicado"
+        publicado
             ? `
+
                 <span
-                    class="badge bg-info-subtle text-info px-2 py-1"
+                    class="
+                        experiencia-status
+                        experiencia-status-published
+                    "
                 >
+
                     <i
-                        class="fas fa-globe me-1"
+                        class="fas fa-globe"
                         aria-hidden="true"
                     ></i>
+
                     Publicado
+
                 </span>
+
             `
             : `
+
                 <span
-                    class="badge bg-warning-subtle text-warning px-2 py-1"
+                    class="
+                        experiencia-status
+                        experiencia-status-draft
+                    "
                 >
+
                     <i
-                        class="fas fa-edit me-1"
+                        class="far fa-clock"
                         aria-hidden="true"
                     ></i>
+
                     Borrador
+
                 </span>
+
             `;
 
 
+    // ======================================================
     // ACCIONES
+    // ======================================================
+
     const tdAcciones =
         document.createElement(
             "td"
         );
 
-    tdAcciones.className =
-        "text-center";
 
-
-    const grupo =
+    const acciones =
         document.createElement(
             "div"
         );
 
-    grupo.className =
-        "btn-group btn-group-sm";
+
+    acciones.className =
+        "experiencia-actions";
 
 
+    // VISIBILIDAD
     const btnEstado =
         document.createElement(
             "button"
         );
 
+
     btnEstado.type =
         "button";
 
+
     btnEstado.className =
-        "btn btn-outline-secondary";
+        "experiencia-action-btn experiencia-action-visibility";
+
+
+    btnEstado.title =
+        activo
+            ? "Ocultar experiencia"
+            : "Activar experiencia";
+
 
     btnEstado.setAttribute(
         "aria-label",
-        experiencia.activo
+        activo
             ? "Ocultar experiencia"
             : "Activar experiencia"
     );
 
+
     btnEstado.innerHTML = `
+
         <i
             class="fas ${
-                experiencia.activo
+                activo
                     ? "fa-eye-slash"
                     : "fa-eye"
             }"
             aria-hidden="true"
         ></i>
+
     `;
 
-    btnEstado.addEventListener(
-        "click",
-        () => {
 
-            alternarEstadoExperiencia(
-                experiencia.id,
-                Number(
-                    experiencia.activo
-                )
-            );
+    btnEstado.onclick = () => {
 
-        }
-    );
+        alternarEstadoExperiencia(
+            experiencia.id,
+            Number(
+                experiencia.activo
+            )
+        );
+
+    };
 
 
+    // ELIMINAR
     const btnEliminar =
         document.createElement(
             "button"
         );
 
+
     btnEliminar.type =
         "button";
 
+
     btnEliminar.className =
-        "btn btn-outline-danger";
+        "experiencia-action-btn experiencia-action-delete";
+
+
+    btnEliminar.title =
+        "Eliminar experiencia";
+
 
     btnEliminar.setAttribute(
         "aria-label",
         "Eliminar experiencia"
     );
 
+
     btnEliminar.innerHTML = `
+
         <i
             class="fas fa-trash-alt"
             aria-hidden="true"
         ></i>
+
     `;
 
-    btnEliminar.addEventListener(
-        "click",
-        () => {
 
-            eliminarExperienciaAdmin(
-                experiencia.id
-            );
+    btnEliminar.onclick = () => {
 
-        }
-    );
+        eliminarExperienciaAdmin(
+            experiencia.id
+        );
+
+    };
 
 
-    grupo.append(
+    acciones.append(
         btnEstado,
         btnEliminar
     );
 
+
     tdAcciones.appendChild(
-        grupo
+        acciones
     );
 
+
+    // ======================================================
+    // ARMAR FILA
+    // ======================================================
 
     fila.append(
         tdId,
@@ -432,9 +590,160 @@ function crearFilaExperiencia(
 
 }
 
+// ==========================================================
+// PREVIEW · NUEVA EXPERIENCIA
+// ==========================================================
+
+function inicializarPreviewExperiencia() {
+
+    const tituloInput =
+        document.getElementById(
+            "experiencia-titulo"
+        );
+
+    const imagenInput =
+        document.getElementById(
+            "experiencia-imagen"
+        );
+
+    const contenedor =
+        document.getElementById(
+            "experienciaPreviewContainer"
+        );
+
+    const preview =
+        document.getElementById(
+            "experienciaPreviewImage"
+        );
+
+    const tituloPreview =
+        document.getElementById(
+            "experienciaPreviewTitle"
+        );
+
+    const nombreArchivo =
+        document.getElementById(
+            "experienciaFileName"
+        );
+
+
+    if (
+        !tituloInput ||
+        !imagenInput ||
+        !contenedor ||
+        !preview
+    ) {
+        return;
+    }
+
+
+    // ==============================================
+    // ACTUALIZAR TÍTULO EN TIEMPO REAL
+    // ==============================================
+
+    tituloInput.oninput = () => {
+
+        if (!tituloPreview) {
+            return;
+        }
+
+        tituloPreview.textContent =
+            tituloInput.value.trim() ||
+            "Nueva experiencia";
+
+    };
+
+
+    // ==============================================
+    // PREVIEW DE IMAGEN
+    // ==============================================
+
+    imagenInput.onchange = () => {
+
+        const archivo =
+            imagenInput.files?.[0];
+
+
+        if (!archivo) {
+
+            preview.removeAttribute(
+                "src"
+            );
+
+            contenedor.classList.add(
+                "experiencia-preview-hidden"
+            );
+
+            if (nombreArchivo) {
+                nombreArchivo.textContent = "";
+            }
+
+            return;
+
+        }
+
+
+        if (
+            !archivo.type.startsWith(
+                "image/"
+            )
+        ) {
+
+            alert(
+                "Selecciona un archivo de imagen válido."
+            );
+
+            imagenInput.value = "";
+
+            return;
+
+        }
+
+
+        const lector =
+            new FileReader();
+
+
+        lector.onload = evento => {
+
+            preview.src =
+                evento.target.result;
+
+            contenedor.classList.remove(
+                "experiencia-preview-hidden"
+            );
+
+            if (nombreArchivo) {
+
+                nombreArchivo.textContent =
+                    archivo.name;
+
+            }
+
+            if (tituloPreview) {
+
+                tituloPreview.textContent =
+                    tituloInput.value.trim() ||
+                    "Nueva experiencia";
+
+            }
+
+        };
+
+
+        lector.readAsDataURL(
+            archivo
+        );
+
+    };
+
+}
+
+
+
 
 // ==========================================================
-// ABRIR MODAL
+// ABRIR MODAL · NUEVA EXPERIENCIA
 // ==========================================================
 
 function abrirModalExperiencia() {
@@ -444,14 +753,29 @@ function abrirModalExperiencia() {
             "form-experiencia"
         );
 
-    const idInput =
-        document.getElementById(
-            "experiencia-id"
-        );
-
     const modalElement =
         document.getElementById(
             "modalExperiencia"
+        );
+
+    const contenedorPreview =
+        document.getElementById(
+            "experienciaPreviewContainer"
+        );
+
+    const preview =
+        document.getElementById(
+            "experienciaPreviewImage"
+        );
+
+    const tituloPreview =
+        document.getElementById(
+            "experienciaPreviewTitle"
+        );
+
+    const nombreArchivo =
+        document.getElementById(
+            "experienciaFileName"
         );
 
 
@@ -460,20 +784,58 @@ function abrirModalExperiencia() {
     }
 
 
-    if (idInput) {
-        idInput.value = "";
+    if (contenedorPreview) {
+
+        contenedorPreview.classList.add(
+            "experiencia-preview-hidden"
+        );
+
     }
 
 
+    if (preview) {
+
+        preview.removeAttribute(
+            "src"
+        );
+
+    }
+
+
+    if (tituloPreview) {
+
+        tituloPreview.textContent =
+            "Nueva experiencia";
+
+    }
+
+
+    if (nombreArchivo) {
+
+        nombreArchivo.textContent = "";
+
+    }
+
+
+    inicializarPreviewExperiencia();
+
+
     if (!modalElement) {
+
+        console.error(
+            "No se encontró el modal de experiencias."
+        );
+
         return;
+
     }
 
 
     const modal =
-        bootstrap.Modal.getOrCreateInstance(
-            modalElement
-        );
+        bootstrap.Modal
+            .getOrCreateInstance(
+                modalElement
+            );
 
 
     modal.show();
@@ -482,7 +844,7 @@ function abrirModalExperiencia() {
 
 
 // ==========================================================
-// GUARDAR EXPERIENCIA
+// GUARDAR NUEVA EXPERIENCIA
 // ==========================================================
 
 async function guardarExperiencia(
@@ -497,11 +859,31 @@ async function guardarExperiencia(
             "experiencia-titulo"
         );
 
-
     const fileInput =
         document.getElementById(
             "experiencia-imagen"
         );
+
+    const botonGuardar =
+        event.submitter;
+
+
+    const titulo =
+        tituloInput?.value?.trim() ||
+        "";
+
+
+    if (!titulo) {
+
+        alert(
+            "Escribe un título para la experiencia."
+        );
+
+        tituloInput?.focus();
+
+        return;
+
+    }
 
 
     if (
@@ -510,12 +892,16 @@ async function guardarExperiencia(
     ) {
 
         alert(
-            "Por favor, selecciona una imagen para la experiencia."
+            "Selecciona una imagen para la experiencia."
         );
 
         return;
 
     }
+
+
+    const archivo =
+        fileInput.files[0];
 
 
     const formData =
@@ -524,14 +910,34 @@ async function guardarExperiencia(
 
     formData.append(
         "titulo",
-        tituloInput?.value?.trim() || ""
+        titulo
     );
 
 
     formData.append(
         "imagen",
-        fileInput.files[0]
+        archivo
     );
+
+
+    // ==============================================
+    // EVITAR DOBLE ENVÍO
+    // ==============================================
+
+    if (botonGuardar) {
+
+        botonGuardar.disabled =
+            true;
+
+        botonGuardar.innerHTML = `
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            Guardando...
+
+        `;
+
+    }
 
 
     try {
@@ -542,11 +948,6 @@ async function guardarExperiencia(
                 {
                     method: "POST",
 
-                    /*
-                     * No agregar Content-Type.
-                     * El navegador genera automáticamente
-                     * multipart/form-data + boundary.
-                     */
                     headers:
                         headersExperiencias(),
 
@@ -601,8 +1002,26 @@ async function guardarExperiencia(
 
         alert(
             error.message ||
-            "Error al intentar subir el registro."
+            "No fue posible guardar la experiencia."
         );
+
+
+    } finally {
+
+        if (botonGuardar) {
+
+            botonGuardar.disabled =
+                false;
+
+            botonGuardar.innerHTML = `
+
+                <i class="fas fa-plus"></i>
+
+                Agregar Experiencia
+
+            `;
+
+        }
 
     }
 

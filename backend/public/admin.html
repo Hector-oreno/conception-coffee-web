@@ -47,6 +47,9 @@
     <!-- Hero de inicio -->
     <link rel="stylesheet" href="css/hero/hero-admin.css">
 
+    <!-- Experiencias -->
+    <link rel="stylesheet" href="css/experiencias/experiencias-admin.css">
+
     <!-- Plantillas visuales -->
     <link rel="stylesheet" href="css/planner/clasica.css">
     <link rel="stylesheet" href="css/planner/moderna.css">
@@ -895,46 +898,183 @@
         <!-- INICIO MÓDULO EXPERIENCIAS -->
         <!-- ====================================================================== -->
 
-        <section id="seccion-experiencias" style="display: none;" class="admin-module">
-            <!-- BOTONES DE ACCIÓN -->
-            <div class="mb-4 d-flex gap-2">
-                <button class="btn btn-primary" onclick="abrirModalExperiencia()">
-                    <i class="fas fa-plus-circle me-2"></i>Agregar Nueva Experiencia
-                </button>
-                <button class="btn btn-success" onclick="publicarExperienciasAlCliente()">
-                    <i class="fas fa-cloud-upload-alt me-2"></i>Publicar Cambios en Web
-                </button>
-            </div>
+        <section
+            id="seccion-experiencias"
+            class="admin-module experiencias-admin"
+        >
 
-            <!-- TABLA DE CONTROL -->
-            <div class="card shadow-sm">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th style="width: 80px;" class="text-center">ID</th>
-                                    <th style="width: 120px;">MINIATURA</th>
-                                    <th>TÍTULO / DESCRIPCIÓN</th>
-                                    <th style="width: 150px;" class="text-center">DISPONIBILIDAD</th>
-                                    <th style="width: 150px;" class="text-center">ESTADO SINCRO</th>
-                                    <th style="width: 120px;" class="text-center">ACCIONES</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody-experiencias">
-                                <tr>
-                                    <td colspan="6" class="text-center text-muted py-4">
-                                        <i class="fas fa-spinner fa-spin me-2"></i>Cargando sección de experiencias...
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <!-- ================================================================ -->
+            <!-- BARRA SUPERIOR -->
+            <!-- ================================================================ -->
+
+            <div class="experiencias-admin-toolbar">
+
+                <div class="experiencias-admin-toolbar-info">
+
+                    <span class="experiencias-admin-eyebrow">
+                        Contenido editorial
+                    </span>
+
+                    <p>
+                        Administra las experiencias que se muestran
+                        en el sitio web de Conception Coffee.
+                    </p>
+
                 </div>
+
+
+                <div class="experiencias-admin-toolbar-actions">
+
+                    <button
+                        type="button"
+                        class="experiencias-admin-btn experiencias-admin-btn-secondary"
+                        onclick="abrirModalExperiencia()"
+                    >
+                        <i class="fas fa-plus"></i>
+
+                        Nueva Experiencia
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="experiencias-admin-btn experiencias-admin-btn-publish"
+                        onclick="publicarExperienciasAlCliente()"
+                    >
+                        <i class="fas fa-cloud-arrow-up"></i>
+
+                        Publicar Cambios
+                    </button>
+
+                </div>
+
             </div>
 
-            <!-- MODAL DE CAPTURA (Bootstrap 5 nativo sin aria-hidden en etiqueta) -->
-            </section>
+
+            <!-- ================================================================ -->
+            <!-- INFORMACIÓN -->
+            <!-- ================================================================ -->
+
+            <div class="experiencias-admin-notice">
+
+                <div class="experiencias-admin-notice-icon">
+
+                    <i class="fas fa-circle-info"></i>
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Control de contenido
+                    </strong>
+
+                    <p>
+                        Administra la disponibilidad de las experiencias
+                        y publica el contenido nuevo cuando esté listo
+                        para mostrarse en el sitio web.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================================ -->
+            <!-- LISTADO -->
+            <!-- ================================================================ -->
+
+            <div class="experiencias-admin-table-card">
+
+                <div class="experiencias-admin-table-header">
+
+                    <div>
+
+                        <span class="experiencias-admin-eyebrow">
+                            Experiencias
+                        </span>
+
+                        <h3>
+                            Contenido registrado
+                        </h3>
+
+                    </div>
+
+
+                    <span
+                        class="experiencias-admin-count"
+                        id="experienciasCount"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="experiencias-admin-table-scroll">
+
+                    <table class="experiencias-admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="experiencias-col-id">
+                                    ID
+                                </th>
+
+                                <th class="experiencias-col-preview">
+                                    Vista previa
+                                </th>
+
+                                <th>
+                                    Experiencia
+                                </th>
+
+                                <th class="experiencias-col-status">
+                                    Disponibilidad
+                                </th>
+
+                                <th class="experiencias-col-status">
+                                    Publicación
+                                </th>
+
+                                <th class="experiencias-col-actions">
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tbody-experiencias">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    class="experiencias-admin-loading"
+                                >
+
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                    Cargando experiencias...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
 
         <!-- ====================================================================== -->
         <!-- FIN MÓDULO EXPERIENCIAS -->
@@ -2564,44 +2704,228 @@
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODALES · EXPERIENCIAS -->
+    <!-- INICIO MODAL · NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
-    <!-- inicio modalExperiencia -->
-    <div class="modal fade" id="modalExperiencia" tabindex="-1" aria-labelledby="modalExperienciaLabel">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalExperienciaLabel">Nueva Experiencia de Cliente</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+        class="modal fade experiencia-modal"
+        id="modalExperiencia"
+        tabindex="-1"
+        aria-labelledby="modalExperienciaLabel"
+        aria-hidden="true"
+    >
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content experiencia-modal-content">
+
+                <!-- HEADER -->
+                <div class="experiencia-modal-header">
+
+                    <div class="experiencia-modal-heading">
+
+                        <div class="experiencia-modal-icon">
+                            <i class="far fa-images"></i>
+                        </div>
+
+                        <div>
+
+                            <span class="experiencias-admin-eyebrow">
+                                Contenido editorial
+                            </span>
+
+                            <h3 id="modalExperienciaLabel">
+                                Nueva Experiencia
+                            </h3>
+
+                        </div>
+
                     </div>
-                    <form id="form-experiencia" onsubmit="guardarExperiencia(event)">
-                        <div class="modal-body">
-                            <input type="hidden" id="experiencia-id">
 
-                            <div class="mb-3">
-                                <label for="experiencia-titulo" class="form-label">Título o Nombre del Platillo</label>
-                                <input type="text" class="form-control" id="experiencia-titulo" placeholder="Ej. Disfruta el dia de las madres" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="experiencia-imagen" class="form-label">Imagen de la Experiencia</label>
-                                <input type="file" class="form-control" id="experiencia-imagen" accept="image/*" required>
-                                <div class="form-text">Sube una fotografía real tomada en el restaurante.</div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-shadow data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar como Borrador</button>
-                        </div>
-                    </form>
+                    <button
+                        type="button"
+                        class="experiencia-modal-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar"
+                    >
+                        <i class="fas fa-xmark"></i>
+                    </button>
+
                 </div>
+
+
+                <!-- FORMULARIO -->
+                <form
+                    id="form-experiencia"
+                    onsubmit="guardarExperiencia(event)"
+                >
+
+                    <div class="experiencia-modal-body">
+
+                        <!-- TÍTULO -->
+                        <div class="experiencia-field">
+
+                            <label for="experiencia-titulo">
+                                Título de la experiencia
+                                <span>*</span>
+                            </label>
+
+                            <p class="experiencia-field-help">
+                                Escribe un título breve que acompañe
+                                la fotografía en el sitio web.
+                            </p>
+
+                            <input
+                                type="text"
+                                id="experiencia-titulo"
+                                class="experiencia-input"
+                                placeholder="Ej. Celebra momentos especiales con nosotros"
+                                maxlength="120"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- IMAGEN -->
+                        <div class="experiencia-field">
+
+                            <label for="experiencia-imagen">
+                                Fotografía
+                                <span>*</span>
+                            </label>
+
+                            <p class="experiencia-field-help">
+                                Selecciona una fotografía real de
+                                la experiencia en Conception Coffee.
+                            </p>
+
+
+                            <label
+                                for="experiencia-imagen"
+                                class="experiencia-upload"
+                            >
+
+                                <div class="experiencia-upload-icon">
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                </div>
+
+                                <strong>
+                                    Seleccionar imagen
+                                </strong>
+
+                                <span>
+                                    JPG, JPEG, PNG o WEBP
+                                </span>
+
+                                <small>
+                                    Utiliza una fotografía nítida
+                                    y de buena calidad.
+                                </small>
+
+                            </label>
+
+
+                            <input
+                                type="file"
+                                id="experiencia-imagen"
+                                class="experiencia-file-input"
+                                accept="image/jpeg,image/png,image/webp"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PREVIEW -->
+                        <div
+                            class="experiencia-preview-modal experiencia-preview-hidden"
+                            id="experienciaPreviewContainer"
+                        >
+
+                            <div class="experiencia-preview-header">
+
+                                <span>
+                                    Vista previa
+                                </span>
+
+                                <small id="experienciaFileName"></small>
+
+                            </div>
+
+
+                            <div class="experiencia-preview-frame">
+
+                                <img
+                                    id="experienciaPreviewImage"
+                                    src=""
+                                    alt="Vista previa de la experiencia"
+                                >
+
+                                <div class="experiencia-preview-caption">
+
+                                    <span id="experienciaPreviewTitle">
+                                        Nueva experiencia
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- INFORMACIÓN -->
+                        <div class="experiencia-modal-info">
+
+                            <i class="fas fa-circle-info"></i>
+
+                            <p>
+                                La experiencia se guardará como
+                                <strong>borrador</strong>.
+                                Podrás publicarla cuando el contenido
+                                esté listo para mostrarse en el sitio.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FOOTER -->
+                    <div class="experiencia-modal-footer">
+
+                        <button
+                            type="button"
+                            class="experiencia-modal-cancel"
+                            data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="experiencia-modal-save"
+                        >
+                            <i class="fas fa-plus"></i>
+
+                            Agregar Experiencia
+                        </button>
+
+                    </div>
+
+                </form>
+
             </div>
+
         </div>
-    <!-- fin modalExperiencia -->
+
+    </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES · EXPERIENCIAS -->
+    <!-- FIN MODAL · NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->

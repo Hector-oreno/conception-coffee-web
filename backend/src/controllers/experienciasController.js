@@ -23,56 +23,349 @@ exports.obtenerExperienciasCliente = async (req, res) => {
     }
 };
 
-exports.crearExperiencia = async (req, res) => {
-    try {
-        if (!req.file) return res.status(400).json({ success: false, message: 'Falta la imagen.' });
+exports.crearExperiencia =
+    async (req, res) => {
 
-        const nuevaExp = {
-            imagen_url: `/images/uploads/${req.file.filename}`,
-            titulo: req.body.titulo || 'Nueva Experiencia'
-        };
+        try {
 
-        await Experiencia.create(nuevaExp);
-        return res.json({ success: true, message: 'Experiencia guardada como borrador.' });
-    } catch (error) {
-        console.error("Error en crearExperiencia:", error);
-        return res.status(500).json({ success: false, message: error.message });
-    }
+            if (!req.file) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Falta la imagen."
+
+                });
+
+            }
+
+            const titulo =
+                req.body.titulo?.trim();
+
+
+            if (!titulo) {
+
+                if (req.file?.filename) {
+
+                    const rutaFisica =
+                        path.join(
+                            __dirname,
+                            "../../public/images/uploads",
+                            req.file.filename
+                        );
+
+
+                    fs.unlink(
+                        rutaFisica,
+                        () => {}
+                    );
+
+                }
+
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "El título de la experiencia es obligatorio."
+
+                });
+
+            }
+
+
+            const nuevaExp = {
+
+                imagen_url:
+                    `/images/uploads/${req.file.filename}`,
+
+                titulo:
+                    req.body.titulo?.trim() ||
+                    "Nueva Experiencia"
+
+            };
+
+
+            await Experiencia.create(
+                nuevaExp
+            );
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Experiencia guardada como borrador."
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Error en crearExperiencia:",
+                error
+            );
+
+
+            // ==========================================
+            // LIMPIAR ARCHIVO SI FALLÓ LA BD
+            // ==========================================
+
+            if (req.file?.filename) {
+
+                const rutaFisica =
+                    path.join(
+                        __dirname,
+                        "../../public/images/uploads",
+                        req.file.filename
+                    );
+
+
+                fs.unlink(
+                    rutaFisica,
+                    errorArchivo => {
+
+                        if (
+                            errorArchivo &&
+                            errorArchivo.code !==
+                                "ENOENT"
+                        ) {
+
+                            console.warn(
+                                "No fue posible limpiar la imagen después del error:",
+                                errorArchivo.message
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Error al crear la experiencia."
+
+            });
+
+        }
+
 };
 
-exports.actualizarExperiencia = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { activo } = req.body;
 
-        await Experiencia.updateEstado(id, activo);
-        return res.json({ success: true, message: 'Estado actualizado correctamente.' });
-    } catch (error) {
-        console.error("Error en actualizarExperiencia:", error);
-        return res.status(500).json({ success: false, message: error.message });
-    }
+exports.actualizarExperiencia =
+    async (req, res) => {
+
+        try {
+
+            const { id } =
+                req.params;
+
+            const { activo } =
+                req.body;
+
+
+            if (
+                activo !== 0 &&
+                activo !== 1 &&
+                activo !== false &&
+                activo !== true
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        "Estado de disponibilidad inválido."
+
+                });
+
+            }
+
+
+            const actualizado =
+                await Experiencia.updateEstado(
+                    id,
+                    Number(activo)
+                );
+
+
+            if (!actualizado) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "Experiencia no encontrada."
+
+                });
+
+            }
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Estado actualizado correctamente."
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Error en actualizarExperiencia:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Error al actualizar la experiencia."
+
+            });
+
+        }
+
 };
 
 exports.eliminarExperiencia = async (req, res) => {
-    try {
-        const { id } = req.params;
 
-        const [result] = await Experiencia.delete(id);
-        if (!result || !result.length) return res.status(404).json({ success: false, message: 'No se encontró el registro.' });
+        try {
 
-        const pathFisico = path.join(__dirname, '../../public', result[0].imagen_url);
+            const { id } =
+                req.params;
 
-        // Borrado del archivo físico
-        fs.unlink(pathFisico, async (errFs) => {
-            if (errFs) console.error('Aviso: El archivo físico no existía o no se pudo borrar:', errFs.message);
-            
-            await Experiencia.deleteConfirm(id);
-            return res.json({ success: true, message: 'Eliminado con éxito de la base de datos.' });
-        });
-    } catch (error) {
-        console.error("Error en eliminarExperiencia:", error);
-        return res.status(500).json({ success: false, message: error.message });
-    }
+
+            // ==========================================
+            // BUSCAR EXPERIENCIA
+            // ==========================================
+
+            const experiencia =
+                await Experiencia.obtenerPorId(
+                    id
+                );
+
+
+            if (!experiencia) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "No se encontró la experiencia."
+
+                });
+
+            }
+
+
+            // ==========================================
+            // ELIMINAR REGISTRO
+            // ==========================================
+
+            const eliminado =
+                await Experiencia.eliminar(
+                    id
+                );
+
+
+            if (!eliminado) {
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        "No se pudo eliminar la experiencia."
+
+                });
+
+            }
+
+
+            // ==========================================
+            // ELIMINAR ARCHIVO FÍSICO
+            // ==========================================
+
+            const nombreArchivo =
+                path.basename(
+                    experiencia.imagen_url
+                );
+
+
+            const rutaFisica =
+                path.join(
+                    __dirname,
+                    "../../public/images/uploads",
+                    nombreArchivo
+                );
+
+
+            fs.unlink(
+                rutaFisica,
+                error => {
+
+                    if (error) {
+
+                        console.warn(
+                            "Aviso: no fue posible eliminar el archivo físico de la experiencia:",
+                            error.message
+                        );
+
+                    }
+
+                }
+            );
+
+
+            return res.json({
+
+                success: true,
+
+                message:
+                    "Experiencia eliminada correctamente."
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Error en eliminarExperiencia:",
+                error
+            );
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Error al eliminar la experiencia."
+
+            });
+
+        }
+
 };
 
 exports.publicarCambios = async (req, res) => {

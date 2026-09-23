@@ -1,0 +1,778 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   EXPERIENCIAS · SITIO PÚBLICO
+   ========================================================================== */
+
+
+/* ==========================================================================
+   SECCIÓN
+   ========================================================================== */
+
+.experiences-section {
+    position: relative;
+
+    padding:
+        clamp(90px, 10vw, 150px)
+        0;
+
+    overflow: hidden;
+
+    background:
+        var(--beige-suave, #f3e8df);
+}
+
+
+.experiences-section::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: min(1180px, calc(100% - 48px));
+    height: 1px;
+
+    background:
+        rgba(89, 45, 20, 0.10);
+
+    transform:
+        translateX(-50%);
+}
+
+
+.experiences-container {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* ==========================================================================
+   ENCABEZADO
+   ========================================================================== */
+
+.experiences-heading {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(280px, 0.75fr);
+
+    align-items: end;
+
+    gap:
+        clamp(40px, 7vw, 100px);
+
+    margin-bottom:
+        clamp(55px, 7vw, 90px);
+}
+
+
+.experiences-heading-copy {
+    min-width: 0;
+}
+
+
+.experiences-heading
+.section-tag {
+    margin-bottom: 15px;
+}
+
+
+.experiences-heading
+.section-title {
+    max-width: 760px;
+
+    margin-bottom: 0;
+}
+
+
+.experiences-heading
+.section-title span {
+    display: block;
+}
+
+
+.experiences-heading-text {
+    max-width: 440px;
+
+    margin: 0 0 5px;
+
+    color:
+        rgba(89, 45, 20, 0.65);
+
+    font-size:
+        0.88rem;
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================================
+   LAYOUT PRINCIPAL
+   ========================================================================== */
+
+.experiences-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(260px, 0.72fr)
+        minmax(0, 1.28fr);
+
+    gap:
+        clamp(45px, 7vw, 100px);
+
+    align-items: stretch;
+}
+
+
+/* ==========================================================================
+   COLUMNA EDITORIAL
+   ========================================================================== */
+
+.experiences-editorial {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding:
+        10px 0 4px;
+}
+
+
+.experiences-index {
+    display: block;
+
+    margin-bottom: 26px;
+
+    color:
+        rgba(89, 45, 20, 0.45);
+
+    font-size: 0.61rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+
+.experiences-editorial > h3 {
+    max-width: 420px;
+
+    margin:
+        0 0 22px;
+
+    color:
+        var(--cafe, #592d14);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(2.2rem, 4vw, 4rem);
+
+    font-weight: 600;
+
+    letter-spacing: -0.035em;
+
+    line-height: 0.98;
+}
+
+
+.experiences-editorial > h3 em {
+    display: block;
+
+    color:
+        #a66b49;
+
+    font-weight: 500;
+}
+
+
+.experiences-editorial > p {
+    max-width: 440px;
+
+    margin:
+        0 0 34px;
+
+    color:
+        rgba(89, 45, 20, 0.66);
+
+    font-size: 0.87rem;
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================================
+   ATRIBUTOS
+   ========================================================================== */
+
+.experiences-features {
+    border-top:
+        1px solid rgba(89, 45, 20, 0.11);
+}
+
+
+.experiences-feature {
+    display: grid;
+
+    grid-template-columns:
+        36px minmax(0, 1fr);
+
+    gap: 13px;
+
+    padding:
+        15px 0;
+
+    border-bottom:
+        1px solid rgba(89, 45, 20, 0.11);
+}
+
+
+.experiences-feature-number {
+    padding-top: 2px;
+
+    color:
+        rgba(89, 45, 20, 0.38);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 0.68rem;
+}
+
+
+.experiences-feature > div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.experiences-feature strong {
+    color:
+        var(--cafe, #592d14);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+
+.experiences-feature div span {
+    color:
+        rgba(89, 45, 20, 0.57);
+
+    font-size: 0.66rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   CTA EDITORIAL
+   ========================================================================== */
+
+.experiences-contact-link {
+    align-self: flex-start;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 30px;
+
+    padding:
+        9px 0 7px;
+
+    border-bottom:
+        1px solid rgba(89, 45, 20, 0.28);
+
+    color:
+        var(--cafe, #592d14);
+
+    font-size: 0.66rem;
+    font-weight: 700;
+
+    letter-spacing: 0.10em;
+
+    text-decoration: none;
+    text-transform: uppercase;
+
+    transition:
+        gap 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.experiences-contact-link i {
+    font-size: 0.62rem;
+
+    transition:
+        transform 0.25s ease;
+}
+
+
+.experiences-contact-link:hover {
+    gap: 14px;
+
+    border-color:
+        var(--cafe, #592d14);
+
+    color: #8f5838;
+}
+
+
+.experiences-contact-link:hover i {
+    transform:
+        translateX(2px);
+}
+
+
+/* ==========================================================================
+   GALERÍA
+   ========================================================================== */
+
+.experiences-gallery {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.experiences-track {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 10;
+
+    overflow: hidden;
+
+    border-radius: 3px;
+
+    background: #dfd3ca;
+
+    box-shadow:
+        0 25px 65px
+        rgba(61, 30, 12, 0.11);
+}
+
+
+/* ==========================================================================
+   SLIDES
+   ========================================================================== */
+
+.experience-slide {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.7s ease;
+}
+
+
+.experience-slide.active {
+    z-index: 2;
+
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+.experience-slide > img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transform:
+        scale(1.01);
+
+    transition:
+        transform 7s ease;
+}
+
+
+.experience-slide.active > img {
+    transform:
+        scale(1.055);
+}
+
+
+/* ==========================================================================
+   OVERLAY
+   ========================================================================== */
+
+.experience-slide::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(31, 17, 9, 0.74) 0%,
+            rgba(31, 17, 9, 0.30) 40%,
+            transparent 72%
+        );
+
+    pointer-events: none;
+}
+
+
+.experience-slide-content {
+    position: absolute;
+
+    z-index: 3;
+
+    left:
+        clamp(24px, 5vw, 48px);
+
+    right:
+        clamp(24px, 5vw, 48px);
+
+    bottom:
+        clamp(24px, 5vw, 42px);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+
+    transform:
+        translateY(12px);
+
+    opacity: 0;
+
+    transition:
+        opacity 0.55s ease 0.15s,
+        transform 0.55s ease 0.15s;
+}
+
+
+.experience-slide.active
+.experience-slide-content {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+.experience-slide-eyebrow {
+    color:
+        rgba(255, 255, 255, 0.72);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    letter-spacing: 0.17em;
+
+    text-transform: uppercase;
+}
+
+
+.experience-slide-content h3 {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(1.6rem, 3vw, 3rem);
+
+    font-weight: 600;
+
+    letter-spacing: -0.025em;
+
+    line-height: 1.05;
+
+    text-wrap: balance;
+
+    text-shadow:
+        0 3px 20px
+        rgba(0, 0, 0, 0.18);
+}
+
+
+/* ==========================================================================
+   FALLBACK
+   ========================================================================== */
+
+.experience-slide-fallback {
+    background: #eee5dc;
+}
+
+
+.experience-slide-fallback > img {
+    padding:
+        clamp(60px, 9vw, 110px);
+
+    object-fit: contain;
+
+    transform: none;
+}
+
+
+.experience-slide-fallback.active > img {
+    transform: none;
+}
+
+
+/* ==========================================================================
+   CONTROLES
+   ========================================================================== */
+
+.experiences-controls {
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding-top: 15px;
+}
+
+
+/* ==========================================================================
+   CONTADOR
+   ========================================================================== */
+
+.experiences-counter {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color:
+        rgba(89, 45, 20, 0.50);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 0.67rem;
+}
+
+
+.experiences-counter
+#experienciaActual {
+    color:
+        var(--cafe, #592d14);
+
+    font-weight: 700;
+}
+
+
+.experiences-counter-line {
+    width: 36px;
+    height: 1px;
+
+    background:
+        rgba(89, 45, 20, 0.22);
+}
+
+
+/* ==========================================================================
+   NAVEGACIÓN
+   ========================================================================== */
+
+.experiences-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.experiences-navigation[hidden] {
+    display: none;
+}
+
+
+.experiences-arrow {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(89, 45, 20, 0.16);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.28);
+
+    color:
+        var(--cafe, #592d14);
+
+    font-size: 0.67rem;
+
+    cursor: pointer;
+
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease;
+}
+
+
+.experiences-arrow:hover {
+    border-color:
+        var(--cafe, #592d14);
+
+    background:
+        var(--cafe, #592d14);
+
+    color: #ffffff;
+
+    transform:
+        translateY(-2px);
+}
+
+
+.experiences-arrow:focus-visible {
+    outline:
+        2px solid #a66b49;
+
+    outline-offset:
+        3px;
+}
+
+
+/* ==========================================================================
+   ACCESIBILIDAD · MOVIMIENTO REDUCIDO
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .experience-slide,
+    .experience-slide > img,
+    .experience-slide-content,
+    .experiences-arrow,
+    .experiences-contact-link,
+    .experiences-contact-link i {
+        transition: none;
+    }
+
+}
+
+
+/* ==========================================================================
+   RESPONSIVE LOCAL
+   ========================================================================== */
+
+@media (max-width: 980px) {
+
+    .experiences-heading {
+        grid-template-columns: 1fr;
+
+        gap: 24px;
+    }
+
+
+    .experiences-heading-text {
+        max-width: 620px;
+    }
+
+
+    .experiences-layout {
+        grid-template-columns: 1fr;
+
+        gap: 48px;
+    }
+
+
+    .experiences-editorial {
+        max-width: 680px;
+    }
+
+
+    .experiences-track {
+        aspect-ratio: 16 / 9;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .experiences-section {
+        padding:
+            75px 0;
+    }
+
+
+    .experiences-heading {
+        margin-bottom: 45px;
+    }
+
+
+    .experiences-editorial > h3 {
+        font-size:
+            clamp(2.2rem, 11vw, 3.2rem);
+    }
+
+
+    .experiences-track {
+        aspect-ratio: 4 / 5;
+    }
+
+
+    .experience-slide-content {
+        left: 22px;
+        right: 22px;
+        bottom: 24px;
+    }
+
+
+    .experience-slide-content h3 {
+        font-size:
+            clamp(1.45rem, 7vw, 2rem);
+    }
+
+
+    .experiences-controls {
+        min-height: 58px;
+    }
+
+}

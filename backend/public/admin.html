@@ -53,6 +53,9 @@
      <!-- Sucursales -->
     <link rel="stylesheet" href="css/sucursales/sucursales-admin.css">
 
+      <!-- Plantillas -->
+    <link rel="stylesheet" href="css/plantillas/plantillas-admin.css">
+
 
     <!-- Plantillas visuales -->
     <link rel="stylesheet" href="css/planner/clasica.css">
@@ -3429,7 +3432,9 @@
     <div
         id="modalConfigPlantilla"
         class="plantilla-config-overlay"
-        style="display: none;"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="plantillaConfigTitulo"
     >
 
         <div class="plantilla-config-modal">
@@ -3488,46 +3493,103 @@
 
                     <div class="plantilla-config-group">
 
-                        <h3>Contenido visible</h3>
+                        <h3>
+                            Contenido visible
+                        </h3>
+
 
                         <label class="plantilla-config-switch">
+
                             <input
                                 type="checkbox"
                                 id="configMostrarPrecio"
                             >
-                            <span>Mostrar precio</span>
+
+                            <span
+                                class="plantilla-switch-control"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="plantilla-switch-label">
+                                Mostrar precio
+                            </span>
+
                         </label>
 
+
                         <label class="plantilla-config-switch">
+
                             <input
                                 type="checkbox"
                                 id="configMostrarGuarniciones"
                             >
-                            <span>Mostrar guarniciones</span>
+
+                            <span
+                                class="plantilla-switch-control"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="plantilla-switch-label">
+                                Mostrar guarniciones
+                            </span>
+
                         </label>
 
+
                         <label class="plantilla-config-switch">
+
                             <input
                                 type="checkbox"
                                 id="configMostrarTelefono"
                             >
-                            <span>Mostrar teléfono</span>
+
+                            <span
+                                class="plantilla-switch-control"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="plantilla-switch-label">
+                                Mostrar teléfono
+                            </span>
+
                         </label>
 
+
                         <label class="plantilla-config-switch">
+
                             <input
                                 type="checkbox"
                                 id="configMostrarDireccion"
                             >
-                            <span>Mostrar dirección</span>
+
+                            <span
+                                class="plantilla-switch-control"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="plantilla-switch-label">
+                                Mostrar dirección
+                            </span>
+
                         </label>
 
+
                         <label class="plantilla-config-switch">
+
                             <input
                                 type="checkbox"
                                 id="configMostrarLogo"
                             >
-                            <span>Mostrar logotipo</span>
+
+                            <span
+                                class="plantilla-switch-control"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="plantilla-switch-label">
+                                Mostrar logotipo
+                            </span>
+
                         </label>
 
                     </div>
@@ -3538,13 +3600,21 @@
                         <h3>Disponibilidad</h3>
 
                         <label class="plantilla-config-switch">
+
                             <input
                                 type="checkbox"
                                 id="configPlantillaActiva"
                             >
-                            <span>
+
+                            <span
+                                class="plantilla-switch-control"
+                                aria-hidden="true"
+                            ></span>
+
+                            <span class="plantilla-switch-label">
                                 Plantilla disponible en el Planner
                             </span>
+
                         </label>
 
                     </div>

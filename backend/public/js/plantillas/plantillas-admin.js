@@ -484,10 +484,17 @@ const PlantillasAdmin = {
                 "modalConfigPlantilla"
             );
 
+
         if (modal) {
 
-            modal.style.display =
-                "flex";
+            modal.classList.add(
+                "active"
+            );
+
+
+            document.body.classList.add(
+                "plantilla-modal-open"
+            );
 
         }
 
@@ -927,8 +934,14 @@ const PlantillasAdmin = {
 
         if (overlay) {
 
-            overlay.style.display =
-                "none";
+            overlay.classList.remove(
+                "active"
+            );
+
+
+            document.body.classList.remove(
+                "plantilla-modal-open"
+            );
 
         }
 
@@ -1186,10 +1199,7 @@ const PlantillasAdmin = {
             // CONFIRMACIÓN
             // ==========================================
 
-            console.log(
-                "Plantilla actualizada correctamente."
-            );
-
+           
 
         } catch (error) {
 

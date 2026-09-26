@@ -1,0 +1,1334 @@
+/* ==========================================================================
+   CONCEPTION COFFEE
+   ADMIN · SUCURSALES
+   ========================================================================== */
+
+
+/* ==========================================================================
+   MÓDULO
+   ========================================================================== */
+
+.sucursales-admin {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   BARRA SUPERIOR
+   ========================================================================== */
+
+.sucursales-admin-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 24px;
+
+    margin-bottom: 18px;
+    padding: 20px 22px;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 14px;
+
+    background:
+        var(--admin-surface, #ffffff);
+
+    box-shadow:
+        0 8px 24px
+        rgba(45, 35, 29, 0.04);
+}
+
+
+.sucursales-admin-toolbar-info {
+    min-width: 0;
+}
+
+
+.sucursales-admin-eyebrow {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+.sucursales-admin-toolbar-info p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   BOTÓN NUEVA SUCURSAL
+   ========================================================================== */
+
+.sucursales-admin-btn {
+    min-height: 42px;
+
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border: 1px solid
+        var(--admin-accent, #8a5a3b);
+
+    border-radius: 9px;
+
+    background:
+        var(--admin-accent, #8a5a3b);
+
+    color: #ffffff;
+
+    font: inherit;
+    font-size: 0.67rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(138, 90, 59, 0.14);
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.sucursales-admin-btn:hover {
+    border-color:
+        var(--admin-accent-hover, #70472f);
+
+    background:
+        var(--admin-accent-hover, #70472f);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 9px 22px
+        rgba(112, 71, 47, 0.18);
+}
+
+
+/* ==========================================================================
+   AVISO
+   ========================================================================== */
+
+.sucursales-admin-notice {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+    padding: 13px 16px;
+
+    border: 1px solid
+        rgba(138, 90, 59, 0.10);
+
+    border-radius: 11px;
+
+    background: #faf7f4;
+}
+
+
+.sucursales-admin-notice-icon {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.72rem;
+}
+
+
+.sucursales-admin-notice strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+}
+
+
+.sucursales-admin-notice p {
+    margin: 0;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.65rem;
+    line-height: 1.45;
+}
+
+
+/* ==========================================================================
+   TARJETA DE TABLA
+   ========================================================================== */
+
+.sucursales-admin-table-card {
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 14px;
+
+    background:
+        var(--admin-surface, #ffffff);
+
+    box-shadow:
+        0 8px 25px
+        rgba(45, 35, 29, 0.045);
+}
+
+
+.sucursales-admin-table-header {
+    min-height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 18px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+}
+
+
+.sucursales-admin-table-header h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+
+.sucursales-admin-count {
+    min-height: 30px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 10px;
+
+    border-radius: 999px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   SCROLL TABLA
+   ========================================================================== */
+
+.sucursales-admin-table-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d8d0ca transparent;
+}
+
+
+.sucursales-admin-table-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+
+.sucursales-admin-table-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+
+    background: #d8d0ca;
+}
+
+
+/* ==========================================================================
+   TABLA
+   ========================================================================== */
+
+.sucursales-admin-table {
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+
+.sucursales-admin-table thead {
+    background: #faf9f7;
+}
+
+
+.sucursales-admin-table th {
+    padding: 11px 14px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-align: left;
+    text-transform: uppercase;
+}
+
+
+.sucursales-admin-table td {
+    padding: 14px;
+
+    border-bottom: 1px solid
+        #f0ece9;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.66rem;
+
+    line-height: 1.5;
+
+    vertical-align: middle;
+}
+
+
+.sucursales-admin-table tbody tr {
+    transition:
+        background 0.18s ease;
+}
+
+
+.sucursales-admin-table tbody tr:hover {
+    background: #fcfaf8;
+}
+
+
+.sucursales-admin-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* ==========================================================================
+   COLUMNAS
+   ========================================================================== */
+
+.sucursal-col-id {
+    width: 75px;
+
+    text-align: center !important;
+}
+
+
+.sucursal-col-status {
+    width: 120px;
+
+    text-align: center !important;
+}
+
+
+.sucursal-col-actions {
+    width: 215px;
+
+    text-align: center !important;
+}
+
+
+/* ==========================================================================
+   CONTENIDO DE FILAS
+   ========================================================================== */
+
+.sucursal-id {
+    text-align: center;
+}
+
+
+.sucursal-id span {
+    width: 30px;
+    height: 30px;
+
+    display: inline-grid;
+    place-items: center;
+
+    border: 1px solid
+        var(--admin-border, #e4ded9);
+
+    border-radius: 8px;
+
+    background: #faf9f7;
+
+    font-size: 0.61rem;
+    font-weight: 700;
+}
+
+
+.sucursal-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.sucursal-info strong {
+    overflow: hidden;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.69rem;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.sucursal-info span {
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.56rem;
+}
+
+
+.sucursal-data {
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.sucursal-data-empty {
+    color: #aaa19b;
+
+    font-style: italic;
+}
+
+
+/* ==========================================================================
+   ESTADO
+   ========================================================================== */
+
+.sucursal-status-cell {
+    text-align: center;
+}
+
+
+.sucursal-status {
+    min-height: 27px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 0 9px;
+
+    border-radius: 999px;
+
+    font-size: 0.54rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.sucursal-status-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+
+.sucursal-status-active {
+    background: #eaf6ee;
+
+    color: #287744;
+}
+
+
+.sucursal-status-inactive {
+    background: #f8eded;
+
+    color: #a34b4b;
+}
+
+
+/* ==========================================================================
+   ACCIONES
+   ========================================================================== */
+
+.sucursal-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.sucursal-action-btn {
+    min-height: 31px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0 10px;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    font: inherit;
+    font-size: 0.56rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.sucursal-action-disable {
+    border: 1px solid #efd4d1;
+
+    color: #a84d47;
+}
+
+
+.sucursal-action-disable:hover {
+    border-color: #e4b8b4;
+
+    background: #fbefee;
+
+    transform: translateY(-1px);
+}
+
+
+.sucursal-action-enable {
+    border: 1px solid #cde5d4;
+
+    color: #287744;
+}
+
+
+.sucursal-action-enable:hover {
+    border-color: #abd1b6;
+
+    background: #edf7f0;
+
+    transform: translateY(-1px);
+}
+
+
+/* ==========================================================================
+   ESTADOS GENERALES
+   ========================================================================== */
+
+.sucursales-admin-loading {
+    height: 150px;
+
+    color:
+        var(--admin-text-muted, #756d67) !important;
+
+    text-align: center;
+
+    font-size: 0.66rem !important;
+}
+
+
+.sucursales-admin-loading i {
+    margin-right: 7px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+.sucursales-admin-empty {
+    height: 190px;
+
+    color:
+        var(--admin-text-muted, #756d67) !important;
+
+    text-align: center;
+}
+
+
+.sucursales-admin-error {
+    height: 160px;
+
+    color: #a34b4b !important;
+
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   MODAL
+   ========================================================================== */
+
+.sucursal-modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background:
+        rgba(30, 22, 18, 0.48);
+
+    backdrop-filter:
+        blur(4px);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease;
+}
+
+
+.sucursal-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+
+.sucursal-modal-card {
+    width: min(560px, 100%);
+
+    max-height:
+        calc(100vh - 48px);
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 28px 70px
+        rgba(36, 27, 22, 0.22);
+
+    transform:
+        translateY(10px)
+        scale(0.985);
+
+    transition:
+        transform 0.22s ease;
+}
+
+
+.sucursal-modal-overlay.active
+.sucursal-modal-card {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.sucursal-modal-card > form {
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   MODAL · HEADER
+   ========================================================================== */
+
+.sucursal-modal-header {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid
+        var(--admin-border, #ebe7e3);
+}
+
+
+.sucursal-modal-heading {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.sucursal-modal-icon {
+    width: 40px;
+    height: 40px;
+
+    flex: 0 0 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.8rem;
+}
+
+
+.sucursal-modal-heading h3 {
+    margin: 0;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+
+.sucursal-modal-close {
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #f6f3f1;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+
+.sucursal-modal-close:hover {
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+}
+
+
+/* ==========================================================================
+   MODAL · BODY
+   ========================================================================== */
+
+.sucursal-modal-body {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    scrollbar-width: thin;
+    scrollbar-color:
+        #d7cec8 transparent;
+}
+
+
+.sucursal-field {
+    margin-bottom: 17px;
+}
+
+
+.sucursal-field > label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.66rem;
+    font-weight: 700;
+}
+
+
+.sucursal-field > label span {
+    color: #b8544d;
+}
+
+
+.sucursal-field > p {
+    margin:
+        -1px 0 9px;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.57rem;
+
+    line-height: 1.45;
+}
+
+
+.sucursal-input {
+    width: 100%;
+    min-height: 43px;
+
+    padding: 0 13px;
+
+    border: 1px solid #ded8d3;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text, #282421);
+
+    font: inherit;
+    font-size: 0.68rem;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.sucursal-input:focus {
+    border-color:
+        var(--admin-accent, #8a5a3b);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(138, 90, 59, 0.10);
+}
+
+
+/* ==========================================================================
+   MODAL · INFO
+   ========================================================================== */
+
+.sucursal-modal-info {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 9px;
+
+    padding: 10px 12px;
+
+    border-radius: 9px;
+
+    background: #faf7f4;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.sucursal-modal-info > i {
+    margin-top: 2px;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.62rem;
+}
+
+
+.sucursal-modal-info p {
+    margin: 0;
+
+    font-size: 0.57rem;
+    line-height: 1.5;
+}
+
+
+.sucursal-modal-info strong {
+    color:
+        var(--admin-text, #282421);
+}
+
+
+/* ==========================================================================
+   MODAL · FOOTER
+   ========================================================================== */
+
+.sucursal-modal-footer {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding: 14px 20px;
+
+    border-top: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    background: #fcfbfa;
+}
+
+
+.sucursal-modal-cancel,
+.sucursal-modal-save {
+    min-height: 39px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 0 15px;
+
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.sucursal-modal-cancel {
+    border: 1px solid
+        var(--admin-border, #ddd7d2);
+
+    background: #ffffff;
+
+    color:
+        var(--admin-text-muted, #756d67);
+}
+
+
+.sucursal-modal-cancel:hover {
+    background: #f7f4f2;
+
+    color:
+        var(--admin-text, #282421);
+}
+
+
+.sucursal-modal-save {
+    border: 1px solid
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent, #8a5a3b);
+
+    color: #ffffff;
+}
+
+
+.sucursal-modal-save:hover {
+    border-color:
+        var(--admin-accent-hover, #70472f);
+
+    background:
+        var(--admin-accent-hover, #70472f);
+
+    transform: translateY(-1px);
+}
+
+
+.sucursal-modal-save:disabled {
+    cursor: wait;
+
+    opacity: 0.65;
+
+    transform: none;
+}
+
+
+/* ==========================================================================
+   BLOQUEAR SCROLL DEL FONDO
+   ========================================================================== */
+
+body.sucursal-modal-open {
+    overflow: hidden;
+}
+
+
+/* ==========================================================================
+   SUCURSAL · UPLOAD DE FOTOGRAFÍA
+   ========================================================================== */
+
+.sucursal-upload {
+    min-height: 120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 18px;
+
+    border: 1px dashed #cdbeb4;
+    border-radius: 11px;
+
+    background: #faf8f6;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.sucursal-upload:hover {
+    border-color:
+        var(--admin-accent, #8a5a3b);
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+}
+
+
+.sucursal-upload-icon {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 3px;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    box-shadow:
+        0 5px 15px
+        rgba(45, 35, 29, 0.06);
+}
+
+
+.sucursal-upload strong {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.65rem;
+}
+
+
+.sucursal-upload span {
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    font-size: 0.54rem;
+    font-weight: 700;
+}
+
+
+.sucursal-file-input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   SUCURSAL · PREVIEW
+   ========================================================================== */
+
+.sucursal-image-preview {
+    margin-bottom: 18px;
+}
+
+
+.sucursal-preview-hidden {
+    display: none;
+}
+
+
+.sucursal-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 7px;
+}
+
+
+.sucursal-preview-header span {
+    color:
+        var(--admin-text, #282421);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+
+.sucursal-preview-header small {
+    min-width: 0;
+
+    overflow: hidden;
+
+    color:
+        var(--admin-text-muted, #756d67);
+
+    font-size: 0.53rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.sucursal-preview-frame {
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    overflow: hidden;
+
+    border: 1px solid
+        var(--admin-border, #ebe7e3);
+
+    border-radius: 11px;
+
+    background: #eee9e5;
+}
+
+
+.sucursal-preview-frame img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.sucursal-action-edit {
+    border: 1px solid #d8d0ca;
+
+    color: #766b64;
+}
+
+
+.sucursal-action-edit:hover {
+    border-color: #cbb5a6;
+
+    background:
+        var(--admin-accent-soft, #f5ebe3);
+
+    color:
+        var(--admin-accent, #8a5a3b);
+
+    transform: translateY(-1px);
+}
+
+
+.sucursal-actions {
+    gap: 6px;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE LOCAL
+   ========================================================================== */
+
+@media (max-width: 900px) {
+
+    .sucursales-admin-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+
+    .sucursales-admin-btn {
+        align-self: flex-start;
+    }
+
+}
+
+
+@media (max-width: 560px) {
+
+    .sucursales-admin-toolbar {
+        padding: 16px;
+    }
+
+
+    .sucursales-admin-btn {
+        width: 100%;
+    }
+
+
+    .sucursales-admin-notice {
+        align-items: flex-start;
+    }
+
+
+    .sucursal-modal-overlay {
+        padding: 14px;
+    }
+
+
+    .sucursal-modal-header,
+    .sucursal-modal-body {
+        padding: 16px;
+    }
+
+
+    .sucursal-modal-footer {
+        align-items: stretch;
+        flex-direction: column-reverse;
+
+        padding: 13px 16px;
+    }
+
+
+    .sucursal-modal-cancel,
+    .sucursal-modal-save {
+        width: 100%;
+    }
+
+}

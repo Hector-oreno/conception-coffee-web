@@ -1,306 +1,835 @@
+// ==========================================================
+// SUCURSALES · SITIO PÚBLICO
+// ==========================================================
+
 let listaSucursales = [];
+
 let indiceSucursalActual = 0;
 
-async function cargarSucursalesSlider() {
-  const cardContainer = document.getElementById('sucursalCardInfo');
-  
-  if (!cardContainer) return;
 
-  try {
-    const res = await fetch('/api/sucursales');
-    if (!res.ok) throw new Error('Error al consultar sucursales');
-    
-    const data = await res.json();
+// ==========================================================
+// INICIALIZACIÓN
+// ==========================================================
 
-    // Filtramos solo las sucursales activas (activa == 1)
-    listaSucursales = data.filter(s => s.activa == 1);
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    if (listaSucursales.length === 0) {
-      cardContainer.innerHTML = '<p>No hay sucursales disponibles por el momento.</p>';
-      return;
+        inicializarSucursalesCliente();
+
     }
+);
 
-    // Renderizamos la primera sucursal
-    indiceSucursalActual = 0;
-    mostrarSucursalActual();
 
-    // Eventos de botones
-    const btnPrev = document.getElementById('btnPrevBranch');
-    const btnNext = document.getElementById('btnNextBranch');
+// ==========================================================
+// INICIALIZAR
+// ==========================================================
+
+async function inicializarSucursalesCliente() {
+
+    const btnPrev =
+        document.getElementById(
+            "btnPrevBranch"
+        );
+
+    const btnNext =
+        document.getElementById(
+            "btnNextBranch"
+        );
+
 
     if (btnPrev) {
-      btnPrev.onclick = () => {
-        indiceSucursalActual = (indiceSucursalActual > 0) ? indiceSucursalActual - 1 : listaSucursales.length - 1;
-        mostrarSucursalActual();
-      };
+
+        btnPrev.onclick = () => {
+
+            moverSucursal(-1);
+
+        };
+
     }
+
 
     if (btnNext) {
-      btnNext.onclick = () => {
-        indiceSucursalActual = (indiceSucursalActual < listaSucursales.length - 1) ? indiceSucursalActual + 1 : 0;
-        mostrarSucursalActual();
-      };
+
+        btnNext.onclick = () => {
+
+            moverSucursal(1);
+
+        };
+
     }
 
-  } catch (error) {
-    console.error('Error cargando sucursales:', error);
-    cardContainer.innerHTML = '<p>No se pudo cargar la información de las sucursales.</p>';
-  }
+
+    await cargarSucursalesSlider();
+
 }
 
-function mostrarSucursalActual() {
-  const sucursal = listaSucursales[indiceSucursalActual];
-  if (!sucursal) return;
 
-  // ==========================================
-  // INFORMACIÓN SEMÁNTICA DE LA SUCURSAL
-  // ==========================================
+// ==========================================================
+// CARGAR SUCURSALES
+// ==========================================================
 
-  const cardContainer =
-    document.getElementById(
-        'sucursalCardInfo'
-    );
+async function cargarSucursalesSlider() {
 
-  if (cardContainer) {
-
-      cardContainer.innerHTML = '';
+    const cardContainer =
+        document.getElementById(
+            "sucursalCardInfo"
+        );
 
 
-      const titulo =
-          document.createElement('h3');
-
-      titulo.textContent =
-          sucursal.nombre ||
-          'Conception Coffee';
+    if (!cardContainer) {
+        return;
+    }
 
 
-      const address =
-          document.createElement('address');
+    try {
 
-      address.className =
-          'sucursal-address';
-
-
-      // DIRECCIÓN
-      if (sucursal.direccion) {
-
-        const direccion =
-            document.createElement('p');
-
-        direccion.className =
-            'sucursal-detail';
-
-        direccion.innerHTML =
-            '<span aria-hidden="true">📍</span> ' +
-            '<strong>Dirección:</strong> ';
-
-        const textoDireccion =
-            document.createTextNode(
-                sucursal.direccion
+        const response =
+            await fetch(
+                "/api/sucursales"
             );
 
-        direccion.appendChild(
-            textoDireccion
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                `Error HTTP ${response.status}`
+            );
+
+        }
+
+
+        if (!Array.isArray(data)) {
+
+            throw new Error(
+                "Respuesta inválida de sucursales."
+            );
+
+        }
+
+
+        // ==================================================
+        // SOLO SUCURSALES ACTIVAS
+        // ==================================================
+
+        listaSucursales =
+            data.filter(
+                sucursal =>
+                    Number(
+                        sucursal.activa
+                    ) === 1
+            );
+
+
+        // ==================================================
+        // SIN SUCURSALES
+        // ==================================================
+
+        if (
+            listaSucursales.length === 0
+        ) {
+
+            mostrarEstadoVacioSucursales();
+
+            return;
+
+        }
+
+
+        indiceSucursalActual = 0;
+
+
+        mostrarSucursalActual();
+
+
+    } catch (error) {
+
+        console.error(
+            "Error cargando sucursales:",
+            error
         );
 
-        address.appendChild(
-            direccion
+
+        mostrarErrorSucursales();
+
+    }
+
+}
+
+
+// ==========================================================
+// MOSTRAR SUCURSAL ACTUAL
+// ==========================================================
+
+function mostrarSucursalActual() {
+
+    const sucursal =
+        listaSucursales[
+            indiceSucursalActual
+        ];
+
+
+    if (!sucursal) {
+        return;
+    }
+
+
+    actualizarImagenSucursal(
+        sucursal
+    );
+
+
+    actualizarInformacionSucursal(
+        sucursal
+    );
+
+
+    actualizarMapaSucursal(
+        sucursal
+    );
+
+
+    actualizarContadorSucursales();
+
+
+    actualizarNavegacionSucursales();
+
+}
+
+
+// ==========================================================
+// IMAGEN
+// ==========================================================
+
+function actualizarImagenSucursal(
+    sucursal
+) {
+
+    const imagen =
+        document.getElementById(
+            "sucursalImagen"
         );
 
-      }
+    const etiqueta =
+        document.getElementById(
+            "sucursalImagenEtiqueta"
+        );
 
 
-      // HORARIO
-      if (sucursal.horario) {
+    if (!imagen) {
+        return;
+    }
 
-        const horario =
-            document.createElement('p');
 
-        horario.className =
-            'sucursal-detail';
+    imagen.src =
+        sucursal.imagen_url ||
+        "/images/uploads/logo_carta.png";
 
-        horario.innerHTML =
-            '<span aria-hidden="true">⏰</span> ' +
-            '<strong>Horario:</strong> ';
 
-        horario.appendChild(
-            document.createTextNode(
+    imagen.alt =
+        sucursal.imagen_url
+            ? `${
+                sucursal.nombre ||
+                "Conception Coffee"
+            }`
+            : "Conception Coffee";
+
+
+    imagen.classList.toggle(
+        "branch-image-fallback",
+        !sucursal.imagen_url
+    );
+
+
+    if (etiqueta) {
+
+        etiqueta.textContent =
+            sucursal.nombre ||
+            "Conception Coffee";
+
+    }
+
+}
+
+
+// ==========================================================
+// INFORMACIÓN
+// ==========================================================
+
+function actualizarInformacionSucursal(
+    sucursal
+) {
+
+    const card =
+        document.getElementById(
+            "sucursalCardInfo"
+        );
+
+    const indice =
+        document.getElementById(
+            "sucursalIndice"
+        );
+
+    const principal =
+        document.getElementById(
+            "sucursalPrincipal"
+        );
+
+
+    if (!card) {
+        return;
+    }
+
+
+    card.innerHTML = "";
+
+
+    if (indice) {
+
+        indice.textContent =
+            `${String(
+                indiceSucursalActual + 1
+            ).padStart(
+                2,
+                "0"
+            )} — SEDE`;
+
+    }
+
+
+    if (principal) {
+
+        principal.hidden =
+            Number(
+                sucursal.es_principal
+            ) !== 1;
+
+    }
+
+
+    // ======================================================
+    // NOMBRE
+    // ======================================================
+
+    const titulo =
+        document.createElement(
+            "h3"
+        );
+
+
+    titulo.textContent =
+        sucursal.nombre ||
+        "Conception Coffee";
+
+
+    card.appendChild(
+        titulo
+    );
+
+
+    // ======================================================
+    // DETALLES
+    // ======================================================
+
+    const detalles =
+        document.createElement(
+            "div"
+        );
+
+
+    detalles.className =
+        "branch-details";
+
+
+    if (sucursal.direccion) {
+
+        detalles.appendChild(
+            crearDetalleSucursal(
+                "fa-location-dot",
+                "Dirección",
+                sucursal.direccion
+            )
+        );
+
+    }
+
+
+    if (sucursal.horario) {
+
+        detalles.appendChild(
+            crearDetalleSucursal(
+                "fa-clock",
+                "Horario",
                 sucursal.horario
             )
         );
 
-        address.appendChild(
-            horario
-        );
-
-      }
-
-
-      // TELÉFONO
-      if (sucursal.telefono) {
-
-        const telefono =
-            document.createElement('p');
-
-        telefono.className =
-            'sucursal-detail';
-
-
-        const numeroLimpio =
-            String(
-                sucursal.telefono
-            ).replace(
-                /[^\d+]/g,
-                ''
-            );
-
-
-        telefono.innerHTML =
-            '<span aria-hidden="true">📞</span> ' +
-            '<strong>Teléfono:</strong> ';
-
-
-        const enlaceTelefono =
-            document.createElement('a');
-
-        enlaceTelefono.href =
-            `tel:${numeroLimpio}`;
-
-        enlaceTelefono.textContent =
-            sucursal.telefono;
-
-
-        telefono.appendChild(
-            enlaceTelefono
-        );
-
-        address.appendChild(
-            telefono
-        );
-
-      }
-
-
-      cardContainer.appendChild(
-        titulo
-      );
-
-      cardContainer.appendChild(
-        address
-      );
-
-  }
-
-  // 2. Actualizar contador
-  const counter = document.getElementById('sliderCounter');
-  if (counter) {
-    counter.textContent = `${indiceSucursalActual + 1} de ${listaSucursales.length}`;
-  }
-
-  // 3. Actualizar mapa iframe
-  const mapaIframe =
-      document.getElementById(
-        'mapaDinamico'
-      );
-
-  const mapaCard =
-    mapaIframe?.closest(
-        '.branch-map-card'
-    );
-
-
-  if (
-    mapaIframe &&
-    mapaCard
-  ) {
-
-    // Limpiar placeholder anterior
-    const placeholderAnterior =
-        mapaCard.querySelector(
-            '.branch-map-placeholder'
-        );
-
-    if (placeholderAnterior) {
-        placeholderAnterior.remove();
     }
 
 
-    if (sucursal.mapa_url) {
+    if (sucursal.telefono) {
 
-        mapaIframe.style.display =
-            'block';
+        detalles.appendChild(
+            crearDetalleSucursal(
+                "fa-phone",
+                "Teléfono",
+                sucursal.telefono,
+                crearTelefonoSucursal(
+                    sucursal.telefono
+                )
+            )
+        );
 
-        mapaIframe.src =
-            sucursal.mapa_url;
+    }
 
-        mapaIframe.title =
-            `Ubicación de ${
-                sucursal.nombre ||
-                'Conception Coffee'
-            }`;
+
+    if (
+        detalles.children.length === 0
+    ) {
+
+        const vacio =
+            document.createElement(
+                "p"
+            );
+
+
+        vacio.className =
+            "branch-info-empty";
+
+
+        vacio.textContent =
+            "La información de esta sede estará disponible próximamente.";
+
+
+        detalles.appendChild(
+            vacio
+        );
+
+    }
+
+
+    card.appendChild(
+        detalles
+    );
+
+}
+
+
+// ==========================================================
+// CREAR DETALLE
+// ==========================================================
+
+function crearDetalleSucursal(
+    icono,
+    etiqueta,
+    valor,
+    contenidoPersonalizado = null
+) {
+
+    const fila =
+        document.createElement(
+            "div"
+        );
+
+
+    fila.className =
+        "branch-detail";
+
+
+    const iconoContenedor =
+        document.createElement(
+            "span"
+        );
+
+
+    iconoContenedor.className =
+        "branch-detail-icon";
+
+
+    iconoContenedor.innerHTML = `
+
+        <i
+            class="fas ${icono}"
+            aria-hidden="true"
+        ></i>
+
+    `;
+
+
+    const contenido =
+        document.createElement(
+            "div"
+        );
+
+
+    const label =
+        document.createElement(
+            "span"
+        );
+
+
+    label.className =
+        "branch-detail-label";
+
+
+    label.textContent =
+        etiqueta;
+
+
+    const valorElemento =
+        document.createElement(
+            "div"
+        );
+
+
+    valorElemento.className =
+        "branch-detail-value";
+
+
+    if (contenidoPersonalizado) {
+
+        valorElemento.appendChild(
+            contenidoPersonalizado
+        );
 
     } else {
 
-        mapaIframe.style.display =
-            'none';
-
-        mapaIframe.removeAttribute(
-            'src'
-        );
-
-
-        const placeholder =
-            document.createElement(
-                'div'
-            );
-
-        placeholder.className =
-            'branch-map-placeholder';
-
-
-        const etiqueta =
-            document.createElement(
-                'span'
-            );
-
-        etiqueta.textContent =
-            'Ubicación';
-
-
-        const nombre =
-            document.createElement(
-                'strong'
-            );
-
-        nombre.textContent =
-            sucursal.nombre ||
-            'Conception Coffee';
-
-
-        const mensaje =
-            document.createElement(
-                'p'
-            );
-
-        mensaje.textContent =
-            'Mapa próximamente';
-
-
-        placeholder.append(
-            etiqueta,
-            nombre,
-            mensaje
-        );
-
-
-        mapaCard.appendChild(
-            placeholder
-        );
+        valorElemento.textContent =
+            valor;
 
     }
 
-  }
+
+    contenido.append(
+        label,
+        valorElemento
+    );
+
+
+    fila.append(
+        iconoContenedor,
+        contenido
+    );
+
+
+    return fila;
+
 }
 
-// Cargar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', cargarSucursalesSlider);
+
+// ==========================================================
+// TELÉFONO
+// ==========================================================
+
+function crearTelefonoSucursal(
+    telefono
+) {
+
+    const enlace =
+        document.createElement(
+            "a"
+        );
+
+
+    const numeroLimpio =
+        String(
+            telefono
+        ).replace(
+            /[^\d+]/g,
+            ""
+        );
+
+
+    enlace.href =
+        `tel:${numeroLimpio}`;
+
+
+    enlace.textContent =
+        telefono;
+
+
+    return enlace;
+
+}
+
+
+// ==========================================================
+// MAPA
+// ==========================================================
+
+function actualizarMapaSucursal(
+    sucursal
+) {
+
+    const seccion =
+        document.getElementById(
+            "branchMapSection"
+        );
+
+    const iframe =
+        document.getElementById(
+            "mapaDinamico"
+        );
+
+    const enlace =
+        document.getElementById(
+            "branchMapLink"
+        );
+
+
+    const tieneMapa =
+        Boolean(
+            sucursal.mapa_url
+        );
+
+
+    if (seccion) {
+
+        seccion.hidden =
+            !tieneMapa;
+
+    }
+
+
+    if (iframe) {
+
+        if (tieneMapa) {
+
+            iframe.src =
+                sucursal.mapa_url;
+
+
+            iframe.title =
+                `Ubicación de ${
+                    sucursal.nombre ||
+                    "Conception Coffee"
+                }`;
+
+        } else {
+
+            iframe.removeAttribute(
+                "src"
+            );
+
+        }
+
+    }
+
+
+    if (enlace) {
+
+        enlace.hidden =
+            !tieneMapa;
+
+
+        if (tieneMapa) {
+
+            enlace.href =
+                sucursal.mapa_url;
+
+        } else {
+
+            enlace.removeAttribute(
+                "href"
+            );
+
+        }
+
+    }
+
+}
+
+
+// ==========================================================
+// NAVEGACIÓN
+// ==========================================================
+
+function moverSucursal(
+    direccion
+) {
+
+    if (
+        listaSucursales.length <= 1
+    ) {
+        return;
+    }
+
+
+    indiceSucursalActual +=
+        direccion;
+
+
+    if (
+        indiceSucursalActual >=
+        listaSucursales.length
+    ) {
+
+        indiceSucursalActual = 0;
+
+    }
+
+
+    if (
+        indiceSucursalActual < 0
+    ) {
+
+        indiceSucursalActual =
+            listaSucursales.length - 1;
+
+    }
+
+
+    mostrarSucursalActual();
+
+}
+
+
+// ==========================================================
+// CONTADOR
+// ==========================================================
+
+function actualizarContadorSucursales() {
+
+    const actual =
+        document.getElementById(
+            "sucursalActual"
+        );
+
+    const total =
+        document.getElementById(
+            "sucursalTotal"
+        );
+
+
+    if (actual) {
+
+        actual.textContent =
+            String(
+                indiceSucursalActual + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+    }
+
+
+    if (total) {
+
+        total.textContent =
+            String(
+                listaSucursales.length
+            ).padStart(
+                2,
+                "0"
+            );
+
+    }
+
+}
+
+
+// ==========================================================
+// MOSTRAR / OCULTAR FLECHAS
+// ==========================================================
+
+function actualizarNavegacionSucursales() {
+
+    const navegacion =
+        document.querySelector(
+            ".branches-navigation"
+        );
+
+
+    if (!navegacion) {
+        return;
+    }
+
+
+    navegacion.hidden =
+        listaSucursales.length <= 1;
+
+}
+
+
+// ==========================================================
+// ESTADO VACÍO
+// ==========================================================
+
+function mostrarEstadoVacioSucursales() {
+
+    const card =
+        document.getElementById(
+            "sucursalCardInfo"
+        );
+
+
+    if (!card) {
+        return;
+    }
+
+
+    card.innerHTML = `
+
+        <div class="branch-state">
+
+            <i
+                class="fas fa-location-dot"
+                aria-hidden="true"
+            ></i>
+
+            <strong>
+                Próximamente
+            </strong>
+
+            <p>
+                Estamos preparando la información
+                de nuestras sedes.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+// ==========================================================
+// ERROR
+// ==========================================================
+
+function mostrarErrorSucursales() {
+
+    const card =
+        document.getElementById(
+            "sucursalCardInfo"
+        );
+
+
+    if (!card) {
+        return;
+    }
+
+
+    card.innerHTML = `
+
+        <div class="branch-state branch-state-error">
+
+            <strong>
+                No fue posible cargar las sucursales.
+            </strong>
+
+            <p>
+                Intenta nuevamente en unos momentos.
+            </p>
+
+        </div>
+
+    `;
+
+}

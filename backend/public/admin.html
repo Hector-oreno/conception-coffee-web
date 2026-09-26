@@ -50,6 +50,10 @@
     <!-- Experiencias -->
     <link rel="stylesheet" href="css/experiencias/experiencias-admin.css">
 
+     <!-- Sucursales -->
+    <link rel="stylesheet" href="css/sucursales/sucursales-admin.css">
+
+
     <!-- Plantillas visuales -->
     <link rel="stylesheet" href="css/planner/clasica.css">
     <link rel="stylesheet" href="css/planner/moderna.css">
@@ -1084,34 +1088,176 @@
         <!-- INICIO MÓDULO SUCURSALES -->
         <!-- ====================================================================== -->
 
-        <section id="seccion-sucursales" class="admin-section admin-module">
-                <div class="admin-header">
-                    
-                    <button type="button" class="btn-nueva-sucursal" onclick="abrirModalSucursal()">
-                        + Nueva Sucursal
-                    </button>
+        <section
+            id="seccion-sucursales"
+            class="admin-module sucursales-admin"
+        >
+
+            <!-- ================================================================ -->
+            <!-- BARRA SUPERIOR -->
+            <!-- ================================================================ -->
+
+            <div class="sucursales-admin-toolbar">
+
+                <div class="sucursales-admin-toolbar-info">
+
+                    <span class="sucursales-admin-eyebrow">
+                        Operación
+                    </span>
+
+                    <p>
+                        Administra las sedes disponibles de
+                        Conception Coffee.
+                    </p>
+
                 </div>
 
-                <!-- TABLA DE SUCURSALES -->
-                <div class="tabla-contenedor">
-                    <table class="tabla-admin">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Dirección</th>
-                                <th>Horario</th>
-                                <th>Teléfono</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaSucursalesBody">
-                            <!-- Se llena dinámicamente con JS -->
-                        </tbody>
-                    </table>
+
+                <button
+                    type="button"
+                    class="sucursales-admin-btn"
+                    onclick="abrirModalSucursal()"
+                >
+                    <i
+                        class="fas fa-plus"
+                        aria-hidden="true"
+                    ></i>
+
+                    Nueva Sucursal
+                </button>
+
+            </div>
+
+
+            <!-- ================================================================ -->
+            <!-- INFORMACIÓN -->
+            <!-- ================================================================ -->
+
+            <div class="sucursales-admin-notice">
+
+                <div class="sucursales-admin-notice-icon">
+
+                    <i
+                        class="fas fa-location-dot"
+                        aria-hidden="true"
+                    ></i>
+
                 </div>
-            </section>
+
+
+                <div>
+
+                    <strong>
+                        Disponibilidad de sedes
+                    </strong>
+
+                    <p>
+                        Las sucursales inactivas se conservan en el
+                        sistema, pero dejan de estar disponibles para
+                        las operaciones que requieren una sede activa.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================================ -->
+            <!-- TABLA -->
+            <!-- ================================================================ -->
+
+            <div class="sucursales-admin-table-card">
+
+                <div class="sucursales-admin-table-header">
+
+                    <div>
+
+                        <span class="sucursales-admin-eyebrow">
+                            Sucursales
+                        </span>
+
+                        <h3>
+                            Sedes registradas
+                        </h3>
+
+                    </div>
+
+
+                    <span
+                        class="sucursales-admin-count"
+                        id="sucursalesCount"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="sucursales-admin-table-scroll">
+
+                    <table class="sucursales-admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th class="sucursal-col-id">
+                                    ID
+                                </th>
+
+                                <th>
+                                    Sucursal
+                                </th>
+
+                                <th>
+                                    Dirección
+                                </th>
+
+                                <th>
+                                    Horario
+                                </th>
+
+                                <th>
+                                    Teléfono
+                                </th>
+
+                                <th class="sucursal-col-status">
+                                    Estado
+                                </th>
+
+                                <th class="sucursal-col-actions">
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="tablaSucursalesBody">
+
+                            <tr>
+
+                                <td
+                                    colspan="7"
+                                    class="sucursales-admin-loading"
+                                >
+                                    <i class="fas fa-spinner fa-spin"></i>
+
+                                    Cargando sucursales...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
 
         <!-- ====================================================================== -->
         <!-- FIN MÓDULO SUCURSALES -->
@@ -2453,9 +2599,9 @@
 
     </div>
 
-<!-- ========================================================= -->
-<!-- FIN MODAL: SELECCIONAR SEMANA -->
-<!-- ========================================================= -->
+    <!-- ========================================================= -->
+    <!-- FIN MODAL: SELECCIONAR SEMANA -->
+    <!-- ========================================================= -->
 
     
    
@@ -2928,49 +3074,354 @@
     <!-- FIN MODAL · NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
+    <!-- ====================================================================== --> 
+    <!-- INICIO MODAL · SUCURSAL -->
     <!-- ====================================================================== -->
-    <!-- INICIO MODALES · SUCURSALES -->
-    <!-- ====================================================================== -->
 
-    <!-- inicio modalSucursal -->
-    <div id="modalSucursal" class="modal-overlay">
-            <div class="modal-card">
-                <h3 class="modal-titulo">Registrar Nueva Sucursal</h3>
+    <div
+        id="modalSucursal"
+        class="sucursal-modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalSucursalTitulo"
+    >
 
-                <form id="formNuevaSucursal" onsubmit="guardarNuevaSucursal(event)">
-                    <div class="form-grupo">
-                        <label for="nuevaSucursalNombre" class="form-label">Nombre de Sucursal *</label>
-                        <input type="text" id="nuevaSucursalNombre" class="form-input" placeholder="Ej: Concepción Coffee (Escuintla)" required>
+        <div class="sucursal-modal-card">
+
+            <!-- ============================================================ -->
+            <!-- HEADER -->
+            <!-- ============================================================ -->
+
+            <div class="sucursal-modal-header">
+
+                <div class="sucursal-modal-heading">
+
+                    <div class="sucursal-modal-icon">
+
+                        <i
+                            class="fas fa-location-dot"
+                            aria-hidden="true"
+                        ></i>
+
                     </div>
 
-                    <div class="form-grupo">
-                        <label for="nuevaSucursalDireccion" class="form-label">Dirección</label>
-                        <input type="text" id="nuevaSucursalDireccion" class="form-input" placeholder="Ej: 4ta Calle 3-12 Zona 1">
+
+                    <div>
+
+                        <span
+                            class="sucursales-admin-eyebrow"
+                            id="modalSucursalEyebrow"
+                        >
+                            Nueva sede
+                        </span>
+
+                        <h3 id="modalSucursalTitulo">
+                            Registrar Sucursal
+                        </h3>
+
                     </div>
 
-                    <div class="form-grupo">
-                        <label for="nuevaSucursalHorario" class="form-label">Horario de Atención</label>
-                        <input type="text" id="nuevaSucursalHorario" class="form-input" placeholder="Ej: Lun - Dom: 7:00 AM - 8:00 PM">
-                    </div>
+                </div>
 
-                    <div class="form-grupo">
-                        <label for="nuevaSucursalTelefono" class="form-label">Teléfono / WhatsApp</label>
-                        <input type="text" id="nuevaSucursalTelefono" class="form-input" placeholder="Ej: +502 7700-0000">
-                    </div>
 
-                    <div class="modal-acciones">
-                        <button type="button" class="btn-cancelar" onclick="cerrarModalSucursal()">Cancelar</button>
-                        <button type="submit" class="btn-guardar">Guardar Sucursal</button>
-                    </div>
-                </form>
+                <button
+                    type="button"
+                    class="sucursal-modal-close"
+                    onclick="cerrarModalSucursal()"
+                    aria-label="Cerrar"
+                >
+                    <i
+                        class="fas fa-xmark"
+                        aria-hidden="true"
+                    ></i>
+                </button>
+
             </div>
+
+
+            <!-- ============================================================ -->
+            <!-- FORMULARIO -->
+            <!-- ============================================================ -->
+
+            <form
+                id="formNuevaSucursal"
+                onsubmit="guardarSucursal(event)"
+            >
+
+                <!-- ID · vacío significa CREAR -->
+                <input
+                    type="hidden"
+                    id="sucursal-id"
+                >
+
+
+                <div class="sucursal-modal-body">
+
+                    <!-- ==================================================== -->
+                    <!-- NOMBRE -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-field">
+
+                        <label for="nuevaSucursalNombre">
+                            Nombre de la sucursal
+                            <span>*</span>
+                        </label>
+
+                        <p>
+                            Utiliza un nombre corto y fácil de identificar.
+                        </p>
+
+                        <input
+                            type="text"
+                            id="nuevaSucursalNombre"
+                            class="sucursal-input"
+                            placeholder="Ej. Conception Coffee Escuintla"
+                            maxlength="150"
+                            autocomplete="organization"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- DIRECCIÓN -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-field">
+
+                        <label for="nuevaSucursalDireccion">
+                            Dirección
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nuevaSucursalDireccion"
+                            class="sucursal-input"
+                            placeholder="Ej. 4a Calle 3-12, Zona 1"
+                            autocomplete="street-address"
+                        >
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- HORARIO -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-field">
+
+                        <label for="nuevaSucursalHorario">
+                            Horario de atención
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nuevaSucursalHorario"
+                            class="sucursal-input"
+                            placeholder="Ej. Lun - Dom · 7:00 AM - 8:00 PM"
+                            maxlength="255"
+                        >
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- TELÉFONO -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-field">
+
+                        <label for="nuevaSucursalTelefono">
+                            Teléfono / WhatsApp
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="nuevaSucursalTelefono"
+                            class="sucursal-input"
+                            placeholder="Ej. +502 7700-0000"
+                            maxlength="50"
+                            autocomplete="tel"
+                        >
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- MAPA -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-field">
+
+                        <label for="nuevaSucursalMapa">
+                            URL del mapa
+                        </label>
+
+                        <p>
+                            Puedes guardar la URL utilizada para mostrar
+                            la ubicación de esta sede.
+                        </p>
+
+                        <input
+                            type="url"
+                            id="nuevaSucursalMapa"
+                            class="sucursal-input"
+                            placeholder="https://..."
+                        >
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- FOTOGRAFÍA -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-field">
+
+                        <label for="nuevaSucursalImagen">
+                            Fotografía de la sucursal
+                        </label>
+
+                        <p>
+                            En edición, dejar este campo vacío conserva
+                            la fotografía actual.
+                        </p>
+
+
+                        <label
+                            for="nuevaSucursalImagen"
+                            class="sucursal-upload"
+                        >
+
+                            <div class="sucursal-upload-icon">
+
+                                <i
+                                    class="fas fa-cloud-arrow-up"
+                                    aria-hidden="true"
+                                ></i>
+
+                            </div>
+
+                            <strong>
+                                Seleccionar fotografía
+                            </strong>
+
+                            <span>
+                                JPG, JPEG, PNG o WEBP
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="nuevaSucursalImagen"
+                            class="sucursal-file-input"
+                            accept="image/jpeg,image/png,image/webp"
+                        >
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- PREVIEW -->
+                    <!-- ==================================================== -->
+
+                    <div
+                        id="sucursalPreviewContainer"
+                        class="sucursal-image-preview sucursal-preview-hidden"
+                    >
+
+                        <div class="sucursal-preview-header">
+
+                            <span>
+                                Vista previa
+                            </span>
+
+                            <small id="sucursalFileName"></small>
+
+                        </div>
+
+
+                        <div class="sucursal-preview-frame">
+
+                            <img
+                                id="sucursalPreviewImage"
+                                src=""
+                                alt="Vista previa de la sucursal"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- INFORMACIÓN -->
+                    <!-- ==================================================== -->
+
+                    <div class="sucursal-modal-info">
+
+                        <i
+                            class="fas fa-circle-info"
+                            aria-hidden="true"
+                        ></i>
+
+                        <p id="sucursalModalInfoTexto">
+                            La nueva sucursal se registrará
+                            <strong>activa</strong>.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ======================================================== -->
+                <!-- FOOTER -->
+                <!-- ======================================================== -->
+
+                <div class="sucursal-modal-footer">
+
+                    <button
+                        type="button"
+                        class="sucursal-modal-cancel"
+                        onclick="cerrarModalSucursal()"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="sucursal-modal-save"
+                        id="btnGuardarSucursal"
+                    >
+                        <i
+                            class="fas fa-plus"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span id="btnGuardarSucursalTexto">
+                            Registrar Sucursal
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
         </div>
-    <!-- fin modalSucursal -->
+
+    </div>
+
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES · SUCURSALES -->
+    <!-- FIN MODAL · NUEVA SUCURSAL -->
     <!-- ====================================================================== -->
-
     <!-- ====================================================================== -->
     <!-- MODAL CONFIGURACIÓN DE PLANTILLA -->
     <!-- ====================================================================== -->

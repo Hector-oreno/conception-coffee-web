@@ -183,6 +183,7 @@
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/experiencias/experiencias-cliente.css">
+  <link rel="stylesheet" href="css/sucursales/sucursales.css">
 
 </head>
 
@@ -681,162 +682,223 @@
     </section>
 
 
-    <!-- ======================================================
-      SUCURSALES
-      ====================================================== -->
+    <!-- ====================================================================== --> 
+    <!-- SUCURSALES -->
+    <!-- ====================================================================== -->
+
     <section
-      class="branches"
-      id="sucursales"
-      aria-labelledby="sucursalesTitulo"
+        class="branches-section"
+        id="sucursales"
+        aria-labelledby="sucursalesTitulo"
     >
 
-      <div class="container">
+        <div class="container branches-container">
 
-          <!-- REDES SOCIALES -->
-          <p class="section-tag">
-              Síguenos
-          </p>
+            <!-- ========================================================== -->
+            <!-- ENCABEZADO -->
+            <!-- ========================================================== -->
 
-          <div
-            class="social-header reveal"
-            aria-label="Redes sociales de Conception Coffee"
-          >
+            <header class="branches-heading">
 
-            <a
-                href="https://www.instagram.com/restauranteconception"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-icon"
-                aria-label="Instagram de Conception Coffee"
-                title="Instagram"
-            >
-                <i
-                    class="fab fa-instagram"
-                    aria-hidden="true"
-                ></i>
-            </a>
+                <div class="branches-heading-copy">
 
-
-            <a
-                href="https://www.facebook.com/people/Restaurante-Conception-Coffee/61587045759034/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-icon"
-                aria-label="Facebook de Conception Coffee"
-                title="Facebook"
-            >
-                <i
-                    class="fab fa-facebook-f"
-                    aria-hidden="true"
-                ></i>
-            </a>
-
-
-            <a
-                href="https://wa.me/50259878068"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-icon"
-                aria-label="WhatsApp de Conception Coffee"
-                title="WhatsApp"
-            >
-                <i
-                    class="fab fa-whatsapp"
-                    aria-hidden="true"
-                ></i>
-            </a>
-
-          </div>
-
-
-          <!-- TÍTULO -->
-          <h2
-            class="section-title reveal reveal-delay"
-            id="sucursalesTitulo"
-          >
-            Visítanos
-            <span></span>
-          </h2>
-
-          <div
-            class="section-line"
-            aria-hidden="true"
-          ></div>
-
-
-          <!-- CONTENIDO -->
-          <div class="branches-layout">
-
-            <!-- ==========================================
-                 INFORMACIÓN DE SUCURSAL
-                 ========================================== -->
-            <div
-                class="branch-card-container reveal reveal-delay-2"
-            >
-
-                <article
-                    id="sucursalCardInfo"
-                    class="branch-card"
-                    aria-live="polite"
-                >
-                    <p>
-                        Cargando información de sucursales...
+                    <p class="section-tag reveal">
+                        Nuestras sedes
                     </p>
-                </article>
+
+                    <h2
+                        class="section-title reveal reveal-delay"
+                        id="sucursalesTitulo"
+                    >
+                        Encuentra tu
+                        <span>Conception Coffee.</span>
+                    </h2>
+
+                </div>
 
 
-                <!-- NAVEGACIÓN ENTRE SUCURSALES -->
+                <p
+                    class="branches-heading-text
+                       reveal reveal-delay-2"
+                >
+                    Visítanos y disfruta de nuestros espacios,
+                    sabores y atención en la sede más cercana.
+                </p>
+
+            </header>
+
+
+            <!-- ========================================================== -->
+            <!-- SUCURSAL ACTUAL -->
+            <!-- ========================================================== -->
+
+            <div class="branches-showcase">
+
+                <!-- ====================================================== -->
+                <!-- FOTOGRAFÍA -->
+                <!-- ====================================================== -->
+
                 <div
-                    class="slider-controls"
-                    aria-label="Selector de sucursal"
+                    class="branch-visual reveal reveal-delay-2"
                 >
 
-                    <button
-                        type="button"
-                        id="btnPrevBranch"
-                        class="btn-slider"
-                        aria-label="Ver sucursal anterior"
-                    >
-                        <span aria-hidden="true">
-                            ←
+                    <div class="branch-image-frame">
+
+                        <img
+                            id="sucursalImagen"
+                            src="/images/uploads/logo_carta.png"
+                            alt="Conception Coffee"
+                        >
+
+
+                        <div class="branch-image-overlay">
+
+                            <span id="sucursalImagenEtiqueta">
+                                Conception Coffee
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ====================================================== -->
+                <!-- INFORMACIÓN -->
+                <!-- ====================================================== -->
+
+                <div
+                    class="branch-content reveal reveal-delay-3"
+                >
+
+                    <div class="branch-content-top">
+
+                        <span
+                            class="branch-index"
+                            id="sucursalIndice"
+                        >
+                            01 — SEDE
                         </span>
 
-                        Anterior
-                    </button>
+
+                        <span
+                            class="branch-principal"
+                            id="sucursalPrincipal"
+                            hidden
+                        >
+                            Sucursal principal
+                        </span>
+
+                    </div>
 
 
-                    <span
-                        id="sliderCounter"
-                        class="slider-counter"
+                    <article
+                        id="sucursalCardInfo"
+                        class="branch-info"
                         aria-live="polite"
                     >
-                        1 de 1
-                    </span>
+
+                        <p class="branch-loading">
+                            Cargando información...
+                        </p>
+
+                    </article>
 
 
-                    <button
-                        type="button"
-                        id="btnNextBranch"
-                        class="btn-slider"
-                        aria-label="Ver siguiente sucursal"
+                    <!-- ================================================== -->
+                    <!-- UBICACIÓN -->
+                    <!-- ================================================== -->
+
+                    <div
+                        class="branch-location"
+                        id="branchLocation"
                     >
-                        Siguiente
 
-                        <span aria-hidden="true">
-                            →
-                        </span>
-                    </button>
+                        <a
+                            id="branchMapLink"
+                            class="branch-map-link"
+                            href="#"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            hidden
+                        >
+                            Ver ubicación
+
+                            <i
+                                class="fas fa-arrow-up-right-from-square"
+                                aria-hidden="true"
+                            ></i>
+                        </a>
+
+                    </div>
+
+
+                    <!-- ================================================== -->
+                    <!-- NAVEGACIÓN -->
+                    <!-- ================================================== -->
+
+                    <div class="branches-controls">
+
+                        <div class="branches-counter">
+
+                            <span id="sucursalActual">
+                                01
+                            </span>
+
+                            <span class="branches-counter-line"></span>
+
+                            <span id="sucursalTotal">
+                                01
+                            </span>
+
+                        </div>
+
+
+                        <div class="branches-navigation">
+
+                            <button
+                                type="button"
+                                id="btnPrevBranch"
+                                class="branches-arrow"
+                                aria-label="Ver sucursal anterior"
+                            >
+                                <i
+                                    class="fas fa-arrow-left"
+                                    aria-hidden="true"
+                                ></i>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                id="btnNextBranch"
+                                class="branches-arrow"
+                                aria-label="Ver siguiente sucursal"
+                            >
+                                <i
+                                    class="fas fa-arrow-right"
+                                    aria-hidden="true"
+                                ></i>
+                            </button>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- ==========================================
-                 MAPA / UBICACIÓN
-                 ========================================== -->
+            <!-- ========================================================== -->
+            <!-- MAPA DINÁMICO -->
+            <!-- ========================================================== -->
+
             <div
-                class="branch-map-card reveal reveal-delay-3"
+                class="branch-map-section"
+                id="branchMapSection"
+                hidden
             >
 
                 <iframe
@@ -851,10 +913,11 @@
 
         </div>
 
-      </div>
-
     </section>
 
+    <!-- ====================================================================== -->
+    <!-- FIN SUCURSALES -->
+    <!-- ====================================================================== -->
     <!-- ====================================================================== -->
     <!-- EXPERIENCIAS -->
     <!-- ====================================================================== -->

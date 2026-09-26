@@ -633,52 +633,5 @@ function ocultarModalEstatico(idModal) {
     if (modal) modal.style.display = 'none';
 }
 
-// Guardar nueva sucursal completa
-async function guardarNuevaSucursal(e) {
-    e.preventDefault();
-
-    const nombre = document.getElementById('nuevaSucursalNombre').value;
-    const direccion = document.getElementById('nuevaSucursalDireccion').value;
-    const horario = document.getElementById('nuevaSucursalHorario') ? document.getElementById('nuevaSucursalHorario').value : '';
-    const telefono = document.getElementById('nuevaSucursalTelefono') ? document.getElementById('nuevaSucursalTelefono').value : '';
-
-    try {
-        const res = await fetch('/api/sucursales', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nombre, direccion, horario, telefono })
-        });
-
-        const data = await res.json();
-
-        if (res.ok && data.success) {
-            alert('¡Sucursal creada exitosamente!');
-            cerrarModalSucursal();
-            document.getElementById('formNuevaSucursal').reset();
-            
-            // 1. Recarga la tabla de la pestaña Sucursales
-            if (typeof cargarTablaSucursales === 'function') {
-                await cargarTablaSucursales();
-            }
-
-            // 2. Recarga el select desplegable de la pestaña Productos
-            if (typeof cargarSelectSucursalesAdmin === 'function') {
-                await cargarSelectSucursalesAdmin();
-            }
-        } else {
-            alert('Error: ' + (data.error || 'No se pudo crear la sucursal'));
-        }
-    } catch (err) {
-        console.error('Error enviando sucursal:', err);
-    }
-}
-
-function abrirModalSucursal() {
-    document.getElementById('modalSucursal').style.display = 'flex';
-}
-
-function cerrarModalSucursal() {
-    document.getElementById('modalSucursal').style.display = 'none';
-}
 
 

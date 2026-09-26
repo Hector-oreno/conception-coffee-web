@@ -1,158 +1,886 @@
-/* ==========================================
-   ESTILOS: MÓDULO GESTIÓN DE SUCURSALES
-   ========================================== */
+/* ==========================================================================
+   CONCEPTION COFFEE
+   SUCURSALES · SITIO PÚBLICO
+   ========================================================================== */
 
-/* Header de la Sección */
-.admin-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+
+/* ==========================================================================
+   SECCIÓN
+   ========================================================================== */
+
+.branches-section {
+    position: relative;
+
+    padding:
+        clamp(90px, 10vw, 150px)
+        0;
+
+    overflow: hidden;
+
+    background: #fffdfb;
 }
 
-.admin-header h2 {
-    font-size: 1.75rem;
-    color: #2c211b; /* Tono café oscuro */
-    margin: 0 0 0.25rem 0;
-    font-family: inherit;
+
+.branches-section::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: min(1180px, calc(100% - 48px));
+    height: 1px;
+
+    background:
+        rgba(89, 45, 20, 0.10);
+
+    transform:
+        translateX(-50%);
 }
 
-.admin-header p {
-    color: #6c757d;
-    font-size: 0.95rem;
-    margin: 0;
+
+.branches-container {
+    position: relative;
+
+    z-index: 2;
 }
 
-/* Botón Nueva Sucursal */
-.btn-nueva-sucursal {
-    background-color: #3e2723; /* Café corporativo */
-    color: #ffffff;
-    border: none;
-    padding: 0.65rem 1.25rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+/* ==========================================================================
+   ENCABEZADO
+   ========================================================================== */
+
+.branches-heading {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(280px, 0.75fr);
+
+    align-items: end;
+
+    gap:
+        clamp(40px, 7vw, 100px);
+
+    margin-bottom:
+        clamp(55px, 7vw, 90px);
 }
 
-.btn-nueva-sucursal:hover {
-    background-color: #5d4037;
-    transform: translateY(-1px);
+
+.branches-heading-copy {
+    min-width: 0;
 }
 
-/* Contenedor de Tabla */
-.tabla-contenedor {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-    border: 1px solid #e2ded8;
-    overflow-x: auto; /* Scroll horizontal si es pantalla chica */
-    padding: 0.5rem;
+
+.branches-heading
+.section-tag {
+    margin-bottom: 15px;
 }
 
-/* Estilos de la Tabla */
-.tabla-admin {
+
+.branches-heading
+.section-title {
+    max-width: 760px;
+
+    margin-bottom: 0;
+}
+
+
+.branches-heading
+.section-title span {
+    display: block;
+}
+
+
+.branches-heading-text {
+    max-width: 440px;
+
+    margin: 0 0 5px;
+
+    color:
+        rgba(89, 45, 20, 0.64);
+
+    font-size: 0.88rem;
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================================
+   SHOWCASE
+   ========================================================================== */
+
+.branches-showcase {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(360px, 0.95fr);
+
+    min-height: 570px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(89, 45, 20, 0.10);
+
+    background:
+        #f7f0ea;
+
+    box-shadow:
+        0 25px 70px
+        rgba(61, 30, 12, 0.08);
+}
+
+
+/* ==========================================================================
+   FOTOGRAFÍA
+   ========================================================================== */
+
+.branch-visual {
+    min-width: 0;
+
+    min-height: 570px;
+}
+
+
+.branch-image-frame {
+    position: relative;
+
     width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-    font-size: 0.9rem;
+    height: 100%;
+
+    min-height: 570px;
+
+    overflow: hidden;
+
+    background:
+        #e8ddd5;
 }
 
-.tabla-admin thead tr {
-    background-color: #fbf9f6;
-    border-bottom: 2px solid #e8e2d9;
+
+.branch-image-frame::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(38, 21, 11, 0.48) 0%,
+            rgba(38, 21, 11, 0.10) 40%,
+            transparent 68%
+        );
+
+    pointer-events: none;
 }
 
-.tabla-admin th {
-    padding: 1rem 0.85rem;
-    color: #4a3b32;
+
+.branch-image-frame img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transform:
+        scale(1.01);
+
+    transition:
+        opacity 0.35s ease,
+        transform 6s ease;
+}
+
+
+.branch-image-frame:hover img:not(
+    .branch-image-fallback
+) {
+    transform:
+        scale(1.04);
+}
+
+
+/* ==========================================================================
+   FALLBACK SIN FOTOGRAFÍA
+   ========================================================================== */
+
+.branch-image-frame img.branch-image-fallback {
+    padding:
+        clamp(120px, 14vw, 190px);
+
+    object-fit: contain;
+
+    background:
+        #eee5dd;
+
+    transform: none;
+
+    opacity: 0.82;
+}
+
+
+.branch-image-frame:hover
+img.branch-image-fallback {
+    transform: none;
+}
+
+
+/* ==========================================================================
+   ETIQUETA SOBRE IMAGEN
+   ========================================================================== */
+
+.branch-image-overlay {
+    position: absolute;
+
+    z-index: 3;
+
+    left:
+        clamp(22px, 4vw, 42px);
+
+    right:
+        clamp(22px, 4vw, 42px);
+
+    bottom:
+        clamp(22px, 4vw, 36px);
+}
+
+
+.branch-image-overlay span {
+    color:
+        rgba(255, 255, 255, 0.88);
+
+    font-size: 0.60rem;
     font-weight: 700;
-    white-space: nowrap;
+
+    letter-spacing: 0.15em;
+
+    text-transform: uppercase;
 }
 
-.tabla-admin td {
-    padding: 1rem 0.85rem;
-    color: #333333;
-    border-bottom: 1px solid #f0ece6;
-    vertical-align: middle;
+
+/* ==========================================================================
+   INFORMACIÓN
+   ========================================================================== */
+
+.branch-content {
+    min-width: 0;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    padding:
+        clamp(34px, 5vw, 60px);
 }
 
-.tabla-admin tbody tr:hover {
-    background-color: #fcfbfa;
+
+.branch-content-top {
+    min-height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 30px;
 }
 
-.tabla-admin tbody tr:last-child td {
-    border-bottom: none;
+
+.branch-index {
+    color:
+        rgba(89, 45, 20, 0.43);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
 }
 
-/* Badges de Estado */
-.badge {
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
-    font-size: 0.78rem;
+
+.branch-principal {
+    padding:
+        6px 9px;
+
+    border:
+        1px solid rgba(138, 90, 59, 0.14);
+
+    border-radius: 999px;
+
+    background:
+        #f3e6dc;
+
+    color:
+        #86573a;
+
+    font-size: 0.52rem;
+    font-weight: 700;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+}
+
+
+.branch-principal[hidden] {
+    display: none;
+}
+
+
+/* ==========================================================================
+   NOMBRE
+   ========================================================================== */
+
+.branch-info {
+    min-height: 0;
+}
+
+
+.branch-info > h3 {
+    width: 100%;
+    max-width: 100%;
+
+    margin:
+        0 0 34px;
+
+    color:
+        var(--cafe, #592d14);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size:
+        clamp(1.85rem, 2.75vw, 3rem);
+
     font-weight: 600;
-    display: inline-block;
+
+    letter-spacing:
+        -0.04em;
+
+    line-height: 0.98;
+
+    text-wrap: balance;
+
+    overflow-wrap: normal;
+    word-break: normal;
+
+    hyphens: none;
 }
 
-.badge-activa {
-    background-color: #e6f4ea;
-    color: #1e7e34;
-    border: 1px solid #c3e6cb;
+
+
+
+
+/* ==========================================================================
+   DETALLES
+   ========================================================================== */
+
+.branch-details {
+    border-top:
+        1px solid rgba(89, 45, 20, 0.11);
 }
 
-.badge-inactiva {
-    background-color: #fbeae8;
-    color: #d9534f;
-    border: 1px solid #f5c6cb;
+
+.branch-detail {
+    display: grid;
+
+    grid-template-columns:
+        36px minmax(0, 1fr);
+
+    gap: 13px;
+
+    padding:
+        16px 0;
+
+    border-bottom:
+        1px solid rgba(89, 45, 20, 0.11);
 }
 
-/* Botones de Acción en la Tabla */
-.btn-accion-tabla {
-    background-color: #f5f3f0;
-    border: 1px solid #dcd6cd;
-    border-radius: 6px;
-    padding: 0.35rem 0.6rem;
+
+.branch-detail-icon {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border:
+        1px solid rgba(89, 45, 20, 0.12);
+
+    border-radius: 50%;
+
+    color:
+        #9a6748;
+
+    font-size: 0.62rem;
+}
+
+
+.branch-detail > div {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.branch-detail-label {
+    color:
+        rgba(89, 45, 20, 0.43);
+
+    font-size: 0.53rem;
+    font-weight: 700;
+
+    letter-spacing: 0.10em;
+
+    text-transform: uppercase;
+}
+
+
+.branch-detail-value {
+    color:
+        rgba(89, 45, 20, 0.78);
+
+    font-size: 0.70rem;
+
+    line-height: 1.55;
+}
+
+
+.branch-detail-value a {
+    color: inherit;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.branch-detail-value a:hover {
+    color:
+        #9a6748;
+}
+
+
+/* ==========================================================================
+   INFORMACIÓN VACÍA
+   ========================================================================== */
+
+.branch-info-empty {
+    margin: 0;
+
+    padding:
+        22px 0;
+
+    color:
+        rgba(89, 45, 20, 0.52);
+
+    font-size: 0.70rem;
+
+    line-height: 1.6;
+}
+
+
+/* ==========================================================================
+   UBICACIÓN
+   ========================================================================== */
+
+.branch-location {
+    margin-top: 25px;
+}
+
+
+.branch-map-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+        9px 0 7px;
+
+    border-bottom:
+        1px solid rgba(89, 45, 20, 0.28);
+
+    color:
+        var(--cafe, #592d14);
+
+    font-size: 0.61rem;
+    font-weight: 700;
+
+    letter-spacing: 0.10em;
+
+    text-decoration: none;
+    text-transform: uppercase;
+
+    transition:
+        gap 0.22s ease,
+        color 0.22s ease,
+        border-color 0.22s ease;
+}
+
+
+.branch-map-link:hover {
+    gap: 13px;
+
+    border-color:
+        var(--cafe, #592d14);
+
+    color: #8f5838;
+}
+
+
+.branch-map-link[hidden] {
+    display: none;
+}
+
+
+/* ==========================================================================
+   CONTROLES
+   ========================================================================== */
+
+.branches-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: auto;
+
+    padding-top: 36px;
+}
+
+
+/* ==========================================================================
+   CONTADOR
+   ========================================================================== */
+
+.branches-counter {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    color:
+        rgba(89, 45, 20, 0.44);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 0.67rem;
+}
+
+
+.branches-counter
+#sucursalActual {
+    color:
+        var(--cafe, #592d14);
+
+    font-weight: 700;
+}
+
+
+.branches-counter-line {
+    width: 36px;
+    height: 1px;
+
+    background:
+        rgba(89, 45, 20, 0.22);
+}
+
+
+/* ==========================================================================
+   NAVEGACIÓN
+   ========================================================================== */
+
+.branches-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.branches-navigation[hidden] {
+    display: none;
+}
+
+
+.branches-arrow {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border:
+        1px solid rgba(89, 45, 20, 0.16);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.40);
+
+    color:
+        var(--cafe, #592d14);
+
+    font-size: 0.67rem;
+
     cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
+
+    transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        transform 0.22s ease;
 }
 
-.btn-accion-tabla:hover {
-    background-color: #e2ded8;
-    border-color: #beb7ac;
+
+.branches-arrow:hover {
+    border-color:
+        var(--cafe, #592d14);
+
+    background:
+        var(--cafe, #592d14);
+
+    color: #ffffff;
+
+    transform:
+        translateY(-2px);
 }
 
-/* Botones de Estado en la Tabla */
-.btn-estado {
-    border: none;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+
+.branches-arrow:focus-visible {
+    outline:
+        2px solid #a66b49;
+
+    outline-offset:
+        3px;
 }
 
-.btn-inactivar {
-    background-color: #ffebee;
-    color: #c62828;
-    border: 1px solid #ffcdd2;
+
+/* ==========================================================================
+   MAPA
+   ========================================================================== */
+
+.branch-map-section {
+    width: 100%;
+
+    height:
+        clamp(300px, 38vw, 480px);
+
+    margin-top: 28px;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(89, 45, 20, 0.10);
+
+    background:
+        #eee7e1;
 }
 
-.btn-inactivar:hover {
-    background-color: #ffcdd2;
+
+.branch-map-section[hidden] {
+    display: none;
 }
 
-.btn-activar {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #c8e6c9;
+
+.branch-map-section iframe {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    border: 0;
 }
 
-.btn-activar:hover {
-    background-color: #c8e6c9;
+
+/* ==========================================================================
+   ESTADOS
+   ========================================================================== */
+
+.branch-loading {
+    margin: 0;
+
+    color:
+        rgba(89, 45, 20, 0.55);
+
+    font-size: 0.72rem;
+}
+
+
+.branch-state {
+    min-height: 230px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    text-align: center;
+}
+
+
+.branch-state > i {
+    margin-bottom: 12px;
+
+    color: #a66b49;
+
+    font-size: 1.2rem;
+}
+
+
+.branch-state strong {
+    margin-bottom: 5px;
+
+    color:
+        var(--cafe, #592d14);
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 1.4rem;
+}
+
+
+.branch-state p {
+    max-width: 320px;
+
+    margin: 0;
+
+    color:
+        rgba(89, 45, 20, 0.55);
+
+    font-size: 0.70rem;
+
+    line-height: 1.6;
+}
+
+
+.branch-state-error strong {
+    color: #9b4a45;
+}
+
+
+/* ==========================================================================
+   MOVIMIENTO REDUCIDO
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .branch-image-frame img,
+    .branches-arrow,
+    .branch-map-link {
+        transition: none;
+    }
+
+}
+
+
+/* ==========================================================================
+   RESPONSIVE LOCAL
+   ========================================================================== */
+
+@media (max-width: 980px) {
+
+    .branches-heading {
+        grid-template-columns: 1fr;
+
+        gap: 24px;
+    }
+
+
+    .branches-heading-text {
+        max-width: 620px;
+    }
+
+
+    .branches-showcase {
+        grid-template-columns: 1fr;
+
+        min-height: auto;
+    }
+
+
+    .branch-visual,
+    .branch-image-frame {
+        min-height: 480px;
+    }
+
+
+    .branch-content {
+        min-height: 480px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .branches-section {
+        padding:
+            75px 0;
+    }
+
+
+    .branches-heading {
+        margin-bottom: 45px;
+    }
+
+
+    .branch-visual,
+    .branch-image-frame {
+        min-height: 390px;
+    }
+
+
+    .branch-content {
+        min-height: auto;
+
+        padding:
+            28px 22px;
+    }
+
+
+    .branch-content-top {
+        margin-bottom: 24px;
+    }
+
+
+    .branch-info > h3 {
+        margin-bottom: 28px;
+
+        font-size:
+            clamp(2rem, 11vw, 3rem);
+    }
+
+
+    .branches-controls {
+        padding-top: 30px;
+    }
+
+
+    .branch-map-section {
+        height: 320px;
+    }
+
 }

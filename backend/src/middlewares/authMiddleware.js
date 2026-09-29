@@ -114,12 +114,17 @@ const verificarToken = async (req, res, next) => {
                     u.correo,
                     u.rol,
                     u.sucursal_id,
-                    u.activo
+                    u.activo,
+
+                    suc.nombre AS sucursal_nombre
 
                 FROM sesiones_usuario ses
 
                 INNER JOIN usuarios u
                     ON u.id = ses.usuario_id
+
+                LEFT JOIN sucursales suc
+                    ON suc.id = u.sucursal_id
 
                 WHERE ses.jti = ?
 
@@ -245,6 +250,10 @@ const verificarToken = async (req, res, next) => {
                 sesion.sucursal_id !== null
                     ? Number(sesion.sucursal_id)
                     : null,
+
+            sucursal_nombre:
+                sesion.sucursal_nombre ||
+                null,
 
             jti:
                 sesion.jti,

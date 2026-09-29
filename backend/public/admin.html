@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/usuarios/auth-guard.js"></script>
-    <title>Panel de Administración | Conception Coffee</title>
+    <title>Panel de AdministraciÃ³n | Conception Coffee</title>
 
-    <!-- Iconografía y tipografías -->
+    <!-- IconografÃ­a y tipografÃ­as -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap">
@@ -21,14 +21,14 @@
     >
 
 
-    <!-- Librerías externas -->
+    <!-- LibrerÃ­as externas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
     <!-- Estilos base del panel -->
     <link rel="stylesheet" href="css/admin/sidebar.css">
     <link rel="stylesheet" href="css/admin/admin.css">
-    
-    <!-- Estilos por módulo de productos -->    
+
+    <!-- Estilos por mÃ³dulo de productos -->
     <link rel="stylesheet" href="css/productos/productos.css">
 
     <!-- ========================================================= -->
@@ -40,10 +40,10 @@
     <link rel="stylesheet" href="css/planner/planner-workspace.css">
     <link rel="stylesheet" href="css/planner/planner-artwork.css">
 
-    <!-- Submódulos -->
+    <!-- SubmÃ³dulos -->
     <link rel="stylesheet" href="css/planner/catalogo.css">
     <link rel="stylesheet" href="css/planner/emojis.css">
-     
+
     <!-- Hero de inicio -->
     <link rel="stylesheet" href="css/hero/hero-admin.css">
 
@@ -55,6 +55,9 @@
 
       <!-- Plantillas -->
     <link rel="stylesheet" href="css/plantillas/plantillas-admin.css">
+
+      <!-- usuario -->
+    <link rel="stylesheet" href="css/usuarios/usuarios.css">
 
 
     <!-- Plantillas visuales -->
@@ -70,7 +73,7 @@
     <div class="admin-container">
 
         <!-- ====================================================================== -->
-        <!-- INICIO NAVEGACIÓN LATERAL -->
+        <!-- INICIO NAVEGACIÃ“N LATERAL -->
         <!-- ====================================================================== -->
 
         <aside
@@ -102,8 +105,8 @@
                     type="button"
                     class="sidebar-toggle"
                     id="sidebarToggle"
-                    aria-label="Contraer menú"
-                    title="Contraer menú"
+                    aria-label="Contraer menÃº"
+                    title="Contraer menÃº"
                 >
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -112,13 +115,16 @@
 
 
             <!-- ===================================================== -->
-            <!-- USUARIO -->
+            <!-- USUARIO / MI CUENTA -->
             <!-- ===================================================== -->
 
             <div class="sidebar-user">
 
                 <div class="sidebar-user-avatar">
-                    <i class="fas fa-user"></i>
+                    <i
+                        class="fas fa-user"
+                        aria-hidden="true"
+                    ></i>
                 </div>
 
 
@@ -136,18 +142,32 @@
 
                         <span
                             id="sidebarUsuarioSucursal"
-                            style="display: none;"
+                            hidden
                         ></span>
 
                     </div>
 
                 </div>
 
+
+                <button
+                    type="button"
+                    class="sidebar-user-account"
+                    id="btnAbrirMiCuenta"
+                    aria-label="Abrir mi cuenta"
+                    title="Mi cuenta"
+                >
+                    <i
+                        class="fas fa-chevron-right"
+                        aria-hidden="true"
+                    ></i>
+                </button>
+
             </div>
 
 
             <!-- ===================================================== -->
-            <!-- NAVEGACIÓN -->
+            <!-- NAVEGACIÃ“N -->
             <!-- ===================================================== -->
 
             <nav class="sidebar-menu">
@@ -156,7 +176,7 @@
                     type="button"
                     class="menu-btn active"
                     data-seccion="productos"
-                    data-tooltip="Productos del Menú"
+                    data-tooltip="Productos del MenÃº"
                     onclick="cambiarSeccion('productos')"
                 >
                     <span class="menu-btn-icon">
@@ -164,7 +184,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        Productos del Menú
+                        Productos del MenÃº
                     </span>
                 </button>
 
@@ -173,7 +193,7 @@
                     type="button"
                     class="menu-btn"
                     data-seccion="ejecutivo"
-                    data-tooltip="Menú de la Semana"
+                    data-tooltip="MenÃº de la Semana"
                     onclick="cambiarSeccion('ejecutivo')"
                 >
                     <span class="menu-btn-icon">
@@ -181,7 +201,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        Menú de la Semana
+                        MenÃº de la Semana
                     </span>
                 </button>
 
@@ -241,7 +261,7 @@
                     type="button"
                     class="menu-btn"
                     data-seccion="plantillas"
-                    data-tooltip="Plantillas del Menú"
+                    data-tooltip="Plantillas del MenÃº"
                     onclick="cambiarSeccion('plantillas')"
                 >
                     <span class="menu-btn-icon">
@@ -249,7 +269,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        Plantillas del Menú
+                        Plantillas del MenÃº
                     </span>
                 </button>
 
@@ -275,7 +295,7 @@
                     type="button"
                     class="menu-btn"
                     data-seccion="auditoria"
-                    data-tooltip="Auditoría y Seguridad"
+                    data-tooltip="AuditorÃ­a y Seguridad"
                     onclick="cambiarSeccion('auditoria')"
                 >
                     <span class="menu-btn-icon">
@@ -283,7 +303,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        Auditoría
+                        AuditorÃ­a
                     </span>
                 </button>
 
@@ -315,14 +335,14 @@
                     type="button"
                     onclick="cerrarSesion()"
                     class="sidebar-footer-action sidebar-logout"
-                    data-tooltip="Cerrar Sesión"
+                    data-tooltip="Cerrar SesiÃ³n"
                 >
                     <span class="menu-btn-icon">
                         <i class="fas fa-sign-out-alt"></i>
                     </span>
 
                     <span class="menu-btn-text">
-                        Cerrar Sesión
+                        Cerrar SesiÃ³n
                     </span>
                 </button>
 
@@ -330,13 +350,13 @@
                 <div class="sidebar-legal">
 
                     <span>
-                    CONCEPTION COFFEE © 2026
+                    CONCEPTION COFFEE Â© 2026
                     </span>
 
                     <a
                         href="#"
-                        onclick="alert('POLÍTICA DE PRIVACIDAD Y AUDITORÍA:\n\nEste sistema registra direcciones IP de origen, identificadores de sesión (JTI) y eventos de acceso exclusivamente con fines de seguridad y control interno bajo estándar OWASP.'); return false;"
-                    >   
+                        onclick="alert('POLÃTICA DE PRIVACIDAD Y AUDITORÃA:\n\nEste sistema registra direcciones IP de origen, identificadores de sesiÃ³n (JTI) y eventos de acceso exclusivamente con fines de seguridad y control interno bajo estÃ¡ndar OWASP.'); return false;"
+                    >
                         Aviso de Monitoreo
                     </a>
 
@@ -347,14 +367,14 @@
         </aside>
 
         <!-- ====================================================================== -->
-        <!-- FIN NAVEGACIÓN LATERAL -->
+        <!-- FIN NAVEGACIÃ“N LATERAL -->
         <!-- ====================================================================== -->
 
         <main class="main-content">
 
             <header class="main-header">
                             <div class="header-title">
-                                <h1 id="section-title">Gestión de Productos</h1>
+                                <h1 id="section-title">GestiÃ³n de Productos</h1>
                                 <p id="section-subtitle">Administra los platillos, precios y disponibilidad de la vitrina digital.
                                 </p>
                             </div>
@@ -363,7 +383,7 @@
             <div class="content-wrapper">
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÓDULO PRODUCTOS -->
+        <!-- INICIO MÃ“DULO PRODUCTOS -->
         <!-- ====================================================================== -->
 
         <section
@@ -389,11 +409,11 @@
 
                         <div>
                             <span class="productos-control-eyebrow">
-                                Catálogo
+                                CatÃ¡logo
                             </span>
 
                             <label for="selectSucursal">
-                                Gestión por Sucursal
+                                GestiÃ³n por Sucursal
                             </label>
                         </div>
 
@@ -502,7 +522,7 @@
                                     </th>
 
                                     <th>
-                                        Categoría
+                                        CategorÃ­a
                                     </th>
 
                                     <th>
@@ -559,7 +579,7 @@
                 </strong>
 
                 <span>
-                    Prueba con otra búsqueda o selecciona otra sucursal.
+                    Prueba con otra bÃºsqueda o selecciona otra sucursal.
                 </span>
 
             </div>
@@ -567,11 +587,11 @@
         </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÓDULO PRODUCTOS -->
+        <!-- FIN MÃ“DULO PRODUCTOS -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÓDULO MENÚ DE LA SEMANA (PLANNER) -->
+        <!-- INICIO MÃ“DULO MENÃš DE LA SEMANA (PLANNER) -->
         <!-- ====================================================================== -->
 
         <section id="seccion-ejecutivo" class="admin-module">
@@ -612,7 +632,7 @@
 
                                     <select id="plannerFiltroAnio">
 
-                                        <option value="">Todos los años</option>
+                                        <option value="">Todos los aÃ±os</option>
 
                                     </select>
 
@@ -626,7 +646,7 @@
 
                                     </select>
 
-                                    <!-- Aquí irán los botones -->
+                                    <!-- AquÃ­ irÃ¡n los botones -->
 
                                     <div class="row mb-4 justify-content-end">
                                         <div class="col-auto">
@@ -657,7 +677,7 @@
                                             <i class="fas fa-utensils fa-2x"></i>
                                         </div>
                                         <div>
-                                            <h6 class="text-muted mb-1 text-uppercase small fw-bold tracking-wider">Catálogo Maestro</h6>
+                                            <h6 class="text-muted mb-1 text-uppercase small fw-bold tracking-wider">CatÃ¡logo Maestro</h6>
                                             <h3 class="fw-bold m-0" id="lbl-total-platillos">...</h3>
                                         </div>
                                     </div>
@@ -688,7 +708,7 @@
                                             <th scope="col" class="ps-4">Semana</th>
                                             <th scope="col">Rango de Fechas</th>
                                             <th scope="col">Estado</th>
-                                            <th scope="col">Fecha Creación</th>
+                                            <th scope="col">Fecha CreaciÃ³n</th>
                                             <th scope="col" class="text-end pe-4">Acciones</th>
                                         </tr>
                                     </thead>
@@ -710,11 +730,11 @@
                 </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÓDULO MENÚ DE LA SEMANA (PLANNER) -->
+        <!-- FIN MÃ“DULO MENÃš DE LA SEMANA (PLANNER) -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÓDULO HERO · SLIDERS DE INICIO -->
+        <!-- INICIO MÃ“DULO HERO Â· SLIDERS DE INICIO -->
         <!-- ====================================================================== -->
 
         <section
@@ -735,7 +755,7 @@
                     </span>
 
                     <p>
-                        Administra las imágenes que se muestran
+                        Administra las imÃ¡genes que se muestran
                         en la portada del sitio web.
                     </p>
 
@@ -771,7 +791,7 @@
 
 
             <!-- ================================================================ -->
-            <!-- INFORMACIÓN DE SINCRONIZACIÓN -->
+            <!-- INFORMACIÃ“N DE SINCRONIZACIÃ“N -->
             <!-- ================================================================ -->
 
             <div class="hero-admin-notice">
@@ -785,11 +805,11 @@
                 <div>
 
                     <strong>
-                        Flujo de publicación
+                        Flujo de publicaciÃ³n
                     </strong>
 
                     <p>
-                        Puedes preparar imágenes, cambiar su
+                        Puedes preparar imÃ¡genes, cambiar su
                         disponibilidad y revisar el resultado antes
                         de publicar los cambios en el sitio web.
                     </p>
@@ -823,7 +843,7 @@
                         class="hero-admin-count"
                         id="heroSliderCount"
                     >
-                        —
+                        â€”
                     </span>
 
                 </div>
@@ -857,7 +877,7 @@
                                 </th>
 
                                 <th class="hero-col-status">
-                                    Publicación
+                                    PublicaciÃ³n
                                 </th>
 
                                 <th class="hero-col-actions">
@@ -898,11 +918,11 @@
 
 
         <!-- ====================================================================== -->
-        <!-- FIN MÓDULO HERO (SLIDERS DE INICIO) -->
+        <!-- FIN MÃ“DULO HERO (SLIDERS DE INICIO) -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÓDULO EXPERIENCIAS -->
+        <!-- INICIO MÃ“DULO EXPERIENCIAS -->
         <!-- ====================================================================== -->
 
         <section
@@ -959,7 +979,7 @@
 
 
             <!-- ================================================================ -->
-            <!-- INFORMACIÓN -->
+            <!-- INFORMACIÃ“N -->
             <!-- ================================================================ -->
 
             <div class="experiencias-admin-notice">
@@ -979,7 +999,7 @@
 
                     <p>
                         Administra la disponibilidad de las experiencias
-                        y publica el contenido nuevo cuando esté listo
+                        y publica el contenido nuevo cuando estÃ© listo
                         para mostrarse en el sitio web.
                     </p>
 
@@ -1013,7 +1033,7 @@
                         class="experiencias-admin-count"
                         id="experienciasCount"
                     >
-                        —
+                        â€”
                     </span>
 
                 </div>
@@ -1044,7 +1064,7 @@
                                 </th>
 
                                 <th class="experiencias-col-status">
-                                    Publicación
+                                    PublicaciÃ³n
                                 </th>
 
                                 <th class="experiencias-col-actions">
@@ -1084,11 +1104,11 @@
         </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÓDULO EXPERIENCIAS -->
+        <!-- FIN MÃ“DULO EXPERIENCIAS -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÓDULO SUCURSALES -->
+        <!-- INICIO MÃ“DULO SUCURSALES -->
         <!-- ====================================================================== -->
 
         <section
@@ -1105,7 +1125,7 @@
                 <div class="sucursales-admin-toolbar-info">
 
                     <span class="sucursales-admin-eyebrow">
-                        Operación
+                        OperaciÃ³n
                     </span>
 
                     <p>
@@ -1133,7 +1153,7 @@
 
 
             <!-- ================================================================ -->
-            <!-- INFORMACIÓN -->
+            <!-- INFORMACIÃ“N -->
             <!-- ================================================================ -->
 
             <div class="sucursales-admin-notice">
@@ -1190,7 +1210,7 @@
                         class="sucursales-admin-count"
                         id="sucursalesCount"
                     >
-                        —
+                        â€”
                     </span>
 
                 </div>
@@ -1213,7 +1233,7 @@
                                 </th>
 
                                 <th>
-                                    Dirección
+                                    DirecciÃ³n
                                 </th>
 
                                 <th>
@@ -1221,7 +1241,7 @@
                                 </th>
 
                                 <th>
-                                    Teléfono
+                                    TelÃ©fono
                                 </th>
 
                                 <th class="sucursal-col-status">
@@ -1263,11 +1283,11 @@
         </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÓDULO SUCURSALES -->
+        <!-- FIN MÃ“DULO SUCURSALES -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO SECCIÓN: PLANTILLAS DEL MENÚ -->
+        <!-- INICIO SECCIÃ“N: PLANTILLAS DEL MENÃš -->
         <!-- ====================================================================== -->
 
             <section id="seccion-plantillas" class="admin-section admin-module">
@@ -1285,12 +1305,12 @@
                     <div>
 
                         <strong>
-                            Diseños promocionales
+                            DiseÃ±os promocionales
                         </strong>
 
                         <p>
                             Activa, desactiva y personaliza
-                            los estilos disponibles para el Menú del dia.
+                            los estilos disponibles para el MenÃº del dia.
                         </p>
 
                     </div>
@@ -1299,7 +1319,7 @@
 
 
                 <!-- ====================================================== -->
-                <!-- GRID DINÁMICO -->
+                <!-- GRID DINÃMICO -->
                 <!-- ====================================================== -->
 
                 <div id="plantillasAdminGrid" class="plantillas-admin-grid">
@@ -1317,18 +1337,18 @@
             </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN SECCIÓN: PLANTILLAS DEL MENÚ -->
+        <!-- FIN SECCIÃ“N: PLANTILLAS DEL MENÃš -->
         <!-- ====================================================================== -->
 
 
         <!-- ====================================================================== -->
-        <!-- INICIO SECCIÓN: GESTIÓN DE USUARIOS -->
+        <!-- INICIO SECCIÃ“N: GESTIÃ“N DE USUARIOS -->
         <!-- ====================================================================== -->
         <section id="seccion-usuarios" class="admin-section admin-module">
 
             <div class="plantillas-summary usuarios-summary">
 
-                
+
                 <!-- Controles de usuarios -->
                 <div class="usuarios-toolbar">
 
@@ -1452,7 +1472,7 @@
                 </div>
 
             </div>
-                 
+
             <!-- Tabla de Usuarios -->
             <div class="table-responsive">
                 <table class="admin-table">
@@ -1479,17 +1499,17 @@
 
     </section>
     <!-- ====================================================================== -->
-    <!-- FIN SECCIÓN: GESTIÓN DE USUARIOS -->
+    <!-- FIN SECCIÃ“N: GESTIÃ“N DE USUARIOS -->
     <!-- ====================================================================== -->
 
 
     <!-- ====================================================================== -->
-    <!-- INICIO SECCIÓN: AUDITORÍA Y SEGURIDAD -->
+    <!-- INICIO SECCIÃ“N: AUDITORÃA Y SEGURIDAD -->
     <!-- ====================================================================== -->
     <section id="seccion-auditoria" class="admin-section admin-module">
 
         <div class="plantillas-summary">
-                        
+
             <div class="auditoria-toolbar">
 
                 <div class="auditoria-filtros">
@@ -1538,25 +1558,25 @@
 
         </div>
 
-        <!-- Tabla de Auditoría -->
+        <!-- Tabla de AuditorÃ­a -->
         <div class="table-responsive" style="margin-top: 1rem;">
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>ID Sesión</th>
+                        <th>ID SesiÃ³n</th>
                         <th>Usuario</th>
                         <th>Rol</th>
                         <th>IP Origen</th>
                         <th>Navegador / Dispositivo</th>
                         <th>Fecha / Hora Login</th>
                         <th>Estado</th>
-                        <th>Acción</th>
+                        <th>AcciÃ³n</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-auditoria">
                     <tr>
                         <td colspan="8" class="text-center">
-                            <i class="fas fa-spinner fa-spin"></i> Cargando registros de auditoría...
+                            <i class="fas fa-spinner fa-spin"></i> Cargando registros de auditorÃ­a...
                         </td>
                     </tr>
                 </tbody>
@@ -1565,9 +1585,9 @@
 
     </section>
     <!-- ====================================================================== -->
-    <!-- FIN SECCIÓN: AUDITORÍA Y SEGURIDAD -->
+    <!-- FIN SECCIÃ“N: AUDITORÃA Y SEGURIDAD -->
     <!-- ====================================================================== -->
-            
+
 
 
             </div><!-- /.content-wrapper -->
@@ -1602,7 +1622,7 @@
 
                     <div>
                         <span class="producto-modal-eyebrow">
-                            Catálogo
+                            CatÃ¡logo
                         </span>
 
                         <h3 id="modal-title">
@@ -1617,7 +1637,7 @@
                     onclick="ProductosModal.cerrarModal()"
                     aria-label="Cerrar"
                 >
-                    ×
+                    Ã—
                 </button>
 
             </div>
@@ -1636,7 +1656,7 @@
                 >
 
 
-                <!-- INFORMACIÓN GENERAL -->
+                <!-- INFORMACIÃ“N GENERAL -->
 
                 <section class="producto-form-section">
 
@@ -1647,11 +1667,11 @@
                         </div>
 
                         <div>
-                            <h4>Información General</h4>
+                            <h4>InformaciÃ³n General</h4>
 
                             <p>
                                 Datos principales que identifican
-                                el producto en el catálogo.
+                                el producto en el catÃ¡logo.
                             </p>
                         </div>
 
@@ -1700,7 +1720,7 @@
                         <div class="form-group">
 
                             <label for="prod-categoria">
-                                Categoría
+                                CategorÃ­a
                             </label>
 
                             <select
@@ -1717,7 +1737,7 @@
                     <div class="form-group">
 
                         <label for="prod-descripcion">
-                            Descripción
+                            DescripciÃ³n
                         </label>
 
                         <textarea
@@ -1733,7 +1753,7 @@
                     <div class="form-group">
 
                         <label for="prod-imagen">
-                            Fotografía del Producto
+                            FotografÃ­a del Producto
                         </label>
 
                         <div class="producto-file-control">
@@ -1748,7 +1768,7 @@
                         </div>
 
                         <small class="form-help">
-                            JPG, PNG o WEBP. Máximo 5 MB.
+                            JPG, PNG o WEBP. MÃ¡ximo 5 MB.
                         </small>
 
                     </div>
@@ -1773,8 +1793,8 @@
                             <h4>Disponibilidad Inicial</h4>
 
                             <p>
-                                Selecciona dónde estará disponible
-                                desde su creación.
+                                Selecciona dÃ³nde estarÃ¡ disponible
+                                desde su creaciÃ³n.
                             </p>
                         </div>
 
@@ -1888,7 +1908,7 @@
 
                     <div>
                         <span class="producto-modal-eyebrow">
-                            Distribución
+                            DistribuciÃ³n
                         </span>
 
                         <h3 id="modal-sucursales-title">
@@ -1905,7 +1925,7 @@
                     onclick="cerrarModalSucursales()"
                     aria-label="Cerrar"
                 >
-                    ×
+                    Ã—
                 </button>
 
             </div>
@@ -1943,7 +1963,7 @@
                     </h3>
 
                     <p id="modalDescripcionProducto">
-                        Sin descripción
+                        Sin descripciÃ³n
                     </p>
 
                 </div>
@@ -1953,7 +1973,7 @@
 
                     <div>
                         <strong>
-                            Configuración por sucursal
+                            ConfiguraciÃ³n por sucursal
                         </strong>
 
                         <span>
@@ -1970,7 +1990,7 @@
                     class="sucursales-grid"
                 >
                     <!--
-                        Renderizado dinámicamente desde
+                        Renderizado dinÃ¡micamente desde
                         productos-modal.js
                     -->
                 </div>
@@ -1994,14 +2014,14 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES · PRODUCTOS -->
+    <!-- FIN MODALES Â· PRODUCTOS -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODALES · MENÚ DE LA SEMANA (PLANNER) -->
+    <!-- INICIO MODALES Â· MENÃš DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
 
-    
+
     <!-- inicio plannerWorkspace -->
     <div class="planner-workspace-backdrop" id="plannerWorkspace">
             <div class="planner-workspace">
@@ -2013,8 +2033,8 @@
                             <i class="fas fa-calendar-week"></i>
                         </div>
                         <div>
-                            <h2>Centro de Planificación</h2>
-                            <p>Organiza el menú semanal para una o varias sucursales.</p>
+                            <h2>Centro de PlanificaciÃ³n</h2>
+                            <p>Organiza el menÃº semanal para una o varias sucursales.</p>
                         </div>
                     </div>
                     <button class="planner-close-btn" onclick="ocultarModalEstatico('plannerWorkspace')">
@@ -2025,45 +2045,45 @@
                 <!-- ================= CONTENIDO ================= -->
                 <div class="planner-workspace-content">
 
-                    <!-- PANEL IZQUIERDO (Configuración de la Semana y Navegación) -->
+                    <!-- PANEL IZQUIERDO (ConfiguraciÃ³n de la Semana y NavegaciÃ³n) -->
                     <aside class="planner-sidebar">
-                        <!-- Identificadores dinámicos para el título de la semana y rango de fechas -->
+                        <!-- Identificadores dinÃ¡micos para el tÃ­tulo de la semana y rango de fechas -->
                         <h3 id="plannerSemanaTitulo">Semana --</h3>
                         <small id="plannerSemanaRango">-- de -- al -- de --</small>
 
-                        <!-- Barra de progreso dinámica -->
+                        <!-- Barra de progreso dinÃ¡mica -->
                         <div class="planner-progress">
                             <span>Progreso</span>
-                            <strong id="plannerProgresoTexto">0 / 7 días</strong>
+                            <strong id="plannerProgresoTexto">0 / 7 dÃ­as</strong>
                             <div class="planner-progress-bar">
                                 <div class="planner-progress-fill" id="plannerProgresoBarra"></div>
                             </div>
                         </div>
 
-                        <!-- Contenedor dinámico para las Sucursales -->
+                        <!-- Contenedor dinÃ¡mico para las Sucursales -->
                         <div class="planner-branch-box">
-                            <label>Aplicar planificación a</label>
+                            <label>Aplicar planificaciÃ³n a</label>
                             <label class="planner-check">
                                 <input type="checkbox" id="chkSucursalesTodas">
                                 Todas
                             </label>
-                            <!-- Aquí inyectaremos dinámicamente el listado desde tu base de datos multi-sucursal -->
+                            <!-- AquÃ­ inyectaremos dinÃ¡micamente el listado desde tu base de datos multi-sucursal -->
                             <div id="plannerSucursalesContainer"></div>
                         </div>
 
-                        <!-- Contenedor dinámico para los 7 días de la semana -->
+                        <!-- Contenedor dinÃ¡mico para los 7 dÃ­as de la semana -->
                         <div class="planner-days" id="plannerDiasContainer">
-                            <!-- Los bloques .planner-day-item se generarán dinámicamente con JS -->
+                            <!-- Los bloques .planner-day-item se generarÃ¡n dinÃ¡micamente con JS -->
                         </div>
                     </aside>
 
-                    <!-- PANEL DERECHO (Editor del Día Seleccionado) -->
+                    <!-- PANEL DERECHO (Editor del DÃ­a Seleccionado) -->
                     <section class="planner-editor">
                         <div class="planner-editor-card">
 
                             <div class="planner-editor-title">
                                 <div>
-                                    <!-- Campos mutables según el día clickeado en la izquierda -->
+                                    <!-- Campos mutables segÃºn el dÃ­a clickeado en la izquierda -->
                                     <h2 id="plannerDiaNombre">Lunes</h2>
                                     <small id="plannerDiaFecha">-- de -- 2026</small>
                                 </div>
@@ -2073,7 +2093,7 @@
                             <!-- ESTADO DEL SERVICIO -->
                             <div class="planner-section">
                                 <h4>Estado del servicio</h4>
-                                <p>Selecciona cómo operará este día.</p>
+                                <p>Selecciona cÃ³mo operarÃ¡ este dÃ­a.</p>
                                 <div class="planner-state-grid" id="plannerEstadoGrid">
                                     <div class="planner-state-card active" data-estado="ACTIVO">
                                         <i class="fas fa-utensils"></i>
@@ -2090,12 +2110,12 @@
                                 </div>
                             </div>
 
-                            <!-- BLOQUE: PLATILLO DEL CATÁLOGO -->
+                            <!-- BLOQUE: PLATILLO DEL CATÃLOGO -->
                             <div class="planner-section" id="bloquePlatillo">
-                                <h4>Platillo del catálogo</h4>
-                                <p>Selecciona el platillo base para este día.</p>
+                                <h4>Platillo del catÃ¡logo</h4>
+                                <p>Selecciona el platillo base para este dÃ­a.</p>
                                 <div class="planner-product-selector">
-                                    <!-- Limpio de options estáticas; se llena dinámicamente desde el Catálogo Maestro -->
+                                    <!-- Limpio de options estÃ¡ticas; se llena dinÃ¡micamente desde el CatÃ¡logo Maestro -->
                                     <select id="planner-product-select">
                                         <option value="">Seleccione un platillo...</option>
                                     </select>
@@ -2110,51 +2130,51 @@
                                 <div class="planner-preview-info">
                                     <h3 id="plannerPreviewNombre">Seleccione un platillo</h3>
                                     <span id="plannerPreviewPrecio">--</span>
-                                    <p id="plannerPreviewGuarniciones">Sin información</p>
+                                    <p id="plannerPreviewGuarniciones">Sin informaciÃ³n</p>
                                 </div>
                             </div>
 
-                            <!-- PERSONALIZACIÓN DEL DÍA -->
+                            <!-- PERSONALIZACIÃ“N DEL DÃA -->
                             <div class="planner-section" id="bloquePersonalizacion">
                                 <div class="planner-section-header">
                                     <div>
-                                        <h4>Personalización del Día</h4>
-                                        <p>Modifica solamente lo necesario. Si no realizas cambios, el sistema utilizará
-                                            automáticamente la información del Catálogo Maestro.</p>
+                                        <h4>PersonalizaciÃ³n del DÃ­a</h4>
+                                        <p>Modifica solamente lo necesario. Si no realizas cambios, el sistema utilizarÃ¡
+                                            automÃ¡ticamente la informaciÃ³n del CatÃ¡logo Maestro.</p>
                                     </div>
-                                    <span id="plannerBadge" class="planner-origin-badge catalogo">🟢 Catálogo Maestro</span>
+                                    <span id="plannerBadge" class="planner-origin-badge catalogo">ðŸŸ¢ CatÃ¡logo Maestro</span>
                                 </div>
 
                                 <div class="planner-options">
                                     <label class="planner-option">
                                         <input type="checkbox" id="chkGuarniciones">
-                                        <span>Cambiar guarniciones solamente para este día</span>
+                                        <span>Cambiar guarniciones solamente para este dÃ­a</span>
                                     </label>
                                     <label class="planner-option">
                                         <input type="checkbox" id="chkPrecio">
-                                        <span>Cambiar precio solamente para este día</span>
+                                        <span>Cambiar precio solamente para este dÃ­a</span>
                                     </label>
                                 </div>
 
-                                
+
 
                                 <div class="planner-custom-fields">
                                     <div class="planner-field planner-hidden" id="plannerGuarnicionField">
-                                        <label>Guarniciones específicas</label>
-                                        <input type="text" id="plannerChipInput" placeholder="Escriba una guarnición y presione Enter">
+                                        <label>Guarniciones especÃ­ficas</label>
+                                        <input type="text" id="plannerChipInput" placeholder="Escriba una guarniciÃ³n y presione Enter">
                                         <div id="plannerGuarnicionesSugerencias" class="planner-guarniciones-sugerencias planner-hidden"></div>
                                         <div id="plannerChipContainer" class="planner-chip-container"></div>
-                                        <small>Si no agrega guarniciones, se utilizarán las del Catálogo Maestro.</small>
+                                        <small>Si no agrega guarniciones, se utilizarÃ¡n las del CatÃ¡logo Maestro.</small>
                                     </div>
-                                    
+
 
                                     <div class="planner-field planner-hidden" id="plannerPrecioField">
                                         <label>Precio personalizado</label>
                                         <input type="number" id="plannerInputPrecio" step="0.01" placeholder="0.00">
-                                        <small>Solo se utilizará para esta planificación.</small>
+                                        <small>Solo se utilizarÃ¡ para esta planificaciÃ³n.</small>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             <!-- ========================================================= -->
@@ -2169,15 +2189,15 @@
 
                                     <div>
                                         <span class="planner-artwork-eyebrow">
-                                            🎨 Diseño promocional
+                                            ðŸŽ¨ DiseÃ±o promocional
                                         </span>
 
                                         <h3>
-                                            Arte del Menú Ejecutivo
+                                            Arte del MenÃº Ejecutivo
                                         </h3>
 
                                         <p>
-                                            Elige cómo se mostrará este platillo
+                                            Elige cÃ³mo se mostrarÃ¡ este platillo
                                             en el sitio web y piezas promocionales.
                                         </p>
                                     </div>
@@ -2200,7 +2220,7 @@
                                 <div class="planner-template-section">
 
                                     <label class="planner-template-label">
-                                        Plantilla del día
+                                        Plantilla del dÃ­a
                                     </label>
 
                                     <div
@@ -2242,7 +2262,7 @@
                                     <div>
                                         <strong>Vista previa</strong>
                                         <small>
-                                            Se actualiza con la información del día.
+                                            Se actualiza con la informaciÃ³n del dÃ­a.
                                         </small>
                                     </div>
 
@@ -2255,14 +2275,14 @@
 
                                 <div class="planner-artwork-empty">
 
-                                    <span>🎨</span>
+                                    <span>ðŸŽ¨</span>
 
                                     <strong>
                                         Selecciona una plantilla
                                     </strong>
 
                                     <p>
-                                        Aquí verás la presentación
+                                        AquÃ­ verÃ¡s la presentaciÃ³n
                                         promocional del platillo.
                                     </p>
 
@@ -2288,11 +2308,11 @@
                                 <i class="fas fa-umbrella-beach"></i>
 
                                 <div>
-                                    <h4>Día Feriado</h4>
+                                    <h4>DÃ­a Feriado</h4>
 
                                     <p>
-                                        Este día se guardará como feriado
-                                        y no tendrá platillo asignado.
+                                        Este dÃ­a se guardarÃ¡ como feriado
+                                        y no tendrÃ¡ platillo asignado.
                                     </p>
                                 </div>
 
@@ -2313,15 +2333,15 @@
                                     <h4>Local Cerrado</h4>
 
                                     <p>
-                                        Este día se guardará como cerrado
-                                        y no tendrá servicio de menú.
+                                        Este dÃ­a se guardarÃ¡ como cerrado
+                                        y no tendrÃ¡ servicio de menÃº.
                                     </p>
                                 </div>
 
                             </div>
                         </div>
 
-                        
+
                     </section>
 
                 </div>
@@ -2360,7 +2380,7 @@
         </div>
     <!-- fin plannerWorkspace -->
 
-    
+
     <!-- inicio modalCatalogo -->
     <div id="modalCatalogo" class="modal-backdrop">
             <div class="modal-content">
@@ -2368,16 +2388,16 @@
 
                     <h3>
                         <i class="fas fa-book-open"></i>
-                        Catálogo Maestro de Platos
+                        CatÃ¡logo Maestro de Platos
                     </h3>
 
                     <button
                         type="button"
                         class="close-modal-btn"
                         onclick="ocultarModalEstatico('modalCatalogo')"
-                        aria-label="Cerrar catálogo"
+                        aria-label="Cerrar catÃ¡logo"
                     >
-                        ×
+                        Ã—
                     </button>
 
                 </div>
@@ -2413,7 +2433,7 @@
 
                     <div class="catalogo-empty">
 
-                        Aún no existen platillos registrados.
+                        AÃºn no existen platillos registrados.
 
                     </div>
 
@@ -2441,7 +2461,7 @@
 
                 <button type="button" id="cerrarModalNuevoPlatillo" class="close-modal-btn">
 
-                    ×
+                    Ã—
 
                 </button>
 
@@ -2479,7 +2499,7 @@
 
     <!-- inicio modalEmojis -->
     <div id="modalEmojis" class="modal-backdrop">
-          <div class="modal-content">  
+          <div class="modal-content">
 
             <div class="modal-header">
 
@@ -2493,7 +2513,7 @@
 
                 <button type="button" onclick="ocultarModalEstatico('modalEmojis')" class="close-modal-btn">
 
-                    ×
+                    Ã—
 
                 </button>
 
@@ -2534,7 +2554,7 @@
         </div>
     <!-- fin modalEmojis -->
 
-    
+
     <!-- ========================================================= -->
     <!-- INICIO MODAL: SELECCIONAR SEMANA -->
     <!-- ========================================================= -->
@@ -2551,7 +2571,7 @@
                     <h3>Planificar Semana</h3>
                     <p>
                         Selecciona una semana disponible
-                        para crear su planificación.
+                        para crear su planificaciÃ³n.
                     </p>
                 </div>
 
@@ -2592,7 +2612,7 @@
                     onclick="PlannerActions.crearSemanaSeleccionada()"
                     disabled>
 
-                    Crear Planificación
+                    Crear PlanificaciÃ³n
 
                 </button>
 
@@ -2606,15 +2626,15 @@
     <!-- FIN MODAL: SELECCIONAR SEMANA -->
     <!-- ========================================================= -->
 
-    
-   
+
+
     <!-- ====================================================================== -->
-    <!-- FIN MODALES · MENÚ DE LA SEMANA (PLANNER) -->
+    <!-- FIN MODALES Â· MENÃš DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
 
-    
+
     <!-- ====================================================================== -->
-    <!-- INICIO MODAL · NUEVO SLIDER -->
+    <!-- INICIO MODAL Â· NUEVO SLIDER -->
     <!-- ====================================================================== -->
 
     <div
@@ -2702,7 +2722,7 @@
                             </label>
 
                             <p class="hero-slider-field-help">
-                                Selecciona una fotografía limpia,
+                                Selecciona una fotografÃ­a limpia,
                                 sin textos ni botones incorporados.
                             </p>
 
@@ -2731,8 +2751,8 @@
 
 
                                 <small>
-                                    Se recomiendan fotografías
-                                    panorámicas de alta calidad.
+                                    Se recomiendan fotografÃ­as
+                                    panorÃ¡micas de alta calidad.
                                 </small>
 
                             </label>
@@ -2793,7 +2813,7 @@
 
 
                         <!-- ================================================== -->
-                        <!-- INFORMACIÓN -->
+                        <!-- INFORMACIÃ“N -->
                         <!-- ================================================== -->
 
                         <div class="hero-slider-modal-info">
@@ -2801,8 +2821,8 @@
                             <i class="fas fa-circle-info"></i>
 
                             <p>
-                                El nuevo slider se agregará al final
-                                de la secuencia y quedará como
+                                El nuevo slider se agregarÃ¡ al final
+                                de la secuencia y quedarÃ¡ como
                                 <strong>borrador</strong> hasta que
                                 publiques los cambios.
                             </p>
@@ -2849,11 +2869,11 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES · HERO (SLIDERS DE INICIO) -->
+    <!-- FIN MODALES Â· HERO (SLIDERS DE INICIO) -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODAL · NUEVA EXPERIENCIA -->
+    <!-- INICIO MODAL Â· NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
     <div
@@ -2912,17 +2932,17 @@
 
                     <div class="experiencia-modal-body">
 
-                        <!-- TÍTULO -->
+                        <!-- TÃTULO -->
                         <div class="experiencia-field">
 
                             <label for="experiencia-titulo">
-                                Título de la experiencia
+                                TÃ­tulo de la experiencia
                                 <span>*</span>
                             </label>
 
                             <p class="experiencia-field-help">
-                                Escribe un título breve que acompañe
-                                la fotografía en el sitio web.
+                                Escribe un tÃ­tulo breve que acompaÃ±e
+                                la fotografÃ­a en el sitio web.
                             </p>
 
                             <input
@@ -2941,12 +2961,12 @@
                         <div class="experiencia-field">
 
                             <label for="experiencia-imagen">
-                                Fotografía
+                                FotografÃ­a
                                 <span>*</span>
                             </label>
 
                             <p class="experiencia-field-help">
-                                Selecciona una fotografía real de
+                                Selecciona una fotografÃ­a real de
                                 la experiencia en Conception Coffee.
                             </p>
 
@@ -2969,7 +2989,7 @@
                                 </span>
 
                                 <small>
-                                    Utiliza una fotografía nítida
+                                    Utiliza una fotografÃ­a nÃ­tida
                                     y de buena calidad.
                                 </small>
 
@@ -3025,16 +3045,16 @@
                         </div>
 
 
-                        <!-- INFORMACIÓN -->
+                        <!-- INFORMACIÃ“N -->
                         <div class="experiencia-modal-info">
 
                             <i class="fas fa-circle-info"></i>
 
                             <p>
-                                La experiencia se guardará como
+                                La experiencia se guardarÃ¡ como
                                 <strong>borrador</strong>.
-                                Podrás publicarla cuando el contenido
-                                esté listo para mostrarse en el sitio.
+                                PodrÃ¡s publicarla cuando el contenido
+                                estÃ© listo para mostrarse en el sitio.
                             </p>
 
                         </div>
@@ -3074,11 +3094,11 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODAL · NUEVA EXPERIENCIA -->
+    <!-- FIN MODAL Â· NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
-    <!-- ====================================================================== --> 
-    <!-- INICIO MODAL · SUCURSAL -->
+    <!-- ====================================================================== -->
+    <!-- INICIO MODAL Â· SUCURSAL -->
     <!-- ====================================================================== -->
 
     <div
@@ -3151,7 +3171,7 @@
                 onsubmit="guardarSucursal(event)"
             >
 
-                <!-- ID · vacío significa CREAR -->
+                <!-- ID Â· vacÃ­o significa CREAR -->
                 <input
                     type="hidden"
                     id="sucursal-id"
@@ -3172,7 +3192,7 @@
                         </label>
 
                         <p>
-                            Utiliza un nombre corto y fácil de identificar.
+                            Utiliza un nombre corto y fÃ¡cil de identificar.
                         </p>
 
                         <input
@@ -3189,13 +3209,13 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- DIRECCIÓN -->
+                    <!-- DIRECCIÃ“N -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalDireccion">
-                            Dirección
+                            DirecciÃ³n
                         </label>
 
                         <input
@@ -3216,14 +3236,14 @@
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalHorario">
-                            Horario de atención
+                            Horario de atenciÃ³n
                         </label>
 
                         <input
                             type="text"
                             id="nuevaSucursalHorario"
                             class="sucursal-input"
-                            placeholder="Ej. Lun - Dom · 7:00 AM - 8:00 PM"
+                            placeholder="Ej. Lun - Dom Â· 7:00 AM - 8:00 PM"
                             maxlength="255"
                         >
 
@@ -3231,13 +3251,13 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- TELÉFONO -->
+                    <!-- TELÃ‰FONO -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalTelefono">
-                            Teléfono / WhatsApp
+                            TelÃ©fono / WhatsApp
                         </label>
 
                         <input
@@ -3264,7 +3284,7 @@
 
                         <p>
                             Puedes guardar la URL utilizada para mostrar
-                            la ubicación de esta sede.
+                            la ubicaciÃ³n de esta sede.
                         </p>
 
                         <input
@@ -3278,18 +3298,18 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- FOTOGRAFÍA -->
+                    <!-- FOTOGRAFÃA -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalImagen">
-                            Fotografía de la sucursal
+                            FotografÃ­a de la sucursal
                         </label>
 
                         <p>
-                            En edición, dejar este campo vacío conserva
-                            la fotografía actual.
+                            En ediciÃ³n, dejar este campo vacÃ­o conserva
+                            la fotografÃ­a actual.
                         </p>
 
 
@@ -3308,7 +3328,7 @@
                             </div>
 
                             <strong>
-                                Seleccionar fotografía
+                                Seleccionar fotografÃ­a
                             </strong>
 
                             <span>
@@ -3362,7 +3382,7 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- INFORMACIÓN -->
+                    <!-- INFORMACIÃ“N -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-modal-info">
@@ -3373,7 +3393,7 @@
                         ></i>
 
                         <p id="sucursalModalInfoTexto">
-                            La nueva sucursal se registrará
+                            La nueva sucursal se registrarÃ¡
                             <strong>activa</strong>.
                         </p>
 
@@ -3423,10 +3443,10 @@
 
 
     <!-- ====================================================================== -->
-    <!-- FIN MODAL · NUEVA SUCURSAL -->
+    <!-- FIN MODAL Â· NUEVA SUCURSAL -->
     <!-- ====================================================================== -->
     <!-- ====================================================================== -->
-    <!-- MODAL CONFIGURACIÓN DE PLANTILLA -->
+    <!-- MODAL CONFIGURACIÃ“N DE PLANTILLA -->
     <!-- ====================================================================== -->
 
     <div
@@ -3445,7 +3465,7 @@
                 <div>
                     <span class="plantilla-config-eyebrow">
                         <i class="fas fa-palette"></i>
-                        Diseño promocional
+                        DiseÃ±o promocional
                     </span>
 
                     <h2 id="plantillaConfigTitulo">
@@ -3461,7 +3481,7 @@
                     type="button"
                     class="plantilla-config-close"
                     id="btnCerrarConfigPlantilla"
-                >      
+                >
                     &times;
                 </button>
 
@@ -3549,7 +3569,7 @@
                             ></span>
 
                             <span class="plantilla-switch-label">
-                                Mostrar teléfono
+                                Mostrar telÃ©fono
                             </span>
 
                         </label>
@@ -3568,7 +3588,7 @@
                             ></span>
 
                             <span class="plantilla-switch-label">
-                                Mostrar dirección
+                                Mostrar direcciÃ³n
                             </span>
 
                         </label>
@@ -3663,7 +3683,7 @@
                     id="btnRestaurarConfigPlantilla"
                 >
                     <i class="fas fa-rotate-left"></i>
-                    Restaurar diseño
+                    Restaurar diseÃ±o
                 </button>
 
 
@@ -3687,69 +3707,828 @@
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- MODAL: CREAR / EDITAR USUARIO -->
+    <!-- MODAL Â· CREAR / EDITAR USUARIO -->
     <!-- ====================================================================== -->
-    <div id="modal-usuario" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Registrar Nuevo Usuario</h3>
-                <span class="close-btn" onclick="cerrarModalUsuario()">&times;</span>
+
+    <div
+        id="modal-usuario"
+        class="usuario-modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="usuarioModalTitulo"
+    >
+
+        <div class="usuario-modal-card">
+
+            <!-- ============================================================ -->
+            <!-- HEADER -->
+            <!-- ============================================================ -->
+
+            <div class="usuario-modal-header">
+
+                <div class="usuario-modal-heading">
+
+                    <div class="usuario-modal-icon">
+
+                        <i
+                            class="fas fa-user"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span
+                            class="usuario-modal-eyebrow"
+                            id="usuarioModalEyebrow"
+                        >
+                            Nueva cuenta
+                        </span>
+
+                        <h3 id="usuarioModalTitulo">
+                            Registrar Usuario
+                        </h3>
+
+                        <p id="usuarioModalDescripcion">
+                            Crea una cuenta y define sus permisos
+                            dentro de Conception Coffee.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="usuario-modal-close"
+                    onclick="cerrarModalUsuario()"
+                    aria-label="Cerrar"
+                >
+                    <i
+                        class="fas fa-xmark"
+                        aria-hidden="true"
+                    ></i>
+                </button>
+
             </div>
-        
-            <form id="form-crear-usuario" onsubmit="guardarNuevoUsuario(event)">
-                <div class="form-group">
-                    <label for="usr-nombre">Nombre Completo:</label>
-                    <input type="text" id="usr-nombre" class="form-control" required placeholder="Ej. Carlos Pérez">
-                </div>
 
-                <div class="form-group">
-                    <label for="usr-correo">Correo Electrónico:</label>
-                    <input type="email" id="usr-correo" class="form-control" required placeholder="usuario@conceptioncoffee.com">
-                </div>
 
-                <div class="form-group">
-                    <label for="usr-password">Contraseña Segura:</label>
-                    <input type="password" id="usr-password" class="form-control" required placeholder="Ej. Pass#2026Secure">
-                    <small>
-                        Mínimo 10 caracteres con mayúscula, minúscula, número y símbolo.
-                    </small>
-                </div>
+            <!-- ============================================================ -->
+            <!-- FORMULARIO -->
+            <!-- ============================================================ -->
 
-                <div class="form-group">
-                    <label for="usr-rol">Rol asignado:</label>
-                    <select id="usr-rol" class="form-control" onchange="evaluarSeleccionSucursal(this.value)" required>
-                        <option value="admin">Administrador</option>
-                        <option value="gerente">Gerente de Sucursal</option>
-                        <option value="cajero">Cajero</option>
-                        <option value="mesero">Mesero</option>
-                        <option value="cocina">Cocina (KDS)</option>
-                        <option value="cliente">Cliente Web</option>
-                    </select>
-                </div>
+            <form
+                id="form-crear-usuario"
+                onsubmit="guardarUsuario(event)"
+            >
 
-                <!-- Se muestra dinámicamente según el rol -->
-                <div class="form-group" id="group-sucursal" style="display: none;">
-                    <label for="usr-sucursal">Sucursal Asignada:</label>
-                    <select
-                        id="usr-sucursal"
-                        class="form-control"
+                <!-- VacÃ­o = crear / con valor = editar -->
+                <input
+                    type="hidden"
+                    id="usuario-id"
+                >
+
+
+                <div class="usuario-modal-body">
+
+                    <!-- ==================================================== -->
+                    <!-- IDENTIDAD -->
+                    <!-- ==================================================== -->
+
+                    <div class="usuario-form-section">
+
+                        <div class="usuario-form-section-header">
+
+                            <span>01</span>
+
+                            <div>
+                                <strong>Identidad</strong>
+
+                                <p>
+                                    InformaciÃ³n principal de la cuenta.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="usuario-field">
+
+                            <label for="usr-nombre">
+                                Nombre completo
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="usr-nombre"
+                                class="usuario-input"
+                                maxlength="150"
+                                autocomplete="name"
+                                placeholder="Ej. Carlos PÃ©rez"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="usuario-field">
+
+                            <label for="usr-correo">
+                                Correo electrÃ³nico
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                id="usr-correo"
+                                class="usuario-input"
+                                maxlength="190"
+                                autocomplete="email"
+                                placeholder="usuario@conceptioncoffee.com"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- ACCESO -->
+                    <!-- ==================================================== -->
+
+                    <div
+                        class="usuario-form-section"
+                        id="usuarioPasswordSection"
                     >
-                        <option value="">
-                            Selecciona una sucursal
-                        </option>
-                    </select>
+
+                        <div class="usuario-form-section-header">
+
+                            <span>02</span>
+
+                            <div>
+                                <strong>Acceso</strong>
+
+                                <p>
+                                    Define una contraseÃ±a segura para
+                                    la nueva cuenta.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="usuario-field">
+
+                            <label for="usr-password">
+                                ContraseÃ±a
+                                <span>*</span>
+                            </label>
+
+
+                            <div class="usuario-password-field">
+
+                                <input
+                                    type="password"
+                                    id="usr-password"
+                                    class="usuario-input"
+                                    autocomplete="new-password"
+                                    placeholder="Crea una contraseÃ±a segura"
+                                >
+
+
+                                <button
+                                    type="button"
+                                    class="usuario-password-toggle"
+                                    id="toggleUsuarioPassword"
+                                    aria-label="Mostrar contraseÃ±a"
+                                    aria-pressed="false"
+                                >
+                                    <i
+                                        class="fas fa-eye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================================================= -->
+                        <!-- REQUISITOS -->
+                        <!-- ================================================= -->
+
+                        <div
+                            class="usuario-password-security"
+                            id="usuarioPasswordSecurity"
+                        >
+
+                            <div class="usuario-password-strength">
+
+                                <div class="usuario-password-strength-header">
+
+                                    <span>
+                                        Seguridad
+                                    </span>
+
+                                    <strong id="usuarioPasswordStrengthText">
+                                        Sin evaluar
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="usuario-password-meter"
+                                    aria-hidden="true"
+                                >
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+
+                            </div>
+
+
+                            <ul class="usuario-password-rules">
+
+                                <li data-password-rule="length">
+                                    <i class="fas fa-circle"></i>
+                                    MÃ­nimo 10 caracteres
+                                </li>
+
+                                <li data-password-rule="uppercase">
+                                    <i class="fas fa-circle"></i>
+                                    Una letra mayÃºscula
+                                </li>
+
+                                <li data-password-rule="lowercase">
+                                    <i class="fas fa-circle"></i>
+                                    Una letra minÃºscula
+                                </li>
+
+                                <li data-password-rule="number">
+                                    <i class="fas fa-circle"></i>
+                                    Un nÃºmero
+                                </li>
+
+                                <li data-password-rule="special">
+                                    <i class="fas fa-circle"></i>
+                                    Un carÃ¡cter especial
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ==================================================== -->
+                    <!-- PERMISOS -->
+                    <!-- ==================================================== -->
+
+                    <div class="usuario-form-section">
+
+                        <div class="usuario-form-section-header">
+
+                            <span id="usuarioPermisosNumero">
+                                03
+                            </span>
+
+                            <div>
+                                <strong>Permisos</strong>
+
+                                <p>
+                                    Define el rol y alcance operativo.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="usuario-field">
+
+                            <label for="usr-rol">
+                                Rol asignado
+                                <span>*</span>
+                            </label>
+
+                            <select
+                                id="usr-rol"
+                                class="usuario-input usuario-select"
+                                required
+                            >
+
+                                <option value="admin">
+                                    Administrador
+                                </option>
+
+                                <option value="gerente">
+                                    Gerente de Sucursal
+                                </option>
+
+                                <option value="cajero">
+                                    Cajero
+                                </option>
+
+                                <option value="mesero">
+                                    Mesero
+                                </option>
+
+                                <option value="cocina">
+                                    Cocina (KDS)
+                                </option>
+
+                                <option value="cliente">
+                                    Cliente Web
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div
+                            class="usuario-field usuario-sucursal-field"
+                            id="group-sucursal"
+                            hidden
+                        >
+
+                            <label for="usr-sucursal">
+                                Sucursal asignada
+                                <span>*</span>
+                            </label>
+
+                            <select
+                                id="usr-sucursal"
+                                class="usuario-input usuario-select"
+                            >
+
+                                <option value="">
+                                    Selecciona una sucursal
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="usuario-role-info">
+
+                            <i
+                                class="fas fa-shield-halved"
+                                aria-hidden="true"
+                            ></i>
+
+                            <p id="usuarioRoleInfoTexto">
+                                El administrador tiene acceso global
+                                a las herramientas administrativas.
+                            </p>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" onclick="cerrarModalUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-success"><i class="fas fa-save"></i> Guardar Usuario</button>
+
+                <!-- ======================================================== -->
+                <!-- FOOTER -->
+                <!-- ======================================================== -->
+
+                <div class="usuario-modal-footer">
+
+                    <button
+                        type="button"
+                        class="usuario-modal-cancel"
+                        onclick="cerrarModalUsuario()"
+                    >
+                        Cancelar
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="usuario-modal-save"
+                        id="btnGuardarUsuario"
+                    >
+
+                        <i
+                            class="fas fa-plus"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span id="btnGuardarUsuarioTexto">
+                            Registrar Usuario
+                        </span>
+
+                    </button>
+
                 </div>
+
             </form>
+
         </div>
+
     </div>
+
     <!-- ====================================================================== -->
-    <!-- FIN MODAL: CREAR / EDITAR USUARIO -->
+    <!-- FIN MODAL Â· USUARIO -->
     <!-- ====================================================================== -->
+
+    <!-- ====================================================================== -->
+    <!-- MODAL Â· MI CUENTA -->
+    <!-- ====================================================================== -->
+
+    <div
+        id="modalMiCuenta"
+        class="cuenta-modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="miCuentaTitulo"
+    >
+
+        <div class="cuenta-modal-card">
+
+            <!-- HEADER -->
+
+            <div class="cuenta-modal-header">
+
+                <div class="cuenta-modal-heading">
+
+                    <div class="cuenta-modal-icon">
+                        <i
+                            class="fas fa-user-shield"
+                            aria-hidden="true"
+                        ></i>
+                    </div>
+
+                    <div>
+
+                        <span class="cuenta-modal-eyebrow">
+                            Cuenta personal
+                        </span>
+
+                        <h3 id="miCuentaTitulo">
+                            Mi cuenta
+                        </h3>
+
+                        <p>
+                            Consulta tu perfil y administra
+                            la seguridad de tu acceso.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="cuenta-modal-close"
+                    id="btnCerrarMiCuenta"
+                    aria-label="Cerrar mi cuenta"
+                >
+                    <i
+                        class="fas fa-xmark"
+                        aria-hidden="true"
+                    ></i>
+                </button>
+
+            </div>
+
+
+            <!-- BODY -->
+
+            <div class="cuenta-modal-body">
+
+                <!-- ======================================================== -->
+                <!-- PERFIL -->
+                <!-- ======================================================== -->
+
+                <section class="cuenta-section">
+
+                    <div class="cuenta-section-heading">
+
+                        <span>01</span>
+
+                        <div>
+                            <strong>Perfil</strong>
+
+                            <p>
+                                InformaciÃ³n asociada a tu sesiÃ³n.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="cuenta-profile-grid">
+
+                        <div class="cuenta-profile-item">
+
+                            <span>Nombre</span>
+
+                            <strong id="miCuentaNombre">
+                                â€”
+                            </strong>
+
+                        </div>
+
+
+                        <div class="cuenta-profile-item">
+
+                            <span>Correo</span>
+
+                            <strong id="miCuentaCorreo">
+                                â€”
+                            </strong>
+
+                        </div>
+
+
+                        <div class="cuenta-profile-item">
+
+                            <span>Rol</span>
+
+                            <strong id="miCuentaRol">
+                                â€”
+                            </strong>
+
+                        </div>
+
+
+                        <div class="cuenta-profile-item">
+
+                            <span>Sucursal</span>
+
+                            <strong id="miCuentaSucursal">
+                                â€”
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ======================================================== -->
+                <!-- SEGURIDAD -->
+                <!-- ======================================================== -->
+
+                <section class="cuenta-section">
+
+                    <div class="cuenta-section-heading">
+
+                        <span>02</span>
+
+                        <div>
+                            <strong>Seguridad</strong>
+
+                            <p>
+                                Actualiza tu contraseÃ±a de acceso.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <form id="formCambiarPassword">
+
+                        <!-- CONTRASEÃ‘A ACTUAL -->
+
+                        <div class="cuenta-field">
+
+                            <label for="cuentaPasswordActual">
+                                ContraseÃ±a actual
+                                <span>*</span>
+                            </label>
+
+
+                            <div class="cuenta-password-field">
+
+                                <input
+                                    type="password"
+                                    id="cuentaPasswordActual"
+                                    class="cuenta-input"
+                                    autocomplete="current-password"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="cuenta-password-toggle"
+                                    data-password-target="cuentaPasswordActual"
+                                    aria-label="Mostrar contraseÃ±a actual"
+                                    aria-pressed="false"
+                                >
+                                    <i
+                                        class="fas fa-eye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- NUEVA CONTRASEÃ‘A -->
+
+                        <div class="cuenta-field">
+
+                            <label for="cuentaPasswordNueva">
+                                Nueva contraseÃ±a
+                                <span>*</span>
+                            </label>
+
+
+                            <div class="cuenta-password-field">
+
+                                <input
+                                    type="password"
+                                    id="cuentaPasswordNueva"
+                                    class="cuenta-input"
+                                    autocomplete="new-password"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="cuenta-password-toggle"
+                                    data-password-target="cuentaPasswordNueva"
+                                    aria-label="Mostrar nueva contraseÃ±a"
+                                    aria-pressed="false"
+                                >
+                                    <i
+                                        class="fas fa-eye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONFIRMACIÃ“N -->
+
+                        <div class="cuenta-field">
+
+                            <label for="cuentaPasswordConfirmar">
+                                Confirmar nueva contraseÃ±a
+                                <span>*</span>
+                            </label>
+
+
+                            <div class="cuenta-password-field">
+
+                                <input
+                                    type="password"
+                                    id="cuentaPasswordConfirmar"
+                                    class="cuenta-input"
+                                    autocomplete="new-password"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="cuenta-password-toggle"
+                                    data-password-target="cuentaPasswordConfirmar"
+                                    aria-label="Mostrar confirmaciÃ³n"
+                                    aria-pressed="false"
+                                >
+                                    <i
+                                        class="fas fa-eye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- REQUISITOS -->
+
+                        <div class="cuenta-password-security">
+
+                            <div class="cuenta-password-strength-header">
+
+                                <span>Seguridad</span>
+
+                                <strong id="cuentaPasswordStrengthText">
+                                    Sin evaluar
+                                </strong>
+
+                            </div>
+
+
+                            <div
+                                class="cuenta-password-meter"
+                                aria-hidden="true"
+                            >
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+
+                            <ul class="cuenta-password-rules">
+
+                                <li data-cuenta-rule="length">
+                                    <i class="fas fa-circle"></i>
+                                    MÃ­nimo 10 caracteres
+                                </li>
+
+                                <li data-cuenta-rule="uppercase">
+                                    <i class="fas fa-circle"></i>
+                                    Una mayÃºscula
+                                </li>
+
+                                <li data-cuenta-rule="lowercase">
+                                    <i class="fas fa-circle"></i>
+                                    Una minÃºscula
+                                </li>
+
+                                <li data-cuenta-rule="number">
+                                    <i class="fas fa-circle"></i>
+                                    Un nÃºmero
+                                </li>
+
+                                <li data-cuenta-rule="special">
+                                    <i class="fas fa-circle"></i>
+                                    Un carÃ¡cter especial
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+
+                        <div
+                            class="cuenta-security-message"
+                            id="cuentaSecurityMessage"
+                            role="status"
+                            aria-live="polite"
+                            hidden
+                        ></div>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="cuenta-modal-footer">
+
+                <button
+                    type="button"
+                    class="cuenta-modal-cancel"
+                    id="btnCancelarMiCuenta"
+                >
+                    Cerrar
+                </button>
+
+
+                <button
+                    type="submit"
+                    form="formCambiarPassword"
+                    class="cuenta-modal-save"
+                    id="btnCambiarPassword"
+                >
+                    <i
+                        class="fas fa-shield-halved"
+                        aria-hidden="true"
+                    ></i>
+
+                    <span>
+                        Cambiar contraseÃ±a
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================================== -->
+    <!-- FIN MODAL Â· MI CUENTA -->
+    <!-- ====================================================================== -->
+
 
     <!-- ====================================================================== -->
     <!-- FIN CAPA DE MODALES -->
@@ -3757,22 +4536,22 @@
 
 
 
-    
+
 <!-- ========================================================= -->
-<!-- CORE DEL SISTEMA (Configuración y utilidades globales) -->
+<!-- CORE DEL SISTEMA (ConfiguraciÃ³n y utilidades globales) -->
 <!-- ========================================================= -->
 <script src="js/core/config.js"></script>
 <script src="js/core/utils.js"></script>
 
 
 <!-- ========================================================= -->
-<!-- MÓDULO PRODUCTOS -->
+<!-- MÃ“DULO PRODUCTOS -->
 <!-- ========================================================= -->
 
 <!-- Acciones -->
 <script src="js/productos/productos-actions.js"></script>
 
-<!-- Comunicación con Backend -->
+<!-- ComunicaciÃ³n con Backend -->
 <script src="js/productos/productos-api.js"></script>
 
 <!-- Componentes -->
@@ -3785,10 +4564,10 @@
 
 
 <!-- ========================================================= -->
-<!-- MÓDULO PLANNER -->
+<!-- MÃ“DULO PLANNER -->
 <!-- ========================================================= -->
 
-<!-- Comunicación con Backend -->
+<!-- ComunicaciÃ³n con Backend -->
 <script src="js/planner/planner-api.js"></script>
 <script src="js/plantillas/plantillas-admin.js"></script>
 
@@ -3832,31 +4611,31 @@
 <script src="js/planner/planner.js"></script>
 
 <!-- ========================================================= -->
-<!-- MÓDULO HERO (SLIDERS DE INICIO) -->
+<!-- MÃ“DULO HERO (SLIDERS DE INICIO) -->
 <!-- ========================================================= -->
 <script src="js/hero/hero.js"></script>
 
 
 <!-- ========================================================= -->
-<!-- MÓDULO EXPERIENCIAS -->
+<!-- MÃ“DULO EXPERIENCIAS -->
 <!-- ========================================================= -->
 <script src="js/experiencias/experiencias.js"></script>
 
 <!-- ========================================================= -->
-<!-- MÓDULO SUCURSALES -->
+<!-- MÃ“DULO SUCURSALES -->
 <!-- ========================================================= -->
 
 <script src="js/sucursales/sucursales.js"></script>
 
 <!-- ========================================================= -->
-<!-- MÓDULO DE USUARIOS -->
+<!-- MÃ“DULO DE USUARIOS -->
 <!-- ========================================================= -->
 
 <script src="js/usuarios/usuarios.js"></script>
 <script src="js/usuarios/auditoria.js"></script>
 
 <!-- ========================================================= -->
-<!-- LIBRERÍAS EXTERNAS -->
+<!-- LIBRERÃAS EXTERNAS -->
 <!-- ========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -431,6 +431,287 @@ const UsuarioModel = {
     },
 
 
+    // ======================================================
+    // OBTENER USUARIO POR ID
+    // ======================================================
+
+    obtenerPorId: async (usuarioId) => {
+
+        const query = `
+
+            SELECT
+                id,
+                nombre,
+                correo,
+                rol,
+                sucursal_id,
+                activo,
+                creado_en,
+                actualizado_en
+
+            FROM usuarios
+
+            WHERE id = ?
+
+            LIMIT 1
+
+        `;
+
+
+        const [rows] =
+            await db.query(
+                query,
+                [usuarioId]
+            );
+
+
+        return rows[0] || null;
+
+    },
+
+
+
+    // ======================================================
+    // BUSCAR CORREO EN OTRO USUARIO
+    // ======================================================
+
+    buscarCorreoEnOtroUsuario:
+        async (
+            correo,
+            usuarioId
+        ) => {
+
+            const query = `
+
+                SELECT
+                    id
+
+                FROM usuarios
+
+                WHERE correo = ?
+
+                AND id <> ?
+
+                LIMIT 1
+
+            `;
+
+
+            const [rows] =
+                await db.query(
+                    query,
+                    [
+                        correo,
+                        usuarioId
+                    ]
+                );
+
+
+            return rows[0] || null;
+
+        },
+
+
+    // ======================================================
+    // COMPROBAR SUCURSAL ACTIVA
+    // ======================================================
+
+    obtenerSucursalActivaPorId:
+        async (sucursalId) => {
+
+            const query = `
+
+                SELECT
+                    id,
+                    nombre
+
+                FROM sucursales
+
+                WHERE id = ?
+
+                AND activa = 1
+
+                LIMIT 1
+
+            `;
+
+
+            const [rows] =
+                await db.query(
+                    query,
+                    [sucursalId]
+                );
+
+
+            return rows[0] || null;
+
+        },
+
+
+    // ======================================================
+    // ACTUALIZAR USUARIO
+    // ======================================================
+
+    actualizar: async ({
+        usuarioId,
+        nombre,
+        correo,
+        rol,
+        sucursal_id
+    }) => {
+
+        const query = `
+
+            UPDATE usuarios
+
+            SET
+                nombre = ?,
+                correo = ?,
+                rol = ?,
+                sucursal_id = ?
+
+            WHERE id = ?
+
+        `;
+
+
+        const [result] =
+            await db.query(
+                query,
+                [
+                    nombre,
+                    correo,
+                    rol,
+                    sucursal_id,
+                    usuarioId
+                ]
+            );
+
+
+        return result.affectedRows > 0;
+
+    },
+
+
+    // ======================================================
+    // OBTENER CREDENCIALES POR ID
+    // ======================================================
+
+    obtenerCredencialesPorId:
+        async (usuarioId) => {
+
+            const query = `
+
+                SELECT
+                    id,
+                    password_hash,
+                    activo
+
+                FROM usuarios
+
+                WHERE id = ?
+
+                LIMIT 1
+
+            `;
+
+
+            const [rows] =
+                await db.query(
+                    query,
+                    [usuarioId]
+                );
+
+
+            return rows[0] || null;
+
+        },
+
+
+    // ======================================================
+    // ACTUALIZAR CONTRASEÑA
+    // ======================================================
+
+    actualizarPassword:
+        async (
+            usuarioId,
+            passwordHash
+        ) => {
+
+            const query = `
+
+                UPDATE usuarios
+
+                SET password_hash = ?
+
+                WHERE id = ?
+
+            `;
+
+
+            const [result] =
+                await db.query(
+                    query,
+                    [
+                        passwordHash,
+                        usuarioId
+                    ]
+                );
+
+
+            return result.affectedRows > 0;
+
+        },
+
+
+
+    // ======================================================
+    // REVOCAR OTRAS SESIONES DEL USUARIO
+    // ======================================================
+
+    revocarOtrasSesionesUsuario:
+        async (
+            usuarioId,
+            jtiActual
+        ) => {
+
+            const query = `
+
+                UPDATE sesiones_usuario
+
+                SET
+                    revocada = 1,
+                    revocada_en =
+                        CURRENT_TIMESTAMP
+
+                WHERE usuario_id = ?
+
+                AND jti <> ?
+
+                AND revocada = 0
+
+                AND logout_en IS NULL
+
+            `;
+
+
+            const [result] =
+                await db.query(
+                    query,
+                    [
+                        usuarioId,
+                        jtiActual
+                    ]
+                );
+
+
+            return result.affectedRows;
+
+        },
+
+
+
+
 
 };
 

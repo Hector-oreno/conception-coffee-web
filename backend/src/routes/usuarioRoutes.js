@@ -52,6 +52,20 @@ router.post(
     usuarioController.registrar
 );
 
+
+// ==========================================================
+// EDITAR USUARIO
+// ==========================================================
+
+router.put(
+    '/:id',
+    verificarToken,
+    verificarRoles('admin'),
+    usuarioController.editar
+);
+
+
+
 // Cambiar estado de un usuario
 router.patch(
     '/:id/estado',
@@ -59,6 +73,19 @@ router.patch(
     verificarRoles('admin'),
     usuarioController.cambiarEstado
 );
+
+
+// ==========================================================
+// CAMBIAR CONTRASEÑA PROPIA
+// ==========================================================
+
+router.put(
+    '/me/password',
+    verificarToken,
+    usuarioController.cambiarPassword
+);
+
+
 
 // ==========================================================
 // SESIÓN DEL USUARIO AUTENTICADO

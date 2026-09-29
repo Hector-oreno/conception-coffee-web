@@ -49,14 +49,16 @@ window.PERMISOS_SECCIONES = {
         );
 
 
-    // ======================================================================
-    // NO EXISTE TOKEN
-    // ======================================================================
+    // ==============================================================
+    // SIN TOKEN
+    // ==============================================================
 
     if (!token) {
 
+        limpiarSesionLocal();
+
         window.location.replace(
-            '/login.html'
+            '/login.html?estado=sin-sesion'
         );
 
         return;
@@ -66,9 +68,9 @@ window.PERMISOS_SECCIONES = {
 
     try {
 
-        // ==================================================================
-        // VALIDAR SESIÓN CONTRA EL BACKEND
-        // ==================================================================
+        // ==========================================================
+        // VALIDAR SESIÓN
+        // ==========================================================
 
         const response =
             await fetch(
@@ -77,40 +79,50 @@ window.PERMISOS_SECCIONES = {
                     method: 'GET',
 
                     headers: {
-                        'Authorization':
+                        Authorization:
                             `Bearer ${token}`
                     },
 
-                    cache: 'no-store'
+                    cache:
+                        'no-store'
                 }
             );
 
 
-        const resultado =
-            await response.json();
+        let resultado =
+            null;
 
 
-        // ==================================================================
-        // SESIÓN INVÁLIDA / EXPIRADA / REVOCADA
-        // ==================================================================
+        try {
+
+            resultado =
+                await response.json();
+
+        } catch {
+
+            resultado =
+                null;
+
+        }
+
+
+        // ==========================================================
+        // SESIÓN REALMENTE INVÁLIDA
+        // ==========================================================
+        //
+        // Aquí sí eliminamos credenciales locales.
+        // ==============================================================
 
         if (
-            !response.ok ||
-            !resultado.success ||
-            !resultado.usuario
+            response.status === 401 ||
+            response.status === 403
         ) {
 
-            localStorage.removeItem(
-                'token_conception'
-            );
-
-            localStorage.removeItem(
-                'usuario_conception'
-            );
+            limpiarSesionLocal();
 
 
             window.location.replace(
-                '/login.html'
+                '/login.html?estado=sesion-finalizada'
             );
 
             return;
@@ -118,9 +130,84 @@ window.PERMISOS_SECCIONES = {
         }
 
 
-        // ==================================================================
-        // SOLO ROLES ADMINISTRATIVOS
-        // ==================================================================
+        // ==========================================================
+        // SERVICIO TEMPORALMENTE NO DISPONIBLE
+        // ==========================================================
+        //
+        // NO destruimos la sesión.
+        // ==============================================================
+
+        if (
+            response.status === 503
+        ) {
+
+            mostrarErrorTemporalSesion(
+                resultado?.message ||
+                'El servicio no está disponible temporalmente.'
+            );
+
+            return;
+
+        }
+
+
+        // ==========================================================
+        // OTRO ERROR DEL SERVIDOR
+        // ==========================================================
+        //
+        // 500, 502, 504, etc.
+        // Tampoco destruimos la sesión local.
+        // ==============================================================
+
+        if (!response.ok) {
+
+            console.error(
+                'Error temporal validando sesión:',
+                response.status,
+                resultado
+            );
+
+
+            mostrarErrorTemporalSesion(
+                'No fue posible validar tu sesión en este momento.'
+            );
+
+            return;
+
+        }
+
+
+        // ==========================================================
+        // RESPUESTA INESPERADA
+        // ==============================================================
+
+        if (
+            !resultado?.success ||
+            !resultado?.usuario
+        ) {
+
+            console.error(
+                'Respuesta de sesión inesperada:',
+                resultado
+            );
+
+
+            mostrarErrorTemporalSesion(
+                'No fue posible validar correctamente la sesión.'
+            );
+
+            return;
+
+        }
+
+
+        const usuario =
+            resultado.usuario;
+
+
+        // ==========================================================
+        // ROLES CON ACCESO AL PANEL
+        // ==============================================================
 
         const rolesPermitidos = [
             'admin',
@@ -133,21 +220,18 @@ window.PERMISOS_SECCIONES = {
 
         if (
             !rolesPermitidos.includes(
-                resultado.usuario.rol
+                usuario.rol
             )
         ) {
 
-            localStorage.removeItem(
-                'token_conception'
-            );
+            // Aquí sí sabemos que el usuario está autenticado,
+            // pero su rol no puede utilizar este panel.
 
-            localStorage.removeItem(
-                'usuario_conception'
-            );
+            limpiarSesionLocal();
 
 
             window.location.replace(
-                '/login.html'
+                '/login.html?estado=sin-acceso'
             );
 
             return;
@@ -155,40 +239,51 @@ window.PERMISOS_SECCIONES = {
         }
 
 
-        // ==================================================================
-        // MOSTRAR USUARIO CONECTADO
-        // ==================================================================
+        // ==========================================================
+        // ACTUALIZAR CACHE LOCAL CON DATOS REALES
+        // ==============================================================
+
+        localStorage.setItem(
+            'usuario_conception',
+            JSON.stringify(usuario)
+        );
+
+
+        // ==========================================================
+        // MOSTRAR PANEL
+        // ==============================================================
 
         mostrarUsuarioConectado(
-            resultado.usuario
+            usuario
         );
+
 
         aplicarPermisosSecciones(
-            resultado.usuario
+            usuario
         );
 
-
-        
 
     } catch (error) {
 
+        // ==========================================================
+        // ERROR DE RED
+        // ==========================================================
+        //
+        // fetch() rechazado:
+        // servidor detenido, conexión perdida, etc.
+        //
+        // IMPORTANTE:
+        // NO eliminamos el token.
+        // ==============================================================
+
         console.error(
-            'Error validando sesión administrativa:',
+            'No fue posible validar la sesión por un problema de conexión:',
             error
         );
 
 
-        localStorage.removeItem(
-            'token_conception'
-        );
-
-        localStorage.removeItem(
-            'usuario_conception'
-        );
-
-
-        window.location.replace(
-            '/login.html'
+        mostrarErrorTemporalSesion(
+            'No se pudo conectar con el servidor. Tu sesión no ha sido eliminada.'
         );
 
     }
@@ -317,22 +412,95 @@ function mostrarUsuarioConectado(usuario) {
         if (usuario.sucursal_id) {
 
             sucursal.textContent =
+                usuario.sucursal_nombre ||
                 `Sucursal #${usuario.sucursal_id}`;
 
-            sucursal.style.display =
-                'inline';
+            sucursal.hidden =
+                false;
 
         } else {
 
             sucursal.textContent =
                 'Acceso global';
 
-            sucursal.style.display =
-                'inline';
+            sucursal.hidden =
+                false;
 
         }
 
     }
+
+}
+
+function limpiarSesionLocal() {
+
+    localStorage.removeItem(
+        'token_conception'
+    );
+
+    localStorage.removeItem(
+        'usuario_conception'
+    );
+
+}
+
+
+function mostrarErrorTemporalSesion(
+    mensaje
+) {
+
+    console.warn(
+        mensaje
+    );
+
+
+    // Por ahora dejamos un aviso sencillo.
+    // Después podemos sustituirlo por un componente visual
+    // global del Admin.
+
+    const existente =
+        document.getElementById(
+            'adminSessionWarning'
+        );
+
+
+    if (existente) {
+
+        existente.textContent =
+            mensaje;
+
+        return;
+
+    }
+
+
+    const aviso =
+        document.createElement(
+            'div'
+        );
+
+
+    aviso.id =
+        'adminSessionWarning';
+
+
+    aviso.setAttribute(
+        'role',
+        'alert'
+    );
+
+
+    aviso.textContent =
+        mensaje;
+
+
+    aviso.className =
+        'admin-session-warning';
+
+
+    document.body.appendChild(
+        aviso
+    );
 
 }
 

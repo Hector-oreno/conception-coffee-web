@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/usuarios/auth-guard.js"></script>
-    <title>Panel de AdministraciÃ³n | Conception Coffee</title>
+    <title>Panel de Administración | Conception Coffee</title>
 
-    <!-- IconografÃ­a y tipografÃ­as -->
+    <!-- Iconografía y tipografías -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap">
@@ -21,14 +21,14 @@
     >
 
 
-    <!-- LibrerÃ­as externas -->
+    <!-- Librerías externas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
     <!-- Estilos base del panel -->
     <link rel="stylesheet" href="css/admin/sidebar.css">
     <link rel="stylesheet" href="css/admin/admin.css">
 
-    <!-- Estilos por mÃ³dulo de productos -->
+    <!-- Estilos por módulo de productos -->
     <link rel="stylesheet" href="css/productos/productos.css">
 
     <!-- ========================================================= -->
@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="css/planner/planner-workspace.css">
     <link rel="stylesheet" href="css/planner/planner-artwork.css">
 
-    <!-- SubmÃ³dulos -->
+    <!-- Submódulos -->
     <link rel="stylesheet" href="css/planner/catalogo.css">
     <link rel="stylesheet" href="css/planner/emojis.css">
 
@@ -73,7 +73,7 @@
     <div class="admin-container">
 
         <!-- ====================================================================== -->
-        <!-- INICIO NAVEGACIÃ“N LATERAL -->
+        <!-- INICIO NAVEGACIÓN LATERAL -->
         <!-- ====================================================================== -->
 
         <aside
@@ -105,8 +105,8 @@
                     type="button"
                     class="sidebar-toggle"
                     id="sidebarToggle"
-                    aria-label="Contraer menÃº"
-                    title="Contraer menÃº"
+                    aria-label="Contraer menú"
+                    title="Contraer menú"
                 >
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -167,7 +167,7 @@
 
 
             <!-- ===================================================== -->
-            <!-- NAVEGACIÃ“N -->
+            <!-- NAVEGACIÓN -->
             <!-- ===================================================== -->
 
             <nav class="sidebar-menu">
@@ -176,7 +176,7 @@
                     type="button"
                     class="menu-btn active"
                     data-seccion="productos"
-                    data-tooltip="Productos del MenÃº"
+                    data-tooltip="Productos del Menú"
                     onclick="cambiarSeccion('productos')"
                 >
                     <span class="menu-btn-icon">
@@ -184,7 +184,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        Productos del MenÃº
+                        Productos del Menú
                     </span>
                 </button>
 
@@ -193,7 +193,7 @@
                     type="button"
                     class="menu-btn"
                     data-seccion="ejecutivo"
-                    data-tooltip="MenÃº de la Semana"
+                    data-tooltip="Menú de la Semana"
                     onclick="cambiarSeccion('ejecutivo')"
                 >
                     <span class="menu-btn-icon">
@@ -201,7 +201,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        MenÃº de la Semana
+                        Menú de la Semana
                     </span>
                 </button>
 
@@ -261,7 +261,7 @@
                     type="button"
                     class="menu-btn"
                     data-seccion="plantillas"
-                    data-tooltip="Plantillas del MenÃº"
+                    data-tooltip="Plantillas del Menú"
                     onclick="cambiarSeccion('plantillas')"
                 >
                     <span class="menu-btn-icon">
@@ -269,7 +269,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        Plantillas del MenÃº
+                        Plantillas del Menú
                     </span>
                 </button>
 
@@ -295,7 +295,7 @@
                     type="button"
                     class="menu-btn"
                     data-seccion="auditoria"
-                    data-tooltip="AuditorÃ­a y Seguridad"
+                    data-tooltip="Auditoría y Seguridad"
                     onclick="cambiarSeccion('auditoria')"
                 >
                     <span class="menu-btn-icon">
@@ -303,7 +303,7 @@
                     </span>
 
                     <span class="menu-btn-text">
-                        AuditorÃ­a
+                        Auditoría
                     </span>
                 </button>
 
@@ -335,14 +335,14 @@
                     type="button"
                     onclick="cerrarSesion()"
                     class="sidebar-footer-action sidebar-logout"
-                    data-tooltip="Cerrar SesiÃ³n"
+                    data-tooltip="Cerrar Sesión"
                 >
                     <span class="menu-btn-icon">
                         <i class="fas fa-sign-out-alt"></i>
                     </span>
 
                     <span class="menu-btn-text">
-                        Cerrar SesiÃ³n
+                        Cerrar Sesión
                     </span>
                 </button>
 
@@ -350,12 +350,12 @@
                 <div class="sidebar-legal">
 
                     <span>
-                    CONCEPTION COFFEE Â© 2026
+                    CONCEPTION COFFEE © 2026
                     </span>
 
                     <a
                         href="#"
-                        onclick="alert('POLÃTICA DE PRIVACIDAD Y AUDITORÃA:\n\nEste sistema registra direcciones IP de origen, identificadores de sesiÃ³n (JTI) y eventos de acceso exclusivamente con fines de seguridad y control interno bajo estÃ¡ndar OWASP.'); return false;"
+                        onclick="alert('POLÍTICA DE PRIVACIDAD Y AUDITORÍA:\n\nEste sistema registra direcciones IP de origen, identificadores de sesión (JTI) y eventos de acceso con fines de seguridad, auditoría y control interno.'); return false;"
                     >
                         Aviso de Monitoreo
                     </a>
@@ -367,14 +367,14 @@
         </aside>
 
         <!-- ====================================================================== -->
-        <!-- FIN NAVEGACIÃ“N LATERAL -->
+        <!-- FIN NAVEGACIÓN LATERAL -->
         <!-- ====================================================================== -->
 
         <main class="main-content">
 
             <header class="main-header">
                             <div class="header-title">
-                                <h1 id="section-title">GestiÃ³n de Productos</h1>
+                                <h1 id="section-title">Gestión de Productos</h1>
                                 <p id="section-subtitle">Administra los platillos, precios y disponibilidad de la vitrina digital.
                                 </p>
                             </div>
@@ -383,7 +383,7 @@
             <div class="content-wrapper">
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÃ“DULO PRODUCTOS -->
+        <!-- INICIO MÓDULO PRODUCTOS -->
         <!-- ====================================================================== -->
 
         <section
@@ -409,11 +409,11 @@
 
                         <div>
                             <span class="productos-control-eyebrow">
-                                CatÃ¡logo
+                                Catálogo
                             </span>
 
                             <label for="selectSucursal">
-                                GestiÃ³n por Sucursal
+                                Gestión por Sucursal
                             </label>
                         </div>
 
@@ -522,7 +522,7 @@
                                     </th>
 
                                     <th>
-                                        CategorÃ­a
+                                        Categoría
                                     </th>
 
                                     <th>
@@ -579,7 +579,7 @@
                 </strong>
 
                 <span>
-                    Prueba con otra bÃºsqueda o selecciona otra sucursal.
+                    Prueba con otra búsqueda o selecciona otra sucursal.
                 </span>
 
             </div>
@@ -587,11 +587,11 @@
         </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÃ“DULO PRODUCTOS -->
+        <!-- FIN MÓDULO PRODUCTOS -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÃ“DULO MENÃš DE LA SEMANA (PLANNER) -->
+        <!-- INICIO MÓDULO MENÚ DE LA SEMANA (PLANNER) -->
         <!-- ====================================================================== -->
 
         <section id="seccion-ejecutivo" class="admin-module">
@@ -632,7 +632,7 @@
 
                                     <select id="plannerFiltroAnio">
 
-                                        <option value="">Todos los aÃ±os</option>
+                                        <option value="">Todos los años</option>
 
                                     </select>
 
@@ -646,7 +646,7 @@
 
                                     </select>
 
-                                    <!-- AquÃ­ irÃ¡n los botones -->
+                                    <!-- Aquí irán los botones -->
 
                                     <div class="row mb-4 justify-content-end">
                                         <div class="col-auto">
@@ -677,7 +677,7 @@
                                             <i class="fas fa-utensils fa-2x"></i>
                                         </div>
                                         <div>
-                                            <h6 class="text-muted mb-1 text-uppercase small fw-bold tracking-wider">CatÃ¡logo Maestro</h6>
+                                            <h6 class="text-muted mb-1 text-uppercase small fw-bold tracking-wider">Catálogo Maestro</h6>
                                             <h3 class="fw-bold m-0" id="lbl-total-platillos">...</h3>
                                         </div>
                                     </div>
@@ -708,7 +708,7 @@
                                             <th scope="col" class="ps-4">Semana</th>
                                             <th scope="col">Rango de Fechas</th>
                                             <th scope="col">Estado</th>
-                                            <th scope="col">Fecha CreaciÃ³n</th>
+                                            <th scope="col">Fecha Creación</th>
                                             <th scope="col" class="text-end pe-4">Acciones</th>
                                         </tr>
                                     </thead>
@@ -730,11 +730,11 @@
                 </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÃ“DULO MENÃš DE LA SEMANA (PLANNER) -->
+        <!-- FIN MÓDULO MENÚ DE LA SEMANA (PLANNER) -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÃ“DULO HERO Â· SLIDERS DE INICIO -->
+        <!-- INICIO MÓDULO HERO · SLIDERS DE INICIO -->
         <!-- ====================================================================== -->
 
         <section
@@ -755,7 +755,7 @@
                     </span>
 
                     <p>
-                        Administra las imÃ¡genes que se muestran
+                        Administra las imágenes que se muestran
                         en la portada del sitio web.
                     </p>
 
@@ -791,7 +791,7 @@
 
 
             <!-- ================================================================ -->
-            <!-- INFORMACIÃ“N DE SINCRONIZACIÃ“N -->
+            <!-- INFORMACIÓN DE SINCRONIZACIÓN -->
             <!-- ================================================================ -->
 
             <div class="hero-admin-notice">
@@ -805,11 +805,11 @@
                 <div>
 
                     <strong>
-                        Flujo de publicaciÃ³n
+                        Flujo de publicación
                     </strong>
 
                     <p>
-                        Puedes preparar imÃ¡genes, cambiar su
+                        Puedes preparar imágenes, cambiar su
                         disponibilidad y revisar el resultado antes
                         de publicar los cambios en el sitio web.
                     </p>
@@ -843,7 +843,7 @@
                         class="hero-admin-count"
                         id="heroSliderCount"
                     >
-                        â€”
+                        —
                     </span>
 
                 </div>
@@ -877,7 +877,7 @@
                                 </th>
 
                                 <th class="hero-col-status">
-                                    PublicaciÃ³n
+                                    Publicación
                                 </th>
 
                                 <th class="hero-col-actions">
@@ -918,11 +918,11 @@
 
 
         <!-- ====================================================================== -->
-        <!-- FIN MÃ“DULO HERO (SLIDERS DE INICIO) -->
+        <!-- FIN MÓDULO HERO (SLIDERS DE INICIO) -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÃ“DULO EXPERIENCIAS -->
+        <!-- INICIO MÓDULO EXPERIENCIAS -->
         <!-- ====================================================================== -->
 
         <section
@@ -979,7 +979,7 @@
 
 
             <!-- ================================================================ -->
-            <!-- INFORMACIÃ“N -->
+            <!-- INFORMACIÓN -->
             <!-- ================================================================ -->
 
             <div class="experiencias-admin-notice">
@@ -999,7 +999,7 @@
 
                     <p>
                         Administra la disponibilidad de las experiencias
-                        y publica el contenido nuevo cuando estÃ© listo
+                        y publica el contenido nuevo cuando esté listo
                         para mostrarse en el sitio web.
                     </p>
 
@@ -1033,7 +1033,7 @@
                         class="experiencias-admin-count"
                         id="experienciasCount"
                     >
-                        â€”
+                        —
                     </span>
 
                 </div>
@@ -1064,7 +1064,7 @@
                                 </th>
 
                                 <th class="experiencias-col-status">
-                                    PublicaciÃ³n
+                                    Publicación
                                 </th>
 
                                 <th class="experiencias-col-actions">
@@ -1104,11 +1104,11 @@
         </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÃ“DULO EXPERIENCIAS -->
+        <!-- FIN MÓDULO EXPERIENCIAS -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO MÃ“DULO SUCURSALES -->
+        <!-- INICIO MÓDULO SUCURSALES -->
         <!-- ====================================================================== -->
 
         <section
@@ -1125,7 +1125,7 @@
                 <div class="sucursales-admin-toolbar-info">
 
                     <span class="sucursales-admin-eyebrow">
-                        OperaciÃ³n
+                        Operación
                     </span>
 
                     <p>
@@ -1153,7 +1153,7 @@
 
 
             <!-- ================================================================ -->
-            <!-- INFORMACIÃ“N -->
+            <!-- INFORMACIÓN -->
             <!-- ================================================================ -->
 
             <div class="sucursales-admin-notice">
@@ -1210,7 +1210,7 @@
                         class="sucursales-admin-count"
                         id="sucursalesCount"
                     >
-                        â€”
+                        —
                     </span>
 
                 </div>
@@ -1233,7 +1233,7 @@
                                 </th>
 
                                 <th>
-                                    DirecciÃ³n
+                                    Dirección
                                 </th>
 
                                 <th>
@@ -1241,7 +1241,7 @@
                                 </th>
 
                                 <th>
-                                    TelÃ©fono
+                                    Teléfono
                                 </th>
 
                                 <th class="sucursal-col-status">
@@ -1283,11 +1283,11 @@
         </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN MÃ“DULO SUCURSALES -->
+        <!-- FIN MÓDULO SUCURSALES -->
         <!-- ====================================================================== -->
 
         <!-- ====================================================================== -->
-        <!-- INICIO SECCIÃ“N: PLANTILLAS DEL MENÃš -->
+        <!-- INICIO SECCIÓN: PLANTILLAS DEL MENÚ -->
         <!-- ====================================================================== -->
 
             <section id="seccion-plantillas" class="admin-section admin-module">
@@ -1305,12 +1305,12 @@
                     <div>
 
                         <strong>
-                            DiseÃ±os promocionales
+                            Diseños promocionales
                         </strong>
 
                         <p>
                             Activa, desactiva y personaliza
-                            los estilos disponibles para el MenÃº del dia.
+                            los estilos disponibles para el Menú del dia.
                         </p>
 
                     </div>
@@ -1319,7 +1319,7 @@
 
 
                 <!-- ====================================================== -->
-                <!-- GRID DINÃMICO -->
+                <!-- GRID DINÁMICO -->
                 <!-- ====================================================== -->
 
                 <div id="plantillasAdminGrid" class="plantillas-admin-grid">
@@ -1337,12 +1337,12 @@
             </section>
 
         <!-- ====================================================================== -->
-        <!-- FIN SECCIÃ“N: PLANTILLAS DEL MENÃš -->
+        <!-- FIN SECCIÓN: PLANTILLAS DEL MENÚ -->
         <!-- ====================================================================== -->
 
 
         <!-- ====================================================================== -->
-        <!-- INICIO SECCIÃ“N: GESTIÃ“N DE USUARIOS -->
+        <!-- INICIO SECCIÓN: GESTIÓN DE USUARIOS -->
         <!-- ====================================================================== -->
         <section id="seccion-usuarios" class="admin-section admin-module">
 
@@ -1499,12 +1499,12 @@
 
     </section>
     <!-- ====================================================================== -->
-    <!-- FIN SECCIÃ“N: GESTIÃ“N DE USUARIOS -->
+    <!-- FIN SECCIÓN: GESTIÓN DE USUARIOS -->
     <!-- ====================================================================== -->
 
 
     <!-- ====================================================================== -->
-    <!-- INICIO SECCIÃ“N: AUDITORÃA Y SEGURIDAD -->
+    <!-- INICIO SECCIÓN: AUDITORÍA Y SEGURIDAD -->
     <!-- ====================================================================== -->
     <section id="seccion-auditoria" class="admin-section admin-module">
 
@@ -1558,25 +1558,25 @@
 
         </div>
 
-        <!-- Tabla de AuditorÃ­a -->
+        <!-- Tabla de Auditoría -->
         <div class="table-responsive" style="margin-top: 1rem;">
             <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>ID SesiÃ³n</th>
+                        <th>ID Sesión</th>
                         <th>Usuario</th>
                         <th>Rol</th>
                         <th>IP Origen</th>
                         <th>Navegador / Dispositivo</th>
                         <th>Fecha / Hora Login</th>
                         <th>Estado</th>
-                        <th>AcciÃ³n</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody id="tbody-auditoria">
                     <tr>
                         <td colspan="8" class="text-center">
-                            <i class="fas fa-spinner fa-spin"></i> Cargando registros de auditorÃ­a...
+                            <i class="fas fa-spinner fa-spin"></i> Cargando registros de auditoría...
                         </td>
                     </tr>
                 </tbody>
@@ -1585,7 +1585,7 @@
 
     </section>
     <!-- ====================================================================== -->
-    <!-- FIN SECCIÃ“N: AUDITORÃA Y SEGURIDAD -->
+    <!-- FIN SECCIÓN: AUDITORÍA Y SEGURIDAD -->
     <!-- ====================================================================== -->
 
 
@@ -1622,7 +1622,7 @@
 
                     <div>
                         <span class="producto-modal-eyebrow">
-                            CatÃ¡logo
+                            Catálogo
                         </span>
 
                         <h3 id="modal-title">
@@ -1637,7 +1637,7 @@
                     onclick="ProductosModal.cerrarModal()"
                     aria-label="Cerrar"
                 >
-                    Ã—
+                    ×
                 </button>
 
             </div>
@@ -1656,7 +1656,7 @@
                 >
 
 
-                <!-- INFORMACIÃ“N GENERAL -->
+                <!-- INFORMACIÓN GENERAL -->
 
                 <section class="producto-form-section">
 
@@ -1667,11 +1667,11 @@
                         </div>
 
                         <div>
-                            <h4>InformaciÃ³n General</h4>
+                            <h4>Información General</h4>
 
                             <p>
                                 Datos principales que identifican
-                                el producto en el catÃ¡logo.
+                                el producto en el catálogo.
                             </p>
                         </div>
 
@@ -1720,7 +1720,7 @@
                         <div class="form-group">
 
                             <label for="prod-categoria">
-                                CategorÃ­a
+                                Categoría
                             </label>
 
                             <select
@@ -1737,7 +1737,7 @@
                     <div class="form-group">
 
                         <label for="prod-descripcion">
-                            DescripciÃ³n
+                            Descripción
                         </label>
 
                         <textarea
@@ -1753,7 +1753,7 @@
                     <div class="form-group">
 
                         <label for="prod-imagen">
-                            FotografÃ­a del Producto
+                            Fotografía del Producto
                         </label>
 
                         <div class="producto-file-control">
@@ -1768,7 +1768,7 @@
                         </div>
 
                         <small class="form-help">
-                            JPG, PNG o WEBP. MÃ¡ximo 5 MB.
+                            JPG, PNG o WEBP. Máximo 5 MB.
                         </small>
 
                     </div>
@@ -1793,8 +1793,8 @@
                             <h4>Disponibilidad Inicial</h4>
 
                             <p>
-                                Selecciona dÃ³nde estarÃ¡ disponible
-                                desde su creaciÃ³n.
+                                Selecciona dónde estará disponible
+                                desde su creación.
                             </p>
                         </div>
 
@@ -1908,7 +1908,7 @@
 
                     <div>
                         <span class="producto-modal-eyebrow">
-                            DistribuciÃ³n
+                            Distribución
                         </span>
 
                         <h3 id="modal-sucursales-title">
@@ -1925,7 +1925,7 @@
                     onclick="cerrarModalSucursales()"
                     aria-label="Cerrar"
                 >
-                    Ã—
+                    ×
                 </button>
 
             </div>
@@ -1963,7 +1963,7 @@
                     </h3>
 
                     <p id="modalDescripcionProducto">
-                        Sin descripciÃ³n
+                        Sin descripción
                     </p>
 
                 </div>
@@ -1973,7 +1973,7 @@
 
                     <div>
                         <strong>
-                            ConfiguraciÃ³n por sucursal
+                            Configuración por sucursal
                         </strong>
 
                         <span>
@@ -1990,7 +1990,7 @@
                     class="sucursales-grid"
                 >
                     <!--
-                        Renderizado dinÃ¡micamente desde
+                        Renderizado dinámicamente desde
                         productos-modal.js
                     -->
                 </div>
@@ -2014,11 +2014,11 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES Â· PRODUCTOS -->
+    <!-- FIN MODALES · PRODUCTOS -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODALES Â· MENÃš DE LA SEMANA (PLANNER) -->
+    <!-- INICIO MODALES · MENÚ DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
 
 
@@ -2033,8 +2033,8 @@
                             <i class="fas fa-calendar-week"></i>
                         </div>
                         <div>
-                            <h2>Centro de PlanificaciÃ³n</h2>
-                            <p>Organiza el menÃº semanal para una o varias sucursales.</p>
+                            <h2>Centro de Planificación</h2>
+                            <p>Organiza el menú semanal para una o varias sucursales.</p>
                         </div>
                     </div>
                     <button class="planner-close-btn" onclick="ocultarModalEstatico('plannerWorkspace')">
@@ -2045,45 +2045,45 @@
                 <!-- ================= CONTENIDO ================= -->
                 <div class="planner-workspace-content">
 
-                    <!-- PANEL IZQUIERDO (ConfiguraciÃ³n de la Semana y NavegaciÃ³n) -->
+                    <!-- PANEL IZQUIERDO (Configuración de la Semana y Navegación) -->
                     <aside class="planner-sidebar">
-                        <!-- Identificadores dinÃ¡micos para el tÃ­tulo de la semana y rango de fechas -->
+                        <!-- Identificadores dinámicos para el título de la semana y rango de fechas -->
                         <h3 id="plannerSemanaTitulo">Semana --</h3>
                         <small id="plannerSemanaRango">-- de -- al -- de --</small>
 
-                        <!-- Barra de progreso dinÃ¡mica -->
+                        <!-- Barra de progreso dinámica -->
                         <div class="planner-progress">
                             <span>Progreso</span>
-                            <strong id="plannerProgresoTexto">0 / 7 dÃ­as</strong>
+                            <strong id="plannerProgresoTexto">0 / 7 días</strong>
                             <div class="planner-progress-bar">
                                 <div class="planner-progress-fill" id="plannerProgresoBarra"></div>
                             </div>
                         </div>
 
-                        <!-- Contenedor dinÃ¡mico para las Sucursales -->
+                        <!-- Contenedor dinámico para las Sucursales -->
                         <div class="planner-branch-box">
-                            <label>Aplicar planificaciÃ³n a</label>
+                            <label>Aplicar planificación a</label>
                             <label class="planner-check">
                                 <input type="checkbox" id="chkSucursalesTodas">
                                 Todas
                             </label>
-                            <!-- AquÃ­ inyectaremos dinÃ¡micamente el listado desde tu base de datos multi-sucursal -->
+                            <!-- Aquí inyectaremos dinámicamente el listado desde tu base de datos multi-sucursal -->
                             <div id="plannerSucursalesContainer"></div>
                         </div>
 
-                        <!-- Contenedor dinÃ¡mico para los 7 dÃ­as de la semana -->
+                        <!-- Contenedor dinámico para los 7 días de la semana -->
                         <div class="planner-days" id="plannerDiasContainer">
-                            <!-- Los bloques .planner-day-item se generarÃ¡n dinÃ¡micamente con JS -->
+                            <!-- Los bloques .planner-day-item se generarán dinámicamente con JS -->
                         </div>
                     </aside>
 
-                    <!-- PANEL DERECHO (Editor del DÃ­a Seleccionado) -->
+                    <!-- PANEL DERECHO (Editor del Día Seleccionado) -->
                     <section class="planner-editor">
                         <div class="planner-editor-card">
 
                             <div class="planner-editor-title">
                                 <div>
-                                    <!-- Campos mutables segÃºn el dÃ­a clickeado en la izquierda -->
+                                    <!-- Campos mutables según el día clickeado en la izquierda -->
                                     <h2 id="plannerDiaNombre">Lunes</h2>
                                     <small id="plannerDiaFecha">-- de -- 2026</small>
                                 </div>
@@ -2093,7 +2093,7 @@
                             <!-- ESTADO DEL SERVICIO -->
                             <div class="planner-section">
                                 <h4>Estado del servicio</h4>
-                                <p>Selecciona cÃ³mo operarÃ¡ este dÃ­a.</p>
+                                <p>Selecciona cómo operará este día.</p>
                                 <div class="planner-state-grid" id="plannerEstadoGrid">
                                     <div class="planner-state-card active" data-estado="ACTIVO">
                                         <i class="fas fa-utensils"></i>
@@ -2110,12 +2110,12 @@
                                 </div>
                             </div>
 
-                            <!-- BLOQUE: PLATILLO DEL CATÃLOGO -->
+                            <!-- BLOQUE: PLATILLO DEL CATÁLOGO -->
                             <div class="planner-section" id="bloquePlatillo">
-                                <h4>Platillo del catÃ¡logo</h4>
-                                <p>Selecciona el platillo base para este dÃ­a.</p>
+                                <h4>Platillo del catálogo</h4>
+                                <p>Selecciona el platillo base para este día.</p>
                                 <div class="planner-product-selector">
-                                    <!-- Limpio de options estÃ¡ticas; se llena dinÃ¡micamente desde el CatÃ¡logo Maestro -->
+                                    <!-- Limpio de options estáticas; se llena dinámicamente desde el Catálogo Maestro -->
                                     <select id="planner-product-select">
                                         <option value="">Seleccione un platillo...</option>
                                     </select>
@@ -2130,29 +2130,29 @@
                                 <div class="planner-preview-info">
                                     <h3 id="plannerPreviewNombre">Seleccione un platillo</h3>
                                     <span id="plannerPreviewPrecio">--</span>
-                                    <p id="plannerPreviewGuarniciones">Sin informaciÃ³n</p>
+                                    <p id="plannerPreviewGuarniciones">Sin información</p>
                                 </div>
                             </div>
 
-                            <!-- PERSONALIZACIÃ“N DEL DÃA -->
+                            <!-- PERSONALIZACIÓN DEL DÍA -->
                             <div class="planner-section" id="bloquePersonalizacion">
                                 <div class="planner-section-header">
                                     <div>
-                                        <h4>PersonalizaciÃ³n del DÃ­a</h4>
-                                        <p>Modifica solamente lo necesario. Si no realizas cambios, el sistema utilizarÃ¡
-                                            automÃ¡ticamente la informaciÃ³n del CatÃ¡logo Maestro.</p>
+                                        <h4>Personalización del Día</h4>
+                                        <p>Modifica solamente lo necesario. Si no realizas cambios, el sistema utilizará
+                                            automáticamente la información del Catálogo Maestro.</p>
                                     </div>
-                                    <span id="plannerBadge" class="planner-origin-badge catalogo">ðŸŸ¢ CatÃ¡logo Maestro</span>
+                                    <span id="plannerBadge" class="planner-origin-badge catalogo">🟢 Catálogo Maestro</span>
                                 </div>
 
                                 <div class="planner-options">
                                     <label class="planner-option">
                                         <input type="checkbox" id="chkGuarniciones">
-                                        <span>Cambiar guarniciones solamente para este dÃ­a</span>
+                                        <span>Cambiar guarniciones solamente para este día</span>
                                     </label>
                                     <label class="planner-option">
                                         <input type="checkbox" id="chkPrecio">
-                                        <span>Cambiar precio solamente para este dÃ­a</span>
+                                        <span>Cambiar precio solamente para este día</span>
                                     </label>
                                 </div>
 
@@ -2160,18 +2160,18 @@
 
                                 <div class="planner-custom-fields">
                                     <div class="planner-field planner-hidden" id="plannerGuarnicionField">
-                                        <label>Guarniciones especÃ­ficas</label>
-                                        <input type="text" id="plannerChipInput" placeholder="Escriba una guarniciÃ³n y presione Enter">
+                                        <label>Guarniciones específicas</label>
+                                        <input type="text" id="plannerChipInput" placeholder="Escriba una guarnición y presione Enter">
                                         <div id="plannerGuarnicionesSugerencias" class="planner-guarniciones-sugerencias planner-hidden"></div>
                                         <div id="plannerChipContainer" class="planner-chip-container"></div>
-                                        <small>Si no agrega guarniciones, se utilizarÃ¡n las del CatÃ¡logo Maestro.</small>
+                                        <small>Si no agrega guarniciones, se utilizarán las del Catálogo Maestro.</small>
                                     </div>
 
 
                                     <div class="planner-field planner-hidden" id="plannerPrecioField">
                                         <label>Precio personalizado</label>
                                         <input type="number" id="plannerInputPrecio" step="0.01" placeholder="0.00">
-                                        <small>Solo se utilizarÃ¡ para esta planificaciÃ³n.</small>
+                                        <small>Solo se utilizará para esta planificación.</small>
                                     </div>
                                 </div>
 
@@ -2189,15 +2189,15 @@
 
                                     <div>
                                         <span class="planner-artwork-eyebrow">
-                                            ðŸŽ¨ DiseÃ±o promocional
+                                            🎨 Diseño promocional
                                         </span>
 
                                         <h3>
-                                            Arte del MenÃº Ejecutivo
+                                            Arte del Menú Ejecutivo
                                         </h3>
 
                                         <p>
-                                            Elige cÃ³mo se mostrarÃ¡ este platillo
+                                            Elige cómo se mostrará este platillo
                                             en el sitio web y piezas promocionales.
                                         </p>
                                     </div>
@@ -2220,7 +2220,7 @@
                                 <div class="planner-template-section">
 
                                     <label class="planner-template-label">
-                                        Plantilla del dÃ­a
+                                        Plantilla del día
                                     </label>
 
                                     <div
@@ -2262,7 +2262,7 @@
                                     <div>
                                         <strong>Vista previa</strong>
                                         <small>
-                                            Se actualiza con la informaciÃ³n del dÃ­a.
+                                            Se actualiza con la información del día.
                                         </small>
                                     </div>
 
@@ -2275,14 +2275,14 @@
 
                                 <div class="planner-artwork-empty">
 
-                                    <span>ðŸŽ¨</span>
+                                    <span>🎨</span>
 
                                     <strong>
                                         Selecciona una plantilla
                                     </strong>
 
                                     <p>
-                                        AquÃ­ verÃ¡s la presentaciÃ³n
+                                        Aquí verás la presentación
                                         promocional del platillo.
                                     </p>
 
@@ -2308,11 +2308,11 @@
                                 <i class="fas fa-umbrella-beach"></i>
 
                                 <div>
-                                    <h4>DÃ­a Feriado</h4>
+                                    <h4>Día Feriado</h4>
 
                                     <p>
-                                        Este dÃ­a se guardarÃ¡ como feriado
-                                        y no tendrÃ¡ platillo asignado.
+                                        Este día se guardará como feriado
+                                        y no tendrá platillo asignado.
                                     </p>
                                 </div>
 
@@ -2333,8 +2333,8 @@
                                     <h4>Local Cerrado</h4>
 
                                     <p>
-                                        Este dÃ­a se guardarÃ¡ como cerrado
-                                        y no tendrÃ¡ servicio de menÃº.
+                                        Este día se guardará como cerrado
+                                        y no tendrá servicio de menú.
                                     </p>
                                 </div>
 
@@ -2388,16 +2388,16 @@
 
                     <h3>
                         <i class="fas fa-book-open"></i>
-                        CatÃ¡logo Maestro de Platos
+                        Catálogo Maestro de Platos
                     </h3>
 
                     <button
                         type="button"
                         class="close-modal-btn"
                         onclick="ocultarModalEstatico('modalCatalogo')"
-                        aria-label="Cerrar catÃ¡logo"
+                        aria-label="Cerrar catálogo"
                     >
-                        Ã—
+                        ×
                     </button>
 
                 </div>
@@ -2433,7 +2433,7 @@
 
                     <div class="catalogo-empty">
 
-                        AÃºn no existen platillos registrados.
+                        Aún no existen platillos registrados.
 
                     </div>
 
@@ -2461,7 +2461,7 @@
 
                 <button type="button" id="cerrarModalNuevoPlatillo" class="close-modal-btn">
 
-                    Ã—
+                    ×
 
                 </button>
 
@@ -2513,7 +2513,7 @@
 
                 <button type="button" onclick="ocultarModalEstatico('modalEmojis')" class="close-modal-btn">
 
-                    Ã—
+                    ×
 
                 </button>
 
@@ -2571,7 +2571,7 @@
                     <h3>Planificar Semana</h3>
                     <p>
                         Selecciona una semana disponible
-                        para crear su planificaciÃ³n.
+                        para crear su planificación.
                     </p>
                 </div>
 
@@ -2612,7 +2612,7 @@
                     onclick="PlannerActions.crearSemanaSeleccionada()"
                     disabled>
 
-                    Crear PlanificaciÃ³n
+                    Crear Planificación
 
                 </button>
 
@@ -2629,12 +2629,12 @@
 
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES Â· MENÃš DE LA SEMANA (PLANNER) -->
+    <!-- FIN MODALES · MENÚ DE LA SEMANA (PLANNER) -->
     <!-- ====================================================================== -->
 
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODAL Â· NUEVO SLIDER -->
+    <!-- INICIO MODAL · NUEVO SLIDER -->
     <!-- ====================================================================== -->
 
     <div
@@ -2722,7 +2722,7 @@
                             </label>
 
                             <p class="hero-slider-field-help">
-                                Selecciona una fotografÃ­a limpia,
+                                Selecciona una fotografía limpia,
                                 sin textos ni botones incorporados.
                             </p>
 
@@ -2751,8 +2751,8 @@
 
 
                                 <small>
-                                    Se recomiendan fotografÃ­as
-                                    panorÃ¡micas de alta calidad.
+                                    Se recomiendan fotografías
+                                    panorámicas de alta calidad.
                                 </small>
 
                             </label>
@@ -2813,7 +2813,7 @@
 
 
                         <!-- ================================================== -->
-                        <!-- INFORMACIÃ“N -->
+                        <!-- INFORMACIÓN -->
                         <!-- ================================================== -->
 
                         <div class="hero-slider-modal-info">
@@ -2821,8 +2821,8 @@
                             <i class="fas fa-circle-info"></i>
 
                             <p>
-                                El nuevo slider se agregarÃ¡ al final
-                                de la secuencia y quedarÃ¡ como
+                                El nuevo slider se agregará al final
+                                de la secuencia y quedará como
                                 <strong>borrador</strong> hasta que
                                 publiques los cambios.
                             </p>
@@ -2869,11 +2869,11 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODALES Â· HERO (SLIDERS DE INICIO) -->
+    <!-- FIN MODALES · HERO (SLIDERS DE INICIO) -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODAL Â· NUEVA EXPERIENCIA -->
+    <!-- INICIO MODAL · NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
     <div
@@ -2932,17 +2932,17 @@
 
                     <div class="experiencia-modal-body">
 
-                        <!-- TÃTULO -->
+                        <!-- TÍTULO -->
                         <div class="experiencia-field">
 
                             <label for="experiencia-titulo">
-                                TÃ­tulo de la experiencia
+                                Título de la experiencia
                                 <span>*</span>
                             </label>
 
                             <p class="experiencia-field-help">
-                                Escribe un tÃ­tulo breve que acompaÃ±e
-                                la fotografÃ­a en el sitio web.
+                                Escribe un título breve que acompañe
+                                la fotografía en el sitio web.
                             </p>
 
                             <input
@@ -2961,12 +2961,12 @@
                         <div class="experiencia-field">
 
                             <label for="experiencia-imagen">
-                                FotografÃ­a
+                                Fotografía
                                 <span>*</span>
                             </label>
 
                             <p class="experiencia-field-help">
-                                Selecciona una fotografÃ­a real de
+                                Selecciona una fotografía real de
                                 la experiencia en Conception Coffee.
                             </p>
 
@@ -2989,7 +2989,7 @@
                                 </span>
 
                                 <small>
-                                    Utiliza una fotografÃ­a nÃ­tida
+                                    Utiliza una fotografía nítida
                                     y de buena calidad.
                                 </small>
 
@@ -3045,16 +3045,16 @@
                         </div>
 
 
-                        <!-- INFORMACIÃ“N -->
+                        <!-- INFORMACIÓN -->
                         <div class="experiencia-modal-info">
 
                             <i class="fas fa-circle-info"></i>
 
                             <p>
-                                La experiencia se guardarÃ¡ como
+                                La experiencia se guardará como
                                 <strong>borrador</strong>.
-                                PodrÃ¡s publicarla cuando el contenido
-                                estÃ© listo para mostrarse en el sitio.
+                                Podrás publicarla cuando el contenido
+                                esté listo para mostrarse en el sitio.
                             </p>
 
                         </div>
@@ -3094,11 +3094,11 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODAL Â· NUEVA EXPERIENCIA -->
+    <!-- FIN MODAL · NUEVA EXPERIENCIA -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- INICIO MODAL Â· SUCURSAL -->
+    <!-- INICIO MODAL · SUCURSAL -->
     <!-- ====================================================================== -->
 
     <div
@@ -3171,7 +3171,7 @@
                 onsubmit="guardarSucursal(event)"
             >
 
-                <!-- ID Â· vacÃ­o significa CREAR -->
+                <!-- ID · vacío significa CREAR -->
                 <input
                     type="hidden"
                     id="sucursal-id"
@@ -3192,7 +3192,7 @@
                         </label>
 
                         <p>
-                            Utiliza un nombre corto y fÃ¡cil de identificar.
+                            Utiliza un nombre corto y fácil de identificar.
                         </p>
 
                         <input
@@ -3209,13 +3209,13 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- DIRECCIÃ“N -->
+                    <!-- DIRECCIÓN -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalDireccion">
-                            DirecciÃ³n
+                            Dirección
                         </label>
 
                         <input
@@ -3236,14 +3236,14 @@
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalHorario">
-                            Horario de atenciÃ³n
+                            Horario de atención
                         </label>
 
                         <input
                             type="text"
                             id="nuevaSucursalHorario"
                             class="sucursal-input"
-                            placeholder="Ej. Lun - Dom Â· 7:00 AM - 8:00 PM"
+                            placeholder="Ej. Lun - Dom · 7:00 AM - 8:00 PM"
                             maxlength="255"
                         >
 
@@ -3251,13 +3251,13 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- TELÃ‰FONO -->
+                    <!-- TELÉFONO -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalTelefono">
-                            TelÃ©fono / WhatsApp
+                            Teléfono / WhatsApp
                         </label>
 
                         <input
@@ -3284,7 +3284,7 @@
 
                         <p>
                             Puedes guardar la URL utilizada para mostrar
-                            la ubicaciÃ³n de esta sede.
+                            la ubicación de esta sede.
                         </p>
 
                         <input
@@ -3298,18 +3298,18 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- FOTOGRAFÃA -->
+                    <!-- FOTOGRAFÍA -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-field">
 
                         <label for="nuevaSucursalImagen">
-                            FotografÃ­a de la sucursal
+                            Fotografía de la sucursal
                         </label>
 
                         <p>
-                            En ediciÃ³n, dejar este campo vacÃ­o conserva
-                            la fotografÃ­a actual.
+                            En edición, dejar este campo vacío conserva
+                            la fotografía actual.
                         </p>
 
 
@@ -3328,7 +3328,7 @@
                             </div>
 
                             <strong>
-                                Seleccionar fotografÃ­a
+                                Seleccionar fotografía
                             </strong>
 
                             <span>
@@ -3382,7 +3382,7 @@
 
 
                     <!-- ==================================================== -->
-                    <!-- INFORMACIÃ“N -->
+                    <!-- INFORMACIÓN -->
                     <!-- ==================================================== -->
 
                     <div class="sucursal-modal-info">
@@ -3393,7 +3393,7 @@
                         ></i>
 
                         <p id="sucursalModalInfoTexto">
-                            La nueva sucursal se registrarÃ¡
+                            La nueva sucursal se registrará
                             <strong>activa</strong>.
                         </p>
 
@@ -3443,10 +3443,10 @@
 
 
     <!-- ====================================================================== -->
-    <!-- FIN MODAL Â· NUEVA SUCURSAL -->
+    <!-- FIN MODAL · NUEVA SUCURSAL -->
     <!-- ====================================================================== -->
     <!-- ====================================================================== -->
-    <!-- MODAL CONFIGURACIÃ“N DE PLANTILLA -->
+    <!-- MODAL CONFIGURACIÓN DE PLANTILLA -->
     <!-- ====================================================================== -->
 
     <div
@@ -3465,7 +3465,7 @@
                 <div>
                     <span class="plantilla-config-eyebrow">
                         <i class="fas fa-palette"></i>
-                        DiseÃ±o promocional
+                        Diseño promocional
                     </span>
 
                     <h2 id="plantillaConfigTitulo">
@@ -3569,7 +3569,7 @@
                             ></span>
 
                             <span class="plantilla-switch-label">
-                                Mostrar telÃ©fono
+                                Mostrar teléfono
                             </span>
 
                         </label>
@@ -3588,7 +3588,7 @@
                             ></span>
 
                             <span class="plantilla-switch-label">
-                                Mostrar direcciÃ³n
+                                Mostrar dirección
                             </span>
 
                         </label>
@@ -3683,7 +3683,7 @@
                     id="btnRestaurarConfigPlantilla"
                 >
                     <i class="fas fa-rotate-left"></i>
-                    Restaurar diseÃ±o
+                    Restaurar diseño
                 </button>
 
 
@@ -3707,7 +3707,7 @@
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- MODAL Â· CREAR / EDITAR USUARIO -->
+    <!-- MODAL · CREAR / EDITAR USUARIO -->
     <!-- ====================================================================== -->
 
     <div
@@ -3785,7 +3785,7 @@
                 onsubmit="guardarUsuario(event)"
             >
 
-                <!-- VacÃ­o = crear / con valor = editar -->
+                <!-- Vacío = crear / con valor = editar -->
                 <input
                     type="hidden"
                     id="usuario-id"
@@ -3808,7 +3808,7 @@
                                 <strong>Identidad</strong>
 
                                 <p>
-                                    InformaciÃ³n principal de la cuenta.
+                                    Información principal de la cuenta.
                                 </p>
                             </div>
 
@@ -3828,7 +3828,7 @@
                                 class="usuario-input"
                                 maxlength="150"
                                 autocomplete="name"
-                                placeholder="Ej. Carlos PÃ©rez"
+                                placeholder="Ej. Carlos Pérez"
                                 required
                             >
 
@@ -3838,7 +3838,7 @@
                         <div class="usuario-field">
 
                             <label for="usr-correo">
-                                Correo electrÃ³nico
+                                Correo electrónico
                                 <span>*</span>
                             </label>
 
@@ -3874,7 +3874,7 @@
                                 <strong>Acceso</strong>
 
                                 <p>
-                                    Define una contraseÃ±a segura para
+                                    Define una contraseña segura para
                                     la nueva cuenta.
                                 </p>
                             </div>
@@ -3885,7 +3885,7 @@
                         <div class="usuario-field">
 
                             <label for="usr-password">
-                                ContraseÃ±a
+                                Contraseña
                                 <span>*</span>
                             </label>
 
@@ -3897,7 +3897,7 @@
                                     id="usr-password"
                                     class="usuario-input"
                                     autocomplete="new-password"
-                                    placeholder="Crea una contraseÃ±a segura"
+                                    placeholder="Crea una contraseña segura"
                                 >
 
 
@@ -3905,7 +3905,7 @@
                                     type="button"
                                     class="usuario-password-toggle"
                                     id="toggleUsuarioPassword"
-                                    aria-label="Mostrar contraseÃ±a"
+                                    aria-label="Mostrar contraseña"
                                     aria-pressed="false"
                                 >
                                     <i
@@ -3960,27 +3960,27 @@
 
                                 <li data-password-rule="length">
                                     <i class="fas fa-circle"></i>
-                                    MÃ­nimo 10 caracteres
+                                    Mínimo 10 caracteres
                                 </li>
 
                                 <li data-password-rule="uppercase">
                                     <i class="fas fa-circle"></i>
-                                    Una letra mayÃºscula
+                                    Una letra mayúscula
                                 </li>
 
                                 <li data-password-rule="lowercase">
                                     <i class="fas fa-circle"></i>
-                                    Una letra minÃºscula
+                                    Una letra minúscula
                                 </li>
 
                                 <li data-password-rule="number">
                                     <i class="fas fa-circle"></i>
-                                    Un nÃºmero
+                                    Un número
                                 </li>
 
                                 <li data-password-rule="special">
                                     <i class="fas fa-circle"></i>
-                                    Un carÃ¡cter especial
+                                    Un carácter especial
                                 </li>
 
                             </ul>
@@ -4140,11 +4140,11 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODAL Â· USUARIO -->
+    <!-- FIN MODAL · USUARIO -->
     <!-- ====================================================================== -->
 
     <!-- ====================================================================== -->
-    <!-- MODAL Â· MI CUENTA -->
+    <!-- MODAL · MI CUENTA -->
     <!-- ====================================================================== -->
 
     <div
@@ -4223,7 +4223,7 @@
                             <strong>Perfil</strong>
 
                             <p>
-                                InformaciÃ³n asociada a tu sesiÃ³n.
+                                Información asociada a tu sesión.
                             </p>
                         </div>
 
@@ -4237,7 +4237,7 @@
                             <span>Nombre</span>
 
                             <strong id="miCuentaNombre">
-                                â€”
+                                —
                             </strong>
 
                         </div>
@@ -4248,7 +4248,7 @@
                             <span>Correo</span>
 
                             <strong id="miCuentaCorreo">
-                                â€”
+                                —
                             </strong>
 
                         </div>
@@ -4259,7 +4259,7 @@
                             <span>Rol</span>
 
                             <strong id="miCuentaRol">
-                                â€”
+                                —
                             </strong>
 
                         </div>
@@ -4270,7 +4270,7 @@
                             <span>Sucursal</span>
 
                             <strong id="miCuentaSucursal">
-                                â€”
+                                —
                             </strong>
 
                         </div>
@@ -4294,7 +4294,7 @@
                             <strong>Seguridad</strong>
 
                             <p>
-                                Actualiza tu contraseÃ±a de acceso.
+                                Actualiza tu contraseña de acceso.
                             </p>
                         </div>
 
@@ -4303,12 +4303,12 @@
 
                     <form id="formCambiarPassword">
 
-                        <!-- CONTRASEÃ‘A ACTUAL -->
+                        <!-- CONTRASEÑA ACTUAL -->
 
                         <div class="cuenta-field">
 
                             <label for="cuentaPasswordActual">
-                                ContraseÃ±a actual
+                                Contraseña actual
                                 <span>*</span>
                             </label>
 
@@ -4327,7 +4327,7 @@
                                     type="button"
                                     class="cuenta-password-toggle"
                                     data-password-target="cuentaPasswordActual"
-                                    aria-label="Mostrar contraseÃ±a actual"
+                                    aria-label="Mostrar contraseña actual"
                                     aria-pressed="false"
                                 >
                                     <i
@@ -4341,12 +4341,12 @@
                         </div>
 
 
-                        <!-- NUEVA CONTRASEÃ‘A -->
+                        <!-- NUEVA CONTRASEÑA -->
 
                         <div class="cuenta-field">
 
                             <label for="cuentaPasswordNueva">
-                                Nueva contraseÃ±a
+                                Nueva contraseña
                                 <span>*</span>
                             </label>
 
@@ -4365,7 +4365,7 @@
                                     type="button"
                                     class="cuenta-password-toggle"
                                     data-password-target="cuentaPasswordNueva"
-                                    aria-label="Mostrar nueva contraseÃ±a"
+                                    aria-label="Mostrar nueva contraseña"
                                     aria-pressed="false"
                                 >
                                     <i
@@ -4379,12 +4379,12 @@
                         </div>
 
 
-                        <!-- CONFIRMACIÃ“N -->
+                        <!-- CONFIRMACIÓN -->
 
                         <div class="cuenta-field">
 
                             <label for="cuentaPasswordConfirmar">
-                                Confirmar nueva contraseÃ±a
+                                Confirmar nueva contraseña
                                 <span>*</span>
                             </label>
 
@@ -4403,7 +4403,7 @@
                                     type="button"
                                     class="cuenta-password-toggle"
                                     data-password-target="cuentaPasswordConfirmar"
-                                    aria-label="Mostrar confirmaciÃ³n"
+                                    aria-label="Mostrar confirmación"
                                     aria-pressed="false"
                                 >
                                     <i
@@ -4447,27 +4447,27 @@
 
                                 <li data-cuenta-rule="length">
                                     <i class="fas fa-circle"></i>
-                                    MÃ­nimo 10 caracteres
+                                    Mínimo 10 caracteres
                                 </li>
 
                                 <li data-cuenta-rule="uppercase">
                                     <i class="fas fa-circle"></i>
-                                    Una mayÃºscula
+                                    Una mayúscula
                                 </li>
 
                                 <li data-cuenta-rule="lowercase">
                                     <i class="fas fa-circle"></i>
-                                    Una minÃºscula
+                                    Una minúscula
                                 </li>
 
                                 <li data-cuenta-rule="number">
                                     <i class="fas fa-circle"></i>
-                                    Un nÃºmero
+                                    Un número
                                 </li>
 
                                 <li data-cuenta-rule="special">
                                     <i class="fas fa-circle"></i>
-                                    Un carÃ¡cter especial
+                                    Un carácter especial
                                 </li>
 
                             </ul>
@@ -4515,7 +4515,7 @@
                     ></i>
 
                     <span>
-                        Cambiar contraseÃ±a
+                        Cambiar contraseña
                     </span>
                 </button>
 
@@ -4526,7 +4526,7 @@
     </div>
 
     <!-- ====================================================================== -->
-    <!-- FIN MODAL Â· MI CUENTA -->
+    <!-- FIN MODAL · MI CUENTA -->
     <!-- ====================================================================== -->
 
 
@@ -4538,20 +4538,20 @@
 
 
 <!-- ========================================================= -->
-<!-- CORE DEL SISTEMA (ConfiguraciÃ³n y utilidades globales) -->
+<!-- CORE DEL SISTEMA (Configuración y utilidades globales) -->
 <!-- ========================================================= -->
 <script src="js/core/config.js"></script>
 <script src="js/core/utils.js"></script>
 
 
 <!-- ========================================================= -->
-<!-- MÃ“DULO PRODUCTOS -->
+<!-- MÓDULO PRODUCTOS -->
 <!-- ========================================================= -->
 
 <!-- Acciones -->
 <script src="js/productos/productos-actions.js"></script>
 
-<!-- ComunicaciÃ³n con Backend -->
+<!-- Comunicación con Backend -->
 <script src="js/productos/productos-api.js"></script>
 
 <!-- Componentes -->
@@ -4564,10 +4564,10 @@
 
 
 <!-- ========================================================= -->
-<!-- MÃ“DULO PLANNER -->
+<!-- MÓDULO PLANNER -->
 <!-- ========================================================= -->
 
-<!-- ComunicaciÃ³n con Backend -->
+<!-- Comunicación con Backend -->
 <script src="js/planner/planner-api.js"></script>
 <script src="js/plantillas/plantillas-admin.js"></script>
 
@@ -4611,31 +4611,31 @@
 <script src="js/planner/planner.js"></script>
 
 <!-- ========================================================= -->
-<!-- MÃ“DULO HERO (SLIDERS DE INICIO) -->
+<!-- MÓDULO HERO (SLIDERS DE INICIO) -->
 <!-- ========================================================= -->
 <script src="js/hero/hero.js"></script>
 
 
 <!-- ========================================================= -->
-<!-- MÃ“DULO EXPERIENCIAS -->
+<!-- MÓDULO EXPERIENCIAS -->
 <!-- ========================================================= -->
 <script src="js/experiencias/experiencias.js"></script>
 
 <!-- ========================================================= -->
-<!-- MÃ“DULO SUCURSALES -->
+<!-- MÓDULO SUCURSALES -->
 <!-- ========================================================= -->
 
 <script src="js/sucursales/sucursales.js"></script>
 
 <!-- ========================================================= -->
-<!-- MÃ“DULO DE USUARIOS -->
+<!-- MÓDULO DE USUARIOS -->
 <!-- ========================================================= -->
 
 <script src="js/usuarios/usuarios.js"></script>
 <script src="js/usuarios/auditoria.js"></script>
 
 <!-- ========================================================= -->
-<!-- LIBRERÃAS EXTERNAS -->
+<!-- LIBRERÍAS EXTERNAS -->
 <!-- ========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

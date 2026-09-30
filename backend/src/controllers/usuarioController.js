@@ -1,4 +1,4 @@
-﻿    const crypto = require('crypto'); // MÃ³dulo nativo de Node.js para generar UUIDs/JTIs
+﻿    const crypto = require('crypto'); // Módulo nativo de Node.js para generar UUIDs/JTIs
     const bcrypt = require('bcryptjs');
     const jwt = require('jsonwebtoken');
     const UsuarioModel = require('../models/usuarioModel');
@@ -8,18 +8,18 @@
 
     if (!JWT_SECRET) {
         throw new Error(
-            'JWT_SECRET no estÃ¡ configurado en las variables de entorno.'
+            'JWT_SECRET no está configurado en las variables de entorno.'
         );
     }
 
 
-    // PolÃ­tica de contraseÃ±a del sistema:
-    // mÃ­nimo 10 caracteres, mayÃºscula, minÃºscula,
-    // nÃºmero y carÃ¡cter especial permitido.
+    // Política de contraseña del sistema:
+    // mínimo 10 caracteres, mayúscula, minúscula,
+    // número y carácter especial permitido.
     const regexPasswordSegura =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#-]).{10,}$/;
 
-    // Mapa de duraciones de sesiÃ³n segÃºn el Rol (en horas)
+    // Mapa de duraciones de sesión según el Rol (en horas)
     const DURACION_SESION_ROL = {
         admin: '8h',
         gerente: '10h',
@@ -30,7 +30,7 @@
     };
 
     const usuarioController = {
-        // â”€â”€ 1. LISTAR USUARIOS â”€â”€
+        // ── 1. LISTAR USUARIOS ──
         obtenerTodos: async (req, res) => {
 
             try {
@@ -60,7 +60,7 @@
 
         },
 
-        // â”€â”€ 2. REGISTRAR USUARIO â”€â”€
+        // ── 2. REGISTRAR USUARIO ──
         registrar: async (req, res) => {
 
             try {
@@ -106,7 +106,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'Nombre, correo, contraseÃ±a y rol son obligatorios.'
+                            'Nombre, correo, contraseña y rol son obligatorios.'
                     });
 
                 }
@@ -131,14 +131,14 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'El rol seleccionado no es vÃ¡lido.'
+                            'El rol seleccionado no es válido.'
                     });
 
                 }
 
 
                 // ==========================================
-                // VALIDAR CONTRASEÃ‘A
+                // VALIDAR CONTRASEÑA
                 // ==========================================
 
                 if (!regexPasswordSegura.test(password)) {
@@ -146,14 +146,14 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'La contraseÃ±a debe tener mÃ­nimo 10 caracteres, una mayÃºscula, una minÃºscula, un nÃºmero y un carÃ¡cter especial.'
+                            'La contraseña debe tener mínimo 10 caracteres, una mayúscula, una minúscula, un número y un carácter especial.'
                     });
 
                 }
 
 
                 // ==========================================
-                // VALIDAR SUCURSAL SEGÃšN ROL
+                // VALIDAR SUCURSAL SEGÚN ROL
                 // ==========================================
 
                 const rolesConSucursal = [
@@ -181,14 +181,14 @@
                         return res.status(400).json({
                             success: false,
                             message:
-                                'Este rol requiere una sucursal vÃ¡lida.'
+                                'Este rol requiere una sucursal válida.'
                         });
 
                     }
 
 
                     // ==================================================
-                    // COMPROBAR QUE LA SUCURSAL EXISTA Y ESTÃ‰ ACTIVA
+                    // COMPROBAR QUE LA SUCURSAL EXISTA Y ESTÉ ACTIVA
                     // ==================================================
 
                     const sucursal =
@@ -242,14 +242,14 @@
                     return res.status(409).json({
                         success: false,
                         message:
-                            'El correo electrÃ³nico ya estÃ¡ registrado.'
+                            'El correo electrónico ya está registrado.'
                     });
 
                 }
 
 
                 // ==========================================
-                // HASH DE CONTRASEÃ‘A
+                // HASH DE CONTRASEÑA
                 // ==========================================
 
                 const passwordHash =
@@ -301,7 +301,7 @@
 
 
                 // ==========================================
-                // PROTECCIÃ“N EXTRA POR UNIQUE(correo)
+                // PROTECCIÓN EXTRA POR UNIQUE(correo)
                 // ==========================================
 
                 if (error.code === 'ER_DUP_ENTRY') {
@@ -309,7 +309,7 @@
                     return res.status(409).json({
                         success: false,
                         message:
-                            'El correo electrÃ³nico ya estÃ¡ registrado.'
+                            'El correo electrónico ya está registrado.'
                     });
 
                 }
@@ -352,7 +352,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'El usuario indicado no es vÃ¡lido.'
+                            'El usuario indicado no es válido.'
                     });
 
                 }
@@ -374,7 +374,7 @@
                     return res.status(404).json({
                         success: false,
                         message:
-                            'No se encontrÃ³ el usuario.'
+                            'No se encontró el usuario.'
                     });
 
                 }
@@ -450,7 +450,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'El correo electrÃ³nico no tiene un formato vÃ¡lido.'
+                            'El correo electrónico no tiene un formato válido.'
                     });
 
                 }
@@ -479,7 +479,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'El rol seleccionado no es vÃ¡lido.'
+                            'El rol seleccionado no es válido.'
                     });
 
                 }
@@ -549,7 +549,7 @@
 
 
                 // ==================================================
-                // VALIDAR SUCURSAL SEGÃšN ROL
+                // VALIDAR SUCURSAL SEGÚN ROL
                 // ==================================================
 
                 const rolesConSucursal = [
@@ -586,7 +586,7 @@
                         return res.status(400).json({
                             success: false,
                             message:
-                                'Este rol requiere una sucursal vÃ¡lida.'
+                                'Este rol requiere una sucursal válida.'
                         });
 
                     }
@@ -645,7 +645,7 @@
                     return res.status(409).json({
                         success: false,
                         message:
-                            'El correo electrÃ³nico ya estÃ¡ registrado.'
+                            'El correo electrónico ya está registrado.'
                     });
 
                 }
@@ -692,8 +692,8 @@
                 // de OTRA cuenta, revocamos sus sesiones abiertas.
                 //
                 // El middleware ya consulta rol/sucursal actuales,
-                // pero obligar a iniciar sesiÃ³n nuevamente deja
-                // explÃ­cito el cambio de permisos.
+                // pero obligar a iniciar sesión nuevamente deja
+                // explícito el cambio de permisos.
                 // ==================================================
 
                 const permisosCambiaron =
@@ -744,7 +744,7 @@
                 );
 
 
-                // ProtecciÃ³n adicional por UNIQUE(correo)
+                // Protección adicional por UNIQUE(correo)
                 if (
                     error.code ===
                     'ER_DUP_ENTRY'
@@ -753,7 +753,7 @@
                     return res.status(409).json({
                         success: false,
                         message:
-                            'El correo electrÃ³nico ya estÃ¡ registrado.'
+                            'El correo electrónico ya está registrado.'
                     });
 
                 }
@@ -772,7 +772,7 @@
 
 
 
-        // â”€â”€ CAMBIAR ESTADO DE USUARIO â”€â”€
+        // ── CAMBIAR ESTADO DE USUARIO ──
         cambiarEstado: async (req, res) => {
 
             try {
@@ -796,7 +796,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'El usuario indicado no es vÃ¡lido.'
+                            'El usuario indicado no es válido.'
                     });
 
                 }
@@ -819,7 +819,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'El estado indicado no es vÃ¡lido.'
+                            'El estado indicado no es válido.'
                     });
 
                 }
@@ -859,7 +859,7 @@
                     return res.status(404).json({
                         success: false,
                         message:
-                            'No se encontrÃ³ el usuario.'
+                            'No se encontró el usuario.'
                     });
 
                 }
@@ -920,7 +920,7 @@
 
 
 
-        // â”€â”€ 3. LOGIN DE USUARIOS â”€â”€
+        // ── 3. LOGIN DE USUARIOS ──
         login: async (req, res) => {
 
             try {
@@ -946,7 +946,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'Ingresa correo y contraseÃ±a.'
+                            'Ingresa correo y contraseña.'
                     });
 
                 }
@@ -962,8 +962,8 @@
                     );
 
 
-                // Mismo mensaje si no existe o estÃ¡ inactivo.
-                // Evita revelar quÃ© correos existen.
+                // Mismo mensaje si no existe o está inactivo.
+                // Evita revelar qué correos existen.
                 if (
                     !usuario ||
                     Number(usuario.activo) !== 1
@@ -972,14 +972,14 @@
                     return res.status(401).json({
                         success: false,
                         message:
-                            'Correo o contraseÃ±a incorrectos.'
+                            'Correo o contraseña incorrectos.'
                     });
 
                 }
 
 
                 // ==========================================
-                // VERIFICAR CONTRASEÃ‘A
+                // VERIFICAR CONTRASEÑA
                 // ==========================================
 
                 const passwordValido =
@@ -994,14 +994,14 @@
                     return res.status(401).json({
                         success: false,
                         message:
-                            'Correo o contraseÃ±a incorrectos.'
+                            'Correo o contraseña incorrectos.'
                     });
 
                 }
 
 
                 // ==========================================
-                // GENERAR JTI ÃšNICO
+                // GENERAR JTI ÚNICO
                 // ==========================================
 
                 const jti =
@@ -1009,7 +1009,7 @@
 
 
                 // ==========================================
-                // DURACIÃ“N SEGÃšN ROL
+                // DURACIÓN SEGÚN ROL
                 // ==========================================
 
                 const tiempoExpiracion =
@@ -1056,7 +1056,7 @@
 
 
                 // ==========================================
-                // LEER EXPIRACIÃ“N REAL DEL JWT
+                // LEER EXPIRACIÓN REAL DEL JWT
                 // ==========================================
 
                 const tokenDecodificado =
@@ -1066,7 +1066,7 @@
                 if (!tokenDecodificado?.exp) {
 
                     throw new Error(
-                        'No fue posible determinar la expiraciÃ³n del token.'
+                        'No fue posible determinar la expiración del token.'
                     );
 
                 }
@@ -1111,7 +1111,7 @@
 
 
                 // ==========================================
-                // CREAR SESIÃ“N EN BD
+                // CREAR SESIÓN EN BD
                 // ==========================================
 
                 const sesionId =
@@ -1140,7 +1140,7 @@
                     success: true,
 
                     message:
-                        'Inicio de sesiÃ³n exitoso.',
+                        'Inicio de sesión exitoso.',
 
                     token,
 
@@ -1179,7 +1179,7 @@
                 return res.status(500).json({
                     success: false,
                     message:
-                        'Error interno del servidor al iniciar sesiÃ³n.'
+                        'Error interno del servidor al iniciar sesión.'
                 });
 
             }
@@ -1187,17 +1187,17 @@
         },
 
 
-        // â”€â”€ VALIDAR SESIÃ“N ACTUAL â”€â”€
+        // ── VALIDAR SESIÓN ACTUAL ──
         validarSesion: async (req, res) => {
 
             try {
 
-                // Si llegamos aquÃ­, verificarToken ya comprobÃ³:
-                // - JWT vÃ¡lido
+                // Si llegamos aquí, verificarToken ya comprobó:
+                // - JWT válido
                 // - JTI existente
-                // - sesiÃ³n no revocada
-                // - sesiÃ³n no cerrada
-                // - sesiÃ³n no expirada
+                // - sesión no revocada
+                // - sesión no cerrada
+                // - sesión no expirada
                 // - usuario activo
 
                 return res.json({
@@ -1233,7 +1233,7 @@
             } catch (error) {
 
                 console.error(
-                    'Error validando sesiÃ³n:',
+                    'Error validando sesión:',
                     error
                 );
 
@@ -1242,7 +1242,7 @@
                     success: false,
 
                     message:
-                        'Error interno validando la sesiÃ³n.'
+                        'Error interno validando la sesión.'
 
                 });
 
@@ -1252,7 +1252,7 @@
 
 
         // ==========================================================
-        // CAMBIAR CONTRASEÃ‘A DE LA CUENTA AUTENTICADA
+        // CAMBIAR CONTRASEÑA DE LA CUENTA AUTENTICADA
         // ==========================================================
 
         cambiarPassword: async (req, res) => {
@@ -1285,14 +1285,14 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'Completa todos los campos de contraseÃ±a.'
+                            'Completa todos los campos de contraseña.'
                     });
 
                 }
 
 
                 // ==================================================
-                // CONFIRMACIÃ“N
+                // CONFIRMACIÓN
                 // ==================================================
 
                 if (
@@ -1303,14 +1303,14 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'La nueva contraseÃ±a y su confirmaciÃ³n no coinciden.'
+                            'La nueva contraseña y su confirmación no coinciden.'
                     });
 
                 }
 
 
                 // ==================================================
-                // POLÃTICA DE CONTRASEÃ‘A
+                // POLÍTICA DE CONTRASEÑA
                 // ==================================================
 
                 if (
@@ -1322,7 +1322,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'La nueva contraseÃ±a debe tener mÃ­nimo 10 caracteres, una mayÃºscula, una minÃºscula, un nÃºmero y un carÃ¡cter especial.'
+                            'La nueva contraseña debe tener mínimo 10 caracteres, una mayúscula, una minúscula, un número y un carácter especial.'
                     });
 
                 }
@@ -1356,7 +1356,7 @@
 
 
                 // ==================================================
-                // VERIFICAR CONTRASEÃ‘A ACTUAL
+                // VERIFICAR CONTRASEÑA ACTUAL
                 // ==================================================
 
                 const passwordActualValido =
@@ -1371,14 +1371,14 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'La contraseÃ±a actual no es correcta.'
+                            'La contraseña actual no es correcta.'
                     });
 
                 }
 
 
                 // ==================================================
-                // IMPEDIR REUTILIZAR LA MISMA CONTRASEÃ‘A
+                // IMPEDIR REUTILIZAR LA MISMA CONTRASEÑA
                 // ==================================================
 
                 const esMismaPassword =
@@ -1393,7 +1393,7 @@
                     return res.status(400).json({
                         success: false,
                         message:
-                            'La nueva contraseÃ±a debe ser diferente de la actual.'
+                            'La nueva contraseña debe ser diferente de la actual.'
                     });
 
                 }
@@ -1427,18 +1427,18 @@
                     return res.status(500).json({
                         success: false,
                         message:
-                            'No fue posible actualizar la contraseÃ±a.'
+                            'No fue posible actualizar la contraseña.'
                     });
 
                 }
 
 
                 // ==================================================
-                // REVOCAR LAS DEMÃS SESIONES
+                // REVOCAR LAS DEMÁS SESIONES
                 // ==================================================
                 //
-                // No usamos revocarSesionesUsuario() porque tambiÃ©n
-                // revocarÃ­a la sesiÃ³n desde la que se hizo el cambio.
+                // No usamos revocarSesionesUsuario() porque también
+                // revocaría la sesión desde la que se hizo el cambio.
                 // ==================================================
 
                 const sesionesRevocadas =
@@ -1454,7 +1454,7 @@
                     success: true,
 
                     message:
-                        'ContraseÃ±a actualizada correctamente.',
+                        'Contraseña actualizada correctamente.',
 
                     sesionesRevocadas
 
@@ -1464,7 +1464,7 @@
             } catch (error) {
 
                 console.error(
-                    'Error cambiando contraseÃ±a:',
+                    'Error cambiando contraseña:',
                     error
                 );
 
@@ -1472,7 +1472,7 @@
                 return res.status(500).json({
                     success: false,
                     message:
-                        'Error interno al actualizar la contraseÃ±a.'
+                        'Error interno al actualizar la contraseña.'
                 });
 
             }
@@ -1482,13 +1482,13 @@
 
 
 
-        // â”€â”€ 4. CIERRE DE SESIÃ“N (Logout explÃ­cito para auditorÃ­a) â”€â”€
+        // ── 4. CIERRE DE SESIÓN (Logout explícito para auditoría) ──
         logout: async (req, res) => {
 
             try {
 
-                // verificarToken ya certificÃ³:
-                // usuario + jti + sesiÃ³n
+                // verificarToken ya certificó:
+                // usuario + jti + sesión
 
                 const usuarioId =
                     req.usuario.id;
@@ -1509,7 +1509,7 @@
                     return res.status(401).json({
                         success: false,
                         message:
-                            'La sesiÃ³n ya no se encuentra activa.'
+                            'La sesión ya no se encuentra activa.'
                     });
 
                 }
@@ -1518,14 +1518,14 @@
                 return res.json({
                     success: true,
                     message:
-                        'SesiÃ³n cerrada correctamente.'
+                        'Sesión cerrada correctamente.'
                 });
 
 
             } catch (error) {
 
                 console.error(
-                    'Error cerrando sesiÃ³n:',
+                    'Error cerrando sesión:',
                     error
                 );
 
@@ -1533,14 +1533,14 @@
                 return res.status(500).json({
                     success: false,
                     message:
-                        'Error interno al cerrar sesiÃ³n.'
+                        'Error interno al cerrar sesión.'
                 });
 
             }
 
         },
 
-        // â”€â”€ 5. CONSULTAR AUDITORÃA DE SESIONES â”€â”€
+        // ── 5. CONSULTAR AUDITORÍA DE SESIONES ──
         obtenerHistorialSesiones: async (req, res) => {
 
             try {
@@ -1561,7 +1561,7 @@
             } catch (error) {
 
                 console.error(
-                    'Error consultando auditorÃ­a de sesiones:',
+                    'Error consultando auditoría de sesiones:',
                     error
                 );
 
@@ -1579,7 +1579,7 @@
 
         },
 
-        // â”€â”€ 6. REVOCAR SESIÃ“N EXPLÃCITAMENTE POR JTI â”€â”€
+        // ── 6. REVOCAR SESIÓN EXPLÍCITAMENTE POR JTI ──
         revocarSesion: async (req, res) => {
 
             try {
@@ -1599,7 +1599,7 @@
                         success: false,
 
                         message:
-                            'Se requiere un JTI vÃ¡lido.'
+                            'Se requiere un JTI válido.'
 
                     });
 
@@ -1608,7 +1608,7 @@
 
                 // ==========================================
                 // EVITAR QUE EL ADMIN REVOQUE
-                // SU PROPIA SESIÃ“N DESDE AUDITORÃA
+                // SU PROPIA SESIÓN DESDE AUDITORÍA
                 // ==========================================
 
                 if (
@@ -1621,7 +1621,7 @@
                         success: false,
 
                         message:
-                            'No puedes revocar tu propia sesiÃ³n desde la auditorÃ­a. Utiliza Cerrar sesiÃ³n.'
+                            'No puedes revocar tu propia sesión desde la auditoría. Utiliza Cerrar sesión.'
 
                     });
 
@@ -1641,7 +1641,7 @@
                         success: false,
 
                         message:
-                            'La sesiÃ³n no existe o ya fue revocada.'
+                            'La sesión no existe o ya fue revocada.'
 
                     });
 
@@ -1653,7 +1653,7 @@
                     success: true,
 
                     message:
-                        'SesiÃ³n revocada exitosamente.'
+                        'Sesión revocada exitosamente.'
 
                 });
 
@@ -1661,7 +1661,7 @@
             } catch (error) {
 
                 console.error(
-                    'Error al revocar sesiÃ³n:',
+                    'Error al revocar sesión:',
                     error
                 );
 
@@ -1671,7 +1671,7 @@
                     success: false,
 
                     message:
-                        'Error interno al revocar la sesiÃ³n.'
+                        'Error interno al revocar la sesión.'
 
                 });
 

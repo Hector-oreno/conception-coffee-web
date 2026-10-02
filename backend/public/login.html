@@ -1,60 +1,414 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta name="robots" content="noindex, nofollow, noarchive">
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Administrativo | Conception Coffee</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/usuarios/login.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow, noarchive"
+    >
+
+    <meta
+        name="theme-color"
+        content="#f8f3ee"
+    >
+
+
+    <title>
+        Acceso Administrativo | Conception Coffee
+    </title>
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="css/usuarios/login.css"
+    >
+
 
     <link
         rel="icon"
         type="image/png"
         href="/images/branding/isotipo.png"
     >
-    
+
 </head>
+
+
 <body>
 
-    <div class="login-card">
+    <main class="login-page">
 
-        <div class="login-brand-logo">
+        <!-- ========================================================== -->
+        <!-- AMBIENTE -->
+        <!-- ========================================================== -->
 
-            <img
-                src="/images/branding/isotipo.png"
-                alt="Conception Coffee"
+        <div
+            class="login-light login-light-one"
+            aria-hidden="true"
+        ></div>
+
+        <div
+            class="login-light login-light-two"
+            aria-hidden="true"
+        ></div>
+
+
+        <!-- ========================================================== -->
+        <!-- HEADER -->
+        <!-- ========================================================== -->
+
+        <header class="login-header">
+
+            <a
+                href="/"
+                class="login-brand"
+                aria-label="Ir al sitio de Conception Coffee"
             >
+
+                <img
+                    src="/images/branding/isotipo.png"
+                    alt=""
+                    aria-hidden="true"
+                >
+
+                <div>
+                    <strong>Conception</strong>
+                    <span>Coffee</span>
+                </div>
+
+            </a>
+
+
+            <a
+                href="/"
+                class="login-back"
+            >
+
+                <i
+                    class="fas fa-arrow-left"
+                    aria-hidden="true"
+                ></i>
+
+                <span>
+                    Volver al sitio
+                </span>
+
+            </a>
+
+        </header>
+
+
+        <!-- ========================================================== -->
+        <!-- EXPERIENCIA PRINCIPAL -->
+        <!-- ========================================================== -->
+
+        <div class="login-shell">
+
+
+            
+            <!-- ====================================================== -->
+            <!-- EXPERIENCIA VISUAL DE MARCA · DESKTOP -->
+            <!-- ====================================================== -->
+
+            <section
+                class="login-visual"
+                aria-label="Identidad visual de Conception Coffee"
+            >
+
+                <div
+                    class="login-visual-media"
+                    aria-hidden="true"
+                >
+
+                    <video
+                        id="loginBrandVideo"
+                        class="login-brand-video"
+                        muted
+                        loop
+                        playsinline
+                        preload="none"
+                        aria-hidden="true"
+                        data-src="/videos/login/conception-brand.mp4"
+                    ></video>
+
+                </div>
+
+            </section>
+
+
+            <!-- ====================================================== -->
+            <!-- ACCESO -->
+            <!-- ====================================================== -->
+
+            <section
+                class="login-access"
+                aria-labelledby="loginTitulo"
+            >
+
+                <div class="login-access-inner">
+
+
+                    <!-- LOGO -->
+
+                    <div class="login-access-logo">
+
+                        <span
+                            class="login-access-halo"
+                            aria-hidden="true"
+                        ></span>
+
+                        <img
+                            src="/images/branding/isotipo.png"
+                            alt="Conception Coffee"
+                        >
+
+                    </div>
+
+
+                    <!-- TÍTULO -->
+
+                    <div class="login-access-heading">
+
+                        <span>
+                            Acceso administrativo
+                        </span>
+
+
+                        <h2 id="loginTitulo">
+                            Bienvenido de nuevo
+                        </h2>
+
+
+                        <p>
+                            Ingresa tus credenciales para continuar.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ============================================== -->
+                    <!-- MENSAJES -->
+                    <!-- ============================================== -->
+
+                    <div
+                        id="loginMessage"
+                        class="login-message"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    >
+
+                        <i
+                            id="loginMessageIcon"
+                            class="fas fa-circle-info"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span id="loginMessageText"></span>
+
+                    </div>
+
+
+                    <!-- ============================================== -->
+                    <!-- FORMULARIO -->
+                    <!-- ============================================== -->
+
+                    <form
+                        id="form-login"
+                        novalidate
+                    >
+
+
+                        <!-- CORREO -->
+
+                        <div class="login-field">
+
+                            <label for="correo">
+                                Correo electrónico
+                            </label>
+
+
+                            <div class="login-input">
+
+                                <i
+                                    class="fas fa-envelope"
+                                    aria-hidden="true"
+                                ></i>
+
+
+                                <input
+                                    type="email"
+                                    id="correo"
+                                    name="correo"
+                                    autocomplete="email"
+                                    inputmode="email"
+                                    maxlength="190"
+                                    placeholder="usuario@conceptioncoffee.com"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONTRASEÑA -->
+
+                        <div class="login-field">
+
+                            <div class="login-label-row">
+
+                                <label for="password">
+                                    Contraseña
+                                </label>
+
+
+                                <span>
+                                    Acceso seguro
+                                </span>
+
+                            </div>
+
+
+                            <div class="login-input">
+
+                                <i
+                                    class="fas fa-lock"
+                                    aria-hidden="true"
+                                ></i>
+
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    autocomplete="current-password"
+                                    placeholder="Ingresa tu contraseña"
+                                    required
+                                >
+
+
+                                <button
+                                    type="button"
+                                    id="toggleLoginPassword"
+                                    class="login-password-toggle"
+                                    aria-label="Mostrar contraseña"
+                                    aria-pressed="false"
+                                >
+
+                                    <i
+                                        class="fas fa-eye"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BOTÓN -->
+
+                        <button
+                            type="submit"
+                            id="btnLogin"
+                            class="btn-login"
+                        >
+
+                            <span id="btnLoginText">
+                                Iniciar sesión
+                            </span>
+
+
+                            <span
+                                class="btn-login-icon"
+                                aria-hidden="true"
+                            >
+                                <i class="fas fa-arrow-right"></i>
+                            </span>
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- ============================================== -->
+                    <!-- SEGURIDAD -->
+                    <!-- ============================================== -->
+
+                    <div class="login-protection">
+
+                        <span class="login-protection-icon">
+
+                            <i
+                                class="fas fa-shield-halved"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <div>
+
+                            <strong>
+                                Acceso protegido
+                            </strong>
+
+                            <p>
+                                Sesión administrativa segura
+                                y supervisada.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ============================================== -->
+                    <!-- MOBILE FOOTER -->
+                    <!-- ============================================== -->
+
+                    <div class="login-mobile-footer">
+
+                        <span>
+                            Conception Coffee
+                        </span>
+
+                        <span aria-hidden="true">
+                            ·
+                        </span>
+
+                        <span>
+                            2026
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </div>
 
-        <h2>Conception Admin</h2>
-        <p>Ingresa tus credenciales para acceder al panel</p>
-        
-        <form id="form-login">
-            <div class="form-group">
-                <label for="correo">Correo Electrónico</label>
-                <input type="email" id="correo" placeholder="heoreno@conceptioncoffee.com" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" placeholder="••••••••••••" required>
-            </div>
+    </main>
 
-            <button type="submit" class="btn-login">
-                <i class="fas fa-lock"></i> Iniciar Sesión
-            </button>
-        </form>
-
-        <p class="privacy-notice">
-            <i class="fas fa-shield-alt"></i> <strong>Aviso de Seguridad y Privacidad:</strong><br>
-            Al iniciar sesión, aceptas que tu dirección IP, dispositivo y tiempos de actividad sean monitoreados y registrados con fines de auditoría y protección de accesos.
-        </p>
-
-
-    </div>
 
     <script src="js/usuarios/login.js"></script>
+
 </body>
+
 </html>

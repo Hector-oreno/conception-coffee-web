@@ -911,7 +911,7 @@ const menuSemanaController = {
 
             const imagen = req.file
                 ? `/images/uploads/${req.file.filename}`
-                : null;
+                : undefined;
 
             if (!nombre) {
 

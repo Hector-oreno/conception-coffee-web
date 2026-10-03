@@ -1052,6 +1052,45 @@ const menuSemanaModel = {
     },
 
 
+    // ==========================================================================
+    // OBTENER PLATILLO DEL CATÁLOGO POR ID
+    // ==========================================================================
+
+    obtenerPlatilloPorId: async (id) => {
+
+        const query = `
+            SELECT
+                id,
+                nombre_plato,
+                precio_base,
+                acompanamientos_defecto,
+                imagen_defecto,
+                estado
+            FROM menu_ejecutivo_catalogo
+            WHERE id = ?
+            LIMIT 1
+        `;
+
+        const [rows] =
+            await pool.query(
+                query,
+                [id]
+            );
+
+        return rows.length > 0
+            ? rows[0]
+            : null;
+
+    },
+
+
+
+
+    // ==========================================================================
+    // ACTUALIZAR PLATILLO DEL CATÁLOGO
+    // Conserva la imagen actual cuando no se envía una nueva.
+    // ==========================================================================
+
     actualizarPlatillo: async (id, datos) => {
 
         const {
@@ -1061,25 +1100,64 @@ const menuSemanaModel = {
             imagen
         } = datos;
 
-        const query = `
+
+        let query = `
             UPDATE menu_ejecutivo_catalogo
             SET
                 nombre_plato = ?,
                 precio_base = ?,
-                acompanamientos_defecto = ?,
+                acompanamientos_defecto = ?
+        `;
+
+
+        const parametros = [
+            nombre,
+            precio,
+            acompanamientos
+        ];
+
+
+        /*
+         * Solo modificamos imagen_defecto cuando realmente
+         * se recibió una nueva imagen.
+         *
+         * undefined = conservar imagen existente.
+         */
+
+        if (
+            imagen !== undefined &&
+            imagen !== null
+        ) {
+
+            query += `,
                 imagen_defecto = ?
+            `;
+
+            parametros.push(
+                imagen
+            );
+
+        }
+
+
+        query += `
             WHERE id = ?
         `;
 
-        await pool.query(query, [
 
-            nombre,
-            precio,
-            acompanamientos,
-            imagen,
+        parametros.push(
             id
+        );
 
-        ]);
+
+        const [resultado] =
+            await pool.query(
+                query,
+                parametros
+            );
+
+
+        return resultado.affectedRows > 0;
 
     },
 

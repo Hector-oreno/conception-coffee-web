@@ -1,6 +1,19 @@
 const productoModel = require('../models/productoModel');
 const auditoriaModel = require('../models/auditoriaModel');
 
+
+const imageStorageService =
+    require(
+        '../services/imageStorageService'
+    );
+
+
+
+const imageReferenceService =
+    require('../services/imageReferenceService');
+
+
+
 // Helper rápido para estandarizar el ID de sucursal (Busca en URL o en el cuerpo)
 // Asegurar que nunca intente leer de un undefined
 function obtenerSucursalId(req) {
@@ -151,61 +164,451 @@ const getProductosDestacados = async (req, res) => {
     }
 };
 
-// 3. CREAR UN NUEVO PRODUCTO (Asigna a Maestro + Sucursal Activa)
+// ==========================================================================
+// 3. CREAR UN NUEVO PRODUCTO
+// Crea el producto maestro y lo vincula a las sucursales seleccionadas.
+// Gestiona de forma segura el ciclo de vida del upload.
+// ==========================================================================
+
 const crearProducto = async (req, res) => {
+
+    let imagenProcesada =
+        null;
+
+
     try {
-        const { nombre, precio, categoria_id, descripcion, destacado, sucursales } = req.body;
-        const imagen = req.file ? `/images/uploads/${req.file.filename}` : null;
 
-        // 1. Insertamos únicamente en la tabla maestra 'productos'
-        const nuevoProductoId = await productoModel.registrarProductoMaestro({
+        const {
             nombre,
+            precio,
+            categoria_id,
             descripcion,
-            imagen,
-            categoria_id: parseInt(categoria_id, 10)
-        });
+            sucursales
+        } = req.body;
 
-        // 2. Vinculamos a todas las sucursales que el administrador marcó
-        if (sucursales) {
-            // Si viene de un FormData como string (ej: "[1,2]"), lo parseamos. Si ya es array, se usa directo.
-            const listaSucursales = typeof sucursales === 'string' ? JSON.parse(sucursales) : sucursales;
-            
-            if (Array.isArray(listaSucursales)) {
-                for (const sucursalId of listaSucursales) {
-                    await productoModel.vincularProductoASucursal(
-                        nuevoProductoId, 
-                        sucursalId, 
-                        parseFloat(precio)
+
+        // ==============================================================
+        // VALIDACIONES BÁSICAS
+        // ==============================================================
+
+        const nombreLimpio =
+            typeof nombre === 'string'
+                ? nombre.trim()
+                : '';
+
+
+        const categoriaId =
+            Number(categoria_id);
+
+
+        const precioFinal =
+            Number(precio);
+
+
+        if (!nombreLimpio) {
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
                     );
-                }
+
             }
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'El nombre del producto es obligatorio.'
+
+            });
+
         }
 
-        // 3. Auditoría en formato JSON string nítido
-        await auditoriaModel.registrarMovimiento({
-            id_usuario:
-               req.usuario.id,
 
-            rol_usuario:
-               req.usuario.rol,
-            accion: 'CREAR',
-            tabla_afectada: 'productos',
-            id_registro_afectado: nuevoProductoId,
-            descripcion: `Se creó el producto general: ${nombre} y se asignó a sus sucursales.`,
-            valor_anterior: null,
-            valor_nuevo: JSON.stringify({ nombre, precio, categoria_id, sucursales })
+        if (
+            !Number.isInteger(categoriaId) ||
+            categoriaId <= 0
+        ) {
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
+                    );
+
+            }
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'La categoría indicada no es válida.'
+
+            });
+
+        }
+
+
+        if (
+            !Number.isFinite(precioFinal) ||
+            precioFinal < 0
+        ) {
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
+                    );
+
+            }
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'El precio indicado no es válido.'
+
+            });
+
+        }
+
+
+        // ==============================================================
+        // VALIDAR SUCURSALES ANTES DE PROCESAR LA IMAGEN
+        // ==============================================================
+
+        let listaSucursales =
+            [];
+
+
+        if (sucursales) {
+
+            try {
+
+                listaSucursales =
+                    typeof sucursales === 'string'
+                        ? JSON.parse(sucursales)
+                        : sucursales;
+
+            } catch {
+
+                if (req.file?.filename) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            req.file.filename
+                        );
+
+                }
+
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        'La lista de sucursales no es válida.'
+
+                });
+
+            }
+
+        }
+
+
+        if (
+            !Array.isArray(listaSucursales) ||
+            listaSucursales.length === 0
+        ) {
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
+                    );
+
+            }
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'Selecciona al menos una sucursal.'
+
+            });
+
+        }
+
+
+        listaSucursales =
+            listaSucursales
+                .map(
+                    (sucursalId) =>
+                        Number(sucursalId)
+                )
+                .filter(
+                    (sucursalId) =>
+                        Number.isInteger(sucursalId) &&
+                        sucursalId > 0
+                );
+
+
+        if (listaSucursales.length === 0) {
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
+                    );
+
+            }
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'No se recibió ninguna sucursal válida.'
+
+            });
+
+        }
+
+
+        // Evitamos procesar dos veces una misma sucursal.
+
+        listaSucursales =
+            [
+                ...new Set(
+                    listaSucursales
+                )
+            ];
+
+
+        // ==============================================================
+        // PROCESAR IMAGEN
+        // ==============================================================
+
+        let imagen =
+            null;
+
+
+        if (req.file) {
+
+            imagenProcesada =
+                await imageStorageService
+                    .procesarUpload(
+                        req.file
+                    );
+
+
+            imagen =
+                imagenProcesada.url;
+
+        }
+
+
+        // ==============================================================
+        // CREAR PRODUCTO MAESTRO
+        // ==============================================================
+
+        const nuevoProductoId =
+            await productoModel
+                .registrarProductoMaestro({
+
+                    nombre:
+                        nombreLimpio,
+
+                    descripcion:
+                        typeof descripcion === 'string'
+                            ? descripcion.trim()
+                            : '',
+
+                    imagen,
+
+                    categoria_id:
+                        categoriaId
+
+                });
+
+
+        // ==============================================================
+        // VINCULAR PRODUCTO A SUCURSALES
+        // ==============================================================
+
+        for (
+            const sucursalId
+            of listaSucursales
+        ) {
+
+            await productoModel
+                .vincularProductoASucursal(
+
+                    nuevoProductoId,
+
+                    sucursalId,
+
+                    precioFinal
+
+                );
+
+        }
+
+
+        // ==============================================================
+        // AUDITORÍA
+        // ==============================================================
+
+        await auditoriaModel
+            .registrarMovimiento({
+
+                id_usuario:
+                    req.usuario.id,
+
+                rol_usuario:
+                    req.usuario.rol,
+
+                accion:
+                    'CREAR',
+
+                tabla_afectada:
+                    'productos',
+
+                id_registro_afectado:
+                    nuevoProductoId,
+
+                descripcion:
+                    `Se creó el producto general: ${nombreLimpio} y se asignó a sus sucursales.`,
+
+                valor_anterior:
+                    null,
+
+                valor_nuevo:
+                    JSON.stringify({
+
+                        nombre:
+                            nombreLimpio,
+
+                        precio:
+                            precioFinal,
+
+                        categoria_id:
+                            categoriaId,
+
+                        sucursales:
+                            listaSucursales,
+
+                        imagen
+
+                    })
+
+            });
+
+
+        return res.json({
+
+            success: true,
+
+            message:
+                'Producto creado y replicado en las sucursales seleccionadas con éxito.',
+
+            id:
+                nuevoProductoId
+
         });
 
-        return res.json({ 
-            success: true, 
-            message: 'Producto creado y replicado en las sucursales seleccionadas con éxito.', 
-            id: nuevoProductoId 
-        });
 
     } catch (error) {
-        console.error('Error en crearProducto:', error);
-        return res.status(500).json({ success: false, message: 'Error al crear el producto en el servidor.' });
+
+        // ==============================================================
+        // ROLLBACK DEL ARCHIVO NUEVO
+        // ==============================================================
+        //
+        // Si procesarUpload reutilizó una imagen existente,
+        // NO debemos borrarla.
+        //
+        // Solo limpiamos cuando este request conservó físicamente
+        // un archivo nuevo.
+        // ==============================================================
+
+        if (
+            imagenProcesada &&
+            imagenProcesada.duplicado === false &&
+            imagenProcesada.url
+        ) {
+
+            try {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        imagenProcesada.url
+                    );
+
+            } catch (cleanupError) {
+
+                console.error(
+                    'No fue posible limpiar la imagen después del error:',
+                    cleanupError
+                );
+
+            }
+
+        }
+
+
+        // ==============================================================
+        // IMAGEN CON CONTENIDO INVÁLIDO
+        // ==============================================================
+
+        if (
+            error.code ===
+            'INVALID_IMAGE_CONTENT'
+        ) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'El archivo enviado no es una imagen JPEG, PNG o WebP válida.'
+
+            });
+
+        }
+
+
+        console.error(
+            'Error en crearProducto:',
+            error
+        );
+
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                'Error al crear el producto en el servidor.'
+
+        });
+
     }
+
 };
 
 // 4. OBTENER UN PRODUCTO POR ID (Cruzado con su Sucursal para cargar el Modal)
@@ -213,9 +616,7 @@ const getProductoPorId = async (req, res) => {
     try {
         const { id } = req.params;
         const sucursalId = obtenerSucursalId(req);
-        
-        const producto = await productoModel.obtenerProductoPorId(id, sucursalId); 
-
+        const producto = await productoModel.obtenerProductoPorId(id, sucursalId);
         if (producto) {
             res.json({ success: true, data: producto });
         } else {
@@ -261,18 +662,60 @@ const getProductoSucursales = async (req,res)=>{
 };
 
 
-// 5. ACTUALIZAR UN PRODUCTO EXISTENTE (Específico de la sucursal seleccionada)
+// ==========================================================================
+// 5. ACTUALIZAR UN PRODUCTO EXISTENTE
+// Actualiza datos globales y datos de la sucursal seleccionada.
+// Gestiona de forma segura el reemplazo de imágenes.
+// ==========================================================================
+
 const actualizarProducto = async (req, res) => {
+
+    let imagenProcesada =
+        null;
+
+
     try {
-        const { id } = req.params;
-        const { nombre, descripcion, precio, categoria_id, destacado, disponible } = req.body;
-        
-        // Capturamos la sucursal activa que viene desde el frontend
+
+        const { id } =
+            req.params;
+
+
+        const {
+            nombre,
+            descripcion,
+            precio,
+            categoria_id,
+            destacado,
+            disponible
+        } = req.body;
+
+
+        // ==============================================================
+        // SUCURSAL AUTORIZADA
+        // ==============================================================
+
         const sucursalId =
-            obtenerSucursalAutorizada(req);
+            obtenerSucursalAutorizada(
+                req
+            );
 
 
         if (!sucursalId) {
+
+            /*
+             * Multer ya pudo haber escrito el archivo antes
+             * de llegar al controller.
+             */
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
+                    );
+
+            }
+
 
             return res.status(403).json({
 
@@ -284,60 +727,175 @@ const actualizarProducto = async (req, res) => {
             });
 
         }
-        
-        // Traemos el estado previo exacto usando tu función para la auditoría
-        const valorAnterior = await productoModel.obtenerProductoPorId(id, sucursalId);
-        if (!valorAnterior) {
-            return res.status(404).json({ success: false, message: 'Producto no encontrado en esta sucursal' });
-        }
-
-        // Estructuramos el objeto 'datos' tal como lo lee tu modelo
-        const datosActualizar = {
-            nombre,
-            descripcion,
-            precio: parseFloat(precio),
-            categoria_id: categoria_id ? parseInt(categoria_id, 10) : undefined,
-            destacado: destacado === 'true' || destacado === '1' || destacado === 1 || destacado === true ? 1 : 0,
-            disponible: disponible === 'false' || disponible === '0' || disponible === 0 || disponible === false ? 0 : 1,
-            imagen: req.file ? `/images/uploads/${req.file.filename}` : undefined
-        };
-
-        // ======================================================
-        // ACTUALIZAR SEGÚN EL ROL
-        // ======================================================
-
-        let modificado = false;
 
 
-        if (req.usuario.rol === 'admin') {
+        // ==============================================================
+        // ESTADO ANTERIOR
+        // ==============================================================
 
-            // Admin puede modificar:
-            // - datos globales
-            // - datos de la sucursal seleccionada
-
-            modificado =
-                await productoModel.modificarProducto(
+        const valorAnterior =
+            await productoModel
+                .obtenerProductoPorId(
                     id,
-                    datosActualizar,
                     sucursalId
                 );
+
+
+        if (!valorAnterior) {
+
+            if (req.file?.filename) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        req.file.filename
+                    );
 
             }
 
 
-            else if (req.usuario.rol === 'gerente') {
+            return res.status(404).json({
 
-                // Gerente SOLO puede modificar datos
-                // operativos de SU sucursal.
-                //
-                // nombre, descripción, categoría e imagen
-                // enviados desde el navegador son ignorados.
+                success: false,
 
-                modificado =
-                    await productoModel.modificarProductoSucursal(
+                message:
+                    'Producto no encontrado en esta sucursal.'
+
+            });
+
+        }
+
+
+        // ==============================================================
+        // PROCESAR NUEVA IMAGEN
+        // ==============================================================
+
+        let nuevaImagen =
+            undefined;
+
+
+        /*
+         * Solo el administrador puede modificar
+         * la imagen global del producto.
+         */
+
+        if (
+            req.usuario.rol === 'admin' &&
+            req.file
+        ) {
+
+            imagenProcesada =
+                await imageStorageService
+                    .procesarUpload(
+                        req.file
+                    );
+
+
+            nuevaImagen =
+                imagenProcesada.url;
+
+        }
+
+
+        /*
+         * Si por el flujo actual un rol distinto de admin
+         * llegara hasta aquí con un archivo, no lo utilizamos
+         * y tampoco lo dejamos abandonado.
+         */
+
+        if (
+            req.usuario.rol !== 'admin' &&
+            req.file?.filename
+        ) {
+
+            await imageStorageService
+                .eliminarArchivoSeguro(
+                    req.file.filename
+                );
+
+        }
+
+
+        // ==============================================================
+        // DATOS A ACTUALIZAR
+        // ==============================================================
+
+        const datosActualizar = {
+
+            nombre,
+
+            descripcion,
+
+            precio:
+                parseFloat(
+                    precio
+                ),
+
+            categoria_id:
+                categoria_id
+                    ? parseInt(
+                        categoria_id,
+                        10
+                    )
+                    : undefined,
+
+            destacado:
+                destacado === 'true' ||
+                destacado === '1' ||
+                destacado === 1 ||
+                destacado === true
+                    ? 1
+                    : 0,
+
+            disponible:
+                disponible === 'false' ||
+                disponible === '0' ||
+                disponible === 0 ||
+                disponible === false
+                    ? 0
+                    : 1,
+
+            /*
+             * undefined significa:
+             * conservar la imagen existente.
+             */
+
+            imagen:
+                nuevaImagen
+
+        };
+
+
+        // ==============================================================
+        // ACTUALIZAR SEGÚN EL ROL
+        // ==============================================================
+
+        let modificado =
+            false;
+
+
+        if (
+            req.usuario.rol === 'admin'
+        ) {
+
+            modificado =
+                await productoModel
+                    .modificarProducto(
+                        id,
+                        datosActualizar,
+                        sucursalId
+                    );
+
+        } else if (
+            req.usuario.rol === 'gerente'
+        ) {
+
+            modificado =
+                await productoModel
+                    .modificarProductoSucursal(
                         Number(id),
                         sucursalId,
                         {
+
                             precio:
                                 datosActualizar.precio,
 
@@ -346,51 +904,285 @@ const actualizarProducto = async (req, res) => {
 
                             disponible:
                                 datosActualizar.disponible
+
                         }
+                    );
+
+        } else {
+
+            /*
+             * Si procesamos una imagen nueva antes de descubrir
+             * un rol no permitido, hacemos rollback.
+             */
+
+            if (
+                imagenProcesada &&
+                imagenProcesada.duplicado === false &&
+                imagenProcesada.url
+            ) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        imagenProcesada.url
                     );
 
             }
 
 
-            else {
+            return res.status(403).json({
 
-                return res.status(403).json({
+                success: false,
 
-                    success: false,
+                message:
+                    'No tienes permisos para modificar productos.'
 
-                    message:
-                        'No tienes permisos para modificar productos.'
+            });
 
-                });
+        }
+
+
+        if (!modificado) {
+
+            /*
+             * La BD no aplicó el cambio.
+             *
+             * Si este request creó físicamente una imagen nueva,
+             * la eliminamos.
+             *
+             * Una imagen reutilizada nunca se elimina.
+             */
+
+            if (
+                imagenProcesada &&
+                imagenProcesada.duplicado === false &&
+                imagenProcesada.url
+            ) {
+
+                await imageStorageService
+                    .eliminarArchivoSeguro(
+                        imagenProcesada.url
+                    );
 
             }
 
-        if (modificado) {
-            const valorNuevo = await productoModel.obtenerProductoPorId(id, sucursalId);
 
-            // Guardamos la auditoría limpia
-            await auditoriaModel.registrarMovimiento({
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'No se pudieron aplicar los cambios en la sucursal.'
+
+            });
+
+        }
+
+
+        // ==============================================================
+        // OBTENER ESTADO NUEVO
+        // ==============================================================
+
+        const valorNuevo =
+            await productoModel
+                .obtenerProductoPorId(
+                    id,
+                    sucursalId
+                );
+
+
+        // ==============================================================
+        // AUDITORÍA
+        // ==============================================================
+
+        await auditoriaModel
+            .registrarMovimiento({
+
                 id_usuario:
                     req.usuario.id,
 
                 rol_usuario:
                     req.usuario.rol,
-                accion: 'MODIFICAR',
-                tabla_afectada: 'productos',
-                id_registro_afectado: id,
-                descripcion: `Se modificó el producto ID ${id} en la sucursal ${sucursalId}: ${nombre}`,
-                valor_anterior: JSON.stringify(valorAnterior),
-                valor_nuevo: JSON.stringify(valorNuevo)
+
+                accion:
+                    'MODIFICAR',
+
+                tabla_afectada:
+                    'productos',
+
+                id_registro_afectado:
+                    id,
+
+                descripcion:
+                    `Se modificó el producto ID ${id} en la sucursal ${sucursalId}: ${nombre}`,
+
+                valor_anterior:
+                    JSON.stringify(
+                        valorAnterior
+                    ),
+
+                valor_nuevo:
+                    JSON.stringify(
+                        valorNuevo
+                    )
+
             });
 
-            return res.json({ success: true, message: 'Producto e inventario de sucursal actualizados correctamente' });
-        } else {
-            return res.status(400).json({ success: false, message: 'No se pudieron aplicar los cambios en la sucursal' });
+
+        // ==============================================================
+        // LIMPIAR IMAGEN ANTERIOR SI FUE REEMPLAZADA
+        // ==============================================================
+
+        const imagenAnterior =
+            valorAnterior.imagen;
+
+
+        const imagenActual =
+            valorNuevo?.imagen;
+
+        if (
+            req.usuario.rol === 'admin' &&
+            imagenProcesada &&
+            imagenAnterior &&
+            imagenActual &&
+            imagenAnterior !== imagenActual
+        ) {
+
+            try {
+
+                const sigueReferenciada =
+                    await imageReferenceService
+                        .estaReferenciada(
+                            imagenAnterior
+                        );
+
+
+                if (!sigueReferenciada) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            imagenAnterior
+                        );
+
+                }
+
+            } catch (cleanupError) {
+
+                /*
+                 * La actualización principal ya fue exitosa.
+                 *
+                 * Un problema limpiando la imagen anterior
+                 * NO debe convertir la operación completa en 500.
+                 */
+
+                console.error(
+                    'No fue posible limpiar la imagen anterior del producto:',
+                    cleanupError
+                );
+
+            }
+
         }
+
+
+        return res.json({
+
+            success: true,
+
+            message:
+                'Producto e inventario de sucursal actualizados correctamente.'
+
+        });
+
+
     } catch (error) {
-        console.error('Error en actualizarProducto:', error);
-        return res.status(500).json({ success: false, message: 'Error al actualizar el producto' });
+
+        // ==============================================================
+        // ROLLBACK DE IMAGEN NUEVA
+        // ==============================================================
+
+        if (
+            imagenProcesada &&
+            imagenProcesada.duplicado === false &&
+            imagenProcesada.url
+        ) {
+
+            try {
+
+                /*
+                 * Antes de eliminar comprobamos si la BD llegó
+                 * a utilizar la imagen.
+                 *
+                 * Esto protege el caso donde la actualización
+                 * principal funcionó pero posteriormente falló
+                 * auditoría u otra operación.
+                 */
+
+                const estaEnUso =
+                    await imageReferenceService
+                        .estaReferenciada(
+                            imagenProcesada.url
+                        );
+
+
+                if (!estaEnUso) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            imagenProcesada.url
+                        );
+
+                }
+
+            } catch (cleanupError) {
+
+                console.error(
+                    'No fue posible realizar el rollback de la imagen:',
+                    cleanupError
+                );
+
+            }
+
+        }
+
+
+        // ==============================================================
+        // CONTENIDO DE IMAGEN INVÁLIDO
+        // ==============================================================
+
+        if (
+            error.code ===
+            'INVALID_IMAGE_CONTENT'
+        ) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    'El archivo enviado no es una imagen JPEG, PNG o WebP válida.'
+
+            });
+
+        }
+
+
+        console.error(
+            'Error en actualizarProducto:',
+            error
+        );
+
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                'Error al actualizar el producto.'
+
+        });
+
     }
+
 };
 
 // ========================================================================

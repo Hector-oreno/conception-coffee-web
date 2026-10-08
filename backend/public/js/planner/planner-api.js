@@ -195,23 +195,44 @@ const PlannerAPI = {
 
             );
 
-            if (!response.ok) {
 
-                throw new Error("Error del servidor");
+            // Leer la respuesta del servidor una sola vez.
+            const resultado =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                resultado.success === false
+            ) {
+
+                throw new Error(
+
+                    resultado.message ||
+                    `Error HTTP ${response.status}`
+
+                );
 
             }
 
-            return await response.json();
+
+            return resultado;
+
 
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "Error al actualizar platillo:",
+                error
+            );
+
 
             return {
 
-                success:false,
+                success: false,
 
-                message:error.message
+                message:
+                    error.message
 
             };
 

@@ -1,5 +1,16 @@
 const menuSemanaModel = require('../models/menuSemanaModel');
 
+const imageStorageService =
+    require(
+        '../services/imageStorageService'
+    );
+
+
+const imageReferenceService =
+    require(
+        '../services/imageReferenceService'
+    );
+
 // ==========================================================================
 // OBTENER SUCURSAL AUTORIZADA PARA EL PLANNER
 // ==========================================================================
@@ -840,8 +851,15 @@ const menuSemanaController = {
     },
 
 
-    // 7. Crear un nuevo platillo del catálogo maestro
+    // ==========================================================================
+    // 7. CREAR UN NUEVO PLATILLO DEL CATÁLOGO MAESTRO
+    // ==========================================================================
+
     crearPlatillo: async (req, res) => {
+
+        let imagenProcesada =
+            null;
+
 
         try {
 
@@ -851,42 +869,207 @@ const menuSemanaController = {
                 acompanamientos
             } = req.body;
 
-            const imagen = req.file
-                ? `/images/uploads/${req.file.filename}`
-                : null;
 
-            if (!nombre) {
+            const nombreLimpio =
+                typeof nombre === 'string'
+                    ? nombre.trim()
+                    : '';
+
+
+            const precioFinal =
+                Number(precio);
+
+
+            // ==============================================================
+            // VALIDACIONES
+            // ==============================================================
+
+            if (!nombreLimpio) {
+
+                if (req.file?.filename) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            req.file.filename
+                        );
+
+                }
+
+
                 return res.status(400).json({
+
                     success: false,
-                    message: "El nombre del platillo es obligatorio."
+
+                    message:
+                        'El nombre del platillo es obligatorio.'
+
                 });
+
             }
 
-            const nuevoId = await menuSemanaModel.crearPlatillo({
 
-                nombre,
-                precio,
-                acompanamientos,
-                imagen
+            if (
+                !Number.isFinite(precioFinal) ||
+                precioFinal < 0
+            ) {
 
-            });
+                if (req.file?.filename) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            req.file.filename
+                        );
+
+                }
+
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        'El precio del platillo no es válido.'
+
+                });
+
+            }
+
+
+            // ==============================================================
+            // PROCESAR IMAGEN
+            // ==============================================================
+
+            let imagen =
+                null;
+
+
+            if (req.file) {
+
+                imagenProcesada =
+                    await imageStorageService
+                        .procesarUpload(
+                            req.file
+                        );
+
+
+                imagen =
+                    imagenProcesada.url;
+
+            }
+
+
+            // ==============================================================
+            // CREAR PLATILLO
+            // ==============================================================
+
+            const nuevoId =
+                await menuSemanaModel
+                    .crearPlatillo({
+
+                        nombre:
+                            nombreLimpio,
+
+                        precio:
+                            precioFinal,
+
+                        acompanamientos:
+                            typeof acompanamientos === 'string'
+                                ? acompanamientos.trim()
+                                : '',
+
+                        imagen
+
+                    });
+
 
             return res.json({
 
                 success: true,
-                message: "Platillo creado correctamente.",
-                id: nuevoId
+
+                message:
+                    'Platillo creado correctamente.',
+
+                id:
+                    nuevoId
 
             });
 
+
         } catch (error) {
 
-            console.error(error);
+            // ==============================================================
+            // ROLLBACK DE IMAGEN NUEVA
+            // ==============================================================
+
+            if (
+                imagenProcesada &&
+                imagenProcesada.duplicado === false &&
+                imagenProcesada.url
+            ) {
+
+                try {
+
+                    const estaEnUso =
+                        await imageReferenceService
+                            .estaReferenciada(
+                                imagenProcesada.url
+                            );
+
+
+                    if (!estaEnUso) {
+
+                        await imageStorageService
+                            .eliminarArchivoSeguro(
+                                imagenProcesada.url
+                            );
+
+                    }
+
+                } catch (cleanupError) {
+
+                    console.error(
+                        'No fue posible limpiar la imagen del platillo:',
+                        cleanupError
+                    );
+
+                }
+
+            }
+
+
+            // ==============================================================
+            // CONTENIDO DE IMAGEN INVÁLIDO
+            // ==============================================================
+
+            if (
+                error.code ===
+                'INVALID_IMAGE_CONTENT'
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        'El archivo enviado no es una imagen JPEG, PNG o WebP válida.'
+
+                });
+
+            }
+
+
+            console.error(
+                'Error en crearPlatillo:',
+                error
+            );
+
 
             return res.status(500).json({
 
                 success: false,
-                message: "Error interno del servidor."
+
+                message:
+                    'Error interno del servidor.'
 
             });
 
@@ -895,13 +1078,21 @@ const menuSemanaController = {
     },
 
 
+    // ==========================================================================
+    // 8. ACTUALIZAR UN PLATILLO DEL CATÁLOGO MAESTRO
+    // ==========================================================================
 
-    // 8. Actualizar un platillo del catálogo maestro
     actualizarPlatillo: async (req, res) => {
+
+        let imagenProcesada =
+            null;
+
 
         try {
 
-            const { id } = req.params;
+            const { id } =
+                req.params;
+
 
             const {
                 nombre,
@@ -909,45 +1100,291 @@ const menuSemanaController = {
                 acompanamientos
             } = req.body;
 
-            const imagen = req.file
-                ? `/images/uploads/${req.file.filename}`
-                : undefined;
 
-            if (!nombre) {
+            const nombreLimpio =
+                typeof nombre === 'string'
+                    ? nombre.trim()
+                    : '';
+
+
+            const precioFinal =
+                Number(precio);
+
+
+            // ==============================================================
+            // VALIDACIONES
+            // ==============================================================
+
+            if (!nombreLimpio) {
+
+                if (req.file?.filename) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            req.file.filename
+                        );
+
+                }
+
 
                 return res.status(400).json({
 
                     success: false,
-                    message: "El nombre del platillo es obligatorio."
+
+                    message:
+                        'El nombre del platillo es obligatorio.'
 
                 });
 
             }
 
-            await menuSemanaModel.actualizarPlatillo(id, {
 
-                nombre,
-                precio,
-                acompanamientos,
-                imagen
+            if (
+                !Number.isFinite(precioFinal) ||
+                precioFinal < 0
+            ) {
 
-            });
+                if (req.file?.filename) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            req.file.filename
+                        );
+
+                }
+
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        'El precio del platillo no es válido.'
+
+                });
+
+            }
+
+
+            // ==============================================================
+            // OBTENER ESTADO ANTERIOR
+            // ==============================================================
+
+            const platilloAnterior =
+                await menuSemanaModel
+                    .obtenerPlatilloPorId(
+                        id
+                    );
+
+
+            if (!platilloAnterior) {
+
+                if (req.file?.filename) {
+
+                    await imageStorageService
+                        .eliminarArchivoSeguro(
+                            req.file.filename
+                        );
+
+                }
+
+
+                return res.status(404).json({
+
+                    success: false,
+
+                    message:
+                        'Platillo no encontrado.'
+
+                });
+
+            }
+
+
+            // ==============================================================
+            // PROCESAR NUEVA IMAGEN
+            // ==============================================================
+
+            let imagen =
+                undefined;
+
+
+            if (req.file) {
+
+                imagenProcesada =
+                    await imageStorageService
+                        .procesarUpload(
+                            req.file
+                        );
+
+
+                imagen =
+                    imagenProcesada.url;
+
+            }
+
+
+            // ==============================================================
+            // ACTUALIZAR PLATILLO
+            // ==============================================================
+
+            await menuSemanaModel
+                .actualizarPlatillo(
+                    id,
+                    {
+
+                        nombre:
+                            nombreLimpio,
+
+                        precio:
+                            precioFinal,
+
+                        acompanamientos:
+                            typeof acompanamientos === 'string'
+                                ? acompanamientos.trim()
+                                : '',
+
+                        imagen
+
+                    }
+                );
+
+
+            // ==============================================================
+            // LIMPIAR IMAGEN ANTERIOR
+            // ==============================================================
+
+            const imagenAnterior =
+                platilloAnterior.imagen_defecto;
+
+
+            if (
+                imagenProcesada &&
+                imagenAnterior &&
+                imagen &&
+                imagenAnterior !== imagen
+            ) {
+
+                try {
+
+                    const sigueReferenciada =
+                        await imageReferenceService
+                            .estaReferenciada(
+                                imagenAnterior
+                            );
+
+
+                    if (!sigueReferenciada) {
+
+                        await imageStorageService
+                            .eliminarArchivoSeguro(
+                                imagenAnterior
+                            );
+
+                    }
+
+                } catch (cleanupError) {
+
+                /*
+                 * La actualización principal ya fue exitosa.
+                 * Un fallo de limpieza no debe convertirla en 500.
+                 */
+
+                    console.error(
+                        'No fue posible limpiar la imagen anterior del platillo:',
+                        cleanupError
+                    );
+
+                }
+
+            }
+
 
             return res.json({
 
                 success: true,
-                message: "Platillo actualizado correctamente."
+
+                message:
+                    'Platillo actualizado correctamente.'
 
             });
 
+
         } catch (error) {
 
-            console.error(error);
+            // ==============================================================
+            // ROLLBACK DE IMAGEN NUEVA
+            // ==============================================================
+
+            if (
+                imagenProcesada &&
+                imagenProcesada.duplicado === false &&
+                imagenProcesada.url
+            ) {
+
+                try {
+
+                    const estaEnUso =
+                        await imageReferenceService
+                            .estaReferenciada(
+                                imagenProcesada.url
+                            );
+
+
+                    if (!estaEnUso) {
+
+                        await imageStorageService
+                            .eliminarArchivoSeguro(
+                                imagenProcesada.url
+                            );
+
+                    }
+
+                } catch (cleanupError) {
+
+                    console.error(
+                        'No fue posible realizar el rollback de la imagen del platillo:',
+                        cleanupError
+                    );
+
+                }
+
+            }
+
+
+            // ==============================================================
+            // CONTENIDO DE IMAGEN INVÁLIDO
+            // ==============================================================
+
+            if (
+                error.code ===
+                'INVALID_IMAGE_CONTENT'
+            ) {
+
+                return res.status(400).json({
+
+                    success: false,
+
+                    message:
+                        'El archivo enviado no es una imagen JPEG, PNG o WebP válida.'
+
+                });
+
+            }
+
+
+            console.error(
+                'Error en actualizarPlatillo:',
+                error
+            );
+
 
             return res.status(500).json({
 
                 success: false,
-                message: "Error interno del servidor."
+
+                message:
+                    'Error interno del servidor.'
 
             });
 

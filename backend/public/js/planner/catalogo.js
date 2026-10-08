@@ -106,22 +106,101 @@ const PlannerCatalogo = {
 
     inicializarPreview() {
 
-        const inputImagen = document.getElementById("catalogoImagen");
+        const inputImagen =
+            document.getElementById("catalogoImagen");
 
-        if (!inputImagen) return;
+        const preview =
+            document.getElementById("catalogoPreview");
 
-        inputImagen.addEventListener("change", e => {
+        if (!inputImagen || !preview) {
+            return;
+        }
 
-            const archivo = e.target.files[0];
+        inputImagen.addEventListener("change", () => {
 
-            if (!archivo) return;
+            const archivo =
+                inputImagen.files[0];
 
-            const lector = new FileReader();
+            if (!archivo) {
+                return;
+            }
 
-            lector.onload = evento => {
+            const tiposPermitidos = [
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            ];
 
-                document.getElementById("catalogoPreview").src =
-                    evento.target.result;
+            const extensionesPermitidas =
+                /\.(jpg|jpeg|png|webp)$/i;
+
+            const tamanoMaximo =
+                5 * 1024 * 1024;
+
+            const imagenAnterior =
+                preview.getAttribute("src");
+
+            // Validar extensión, MIME y tamaño.
+
+            if (
+                !tiposPermitidos.includes(archivo.type) ||
+                !extensionesPermitidas.test(archivo.name) ||
+                archivo.size > tamanoMaximo ||
+                archivo.size === 0
+            ) {
+
+                alert(
+                    "Selecciona una imagen JPG, PNG o WebP de máximo 5 MB."
+                );
+
+                inputImagen.value = "";
+
+                return;
+            }
+
+            // Comprobar que el navegador pueda decodificarla.
+
+            const lector =
+                new FileReader();
+
+            lector.onload = () => {
+
+                const imagenPrueba =
+                    new Image();
+
+                imagenPrueba.onload = () => {
+
+                    preview.src =
+                        lector.result;
+
+                };
+
+                imagenPrueba.onerror = () => {
+
+                    alert(
+                        "El archivo seleccionado no contiene una imagen válida."
+                    );
+
+                    inputImagen.value = "";
+
+                    if (imagenAnterior) {
+                        preview.src = imagenAnterior;
+                    }
+
+                };
+
+                imagenPrueba.src =
+                    lector.result;
+
+            };
+
+            lector.onerror = () => {
+
+                alert(
+                    "No fue posible leer la imagen seleccionada."
+                );
+
+                inputImagen.value = "";
 
             };
 
